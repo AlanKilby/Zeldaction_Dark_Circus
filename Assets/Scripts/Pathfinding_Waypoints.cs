@@ -6,7 +6,6 @@ public class Pathfinding_Waypoints : MonoBehaviour
 {
     public GameObject parentWaypoint;
     [Range(0.25f, 10f)] public float speed = 3f;
-    private Vector3 nodeToVist;
     public List<GameObject> nodesList = new List<GameObject>();
     private byte index;
     private bool goingBack; 
@@ -43,7 +42,6 @@ public class Pathfinding_Waypoints : MonoBehaviour
 
         // no looping at the end of list
         index = Vector3.Distance(targetToMove.transform.position, nodesList[index].transform.position) < 0.1f ? (index < nodesList.Count - 1 && !goingBack ? index += 1 : index -= 1) : index; 
-
         targetToMove.transform.Translate((nodesList[index].transform.position - targetToMove.transform.position).normalized * Time.fixedDeltaTime * speed); 
     } 
 
