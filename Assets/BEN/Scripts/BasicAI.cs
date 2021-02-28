@@ -26,7 +26,6 @@ public class BasicAI : MonoBehaviour
             if (Vector3.Distance(transform.position, detectedCollider[0].transform.position) > 2f)
             {
                 pathfinding.transform.Translate((detectedCollider[0].transform.position - transform.position).normalized * Time.fixedDeltaTime * attackMoveSpeed, Space.Self);
-                Debug.Log("walking toward player");
             }
             else
                 Attack(); // use class-based state machine instead 
@@ -34,7 +33,6 @@ public class BasicAI : MonoBehaviour
         else
         {
             pathfinding.FollowWaypoints(pathfinding.transform); 
-            Debug.Log("following waypoints"); 
         } 
     }
 
