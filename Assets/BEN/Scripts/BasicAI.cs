@@ -8,7 +8,7 @@ public class BasicAI : MonoBehaviour
     private SphereCollider selfCollider; 
     private AIState state;
     private Collider[] detectedCollider;
-    private Pathfinding_Waypoints pathfinding;
+    private Pathfinding_Waypoints pathfinding; 
 
     private void Start()
     {
