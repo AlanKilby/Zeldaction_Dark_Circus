@@ -7,15 +7,18 @@ public class MoveTo : MonoBehaviour
     public Transform goal;
     public bool useMouse = false; 
     private NavMeshAgent agent;
+    private float delayModifier = 0f;
+    public static System.Action OnBallMoving; 
 
-    void Start()
+    private void OnEnable()
     {
+        AvoidObject.OnAvoiding += MoveToTargetPosition;
         agent = GetComponent<NavMeshAgent>();
         if (!useMouse)
         {
-            agent.destination = goal.position;
+            Invoke(nameof(SetNewGoal), 0.5f + delayModifier);
         }
-    }
+    } 
 
     void Update()
     {
@@ -25,14 +28,14 @@ public class MoveTo : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        AvoidObject.OnAvoiding += MoveToTargetPosition;  
-    }
-
     private void OnDisable()
     {
         AvoidObject.OnAvoiding -= MoveToTargetPosition;
+    }
+
+    void SetNewGoal() 
+    {
+        agent.destination = goal.position;
     }
 
     void TryGetMouseClickPosition()
@@ -46,7 +49,10 @@ public class MoveTo : MonoBehaviour
     private void MoveToTargetPosition(Vector3 targetPosition)
     {
         float initialHeight = transform.position.y; // to keep same height and not monkey's height
-        transform.position = targetPosition - new Vector3(0f, initialHeight, 0f); 
+        transform.position = targetPosition - new Vector3(0f, initialHeight, 0f);
+
+        delayModifier = 0.5f;
+        OnBallMoving(); 
     }
 }
 
