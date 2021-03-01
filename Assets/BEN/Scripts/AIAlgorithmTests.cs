@@ -1,11 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Zeldaction.Utility; 
+using Zeldaction.Utility;
+using UnityEngine.AI; 
 
-public enum AIArchitecture { StateMachine, GOAP } 
+public enum AIArchitecture { StateMachine, GOAP, BehaviorTree } 
 public enum AIBehaviour { FullSubmission, LoneWolf }
 public enum AIDecisionMaking { Linear, Gaussian, Perlin }
+public enum AITYpe { BaseMonkey, BallRiderMonkey }
 
 
 public class AIAlgorithmTests : MonoBehaviour
@@ -19,8 +20,15 @@ public class AIAlgorithmTests : MonoBehaviour
     [Header("Decision Making")]
     [SerializeField] private AIDecisionMaking m_DecisionMaking;
 
+    // DEBUG ONLY ==> upgrade to other architecture asap (cf AIArchitecture) 
+    [Header("Type")]
+    [SerializeField] private AITYpe AIType; 
 
-    private LinkedListNode<byte> neighbours;
+    [Header("Navigation")]
+    [SerializeField] private NavMeshAgent navMeshAgent; 
+
+
+    [Space] private LinkedListNode<byte> neighbours;
     // list of possible states 
 
     private byte amountOfNodes = 10;
