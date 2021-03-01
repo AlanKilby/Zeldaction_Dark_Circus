@@ -23,7 +23,17 @@ public class MoveTo : MonoBehaviour
         {
             TryGetMouseClickPosition(); 
         }
-    } 
+    }
+
+    private void OnEnable()
+    {
+        AvoidObject.OnAvoiding += MoveToTargetPosition;  
+    }
+
+    private void OnDisable()
+    {
+        AvoidObject.OnAvoiding -= MoveToTargetPosition;
+    }
 
     void TryGetMouseClickPosition()
     {
@@ -31,6 +41,12 @@ public class MoveTo : MonoBehaviour
         {
             agent.destination = hit.point;
         }
+    }
+
+    private void MoveToTargetPosition(Vector3 targetPosition)
+    {
+        float initialHeight = transform.position.y; // to keep same height and not monkey's height
+        transform.position = targetPosition - new Vector3(0f, initialHeight, 0f); 
     }
 }
 
