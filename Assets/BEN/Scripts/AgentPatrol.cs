@@ -7,7 +7,7 @@ public class AgentPatrol : MonoBehaviour
     public Transform[] points;
     private int destPoint = 0;
     private NavMeshAgent agent;
-    public bool playerDetected;
+    public bool m_PlayerDetected;
     private float distanceFromTarget;
     private bool canThrowObject = true; 
 
@@ -26,14 +26,14 @@ public class AgentPatrol : MonoBehaviour
         GotoNextPoint();
     }
      
-    void Update()
+    void FixedUpdate() 
     { 
         // Choose the next destination point when the agent gets
         // close to the current one. 
-        if (!agent.pathPending && agent.remainingDistance < 0.5f && !playerDetected)
+        if (!agent.pathPending && agent.remainingDistance < 0.5f && !m_PlayerDetected)
             GotoNextPoint();
 
-        if (playerDetected)
+        if (m_PlayerDetected)
         {
             distanceFromTarget = Vector3.Distance(transform.position, agent.destination); 
             agent.speed = 0f;
@@ -45,7 +45,7 @@ public class AgentPatrol : MonoBehaviour
         } 
     } 
 
-    void GotoNextPoint()
+    void GotoNextPoint() 
     {
         // Returns if no points have been set up
         if (points.Length == 0)
@@ -59,10 +59,11 @@ public class AgentPatrol : MonoBehaviour
         destPoint = (destPoint + 1) % points.Length;
     }
 
-    public void SetDestination(Vector3 newDestination)
+    public void SetDestination(Vector3 newDestination, float speed, bool playerDetected)
     {
         agent.destination = newDestination;
-        playerDetected = true;
+        m_PlayerDetected = playerDetected;
+        agent.speed = speed; 
     }
 
 
@@ -72,6 +73,14 @@ public class AgentPatrol : MonoBehaviour
         GameObject reference = Instantiate(objToThrow, transform.position, Quaternion.identity);
         reference.transform.LookAt(Camera.main.transform);
 
-        reference.GetComponent<ParabolicFunction>().SetTargetPosition(agent.destination); 
+        reference.GetComponent<ParabolicFunction>().SetTargetPosition(agent.destination, transform.position);
+
+        StartCoroutine(SetBool()); 
     } 
+
+    private IEnumerator SetBool() 
+    {
+        yield return new WaitForSeconds(5f);
+        canThrowObject = true; 
+    }
 }
