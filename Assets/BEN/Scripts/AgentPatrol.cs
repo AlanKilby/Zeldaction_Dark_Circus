@@ -7,6 +7,12 @@ public class AgentPatrol : MonoBehaviour
     public Transform[] points;
     private int destPoint = 0;
     private NavMeshAgent agent;
+    public bool playerDetected;
+    private float distanceFromTarget;
+    private bool canThrowObject = true; 
+
+    [Header("FireSpitter")]
+    public GameObject objToThrow; 
 
     void Start()
     {
@@ -19,13 +25,24 @@ public class AgentPatrol : MonoBehaviour
 
         GotoNextPoint();
     }
-
+     
     void Update()
     { 
         // Choose the next destination point when the agent gets
         // close to the current one. 
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (!agent.pathPending && agent.remainingDistance < 0.5f && !playerDetected)
             GotoNextPoint();
+
+        if (playerDetected)
+        {
+            distanceFromTarget = Vector3.Distance(transform.position, agent.destination); 
+            agent.speed = 0f;
+
+            if (canThrowObject)
+                ThrowObject();
+
+            canThrowObject = false;
+        } 
     } 
 
     void GotoNextPoint()
@@ -41,4 +58,20 @@ public class AgentPatrol : MonoBehaviour
         // cycling to the start if necessary.
         destPoint = (destPoint + 1) % points.Length;
     }
+
+    public void SetDestination(Vector3 newDestination)
+    {
+        agent.destination = newDestination;
+        playerDetected = true;
+    }
+
+
+    // move this to individual behaviour 
+    private void ThrowObject()
+    {
+        GameObject reference = Instantiate(objToThrow, transform.position, Quaternion.identity);
+        reference.transform.LookAt(Camera.main.transform);
+
+        reference.GetComponent<ParabolicFunction>().SetTargetPosition(agent.destination); 
+    } 
 }
