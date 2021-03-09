@@ -1,40 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
+using BEN.Scripts;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
-public class CallMethodOnPhysiscEvent : MonoBehaviour
+namespace BEN
 {
-    [SerializeField, Range(1, 5)] private int radius = 1;
-    [SerializeField] private LayerMask detectableTargetsLayer;
-    private BoxCollider selfCollider;
-    private Collider[] detectedCollidersArray;
-    private AgentPatrol patrolBehaviour;
-    private bool playerDetected;
-    private RaycastHit[] detectedColliders;
-
-    private float[] distances;
-    private float smallestValue;
-
-    private bool notified; // DEBUG 
-
-    private void Start() 
+    [RequireComponent(typeof(BoxCollider))]
+    public class CallMethodOnPhysiscEvent : MonoBehaviour
     {
-        selfCollider = GetComponent<BoxCollider>();
-        patrolBehaviour = GetComponentInParent<AgentPatrol>(); 
-    }
+        [SerializeField, Range(1, 5)] private int radius = 1;
+        [SerializeField] private LayerMask detectableTargetsLayer;
+        private BoxCollider _selfCollider;
+        private Collider[] _detectedCollidersArray;
+        private AgentPatrol _patrolBehaviour;
+        private bool _playerDetected;
+        private RaycastHit[] _detectedColliders;
 
-    private void OnDrawGizmos() 
-    {
+        private float[] _distances;
+        private float _smallestValue;
+
+        private bool _notified; // DEBUG 
+
+        public CallMethodOnPhysiscEvent(Collider[] detectedCollidersArray)
+        {
+            this._detectedCollidersArray = detectedCollidersArray;
+        }
+
+        private void Start() 
+        {
+            _selfCollider = GetComponent<BoxCollider>();
+            _patrolBehaviour = GetComponentInParent<AgentPatrol>(); 
+        }
+
+        private void OnDrawGizmos() 
+        {
 #if UNITY_EDITOR
-        /* UnityEditor.Handles.color = Color.red; 
+            /* UnityEditor.Handles.color = Color.red; 
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, radius); */ 
 #endif
-    }
+        }
 
-    private void FixedUpdate()  
-    {
-        /* detectedCollidersArray = Physics.OverlapBox(transform.position, 
+        private void FixedUpdate()  
+        {
+            /* detectedCollidersArray = Physics.OverlapBox(transform.position, 
                                                     new Vector3(selfCollider.size.x, selfCollider.size.y, selfCollider.size.z), 
                                                     Quaternion.identity, 
                                                     detectableTargetsLayer);
@@ -49,55 +55,51 @@ public class CallMethodOnPhysiscEvent : MonoBehaviour
 
 
         } */ 
-    }
-
-    private void OnTriggerEnter(Collider other) 
-    {
-        Debug.DrawRay(transform.position, other.transform.position - transform.position, Color.red); 
-
-        if (other.CompareTag("Player") && !patrolBehaviour.m_PlayerDetected && playerDetected)
-        {
-            patrolBehaviour.SetDestination(other.transform.position, 0f, playerDetected); 
         }
-    }  
 
-    private void OnTriggerStay(Collider other)
-    {
-        Debug.DrawRay(transform.position, other.transform.position - transform.position, Color.red);
-        detectedColliders = Physics.RaycastAll(transform.position, other.transform.position - transform.position, 15f, detectableTargetsLayer);
-        distances = new float[detectedColliders.Length];
-
-        for (int i = 0; i < detectedColliders.Length; i++)
+        private void OnTriggerEnter(Collider other) 
         {
-            if( i == 0)
-                smallestValue = detectedColliders[i].distance; 
-            else if (smallestValue > detectedColliders[i].distance)
+            Debug.DrawRay(transform.position, other.transform.position - transform.position, Color.red); 
+
+            if (other.CompareTag("Player") && !_patrolBehaviour.playerDetected && _playerDetected)
             {
-                smallestValue = detectedColliders[i].distance; 
+                _patrolBehaviour.SetDestination(other.transform.position, 0f, _playerDetected); 
             }
+        }  
 
-            distances[i] = detectedColliders[i].distance;
+        private void OnTriggerStay(Collider other)
+        {
+            Debug.DrawRay(transform.position, other.transform.position - transform.position, Color.red);
+            // use RaycastNonAlloc instead !!
+            _detectedColliders = Physics.RaycastAll(transform.position, other.transform.position - transform.position, 15f, detectableTargetsLayer);
+            _distances = new float[_detectedColliders.Length];
 
-            if (detectedColliders[i].transform.gameObject.CompareTag("Player"))
+            for (var i = 0; i < _detectedColliders.Length; i++)
             {
-                playerDetected = Mathf.Approximately(smallestValue, detectedColliders[i].distance); 
-
-                if (playerDetected && !notified)
+                if( i == 0)
+                    _smallestValue = _detectedColliders[i].distance; 
+                else if (_smallestValue > _detectedColliders[i].distance)
                 {
-                    notified = true; 
-                    patrolBehaviour.SetDestination(other.transform.position, 0f, playerDetected);
+                    _smallestValue = _detectedColliders[i].distance; 
                 }
-            }
-        } 
-        // blockedByWall = Physics.Raycast(transform.position, other.transform.position - transform.position, out RaycastHit hit, 15f, props);
-    }
 
-    private void OnTriggerExit(Collider other) 
-    { 
-        if (other.CompareTag("Player") && patrolBehaviour.m_PlayerDetected)
+                _distances[i] = _detectedColliders[i].distance;
+
+                if (!_detectedColliders[i].transform.gameObject.CompareTag("Player")) continue;
+                _playerDetected = Mathf.Approximately(_smallestValue, _detectedColliders[i].distance);
+
+                if (!_playerDetected || _notified) continue;
+                _notified = true; 
+                _patrolBehaviour.SetDestination(other.transform.position, 0f, _playerDetected);
+            } 
+            // blockedByWall = Physics.Raycast(transform.position, other.transform.position - transform.position, out RaycastHit hit, 15f, props);
+        }
+
+        private void OnTriggerExit(Collider other)
         {
-            patrolBehaviour.SetDestination(Vector3.zero, 2f, false); // reset speed internally because you don't know initial value here 
-            notified = false; 
+            if (!other.CompareTag("Player") || !_patrolBehaviour.playerDetected) return;
+            _patrolBehaviour.SetDestination(Vector3.zero, 2f, false); // reset speed internally because you don't know initial value here 
+            _notified = false;
         }
     }
 }
