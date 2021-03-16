@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 
 namespace BEN.Scripts
 {
+    [RequireComponent(typeof(NavMeshAgent))]
     public class AgentPatrol : MonoBehaviour
     {
         public Transform[] points;
@@ -64,7 +65,7 @@ namespace BEN.Scripts
         public void SetDestination(Vector3 newDestination, float speed, bool plDetected)
         {
             _agent.destination = newDestination;
-            this.playerDetected = plDetected;
+            playerDetected = plDetected;
             _agent.speed = speed; 
         }
 

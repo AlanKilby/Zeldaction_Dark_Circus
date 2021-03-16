@@ -1057,8 +1057,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb53eba7af440494ea9bdade38eb66c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   attackDelay: 1
+  distanceRange: 8
+  cacRange: 1.5
+  playerDetected: 0
 --- !u!1 &293052646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1629,6 +1632,7 @@ GameObject:
   m_Component:
   - component: {fileID: 392172797}
   - component: {fileID: 392172799}
+  - component: {fileID: 392172798}
   m_Layer: 0
   m_Name: Spitfire_Detection
   m_TagString: Untagged
@@ -1650,6 +1654,21 @@ Transform:
   m_Father: {fileID: 279887018}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &392172798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392172796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff06c788547748941b6e8b0f5e7f7cb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectableTargetsLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!65 &392172799
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4398,7 +4417,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff06c788547748941b6e8b0f5e7f7cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1
   detectableTargetsLayer:
     serializedVersion: 2
     m_Bits: 1088
@@ -4533,14 +4551,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314171686}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.61, y: 1.14, z: 0.69}
+  m_LocalRotation: {x: 0, y: 0.702153, z: 0, w: 0.71202606}
+  m_LocalPosition: {x: -5.61, y: 1.14, z: 0.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 279887018}
   m_Father: {fileID: 0}
   m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 89.2, z: 0}
 --- !u!1 &1342065577
 GameObject:
   m_ObjectHideFlags: 0
@@ -6279,7 +6297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff06c788547748941b6e8b0f5e7f7cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1
   detectableTargetsLayer:
     serializedVersion: 2
     m_Bits: 1088

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace BEN.Scripts.FSM
 {
@@ -8,7 +9,7 @@ namespace BEN.Scripts.FSM
         public Transform[] points;
         private int _destPoint = 0;
         private NavMeshAgent _agent;
-        private bool _playerDetected;
+        [FormerlySerializedAs("_playerDetected")] public bool playerDetected;
         private float _distanceFromTarget;
 
         private void Start()
@@ -27,11 +28,11 @@ namespace BEN.Scripts.FSM
         { 
             // Choose the next destination point when the agent gets
             // close to the current one. 
-            if (!_agent.pathPending && _agent.remainingDistance < 0.5f && !_playerDetected)
+            if (!_agent.pathPending && _agent.remainingDistance < 0.5f && !playerDetected)
                 GotoNextPoint();
 
 
-            if (!_playerDetected) return;
+            if (!playerDetected) return;
             _distanceFromTarget = Vector3.Distance(transform.position, _agent.destination); 
             _agent.speed = 0f;
         } 
@@ -53,8 +54,13 @@ namespace BEN.Scripts.FSM
         public void SetDestination(Vector3 newDestination, float speed, bool plDetected)
         {
             _agent.destination = newDestination;
-            this._playerDetected = plDetected;
+            playerDetected = plDetected;
             _agent.speed = speed; 
+        }
+
+        public void Stop()
+        {
+            _agent.speed = 0f; 
         }
     }
 }
