@@ -68,7 +68,6 @@ namespace BEN.Scripts
             _agent.speed = speed; 
         }
 
-
         // move this to individual behaviour 
         private void ThrowObject()
         {
