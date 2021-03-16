@@ -150,6 +150,8 @@ namespace BEN.Scripts.FSM
         {
             _fsm = StateMachine<States>.Initialize(this); 
             _fsm.ChangeState(States.Init, StateTransition.Safe); // example
+            
+            // Boomerang.s_IsComingBack
         }
 
         private void FixedUpdate()
