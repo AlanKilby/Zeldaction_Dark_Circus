@@ -1,9 +1,10 @@
 using BEN.Scripts;
 using UnityEngine;
 
+// TODO : extend it so it can be called on any type of collider (box and sphere mostly)
 namespace BEN
 {
-    [RequireComponent(typeof(BoxCollider))]
+    [RequireComponent(typeof(BoxCollider))] // DEBUG
     public class CallMethodOnPhysiscEvent : MonoBehaviour
     {
         [SerializeField, Range(1, 5)] private int radius = 1;
@@ -18,6 +19,7 @@ namespace BEN
         private float _smallestValue;
 
         private bool _notified; // DEBUG 
+        public bool isMascotte = false; 
 
         public CallMethodOnPhysiscEvent(Collider[] detectedCollidersArray)
         {
@@ -59,23 +61,29 @@ namespace BEN
 
         private void OnTriggerEnter(Collider other) 
         {
-            Debug.DrawRay(transform.position, other.transform.position - transform.position, Color.red); 
+            var position = transform.position; // cf doc https://github.com/JetBrains/resharper-unity/wiki/Avoid-multiple-unnecessary-property-accesses 
+            Debug.DrawRay(position, other.transform.position - position, Color.red); 
 
+            // rush toward player => move elsewhere
             if (other.CompareTag("Player") && !_patrolBehaviour.playerDetected && _playerDetected)
             {
-                _patrolBehaviour.SetDestination(other.transform.position, 0f, _playerDetected); 
+                _patrolBehaviour.SetDestination(other.transform.position, 0f + Utility.BoolToInt(isMascotte), _playerDetected); 
             }
-        }  
+        }
 
         private void OnTriggerStay(Collider other)
         {
+            // exposed native data is unnefficient 
             Debug.DrawRay(transform.position, other.transform.position - transform.position, Color.red);
+            
             // use RaycastNonAlloc instead !!
             _detectedColliders = Physics.RaycastAll(transform.position, other.transform.position - transform.position, 15f, detectableTargetsLayer);
             _distances = new float[_detectedColliders.Length];
 
+            // keep moving toward player
             for (var i = 0; i < _detectedColliders.Length; i++)
             {
+                // check if player is behind a wall (smallest value will be = to a wall collider)
                 if( i == 0)
                     _smallestValue = _detectedColliders[i].distance; 
                 else if (_smallestValue > _detectedColliders[i].distance)
@@ -85,12 +93,16 @@ namespace BEN
 
                 _distances[i] = _detectedColliders[i].distance;
 
+                // if player is the closest (even when a wall is detected behind player)
                 if (!_detectedColliders[i].transform.gameObject.CompareTag("Player")) continue;
                 _playerDetected = Mathf.Approximately(_smallestValue, _detectedColliders[i].distance);
 
-                if (!_playerDetected || _notified) continue;
+                if (!_playerDetected || !_notified) continue;
                 _notified = true; 
-                _patrolBehaviour.SetDestination(other.transform.position, 0f, _playerDetected);
+                
+                // attack player from distance or rush toward it 
+                _patrolBehaviour.SetDestination(other.transform.position, 0f + Utility.BoolToInt(isMascotte), _playerDetected);
+                
             } 
             // blockedByWall = Physics.Raycast(transform.position, other.transform.position - transform.position, out RaycastHit hit, 15f, props);
         }

@@ -1,5 +1,5 @@
 
-namespace Zeldaction.Utility
+namespace BEN.Scripts
 {
     public static class Utility
     {

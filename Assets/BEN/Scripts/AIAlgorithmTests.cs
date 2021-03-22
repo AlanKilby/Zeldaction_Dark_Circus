@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using BEN.Scripts;
 using UnityEngine;
-using Zeldaction.Utility;
 using UnityEngine.AI; 
 
 public enum AIArchitecture { StateMachine, GOAP, BehaviorTree } 

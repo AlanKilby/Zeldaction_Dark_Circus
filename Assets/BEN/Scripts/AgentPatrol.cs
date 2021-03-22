@@ -13,9 +13,12 @@ namespace BEN.Scripts
         [FormerlySerializedAs("m_PlayerDetected")] public bool playerDetected;
         private float _distanceFromTarget;
         private bool _canThrowObject = true; 
+        public bool isMascotte = false;  // to be removed
 
         [Header("FireSpitter")]
         public GameObject objToThrow; 
+        
+        private bool canCAC = true; 
 
         private void Start()
         {
@@ -39,17 +42,29 @@ namespace BEN.Scripts
 
             if (!playerDetected) return;
             _distanceFromTarget = Vector3.Distance(transform.position, _agent.destination); 
-            _agent.speed = 0f;
+            _agent.speed = 0f + Utility.BoolToInt(isMascotte);
 
-            if (_canThrowObject)
+            if (_canThrowObject && !isMascotte)
                 ThrowObject();
+            else if (isMascotte && _distanceFromTarget <= 2f)
+            {
+                CacAttack(); 
+            }
 
             _canThrowObject = false;
-        } 
+        }
 
-        void GotoNextPoint() 
+        private void CacAttack()
         {
-            // Returns if no points have been set up
+            // DEBUG 
+            Gizmos.color = Color.yellow; 
+            Gizmos.DrawWireSphere(transform.position, 5f); 
+            StartCoroutine(SetAttackBool()); 
+        }
+
+        private void GotoNextPoint() 
+        {
+            // Returns if no points have been set up 
             if (points.Length == 0)
                 return;
 
@@ -84,6 +99,13 @@ namespace BEN.Scripts
         {
             yield return new WaitForSeconds(5f);
             _canThrowObject = true; 
+        }
+
+        private IEnumerator SetAttackBool()
+        {
+            canCAC = false; 
+            yield return new WaitForSeconds(3f);
+            canCAC = true;   
         }
     }
 }

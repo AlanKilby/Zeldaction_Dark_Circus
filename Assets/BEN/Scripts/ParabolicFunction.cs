@@ -1,61 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ParabolicFunction : MonoBehaviour
+namespace BEN.Scripts
 {
-    [Range(1f, 10f)] public float speed = 5f;
-    [Range(1f, 10f)] public float amplitude = 2f;
-
-    private Vector3 m_Target;
-    private bool targetIsSet;
-    private Vector3 direction;
-
-    private bool hasBeenHit;
-    private Vector3 m_Caster;
-
-    private void Start()
+    public class ParabolicFunction : MonoBehaviour
     {
-        Destroy(gameObject, 5f); 
-    }
+        [Range(1f, 10f)] public float speed = 5f;
+        [Range(1f, 10f)] public float amplitude = 2f;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            hasBeenHit = true;
-    }
+        private Vector3 m_Target;
+        private bool _targetIsSet;
+        private Vector3 _direction;
 
-    private void FixedUpdate()
-    { 
-        if (targetIsSet) 
+        private bool _hasBeenHit;
+        private Vector3 m_Caster;
+
+        private void Start()
         {
-            direction = hasBeenHit ? (m_Caster - transform.position).normalized * 3f : (m_Target - transform.position).normalized; 
-            transform.Translate(direction * Time.fixedDeltaTime * speed, Space.World); 
+            Destroy(gameObject, 5f); 
         }
-    } 
 
-    public void SetTargetPosition(Vector3 target, Vector3 caster)
-    {
-        targetIsSet = true; 
-        m_Target = target;
-        m_Caster = caster; 
-    } 
-
-    private void DoParabolicTranslation()
-    {
-        //
-    }
-
-    private void OnTriggerEnter(Collider other) 
-    {
-        if (other.CompareTag("Enemy") && hasBeenHit)
+        private void Update()
         {
-            Destroy(other.transform.root.gameObject);
-            Destroy(gameObject);
+            if (Input.GetKeyDown(KeyCode.Space))
+                _hasBeenHit = true;
+        }
+
+        private void FixedUpdate()
+        {
+            if (!_targetIsSet) return;
+            _direction = _hasBeenHit ? (m_Caster - transform.position).normalized * 3f : (m_Target - transform.position).normalized; 
+            transform.Translate(_direction * Time.fixedDeltaTime * speed, Space.World);
         } 
-        else if (other.CompareTag("Player"))
+
+        public void SetTargetPosition(Vector3 target, Vector3 caster)
         {
-            Destroy(gameObject);  
+            _targetIsSet = true; 
+            m_Target = target;
+            m_Caster = caster; 
+        } 
+
+        private void DoParabolicTranslation()
+        {
+            //
+        }
+
+        private void OnTriggerEnter(Collider other) 
+        {
+            if (other.CompareTag("Enemy") && _hasBeenHit)
+            {
+                Destroy(other.transform.root.gameObject);
+                Destroy(gameObject);
+            } 
+            else if (other.CompareTag("Player"))
+            {
+                Destroy(gameObject);  
+            }
         }
     }
 }
