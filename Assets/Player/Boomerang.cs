@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using BEN.Scripts.FSM;
 using UnityEngine;
 
 
@@ -118,8 +119,14 @@ public class Boomerang : MonoBehaviour
         {
             Debug.Log("Collision with Enemy");
 
-            Destroy(collision.gameObject);
-
+            // ajout benji
+            if (collision.GetComponent<BasicAIBrain>().Type == AIType.Mascotte && !s_IsComingBack)
+            {
+                s_IsComingBack = true;
+                return; // ajout benji
+            }
+            
+            Destroy(collision.gameObject); 
         }
     }
 }

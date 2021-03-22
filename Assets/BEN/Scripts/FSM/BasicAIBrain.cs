@@ -39,6 +39,8 @@ namespace BEN.Scripts.FSM
     public class BasicAIBrain : MonoBehaviour
     {
         [SerializeField] private AIType type;
+        public AIType Type => type; 
+        
         [SerializeField, Range(0f, 5f)] private float attackDelay = 1f; 
         [SerializeField, Range(3f, 10f)] private float distanceRange = 8f; 
         [SerializeField, Range(1f, 3f)] private float cacRange = 1.5f; 

@@ -5,9 +5,9 @@ using UnityEngine.Serialization;
 
 namespace BEN.Scripts
 {
-    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(NavMeshAgent))] 
     public class AgentPatrol : MonoBehaviour
-    {
+    { 
         public Transform[] points;
         private int _destPoint = 0;
         private NavMeshAgent _agent;
