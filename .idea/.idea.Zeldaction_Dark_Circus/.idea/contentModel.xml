@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\fmala\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\fmala\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_Zeldaction_Dark_Circus.1873664534.00" t="ExcludeRecursive" />
-    <e p="D:\GitKraken Repositories\Zeldaction_Dark_Circus" t="IncludeRecursive">
+    <e p="C:\Users\f.nossin\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\f.nossin\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_Zeldaction_Dark_Circus.272343171.00" t="ExcludeRecursive" />
+    <e p="D:\Unity\Class Projects\Zeldaction_Dark_Circus" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="BEN" t="Include">
-          <e p="CallMethodOnPhysiscEvent.cs" t="Include" />
-          <e p="CameraController.cs" t="Include" />
-          <e p="GameplayMaker.cs" t="Include" />
-          <e p="NavMeshComponents" t="Include">
+          <e p="_Imported" t="Include">
             <e p="Examples" t="Include">
               <e p="Editor" t="Include">
                 <e p="NavMeshComponentsExamplesEditor.asmdef" t="Include" />
@@ -34,21 +31,45 @@
                 <e p="SpawnPrefabOnKeyDown.cs" t="Include" />
               </e>
             </e>
-            <e p="Scripts" t="Include">
-              <e p="NavMeshComponents.asmdef" t="Include" />
-              <e p="NavMeshLink.cs" t="Include" />
-              <e p="NavMeshModifier.cs" t="Include" />
-              <e p="NavMeshModifierVolume.cs" t="Include" />
-              <e p="NavMeshSurface.cs" t="Include" />
+            <e p="MonsterLove" t="Include">
+              <e p="StateMachine" t="Include">
+                <e p="StateMachine.cs" t="Include" />
+                <e p="StateMachineRunner.cs" t="Include" />
+              </e>
+            </e>
+            <e p="NavMeshComponents" t="Include">
+              <e p="Editor" t="Include">
+                <e p="NavMeshAssetManager.cs" t="Include" />
+                <e p="NavMeshComponentsEditor.asmdef" t="Include" />
+                <e p="NavMeshComponentsGUIUtility.cs" t="Include" />
+                <e p="NavMeshLinkEditor.cs" t="Include" />
+                <e p="NavMeshModifierEditor.cs" t="Include" />
+                <e p="NavMeshModifierVolumeEditor.cs" t="Include" />
+                <e p="NavMeshSurfaceEditor.cs" t="Include" />
+              </e>
+              <e p="Scripts" t="Include">
+                <e p="NavMeshComponents.asmdef" t="Include" />
+                <e p="NavMeshLink.cs" t="Include" />
+                <e p="NavMeshModifier.cs" t="Include" />
+                <e p="NavMeshModifierVolume.cs" t="Include" />
+                <e p="NavMeshSurface.cs" t="Include" />
+              </e>
             </e>
           </e>
+          <e p="CameraController.cs" t="Include" />
+          <e p="CheckSurroundings.cs" t="Include" />
+          <e p="GameplayMaker.cs" t="Include" />
           <e p="PlayerMovement.cs" t="Include" />
           <e p="ProcessInputs.cs" t="Include" />
           <e p="Scripts" t="Include">
             <e p="AgentPatrol.cs" t="Include" />
             <e p="AvoidObject.cs" t="Include" />
             <e p="BasicAI.cs" t="Include" />
-            <e p="FakePlayerProjectile.cs" t="Include" />
+            <e p="FSM" t="Include">
+              <e p="BasicAIBrain.cs" t="Include" />
+              <e p="FiniteStateMachine.cs" t="Include" />
+              <e p="FsmPatrol.cs" t="Include" />
+            </e>
             <e p="Gameplay" t="Include">
               <e p="Arrow.cs" t="Include" />
               <e p="CAC.cs" t="Include" />
@@ -75,15 +96,15 @@
             <e p="Utility.cs" t="Include" />
           </e>
         </e>
-        <e p="Editor" t="Include">
-          <e p="NavMeshAssetManager.cs" t="Include" />
-          <e p="NavMeshComponentsEditor.asmdef" t="Include" />
-          <e p="NavMeshComponentsGUIUtility.cs" t="Include" />
-          <e p="NavMeshLinkEditor.cs" t="Include" />
-          <e p="NavMeshModifierEditor.cs" t="Include" />
-          <e p="NavMeshModifierVolumeEditor.cs" t="Include" />
-          <e p="NavMeshSurfaceEditor.cs" t="Include" />
+        <e p="Mirror.cs" t="Include" />
+        <e p="Player" t="Include">
+          <e p="Boomerang.cs" t="Include" />
+          <e p="BoomerangThrow.cs" t="Include" />
+          <e p="HatAnimator.cs" t="Include" />
+          <e p="PlayerAnimations.cs" t="Include" />
+          <e p="PlayerMovement_Alan.cs" t="Include" />
         </e>
+        <e p="SendChildPositionOnEvent.cs" t="Include" />
       </e>
       <e p="NavMeshComponents.csproj" t="IncludeRecursive" />
       <e p="NavMeshComponentsEditor.csproj" t="IncludeRecursive" />
