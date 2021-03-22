@@ -30,8 +30,6 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     void Update()
     {
-
-        input = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")); 
         Move();
 
         if(canThrow == true)
@@ -44,9 +42,10 @@ public class PlayerMovement_Alan : MonoBehaviour
     {
         float horizontalMove = Input.GetAxisRaw("Horizontal");
         float verticalMove = Input.GetAxisRaw("Vertical");
+        
         // Vector3 move = transform.forward * verticalMove + transform.right * horizontalMove;
 
-        move = new Vector3(horizontalMove, 0f, verticalMove).normalized;
+        move = new Vector3(horizontalMove, 0f, -verticalMove).normalized;
         playerRB.velocity = move * movementSpeed;
 
 

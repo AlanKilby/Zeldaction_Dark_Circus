@@ -2,6 +2,8 @@ using BEN.Scripts;
 using UnityEngine;
 using System.Reflection;
 using BEN.Scripts.FSM;
+using MonsterLove.StateMachine;
+using UnityEngine.AI; 
 
 namespace BEN
 {
@@ -12,6 +14,7 @@ namespace BEN
         private BoxCollider _selfCollider;
         private Collider[] _detectedCollidersArray;
         private FsmPatrol _patrol;
+        private NavMeshAgent _agent; 
         private bool _playerDetected;
         private RaycastHit[] _detectedColliders; 
 
@@ -19,6 +22,7 @@ namespace BEN
         private float _smallestValue;
 
         private bool _notified; // DEBUG 
+        private BasicAIBrain _brain; // NOT SAFE
 
         public CheckSurroundings(Collider[] detectedCollidersArray)
         {
@@ -28,7 +32,9 @@ namespace BEN
         private void Start() 
         {
             _selfCollider = GetComponent<BoxCollider>();
-            _patrol = GetComponentInParent<FsmPatrol>(); 
+            // _patrol = GetComponentInParent<FsmPatrol>(); 
+            _agent = GetComponentInParent<NavMeshAgent>();
+            _brain = GetComponentInParent<BasicAIBrain>(); 
         }
 
         private void FixedUpdate()  
@@ -49,17 +55,6 @@ namespace BEN
 
         } */ 
         }
-
-        /* private void OnTriggerEnter(Collider other) 
-        {
-            Debug.DrawRay(transform.position, other.transform.position - transform.position, Color.red);
-            
-            if (other.CompareTag("Player") && !_patrol.playerDetected && _playerDetected)
-            {
-                _patrol.SetDestination(other.transform.position, 0f, _playerDetected); 
-            }  
-        } */
-        
         
         private void OnTriggerStay(Collider other)
         {
@@ -85,21 +80,26 @@ namespace BEN
                 _playerDetected = Mathf.Approximately(_smallestValue, _detectedColliders[i].distance);
 
                 if (!_playerDetected || _notified) continue;
-                _notified = true; 
                 
-                // go to attackState
-                // _patrol.SetDestination(other.transform.position, 0.5f, _playerDetected); 
+                // go to attackState 
+                if (!_notified) 
+                { 
+                    _brain.TargetToAttackPosition = other.transform.position;
+                    BasicAIBrain.OnRequireStateChange(States.Attack, StateTransition.Overwrite); 
+                } 
+                _notified = true; 
+                // _patrol.SetDestination(other.transform.position, 0.5f, _playerDetected); if have FSMpatrol 
             } 
             
             // attack 
-            transform.Translate((transform.position - other.transform.position).normalized * Time.fixedTime * 2f, Space.Self);
             // blockedByWall = Physics.Raycast(transform.position, other.transform.position - transform.position, out RaycastHit hit, 15f, props); 
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (!other.CompareTag("Player") || !_patrol.playerDetected) return;
-            _patrol.SetDestination(Vector3.zero, 2f, false); // reset speed internally because you don't know initial value here 
+            if (!other.CompareTag("Player")) return; // || !_patrol.playerDetected) return;
+            // _patrol.SetDestination(Vector3.zero, 2f, false); // reset speed internally because you don't know initial value here 
+            // monkey 
             _notified = false;  
         }
     }

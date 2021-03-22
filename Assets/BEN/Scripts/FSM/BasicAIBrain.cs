@@ -8,43 +8,12 @@ using UnityEditor;
 using Unity.EditorCoroutines.Editor;
 using UnityEngine.AI; 
 
-/* Currently supported methods are:
-
-    Enter
-    Exit
-    FixedUpdate
-    Update
-    LateUpdate
-    Finally
-    
-    It should be easy enough to extend the source to include other Unity Methods such as OnTriggerEnter, OnMouseDown etc
-    
-                                                                    === Transitions ===
-
-There is simple support for managing asynchronous state changes with long enter or exit coroutines.
-
-fsm.ChangeState(States.MyNextState, StateTransition.Safe);
-
-The default is StateTransition.Safe. This will always allows the current state to finish both it's enter and exit functions before transitioning to any new states.
-
-fsm.ChangeState(States.MyNextState, StateTransition.Overwrite);
-
-StateMachine.Overwrite will cancel any current transitions, and call the next state immediately. This means any code which has yet to run in enter and exit routines will be skipped. If you need to ensure you end with a particular configuration, the finally function will always be called:
-
-void MyCurrentState_Finally()
-{
-    //Reset object to desired configuration
-}
-
-
-This implementation uses reflection to automatically bind the state methods callbacks for each state. This saves you having to write endless boilerplate and generally makes life a lot more pleasant. But of course reflection is slow, so we try minimize this by only doing it once during the call to Initialize.
-
-For most objects this won't be a problem, but note that if you are spawning many objects during game play it might pay to make use of an object pool, and initialize objects on start up instead. (This is generally good practice anyway).
-Manual Initialization
-
-In performance critical situations (e.g. thousands of instances) you can optimize initialization further but manually configuring the StateMachineRunner component. You will need to manually add this to a GameObject and then call:
-
-StateMachines<States> fsm = GetComponent<StateMachineRunner>().Initialize<States>(componentReference);
+/* 
+ Very simple architecture (enum-based FSM) to avoid multiple classes and costly virtual calls
+ 
+ All calls are made from here with a switch based on AIType
+ 
+ Upgrade to class-based FSM with abstraction only if needed
  */
 
 namespace BEN.Scripts.FSM 
@@ -73,7 +42,7 @@ namespace BEN.Scripts.FSM
         [SerializeField, Range(0f, 5f)] private float attackDelay = 1f; 
         [SerializeField, Range(3f, 10f)] private float distanceRange = 8f; 
         [SerializeField, Range(1f, 3f)] private float cacRange = 1.5f; 
-        private StateMachine<States> _fsm;
+        private StateMachine<States> _fsm; 
 
         public static Func<Transform[]> OnQueryingChildPosition;
         private bool _patrolZoneIsSet;
@@ -81,8 +50,11 @@ namespace BEN.Scripts.FSM
         private EditorCoroutine _editorCoroutine;
         private FsmPatrol _patrol;
         
-        private NavMeshAgent _agent;
+        private NavMeshAgent _agent; 
         public bool playerDetected; // DEBUG
+
+        public static Action<States, StateTransition> OnRequireStateChange;
+        public Vector3 TargetToAttackPosition { get; set; } 
 
 #region Editor
         
@@ -146,47 +118,106 @@ namespace BEN.Scripts.FSM
         
 #endregion
 
+#region Callbacks
+
+        private void OnEnable()
+        {
+            OnRequireStateChange += TransitionToNewState; 
+        }
+
+        private void OnDisable()
+        {
+            OnRequireStateChange -= TransitionToNewState; 
+        }
+
         void Awake()
         {
             _fsm = StateMachine<States>.Initialize(this); 
-            _fsm.ChangeState(States.Init, StateTransition.Safe); // example
-            
-            // Boomerang.s_IsComingBack
+            _fsm.ChangeState(States.Init, StateTransition.Safe);
+            // Boomerang.s_IsComingBack 
         }
 
-        private void FixedUpdate()
+        private void Start()
         {
-            if (Input.GetKeyDown(KeyCode.N)) // if player is detected
-            {
-                _fsm.ChangeState(States.Attack, StateTransition.Overwrite);
-            }
+            _agent = GetComponent<NavMeshAgent>(); 
+        } 
+
+        #endregion 
+
+        private void TransitionToNewState(States newState, StateTransition transition)
+        {
+            _fsm.ChangeState(newState, transition); 
         }
+
+#region FSM
+
+#region Init 
 
         void Init_Enter()
         {
-            Debug.Log("Initializing Default State"); 
-            
-            // call this only if this NPC needs patrolling behaviour 
-            _fsm.ChangeState(States.Default, StateTransition.Safe);
+            Debug.Log("Initializing Default State");
+            _fsm.ChangeState(States.Default, StateTransition.Safe); 
         }
 
         void Init_Exit()
         {
             Debug.Log("Transition to default state");
         }
+        
+#endregion  
+        
+#region Default
+        void Default_Enter()
+        { 
+            Debug.Log("entering default state");
+        }
 
-        //Coroutines are supported, simply return IEnumerator
-        // UPGRADE : use async/await coroutines instead
-        private IEnumerator Attack_Enter()
+        void Default_FixedUpdate()
+        { 
+            Debug.Log("updating default state");
+            switch (type)
+            {
+                case AIType.Monkey:
+                    Debug.Log("Type is Monkey => Idling");
+                    break;
+                case AIType.SwordSpitter:
+                    Debug.Log("TYpe is SwordSpitter => patrolling");
+                    break;
+                default:
+                    Debug.Log("undefined type => breaking");
+                    break;
+            }
+        }
+        
+        void Default_Exit()
+        {
+            Debug.Log("exiting default state");
+            //Reset object to desired configuration
+        }
+        
+        void Default_Finally()
+        {
+            Debug.Log("finally of default state");
+            //Reset object to desired configuration
+        } 
+        
+#endregion 
+
+#region Attack
+        
+        private IEnumerator Attack_Enter() // UPGRADE : use async-await coroutines
         {
             yield return new WaitForSeconds(attackDelay); 
             Debug.Log($"Attacking in {attackDelay} seconds"); 
+            _agent.destination = TargetToAttackPosition;
+            _agent.speed *= 1.25f; 
+            
         } 
 
         void Attack_FixedUpdate()
         {
+            _agent.destination = TargetToAttackPosition; 
             Debug.Log("Attacking fixedUpdate");
-            
             
         } 
 
@@ -194,24 +225,9 @@ namespace BEN.Scripts.FSM
         {
             Debug.Log("Attacking exit");
         }
-
-        void Default_Enter()
-        { 
-            Debug.Log("entering default state");
-            switch (type)
-            {
-                
-            }
-        }
-
-        void Default_FixedUpdate()
-        {
-            
-        }
         
-        void Default_Finally()
-        {
-            //Reset object to desired configuration
-        }
+#endregion        
+
+#endregion
     }
 }
