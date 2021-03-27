@@ -24,40 +24,44 @@ namespace BEN.Scripts
     {
         [SerializeField] private AIAnimationSO _animationSo;
         private Animator _animator;
-        [Range(0f, 2f)] public float speedMultiplier = 1f; 
-
+        
         [Header("-- DEBUG --")]
-        public AnimationClip animToPlay;  
+        public AnimationState animToPlay;
+
+        private AnimationState _currentState;
+        private AnimationState _requiredState;
+        public bool refreshSpeed; 
+
+        private void OnValidate()
+        {
+            _requiredState = animToPlay;
+            
+            if (_requiredState == _currentState) return;
+            PlayAnimation(animToPlay);
+            _currentState = _requiredState;
+        } 
 
         private void Start()
         {
             _animator = GetComponent<Animator>();
-            animToPlay = _animationSo.clipList[0].clipContainer; 
-        } 
-
-        private void Update()
-        {
-            try
-            {
-                if (Input.GetKeyDown(KeyCode.P) && !_animator.GetCurrentAnimatorStateInfo(0).IsName(animToPlay.name))
-                    PlayDebugAnim(animToPlay);  
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e.Message);
-            }
+            _currentState = _requiredState = animToPlay; 
         }
 
-        private void PlayDebugAnim(AnimationClip clip)
+        private void Update() 
         {
-            _animator.Play(clip.name);
-            _animator.speed = speedMultiplier; 
-        } 
+            if (!refreshSpeed) return;
+            _animator.speed = _animationSo.clipList[(int) animToPlay].speedMultiplier;
+            refreshSpeed = false;
 
-        public void PlayAnimation(AnimationState animationState) 
+        }
+
+        public void PlayAnimation(AnimationState clip) 
         {
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(animToPlay.name)) return;
-            _animator.Play(_animationSo.clipList[(int)animationState].clipContainer.name); 
+            _animator.speed = _animationSo.clipList[(int)clip].speedMultiplier; 
+            
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipList[(int)clip].clipContainer.name)) return;
+            _animator.Play(_animationSo.clipList[(int)clip].clipContainer.name);
+
         }
     }
 } 

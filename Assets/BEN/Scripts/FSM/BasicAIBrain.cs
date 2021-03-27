@@ -181,8 +181,7 @@ namespace BEN.Scripts.FSM
             switch (type)
             {
                 case AIType.Monkey:
-                    Debug.Log("Type is Monkey => Idling");
-                    _aIanimation.PlayAnimation(AnimationState.IdleRight); // turn to dynamic direction 
+                    Debug.Log("Type is Monkey => Idling"); 
                     break;
                 case AIType.SwordSpitter:
                     Debug.Log("TYpe is SwordSpitter => patrolling");
