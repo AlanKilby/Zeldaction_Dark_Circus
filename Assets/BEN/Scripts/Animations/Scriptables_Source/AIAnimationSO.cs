@@ -12,5 +12,6 @@ public class AIAnimationSO : ScriptableObject
 public class Clips
 {
     public string clipName; 
-    public AnimationClip clipContainer; 
+    public AnimationClip clipContainer;
+    [Range(0f, 2f)] public float speedMultiplier = 1f; 
 }

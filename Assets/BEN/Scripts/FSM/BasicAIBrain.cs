@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
-using System.Diagnostics;
 using UnityEngine;
 using MonsterLove.StateMachine;
 using Debug = UnityEngine.Debug;
-using UnityEditor; 
 using Unity.EditorCoroutines.Editor;
 using UnityEngine.AI; 
+using BEN.Scripts; 
 
 /* 
  Very simple architecture (enum-based FSM) to avoid multiple classes and costly virtual calls
@@ -56,7 +55,9 @@ namespace BEN.Scripts.FSM
         public bool playerDetected; // DEBUG
 
         public static Action<States, StateTransition> OnRequireStateChange;
-        public Vector3 TargetToAttackPosition { get; set; } 
+        public Vector3 TargetToAttackPosition { get; set; }
+
+        public AIAnimation _aIanimation; 
 
 #region Editor
         
@@ -181,6 +182,7 @@ namespace BEN.Scripts.FSM
             {
                 case AIType.Monkey:
                     Debug.Log("Type is Monkey => Idling");
+                    _aIanimation.PlayAnimation(AnimationState.IdleRight); // turn to dynamic direction 
                     break;
                 case AIType.SwordSpitter:
                     Debug.Log("TYpe is SwordSpitter => patrolling");
@@ -212,7 +214,14 @@ namespace BEN.Scripts.FSM
             yield return new WaitForSeconds(attackDelay); 
             Debug.Log($"Attacking in {attackDelay} seconds"); 
             _agent.destination = TargetToAttackPosition;
-            _agent.speed *= 1.25f; 
+            _agent.speed *= 1.25f;
+
+            switch (type)
+            {
+                case AIType.Monkey:
+                    _aIanimation.PlayAnimation(AnimationState.AtkRight); // turn to dynamic direction 
+                    break; 
+            }
             
         } 
 
@@ -226,7 +235,7 @@ namespace BEN.Scripts.FSM
         void Attack_Exit()
         {
             Debug.Log("Attacking exit");
-        }
+        } 
         
 #endregion        
 
