@@ -63,7 +63,7 @@ namespace BEN.Scripts.FSM
         public static Action<States, StateTransition> OnRequireStateChange;
         public Vector3 TargetToAttackPosition { get; set; }
 
-        public AIAnimation aIAnimation;
+        private AIAnimation _aIAnimation; 
 
         private Vector3 _positionBeforeAttacking; // a node or single position 
 
@@ -194,9 +194,8 @@ namespace BEN.Scripts.FSM
         {
             _fsm = StateMachine<States>.Initialize(this); 
             _fsm.ChangeState(States.Init, StateTransition.Safe);
-            // Boomerang.s_IsComingBack 
         }
-
+ 
         private void Start()
         {
             _agent = GetComponent<NavMeshAgent>(); 
@@ -217,6 +216,7 @@ namespace BEN.Scripts.FSM
         void Init_Enter()
         {
             Debug.Log("Initializing Default State");
+            _aIAnimation = GetComponentInChildren<AIAnimation>(); 
             _fsm.ChangeState(States.Default, StateTransition.Safe); 
         }
 
@@ -234,8 +234,8 @@ namespace BEN.Scripts.FSM
             switch (type)
             {
                 case AIType.Monkey:
-                    Debug.Log(aIAnimation); 
-                    aIAnimation.PlayAnimation(AnimationState.IdleRight); // make it dynamic direction instead 
+                    Debug.Log(_aIAnimation); 
+                    _aIAnimation.PlayAnimation(AnimationState.IdleRight); // make it dynamic direction instead 
                     break;
             }
         }
@@ -284,7 +284,7 @@ namespace BEN.Scripts.FSM
             _agent.speed *= 1.25f;
             
             // abstracted away => this should be standard 
-            aIAnimation.PlayAnimation(AnimationState.AtkRight); // make it dynamic direction instead 
+            _aIAnimation.PlayAnimation(AnimationState.AtkRight); // make it dynamic direction instead 
         } 
 
         void Attack_FixedUpdate() 

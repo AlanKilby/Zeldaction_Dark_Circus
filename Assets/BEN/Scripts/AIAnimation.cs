@@ -60,13 +60,8 @@ namespace BEN.Scripts
             if (!_animator) return; 
             _animator.speed = _animationSo.clipList[(int)clip].speedMultiplier;
 
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipList[(int) clip].clipContainer.name))
-            {
-                Debug.LogError("same animation"); 
-                return;
-            } 
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipList[(int) clip].clipContainer.name)) return;
             _animator.Play(_animationSo.clipList[(int)clip].clipContainer.name);
-
         }
     }
 } 
