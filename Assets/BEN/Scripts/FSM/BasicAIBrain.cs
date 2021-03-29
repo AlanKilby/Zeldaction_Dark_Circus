@@ -5,7 +5,6 @@ using MonsterLove.StateMachine;
 using Debug = UnityEngine.Debug;
 using Unity.EditorCoroutines.Editor;
 using UnityEngine.AI;
-using Object = System.Object;
 
 /* 
  Very simple architecture (enum-based FSM) to avoid multiple classes and costly virtual calls
@@ -40,17 +39,20 @@ namespace BEN.Scripts.FSM
         [SerializeField] private AIType type;
         public AIType Type => type; 
         
+        // used for conditionalShow's property drawer until I know how to directly use enum 
+        [HideInInspector] public bool isMonkeyBall;
+         
+        [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _monkeyBallProjectile;  
         [SerializeField, Range(0f, 5f)] private float attackDelay = 1f; 
-        [SerializeField, Range(3f, 10f)] private float distanceRange = 8f; 
+        [SerializeField, Range(3f, 10f)] private float distanceRange = 8f;
         [SerializeField, Range(1f, 3f)] private float cacRange = 1.5f; 
         private StateMachine<States> _fsm; 
 
         public static Func<Transform[]> OnQueryingChildPosition;
         private bool _patrolZoneIsSet;
         private GameObject _patrolZone; 
-        private GameObject _ball;
+        private GameObject _ball; 
         [SerializeField] private GameObject _graphics;
-        [SerializeField] private GameObject _monkeyBallProjectile; 
         
         private EditorCoroutine _editorCoroutine;
         private FsmPatrol _patrol;
@@ -61,7 +63,7 @@ namespace BEN.Scripts.FSM
         public static Action<States, StateTransition> OnRequireStateChange;
         public Vector3 TargetToAttackPosition { get; set; }
 
-        public AIAnimation _aIanimation;
+        public AIAnimation aIAnimation;
 
         private Vector3 _positionBeforeAttacking; // a node or single position 
 
@@ -70,15 +72,17 @@ namespace BEN.Scripts.FSM
         private void OnValidate()
         {
             switch (type) 
-            {
+            { 
                 // remove patrolZone gameobject and script
                 case AIType.Undefined:
                     _graphics.transform.localPosition = Vector3.zero;
-                    _graphics.GetComponent<SpriteRenderer>().sprite = null; 
+                    _graphics.GetComponent<SpriteRenderer>().sprite = null;
+                    isMonkeyBall = false; 
                     break;
                 case AIType.Monkey:
                     _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("monkey_idle_resource"); 
                     _graphics.transform.localPosition = Vector3.zero;
+                    isMonkeyBall = false;
                     break; 
                 case AIType.MonkeyBall when !_ball: 
                     _ball = new GameObject();
@@ -90,15 +94,18 @@ namespace BEN.Scripts.FSM
                     _ball.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ball_resource");
                     _graphics.transform.localPosition = Vector3.up;
                     _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("monkeySurBall_idle_resource");
+                    isMonkeyBall = true; 
                     break; 
                 case AIType.Mascotte:
                     _graphics.transform.localPosition = Vector3.up * 0.3f; 
                     _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("mascotte_idle_resource");
+                    isMonkeyBall = false; 
                     break;  
                 // -- TEMPORARY -- 
                 case AIType.SwordSpitter:
                     _graphics.transform.localPosition = Vector3.zero;
                     _graphics.GetComponent<SpriteRenderer>().sprite = null;
+                    isMonkeyBall = false; 
                     break;   
             }
             
@@ -227,8 +234,8 @@ namespace BEN.Scripts.FSM
             switch (type)
             {
                 case AIType.Monkey:
-                    Debug.Log(_aIanimation); 
-                    _aIanimation.PlayAnimation(AnimationState.IdleRight); // make it dynamic direction instead 
+                    Debug.Log(aIAnimation); 
+                    aIAnimation.PlayAnimation(AnimationState.IdleRight); // make it dynamic direction instead 
                     break;
             }
         }
@@ -277,7 +284,7 @@ namespace BEN.Scripts.FSM
             _agent.speed *= 1.25f;
             
             // abstracted away => this should be standard 
-            _aIanimation.PlayAnimation(AnimationState.AtkRight); // make it dynamic direction instead 
+            aIAnimation.PlayAnimation(AnimationState.AtkRight); // make it dynamic direction instead 
         } 
 
         void Attack_FixedUpdate() 

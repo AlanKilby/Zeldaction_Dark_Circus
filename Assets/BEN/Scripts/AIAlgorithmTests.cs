@@ -6,9 +6,6 @@ using UnityEngine.AI;
 public enum AIArchitecture { StateMachine, GOAP, BehaviorTree } 
 public enum AIBehaviour { FullSubmission, LoneWolf }
 public enum AIDecisionMaking { Linear, Gaussian, Perlin }
-public enum AITYpe { BaseMonkey, BallRiderMonkey }
-
-
 public class AIAlgorithmTests : MonoBehaviour
 {
     [Header("Architecture")]
@@ -21,9 +18,6 @@ public class AIAlgorithmTests : MonoBehaviour
     [SerializeField] private AIDecisionMaking m_DecisionMaking;
 
     // DEBUG ONLY ==> upgrade to other architecture asap (cf AIArchitecture) 
-    [Header("Type")]
-    [SerializeField] private AITYpe AIType; 
-
     [Header("Navigation")]
     [SerializeField] private NavMeshAgent navMeshAgent; 
 
