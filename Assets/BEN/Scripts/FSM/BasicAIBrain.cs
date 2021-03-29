@@ -4,13 +4,13 @@ using UnityEngine;
 using MonsterLove.StateMachine;
 using Debug = UnityEngine.Debug;
 using Unity.EditorCoroutines.Editor;
-using UnityEngine.AI; 
-using BEN.Scripts; 
+using UnityEngine.AI;
+using Object = System.Object;
 
 /* 
  Very simple architecture (enum-based FSM) to avoid multiple classes and costly virtual calls
  
- All calls are made from here with a switch based on AIType
+ All calls and processing are made from here with a switch based on AIType
  
  Upgrade to class-based FSM with abstraction only if needed
  */
@@ -32,7 +32,7 @@ namespace BEN.Scripts.FSM
         Default = 2, 
         Attack = 4,
         Clear = 8 
-    }
+    } 
     
     [RequireComponent(typeof(NavMeshAgent))]
     public class BasicAIBrain : MonoBehaviour
@@ -47,7 +47,11 @@ namespace BEN.Scripts.FSM
 
         public static Func<Transform[]> OnQueryingChildPosition;
         private bool _patrolZoneIsSet;
-        private GameObject _patrolZone;
+        private GameObject _patrolZone; 
+        private GameObject _ball;
+        [SerializeField] private GameObject _graphics;
+        [SerializeField] private GameObject _monkeyBallProjectile; 
+        
         private EditorCoroutine _editorCoroutine;
         private FsmPatrol _patrol;
         
@@ -57,20 +61,52 @@ namespace BEN.Scripts.FSM
         public static Action<States, StateTransition> OnRequireStateChange;
         public Vector3 TargetToAttackPosition { get; set; }
 
-        public AIAnimation _aIanimation; 
+        public AIAnimation _aIanimation;
+
+        private Vector3 _positionBeforeAttacking; // a node or single position 
 
 #region Editor
         
         private void OnValidate()
         {
-            // remove patrolZone gameobject and script
+            switch (type)
+            {
+                // remove patrolZone gameobject and script
+                case AIType.Undefined:
+                    _graphics.transform.localPosition = Vector3.zero;
+                    _graphics.GetComponent<SpriteRenderer>().sprite = null; 
+                    break;
+                case AIType.Monkey:
+                    _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("monkey_idle_resource"); 
+                    _graphics.transform.localPosition = Vector3.zero;
+                    break; 
+                case AIType.MonkeyBall when !_ball: 
+                    _ball = new GameObject();
+                    _ball.transform.SetParent(transform); 
+                    _ball.transform.SetAsLastSibling(); 
+                    _ball.transform.localPosition = Vector3.zero;  
+                    _ball.name = "Ball"; 
+                    _ball.AddComponent<Animator>(); 
+                    _ball.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ball_resource");
+                    _graphics.transform.localPosition = Vector3.up;
+                    _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("monkeySurBall_idle_resource");
+                    break;
+            }
+            
             if (type != AIType.SwordSpitter && type != AIType.Mascotte)
             {
                 if (_patrolZoneIsSet) 
-                {
-                    EditorCoroutineUtility.StartCoroutine(DestroyImmediate(), this); 
+                { 
+                    UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] {_patrolZone, _patrol}; 
+                    EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy), this); 
+                    _patrolZoneIsSet = false; 
                 } 
-                _patrolZoneIsSet = false; 
+                else if (_ball && type != AIType.MonkeyBall) // shitty logic
+                {
+                    UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] {_ball}; 
+                    EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy), this); 
+                }
+                
                 return; 
             }
 
@@ -112,21 +148,24 @@ namespace BEN.Scripts.FSM
             }
         }
 
-        private IEnumerator DestroyImmediate() 
+        private IEnumerator DestroyImmediate(UnityEngine.Object[] objectsToDestroy) 
         {
             yield return new EditorWaitForSeconds(0.02f); 
-            DestroyImmediate(_patrolZone, false);
-            DestroyImmediate(_patrol, false);
+            foreach (var item in objectsToDestroy) 
+            {
+                DestroyImmediate(item, false); 
+            } 
         }
+        
         
 #endregion
 
-#region Callbacks
+#region Unity Callbacks
 
         private void OnEnable()
         {
-            OnRequireStateChange += TransitionToNewState; 
-        }
+            OnRequireStateChange += TransitionToNewState;
+        } 
 
         private void OnDisable()
         {
@@ -147,6 +186,7 @@ namespace BEN.Scripts.FSM
 
         #endregion 
 
+        // called by event OnRequireStateChange
         private void TransitionToNewState(States newState, StateTransition transition)
         {
             _fsm.ChangeState(newState, transition); 
@@ -170,12 +210,19 @@ namespace BEN.Scripts.FSM
 #endregion  
         
 #region Default
-        void Default_Enter()
+        void Default_Enter() 
         { 
             Debug.Log("entering default state");
+            switch (type)
+            {
+                case AIType.Monkey:
+                    Debug.Log(_aIanimation); 
+                    _aIanimation.PlayAnimation(AnimationState.IdleRight); // make it dynamic direction instead 
+                    break;
+            }
         }
 
-        void Default_FixedUpdate()
+        void Default_FixedUpdate() 
         { 
             Debug.Log("updating default state");
             switch (type)
@@ -184,18 +231,19 @@ namespace BEN.Scripts.FSM
                     Debug.Log("Type is Monkey => Idling"); 
                     break;
                 case AIType.SwordSpitter:
-                    Debug.Log("TYpe is SwordSpitter => patrolling");
+                    Debug.Log("Type is SwordSpitter => patrolling");
                     break;
                 default:
                     Debug.Log("undefined type => breaking");
                     break;
             }
-        }
+        } 
         
         void Default_Exit()
         {
             Debug.Log("exiting default state");
             //Reset object to desired configuration
+            _positionBeforeAttacking = transform.position; 
         }
         
         void Default_Finally()
@@ -212,28 +260,37 @@ namespace BEN.Scripts.FSM
         {
             yield return new WaitForSeconds(attackDelay); 
             Debug.Log($"Attacking in {attackDelay} seconds"); 
+            
+            // hardcoded monkey behaviour 
             _agent.destination = TargetToAttackPosition;
             _agent.speed *= 1.25f;
-
-            switch (type)
-            {
-                case AIType.Monkey:
-                    _aIanimation.PlayAnimation(AnimationState.AtkRight); // turn to dynamic direction 
-                    break; 
-            }
             
+            // abstracted away => this should be standard 
+            _aIanimation.PlayAnimation(AnimationState.AtkRight); // make it dynamic direction instead 
         } 
 
-        void Attack_FixedUpdate()
+        void Attack_FixedUpdate() 
         {
-            _agent.destination = TargetToAttackPosition; 
+            if (Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos) <= 1.5f) // <= hardcodé
+            {
+                _agent.destination = transform.position; // risky floating-point error; 
+                return;
+            } // archi crade 
+            _agent.destination = PlayerMovement_Alan.sPlayerPos;  // make it dynamic destination instead
             Debug.Log("Attacking fixedUpdate");
-            
         } 
 
         void Attack_Exit()
         {
             Debug.Log("Attacking exit");
+
+            switch (type)
+            {
+                case AIType.Monkey:
+                    _agent.destination = _positionBeforeAttacking;
+                    _agent.speed /= 1.25f;
+                    break; 
+            }
         } 
         
 #endregion        

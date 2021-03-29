@@ -16,11 +16,11 @@ public class PlayerMovement_Alan : MonoBehaviour
     
     // DEBUG benji
     public Vector3 move;
-    public Vector3 input; 
-
+    
     GameObject boomerangInstance;
 
     public PlayerAnimations playerAnim;
+    public static Vector3 sPlayerPos = Vector3.zero; // ajouté par Benji 29.03 
 
     void Start()
     {
@@ -28,8 +28,10 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     }
 
-    void Update()
+    void Update() 
     {
+        sPlayerPos = transform.position; // ajouté par Benji 29.03
+        
         Move();
 
         if(canThrow == true)

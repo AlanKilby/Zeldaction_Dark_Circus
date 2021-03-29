@@ -6,7 +6,7 @@ namespace BEN.Scripts
 {
     public enum AnimationState
     {
-        IdleRight,
+        IdleRight = 0,
         IdleLeft, 
         Hit,
         WalkTop,
@@ -41,7 +41,7 @@ namespace BEN.Scripts
             _currentState = _requiredState;
         } 
 
-        private void Start()
+        private void Awake()
         {
             _animator = GetComponent<Animator>();
             _currentState = _requiredState = animToPlay; 
@@ -55,11 +55,16 @@ namespace BEN.Scripts
 
         }
 
-        public void PlayAnimation(AnimationState clip) 
+        public void PlayAnimation(AnimationState clip)
         {
-            _animator.speed = _animationSo.clipList[(int)clip].speedMultiplier; 
-            
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipList[(int)clip].clipContainer.name)) return;
+            if (!_animator) return; 
+            _animator.speed = _animationSo.clipList[(int)clip].speedMultiplier;
+
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipList[(int) clip].clipContainer.name))
+            {
+                Debug.LogError("same animation"); 
+                return;
+            } 
             _animator.Play(_animationSo.clipList[(int)clip].clipContainer.name);
 
         }
