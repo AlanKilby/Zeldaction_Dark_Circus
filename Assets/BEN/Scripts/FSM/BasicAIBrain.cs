@@ -69,7 +69,7 @@ namespace BEN.Scripts.FSM
         
         private void OnValidate()
         {
-            switch (type)
+            switch (type) 
             {
                 // remove patrolZone gameobject and script
                 case AIType.Undefined:
@@ -82,34 +82,45 @@ namespace BEN.Scripts.FSM
                     break; 
                 case AIType.MonkeyBall when !_ball: 
                     _ball = new GameObject();
-                    _ball.transform.SetParent(transform); 
-                    _ball.transform.SetAsLastSibling(); 
+                    _ball.transform.SetParent(transform);  
+                    _ball.transform.SetAsLastSibling();  
                     _ball.transform.localPosition = Vector3.zero;  
                     _ball.name = "Ball"; 
                     _ball.AddComponent<Animator>(); 
                     _ball.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ball_resource");
                     _graphics.transform.localPosition = Vector3.up;
                     _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("monkeySurBall_idle_resource");
-                    break;
+                    break; 
+                case AIType.Mascotte:
+                    _graphics.transform.localPosition = Vector3.up * 0.3f; 
+                    _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("mascotte_idle_resource");
+                    break;  
+                // -- TEMPORARY -- 
+                case AIType.SwordSpitter:
+                    _graphics.transform.localPosition = Vector3.zero;
+                    _graphics.GetComponent<SpriteRenderer>().sprite = null;
+                    break;   
             }
             
-            if (type != AIType.SwordSpitter && type != AIType.Mascotte)
+            // only one can have ball
+            if (_ball && type != AIType.MonkeyBall)  
             {
-                if (_patrolZoneIsSet) 
-                { 
-                    UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] {_patrolZone, _patrol}; 
-                    EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy), this); 
-                    _patrolZoneIsSet = false; 
-                } 
-                else if (_ball && type != AIType.MonkeyBall) // shitty logic
-                {
-                    UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] {_ball}; 
-                    EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy), this); 
-                }
+                UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] {_ball}; 
+                EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy), this); 
+            }
+            
+            // two can have patrol zone
+            if (type == AIType.Monkey || type == AIType.MonkeyBall || type == AIType.Undefined)
+            {
+                if (!_patrolZoneIsSet) return;
                 
+                UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] {_patrolZone, _patrol}; 
+                EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy), this); 
+                _patrolZoneIsSet = false;
+
                 return; 
             }
-
+            
             if (_patrol) return;
             // create sibling and add script
             _patrolZone = new GameObject();
