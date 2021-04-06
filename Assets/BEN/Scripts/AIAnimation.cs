@@ -39,6 +39,7 @@ namespace BEN.Scripts
             _requiredState = animToPlay;
             
             if (_requiredState == _currentState) return;
+            _animator.runtimeAnimatorController = _animationSo.controller;
             PlayAnimation(animToPlay);
             _currentState = _requiredState;
         }
@@ -60,23 +61,20 @@ namespace BEN.Scripts
         {
             if (!refreshSpeed) return;
             _animator.speed = _animationSo.clipList[(int) animToPlay].speedMultiplier;
-            _animator.runtimeAnimatorController = _animationSo.controller; 
-            refreshSpeed = false;
-
+            refreshSpeed = false; 
         }
 
         public void PlayAnimation(AnimationState clip)
         {
-            if (!_animator) return; 
+            if (!_animator) _animator = GetComponent<Animator>(); 
             if (!_animator.runtimeAnimatorController)
             {
                 _animator.runtimeAnimatorController = _animationSo.controller;
             }
 
             if (!_animator.enabled)
-                _animator.enabled = true; 
+                _animator.enabled = true;  
 
-            if (!_animator) return; 
             _animator.speed = _animationSo.clipList[(int)clip].speedMultiplier;
 
             if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipList[(int) clip].clipContainer.name)) return;
@@ -103,12 +101,6 @@ namespace BEN.Scripts
         public void StopAnimating()
         {
             _animator.enabled = false; 
-        }
-
-        public void SetScriptable(AIAnimationSO scriptableObject)
-        {
-            Debug.Log("setting scriptable animation");
-            _animationSo = scriptableObject;   
-        }
+        } 
     }
 } 

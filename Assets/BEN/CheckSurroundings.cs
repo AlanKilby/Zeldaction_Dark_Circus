@@ -58,6 +58,8 @@ namespace BEN
         
         private void OnTriggerStay(Collider other)
         {
+            if (!other.CompareTag("Player")) return;
+
             Debug.DrawRay(transform.position, other.transform.position - transform.position, Color.red);
             // use RaycastNonAlloc instead !!
             _detectedColliders = Physics.RaycastAll(transform.position, other.transform.position - transform.position, 15f, detectableTargetsLayer);

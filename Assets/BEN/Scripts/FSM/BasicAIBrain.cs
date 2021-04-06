@@ -23,7 +23,7 @@ namespace BEN.Scripts.FSM
         MonkeyBall = 1,
         Ball = 2,
         Mascotte = 3,
-        SwordSpitter = 4  
+        Fakir = 4  
     }
     
     public enum States
@@ -110,7 +110,7 @@ namespace BEN.Scripts.FSM
                     isMonkeyBall = false; 
                     break;  
                 // -- TEMPORARY -- 
-                case AIType.SwordSpitter:
+                case AIType.Fakir:
                     _graphics.transform.localPosition = Vector3.zero;
                     _graphics.GetComponent<SpriteRenderer>().sprite = null;
                     isMonkeyBall = false; 
@@ -225,9 +225,10 @@ namespace BEN.Scripts.FSM
         void Init_Enter()
         {
             Debug.Log("Initializing Default State"); 
+            _aIAnimation = _graphics.GetComponent<AIAnimation>();
+            _aIAnimation.SetType(type);
+
             _fsm.ChangeState(States.Default, StateTransition.Safe);
-            _aIAnimation = _graphics.GetComponent<AIAnimation>(); 
-            _aIAnimation.SetType(type); 
         }
 
         void Init_Exit()
@@ -238,9 +239,11 @@ namespace BEN.Scripts.FSM
 #endregion  
         
 #region Default
-        void Default_Enter()  
+        IEnumerator Default_Enter()  
         { 
             Debug.Log("entering default state");
+            yield return new WaitForSeconds(0.04f); 
+
             switch (type)
             {
                 case AIType.Monkey:
@@ -249,7 +252,10 @@ namespace BEN.Scripts.FSM
                 case AIType.MonkeyBall:
                     /* var scriptableAnimation = GameManager.Instance.scriptableAnimationList[0];
                     _aIAnimation.SetScriptable(scriptableAnimation); */
-                    break; 
+                    break;
+                case AIType.Mascotte: 
+                    _aIAnimation.PlayAnimation(AnimationState.WalkLeft); // make it dynamic direction instead  
+                    break;
             } 
         } 
 
@@ -264,7 +270,7 @@ namespace BEN.Scripts.FSM
                 case AIType.MonkeyBall:
                     Debug.Log("Type is MonkeyBall => Idling"); 
                     break;
-                case AIType.SwordSpitter:
+                case AIType.Fakir:
                     Debug.Log("Type is SwordSpitter => patrolling");
                     break;
                 default:
@@ -308,7 +314,11 @@ namespace BEN.Scripts.FSM
                     Debug.Log("MonkeyBall => attacking");
                     _aIAnimation.PlayAnimation(AnimationState.AtkRight); // invert 
                     _ballAnimation.PlayAnimation(_moveRight); // hardcoded 
-                    break;  
+                    break;
+                case AIType.Mascotte:
+                    Debug.Log("Mascotte => attacking");
+                    _aIAnimation.PlayAnimation(AnimationState.AtkLeft); // invert 
+                    break;
                 default:
                     Debug.Log("Default => breaking");
                     break;
