@@ -63,5 +63,11 @@ namespace BEN.Scripts
             if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipList[(int) clip].clipContainer.name)) return;
             _animator.Play(_animationSo.clipList[(int)clip].clipContainer.name);
         }
+
+        public void SetScriptable(AIAnimationSO scriptableObject)
+        {
+            Debug.Log("setting scriptable animation");
+            _animationSo = scriptableObject;   
+        }
     }
 } 

@@ -66,11 +66,12 @@ namespace BEN.Scripts.FSM
         private AIAnimation _aIAnimation; 
 
         private Vector3 _positionBeforeAttacking; // a node or single position 
+        private Animator _animator = null; 
 
 #region Editor
         
         private void OnValidate()
-        {
+        { 
             switch (type) 
             { 
                 // remove patrolZone gameobject and script
@@ -89,16 +90,19 @@ namespace BEN.Scripts.FSM
                     _ball.transform.SetParent(transform);  
                     _ball.transform.SetAsLastSibling();  
                     _ball.transform.localPosition = Vector3.zero;  
-                    _ball.name = "Ball"; 
-                    _ball.AddComponent<Animator>(); 
-                    _ball.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ball_resource");
+                    _ball.name = "Ball_Graphics";
+                    _animator = _ball.AddComponent<Animator>();
+                    _ball.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ball_resource"); // use static list in manager instead
+                    _ball.AddComponent<SphereCollider>().isTrigger = true;
+                    _aIAnimation = _ball.AddComponent<AIAnimation>();   
+                    // _ball.AddComponent<NavMeshAgent>(); 
                     _graphics.transform.localPosition = Vector3.up;
-                    _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("monkeySurBall_idle_resource");
+                    _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("monkeySurBall_idle_resource"); // use static list in manager instead
                     isMonkeyBall = true; 
                     break; 
                 case AIType.Mascotte:
                     _graphics.transform.localPosition = Vector3.up * 0.3f; 
-                    _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("mascotte_idle_resource");
+                    _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("mascotte_idle_resource"); // use static list in manager instead
                     isMonkeyBall = false; 
                     break;  
                 // -- TEMPORARY -- 
@@ -108,36 +112,36 @@ namespace BEN.Scripts.FSM
                     isMonkeyBall = false; 
                     break;   
             }
-            
+                
             // only one can have ball
             if (_ball && type != AIType.MonkeyBall)  
             {
                 UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] {_ball}; 
                 EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy), this); 
             }
-            
+                
             // two can have patrol zone
             if (type == AIType.Monkey || type == AIType.MonkeyBall || type == AIType.Undefined)
             {
                 if (!_patrolZoneIsSet) return;
-                
+                    
                 UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] {_patrolZone, _patrol}; 
                 EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy), this); 
                 _patrolZoneIsSet = false;
 
                 return; 
             }
-            
+                
             if (_patrol) return;
             // create sibling and add script
             _patrolZone = new GameObject();
             _patrolZone.transform.SetParent(transform.parent);
             _patrolZone.transform.SetAsLastSibling(); 
             _patrolZone.name = "PatrolZone";
-            
+                
             _patrol = gameObject.AddComponent<FsmPatrol>();  
             _patrol.points = new Transform[2]; 
-            
+                
             // add default amount of children
             for (var i = 0; i < 2; i++) 
             {
@@ -151,7 +155,8 @@ namespace BEN.Scripts.FSM
                 Debug.Log("Creating fsmPatrol with default points set to two. Ctrl+D a patrolPoint and add it to the list if you want a longer path");
             }
 
-            _patrolZoneIsSet = true; 
+            _patrolZoneIsSet = true;
+
 
         }
 
@@ -228,17 +233,21 @@ namespace BEN.Scripts.FSM
 #endregion  
         
 #region Default
-        void Default_Enter() 
+        void Default_Enter()  
         { 
             Debug.Log("entering default state");
             switch (type)
             {
                 case AIType.Monkey:
-                    Debug.Log(_aIAnimation); 
                     _aIAnimation.PlayAnimation(AnimationState.IdleRight); // make it dynamic direction instead 
                     break;
-            }
-        }
+                case AIType.MonkeyBall:
+                    var scriptableAnimation = GameManager.Instance.scriptableAnimationList[0];
+                    _aIAnimation.SetScriptable(scriptableAnimation); 
+                    _animator.runtimeAnimatorController = GameManager.Instance.controllersList[0]; // => sending NullRefException sometimes (instance not initialise at OnEnable)
+                    break; 
+            } 
+        } 
 
         void Default_FixedUpdate() 
         { 
@@ -247,6 +256,9 @@ namespace BEN.Scripts.FSM
             {
                 case AIType.Monkey:
                     Debug.Log("Type is Monkey => Idling"); 
+                    break;
+                case AIType.MonkeyBall:
+                    Debug.Log("Type is MonkeyBall => Idling"); 
                     break;
                 case AIType.SwordSpitter:
                     Debug.Log("Type is SwordSpitter => patrolling");
@@ -279,10 +291,23 @@ namespace BEN.Scripts.FSM
             yield return new WaitForSeconds(attackDelay); 
             Debug.Log($"Attacking in {attackDelay} seconds"); 
             
-            // hardcoded monkey behaviour 
             _agent.destination = TargetToAttackPosition;
             _agent.speed *= 1.25f;
             
+            switch (type)
+            {
+                case AIType.Monkey:
+                    Debug.Log("Monkey => attacking");
+                    break;
+                case AIType.MonkeyBall:
+                    Debug.Log("MonkeyBall => attacking");
+                    break; 
+                default:
+                    Debug.Log("Default => breaking");
+                    break;
+            }
+
+
             // abstracted away => this should be standard 
             _aIAnimation.PlayAnimation(AnimationState.AtkRight); // make it dynamic direction instead 
         } 
@@ -301,14 +326,9 @@ namespace BEN.Scripts.FSM
         void Attack_Exit()
         {
             Debug.Log("Attacking exit");
-
-            switch (type)
-            {
-                case AIType.Monkey:
-                    _agent.destination = _positionBeforeAttacking;
-                    _agent.speed /= 1.25f;
-                    break; 
-            }
+            _agent.destination = _positionBeforeAttacking;
+            _agent.speed /= 1.25f; 
+            _aIAnimation.PlayAnimation(AnimationState.IdleLeft); // make it dynamic direction instead 
         } 
         
 #endregion        

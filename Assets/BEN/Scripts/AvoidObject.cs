@@ -31,6 +31,7 @@ public class AvoidObject : MonoBehaviour
             Avoid(); 
         else if (Input.GetKeyDown(KeyCode.X) && !newStateSet) // ball destroyed and monkey attacking
         {
+            newStateSet = true; 
             SetNewState(); 
         } 
     }
