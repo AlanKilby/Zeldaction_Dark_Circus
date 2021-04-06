@@ -5,8 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New AI Animation", menuName = "AI/Animation")]
 public class AIAnimationSO : ScriptableObject
 {
-    public Clips[] clipList; 
-}
+    public RuntimeAnimatorController controller; 
+    public Clips[] clipList;
+} 
 
 [System.Serializable]
 public class Clips

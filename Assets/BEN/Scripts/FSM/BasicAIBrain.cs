@@ -18,11 +18,12 @@ namespace BEN.Scripts.FSM
 {
     public enum AIType
     {
-        Undefined = 0, 
-        Monkey = 1, 
-        MonkeyBall = 2, 
-        SwordSpitter = 4, 
-        Mascotte = 8
+        Undefined = -1, 
+        Monkey = 0, 
+        MonkeyBall = 1,
+        Ball = 2,
+        Mascotte = 3,
+        SwordSpitter = 4  
     }
     
     public enum States
@@ -63,15 +64,17 @@ namespace BEN.Scripts.FSM
         public static Action<States, StateTransition> OnRequireStateChange;
         public Vector3 TargetToAttackPosition { get; set; }
 
-        private AIAnimation _aIAnimation; 
+        private AIAnimation _aIAnimation;
+        private AIAnimation _ballAnimation; 
 
         private Vector3 _positionBeforeAttacking; // a node or single position 
-        private Animator _animator = null; 
+        private Animator _ballAnimator = null; 
+        private const int _moveRight = 1; 
 
 #region Editor
         
         private void OnValidate()
-        { 
+        {
             switch (type) 
             { 
                 // remove patrolZone gameobject and script
@@ -83,7 +86,7 @@ namespace BEN.Scripts.FSM
                 case AIType.Monkey:
                     _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("monkey_idle_resource"); 
                     _graphics.transform.localPosition = Vector3.zero;
-                    isMonkeyBall = false;
+                    isMonkeyBall = false; 
                     break; 
                 case AIType.MonkeyBall when !_ball: 
                     _ball = new GameObject();
@@ -91,10 +94,11 @@ namespace BEN.Scripts.FSM
                     _ball.transform.SetAsLastSibling();  
                     _ball.transform.localPosition = Vector3.zero;  
                     _ball.name = "Ball_Graphics";
-                    _animator = _ball.AddComponent<Animator>();
+                    _ballAnimator = _ball.AddComponent<Animator>();
                     _ball.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ball_resource"); // use static list in manager instead
                     _ball.AddComponent<SphereCollider>().isTrigger = true;
-                    _aIAnimation = _ball.AddComponent<AIAnimation>();   
+                    _ballAnimation = _ball.AddComponent<AIAnimation>();   
+                    _ballAnimation.SetType(AIType.Ball);
                     // _ball.AddComponent<NavMeshAgent>(); 
                     _graphics.transform.localPosition = Vector3.up;
                     _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("monkeySurBall_idle_resource"); // use static list in manager instead
@@ -220,9 +224,10 @@ namespace BEN.Scripts.FSM
 
         void Init_Enter()
         {
-            Debug.Log("Initializing Default State");
-            _aIAnimation = GetComponentInChildren<AIAnimation>(); 
-            _fsm.ChangeState(States.Default, StateTransition.Safe); 
+            Debug.Log("Initializing Default State"); 
+            _fsm.ChangeState(States.Default, StateTransition.Safe);
+            _aIAnimation = _graphics.GetComponent<AIAnimation>(); 
+            _aIAnimation.SetType(type); 
         }
 
         void Init_Exit()
@@ -242,9 +247,8 @@ namespace BEN.Scripts.FSM
                     _aIAnimation.PlayAnimation(AnimationState.IdleRight); // make it dynamic direction instead 
                     break;
                 case AIType.MonkeyBall:
-                    var scriptableAnimation = GameManager.Instance.scriptableAnimationList[0];
-                    _aIAnimation.SetScriptable(scriptableAnimation); 
-                    _animator.runtimeAnimatorController = GameManager.Instance.controllersList[0]; // => sending NullRefException sometimes (instance not initialise at OnEnable)
+                    /* var scriptableAnimation = GameManager.Instance.scriptableAnimationList[0];
+                    _aIAnimation.SetScriptable(scriptableAnimation); */
                     break; 
             } 
         } 
@@ -298,21 +302,23 @@ namespace BEN.Scripts.FSM
             {
                 case AIType.Monkey:
                     Debug.Log("Monkey => attacking");
+                    _aIAnimation.PlayAnimation(AnimationState.AtkRight); 
                     break;
                 case AIType.MonkeyBall:
                     Debug.Log("MonkeyBall => attacking");
-                    break; 
+                    _aIAnimation.PlayAnimation(AnimationState.AtkRight); // invert 
+                    _ballAnimation.PlayAnimation(_moveRight); // hardcoded 
+                    break;  
                 default:
                     Debug.Log("Default => breaking");
                     break;
             }
 
 
-            // abstracted away => this should be standard 
-            _aIAnimation.PlayAnimation(AnimationState.AtkRight); // make it dynamic direction instead 
+            // abstracted away => this should be standard // make it dynamic direction instead 
         } 
 
-        void Attack_FixedUpdate() 
+        void Attack_FixedUpdate()  
         {
             if (Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos) <= 1.5f) // <= hardcodé
             {
@@ -328,7 +334,8 @@ namespace BEN.Scripts.FSM
             Debug.Log("Attacking exit");
             _agent.destination = _positionBeforeAttacking;
             _agent.speed /= 1.25f; 
-            _aIAnimation.PlayAnimation(AnimationState.IdleLeft); // make it dynamic direction instead 
+            _aIAnimation.PlayAnimation(AnimationState.IdleRight); // make it dynamic direction instead 
+            // _ballAnimation.StopAnimating(); only when initial position is reached
         } 
         
 #endregion        

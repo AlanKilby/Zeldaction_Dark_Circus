@@ -939,7 +939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb53eba7af440494ea9bdade38eb66c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 0
   isMonkeyBall: 0
   _monkeyBallProjectile: {fileID: 2745454191333491136, guid: 74380e312f9f8dc47a82ed86733489e5, type: 3}
   attackDelay: 1
@@ -1556,8 +1556,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllersList:
+  - {fileID: 9100000, guid: febdf7098552a4d49bbb1cb82918409c, type: 2}
+  - {fileID: 9100000, guid: c1e3092582b2b4d4e993e711d9be9e03, type: 2}
   - {fileID: 9100000, guid: 1b0e2c6e4b9b3f640b6c2fc992167e24, type: 2}
   scriptableAnimationList:
+  - {fileID: 11400000, guid: 5ae58be6d747e9049b36f76a03e73495, type: 2}
+  - {fileID: 11400000, guid: 024abb3fefd08d44bac72958ab37226a, type: 2}
   - {fileID: 11400000, guid: d623a60036f4a4342874566cae1c8bae, type: 2}
 --- !u!1 &496224764
 GameObject:
@@ -2045,13 +2049,14 @@ GameObject:
   - component: {fileID: 797166849}
   - component: {fileID: 797166851}
   - component: {fileID: 797166850}
+  - component: {fileID: 797166852}
   m_Layer: 0
   m_Name: AnimationTester
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &797166849
 Transform:
   m_ObjectHideFlags: 0
@@ -2136,6 +2141,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &797166852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797166848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 128decd5c173e0d4480b24c0f3843fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animationSo: {fileID: 11400000, guid: 024abb3fefd08d44bac72958ab37226a, type: 2}
+  animToPlay: 0
+  refreshSpeed: 0
 --- !u!1 &803680806
 GameObject:
   m_ObjectHideFlags: 0
@@ -2371,7 +2391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 128decd5c173e0d4480b24c0f3843fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animationSo: {fileID: 11400000, guid: 5ae58be6d747e9049b36f76a03e73495, type: 2}
+  _animationSo: {fileID: 11400000, guid: 024abb3fefd08d44bac72958ab37226a, type: 2}
   animToPlay: 0
   refreshSpeed: 0
 --- !u!212 &852336271
@@ -2435,7 +2455,7 @@ Animator:
   m_GameObject: {fileID: 852336268}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: febdf7098552a4d49bbb1cb82918409c, type: 2}
+  m_Controller: {fileID: 9100000, guid: c1e3092582b2b4d4e993e711d9be9e03, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3806,7 +3826,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1314171687
 Transform:
   m_ObjectHideFlags: 0
