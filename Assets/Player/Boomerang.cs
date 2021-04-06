@@ -119,7 +119,7 @@ public class Boomerang : MonoBehaviour
         {
             Debug.Log("Collision with Enemy");
 
-            // ajout benji
+            // ajout benji => TODO : mascote de face + chapeau retour || mascote de dos == kill 
             if (collision.GetComponent<BasicAIBrain>().Type == AIType.Mascotte && !s_IsComingBack)
             {
                 s_IsComingBack = true;

@@ -111,8 +111,8 @@ namespace BEN.Scripts.FSM
                     break;  
                 // -- TEMPORARY -- 
                 case AIType.Fakir:
-                    _graphics.transform.localPosition = Vector3.zero;
-                    _graphics.GetComponent<SpriteRenderer>().sprite = null;
+                    _graphics.transform.localPosition = Vector3.up * 0.25f;
+                    _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("fakir_idle_resource"); 
                     isMonkeyBall = false; 
                     break;   
             }
@@ -256,6 +256,9 @@ namespace BEN.Scripts.FSM
                 case AIType.Mascotte: 
                     _aIAnimation.PlayAnimation(AnimationState.WalkLeft); // make it dynamic direction instead  
                     break;
+                case AIType.Fakir:
+                    _aIAnimation.PlayAnimation(AnimationState.WalkRight); // make it dynamic direction instead  
+                    break;
             } 
         } 
 
@@ -270,8 +273,11 @@ namespace BEN.Scripts.FSM
                 case AIType.MonkeyBall:
                     Debug.Log("Type is MonkeyBall => Idling"); 
                     break;
+                case AIType.Mascotte:
+                    Debug.Log("Type is Mascotte => Idling");
+                    break;
                 case AIType.Fakir:
-                    Debug.Log("Type is SwordSpitter => patrolling");
+                    Debug.Log("Type is Fakir => patrolling");
                     break;
                 default:
                     Debug.Log("undefined type => breaking");
@@ -319,6 +325,10 @@ namespace BEN.Scripts.FSM
                     Debug.Log("Mascotte => attacking");
                     _aIAnimation.PlayAnimation(AnimationState.AtkLeft); // invert 
                     break;
+                case AIType.Fakir:
+                    Debug.Log("Fakir => attacking");
+                    _aIAnimation.PlayAnimation(AnimationState.AtkRight); // invert 
+                    break;
                 default:
                     Debug.Log("Default => breaking");
                     break;
@@ -334,8 +344,9 @@ namespace BEN.Scripts.FSM
             {
                 _agent.destination = transform.position; // risky floating-point error; 
                 return;
-            } // archi crade 
-            _agent.destination = PlayerMovement_Alan.sPlayerPos;  // make it dynamic destination instead
+            } // archi crade façon d'arrêter
+
+            _agent.destination = PlayerMovement_Alan.sPlayerPos;  
             Debug.Log("Attacking fixedUpdate");
         } 
 
