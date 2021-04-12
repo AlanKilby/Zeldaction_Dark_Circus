@@ -50,7 +50,7 @@ namespace BEN.Scripts.FSM
         private StateMachine<States> _fsm; 
 
         public static Func<Transform[]> OnQueryingChildPosition;
-        private bool _patrolZoneIsSet;
+        private bool _bPatrolZoneIsSet;
         private GameObject _patrolZone; 
         private GameObject _ball; 
         [SerializeField] private GameObject _graphics;
@@ -69,12 +69,13 @@ namespace BEN.Scripts.FSM
 
         private Vector3 _positionBeforeAttacking; // a node or single position 
         private Animator _ballAnimator = null; 
-        private const int _moveRight = 1; 
+        private const int _moveRight = 1;
 
 #region Editor
         
         private void OnValidate()
         {
+            if (Application.isPlaying) return; 
             switch (type) 
             { 
                 // remove patrolZone gameobject and script
@@ -127,25 +128,25 @@ namespace BEN.Scripts.FSM
             // two can have patrol zone
             if (type == AIType.Monkey || type == AIType.MonkeyBall || type == AIType.Undefined)
             {
-                if (!_patrolZoneIsSet) return;
+                if (!_bPatrolZoneIsSet) return;
                     
                 UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] {_patrolZone, _patrol}; 
                 EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy), this); 
-                _patrolZoneIsSet = false;
+                _bPatrolZoneIsSet = false;
 
                 return; 
             }
                 
-            if (_patrol) return;
+            if (_patrol || _bPatrolZoneIsSet) return;
             // create sibling and add script
             _patrolZone = new GameObject();
             _patrolZone.transform.SetParent(transform.parent);
             _patrolZone.transform.SetAsLastSibling(); 
             _patrolZone.name = "PatrolZone";
-                
+
             _patrol = gameObject.AddComponent<FsmPatrol>();  
-            _patrol.points = new Transform[2]; 
-                
+            _patrol.points = new Transform[2];
+
             // add default amount of children
             for (var i = 0; i < 2; i++) 
             {
@@ -159,9 +160,7 @@ namespace BEN.Scripts.FSM
                 Debug.Log("Creating fsmPatrol with default points set to two. Ctrl+D a patrolPoint and add it to the list if you want a longer path");
             }
 
-            _patrolZoneIsSet = true;
-
-
+            _bPatrolZoneIsSet = true; 
         }
 
         private void OnDrawGizmos()
@@ -203,6 +202,7 @@ namespace BEN.Scripts.FSM
         {
             _fsm = StateMachine<States>.Initialize(this); 
             _fsm.ChangeState(States.Init, StateTransition.Safe);
+            _patrol = GetComponent<FsmPatrol>(); 
         }
  
         private void Start()
