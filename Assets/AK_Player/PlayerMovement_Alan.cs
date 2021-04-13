@@ -1,64 +1,91 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement_Alan : MonoBehaviour
 {
-    public float movementSpeed;
+
+    public int playerHp;
+
+    public float movementSpeed = 5f; 
 
     public Rigidbody playerRB;
-    
+
+
     public GameObject boomerang;
 
     public GameObject aim;
 
     public bool canThrow;
-    
-    // DEBUG benji
-    public Vector3 move;
-    
+
     GameObject boomerangInstance;
 
     public PlayerAnimations playerAnim;
-    public static Vector3 sPlayerPos = Vector3.zero; // ajouté par Benji 29.03 
+
+    bool canMove = true;
+
+    public float throwingTime;
+
+    public float minThrowTime;
+
+    // add static reference to pos => BEN 
+    public static Vector3 sPlayerPos = Vector3.zero; 
 
     void Start()
     {
         canThrow = true;
+        throwingTime = minThrowTime;
 
     }
 
-    void Update() 
+    void Update()
     {
-        sPlayerPos = transform.position; // ajouté par Benji 29.03
-        
-        Move();
+        sPlayerPos = transform.position; 
 
-        if(canThrow == true)
+        if (canThrow == true)
         {
-            Attack();
+            if (Input.GetKey(KeyCode.Space))
+            {
+                canMove = false;
+                throwingTime += Time.deltaTime;
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                Debug.Log("No Longer Pressing");
+                Attack(throwingTime);
+                canMove = true;
+                throwingTime = minThrowTime;
+            }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 
     public void Move()
     {
         float horizontalMove = Input.GetAxisRaw("Horizontal");
         float verticalMove = Input.GetAxisRaw("Vertical");
+
+
+        // Movement direction (x,y,z)
+        Vector3 move = new Vector3(horizontalMove, 0f, verticalMove).normalized;
+
+
+        // Lock player movement if !canMove
+        if(canMove == true)
+        {
+            playerRB.MovePosition(transform.position + move * movementSpeed * Time.deltaTime);
+        }
         
-        // Vector3 move = transform.forward * verticalMove + transform.right * horizontalMove;
-
-        move = new Vector3(horizontalMove, 0f, -verticalMove).normalized;
-        playerRB.velocity = move * movementSpeed;
-
-
+        // Keep current rotation
         if (move != Vector3.zero)
         {
             transform.rotation = Quaternion.LookRotation(move);
-            //aim.transform.position = move * 5;
         }
 
 
-        // Animations
+        // Animations 
         if(horizontalMove == 0 && verticalMove == 0 && canThrow == true)
         {
             playerAnim.ChangeAnimationState(playerAnim.PLAYER_IDLE_HAT);
@@ -98,20 +125,13 @@ public class PlayerMovement_Alan : MonoBehaviour
         else if (horizontalMove < 0 && verticalMove == 0 && canThrow == false)
         {
             playerAnim.ChangeAnimationState(playerAnim.PLAYER_LEFT_NO_HAT);
-        }
+        } 
+    } 
 
-
-
-    }
-
-    public void Attack()
+    public void Attack(float throwTime)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            boomerangInstance = Instantiate(boomerang, gameObject.transform.position, gameObject.transform.rotation);
-            canThrow = false;
-        }
-    }
-
-    
+        boomerangInstance = Instantiate(boomerang, aim.transform.position, gameObject.transform.rotation);
+        boomerangInstance.GetComponent<Boomerang>().comebackTimer = throwTime;
+        canThrow = false;
+    }    
 }

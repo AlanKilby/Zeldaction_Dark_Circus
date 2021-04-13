@@ -346,7 +346,7 @@ namespace BEN.Scripts.FSM
                 return;
             } // archi crade façon d'arrêter
 
-            _agent.destination = PlayerMovement_Alan.sPlayerPos;  
+            _agent.destination = PlayerMovement_Alan.sPlayerPos; 
             Debug.Log("Attacking fixedUpdate");
         } 
 

@@ -7,7 +7,7 @@ public class PlayerAnimations : MonoBehaviour
 
     public GameObject player;
     Animator animator;
-    PlayerMovement playerMovement;
+    PlayerMovement_Alan playerMovement;
     public string currentState;
 
     public string PLAYER_IDLE_HAT = "idleh";
@@ -27,7 +27,7 @@ public class PlayerAnimations : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
-        playerMovement = player.GetComponent<PlayerMovement>();
+        playerMovement = player.GetComponent<PlayerMovement_Alan>();
     }
 
     private void Update()

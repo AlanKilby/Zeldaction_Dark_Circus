@@ -109,13 +109,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4eaeac16d01d44da224ab52a7154d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  playerHp: 0
+  movementSpeed: 10
   playerRB: {fileID: 1741164192326739258}
   boomerang: {fileID: 2701310926929972262, guid: 0d6bdac00bad0484fb0758293c17fd2b,
     type: 3}
   aim: {fileID: 1741164193029170810}
   canThrow: 0
   playerAnim: {fileID: 0}
+  throwingTime: 0
+  minThrowTime: 0.2
 --- !u!54 &1741164192326739258
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,12 +129,12 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 116
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!65 &1741164192326739253
 BoxCollider:
   m_ObjectHideFlags: 0
