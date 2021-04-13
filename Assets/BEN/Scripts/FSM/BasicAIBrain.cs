@@ -268,19 +268,14 @@ namespace BEN.Scripts.FSM
             switch (type)
             {
                 case AIType.Monkey:
-                    Debug.Log("Type is Monkey => Idling"); 
                     break;
                 case AIType.MonkeyBall:
-                    Debug.Log("Type is MonkeyBall => Idling"); 
                     break;
                 case AIType.Mascotte:
-                    Debug.Log("Type is Mascotte => Idling");
                     break;
                 case AIType.Fakir:
-                    Debug.Log("Type is Fakir => patrolling");
-                    break;
+                    break; 
                 default:
-                    Debug.Log("undefined type => breaking");
                     break;
             }
         } 
