@@ -25,43 +25,18 @@ namespace BEN.Scripts
     {
         [SerializeField] private AIAnimationSO _animationSo;
         private Animator _animator;
-        
-        [Header("-- DEBUG --")]
-        public AnimationState animToPlay;
+        private AIType _type;
 
-        private AnimationState _currentState;
-        private AnimationState _requiredState;
-        public bool refreshSpeed;
-        private AIType _type; 
-
-        private void OnValidate()
+        private void Start()
         {
-            _requiredState = animToPlay;
-            
-            if (_requiredState == _currentState) return;
+            _animator = GetComponent<Animator>();
             _animator.runtimeAnimatorController = _animationSo.controller;
-            PlayAnimation(animToPlay);
-            _currentState = _requiredState;
         }
-        
+
         public void SetType(AIType type) // called on Awake or from Editor
         {
             _type = type;
             _animationSo = GameManager.Instance.scriptableAnimationList[(int) _type]; 
-        }
-
-        private void Start()
-        { 
-            _animator = GetComponent<Animator>();
-            _animator.runtimeAnimatorController = _animationSo.controller; 
-            _currentState = _requiredState = animToPlay; 
-        }
-
-        private void Update() 
-        {
-            if (!refreshSpeed) return;
-            _animator.speed = _animationSo.clipList[(int) animToPlay].speedMultiplier;
-            refreshSpeed = false; 
         }
 
         public void PlayAnimation(AnimationState clip)

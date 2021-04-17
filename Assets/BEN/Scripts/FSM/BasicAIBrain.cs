@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
+using System.Collections.Generic; 
 using UnityEngine;
 using MonsterLove.StateMachine;
 using Debug = UnityEngine.Debug;
 using Unity.EditorCoroutines.Editor;
 using UnityEngine.AI;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+ 
 /* 
  Very simple architecture (enum-based FSM) to avoid multiple classes and costly virtual calls
  
@@ -52,7 +56,6 @@ namespace BEN.Scripts.FSM
         private StateMachine<States> _fsm; 
 
         public static Func<Transform[]> OnQueryingChildPosition;
-        private bool _bPatrolZoneIsSet;
         private GameObject _patrolZone; 
         private GameObject _ball; 
         [SerializeField] private GameObject _graphics;
@@ -73,13 +76,19 @@ namespace BEN.Scripts.FSM
         private Animator _ballAnimator = null; 
         private const int _moveRight = 1;
 
-        private Sprite _sprite; 
+        private Sprite _sprite;
+        private sbyte _destroying = -1;
 
-        #region Editor
+        private Stack<FsmPatrol> _patrolStack = new Stack<FsmPatrol>();
+
+        [Header("-- DEBUG --")]
+        [SerializeField] private EditorDebuggerSO debugger; 
+
+#region Editor
 
         private void OnValidate()
         {
-            if (Application.isPlaying) return;
+            if (Application.isPlaying || _destroying != -1) return;
 
             isMonkeyBall = false;
             if (Type != AIType.Undefined && Type != AIType.Ball)
@@ -93,7 +102,7 @@ namespace BEN.Scripts.FSM
                     _graphics = transform.GetChild(1).gameObject;
                     Debug.Log($"Catching error message {e.Message}"); 
                 } 
-            }
+            } 
 
             switch (type)
             { 
@@ -127,29 +136,38 @@ namespace BEN.Scripts.FSM
                     break; 
             }
 
-            if (_ball && Type != AIType.Monkey) 
+            if (_ball && Type != AIType.MonkeyBall) 
             {
                 UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] {_ball };
-                EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy), this);
+                EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy, 0.02f), this);
             }
             else if (_patrolZone && (Type == AIType.Undefined || Type == AIType.Ball))
             {
                 UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] { _patrolZone, _patrol };
-                EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy), this);
+                EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy, 0.02f), this);
+                debugger.Amount--; 
             }
 
             // create sibling and add script
-            if (_patrolZone || Type == AIType.Ball) return; // WARNING : logic flaw with precedent block
+            if (_patrolZone || Type == AIType.Ball || Type == AIType.Undefined) return; // WARNING : logic flaw with precedent block
 
             _patrolZone = new GameObject(); 
-            _patrolZone.transform.SetParent(transform.parent);
+            _patrolZone.transform.SetParent(transform.parent); 
             _patrolZone.transform.SetAsLastSibling();
             _patrolZone.name = "PatrolZone";
 
             _patrol = gameObject.AddComponent<FsmPatrol>();
             _patrol.points = new Transform[2];
 
-            _bPatrolZoneIsSet = true;
+            debugger.Amount++;
+
+            if (debugger.Amount > 1)
+            {
+                UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] { _patrolZone, _patrol };
+                EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy, 0f), this);
+
+                debugger.Amount = 1; 
+            }
 
             // add default amount of children
             for (var i = 0; i < 2; i++)
@@ -161,7 +179,6 @@ namespace BEN.Scripts.FSM
 
                 // populate fsm array 
                 _patrol.points[i] = goChild.transform;
-                Debug.Log("Creating fsmPatrol with default points set to two. Ctrl+D a patrolPoint and add it to the list if you want a longer path");
             }
         }
 
@@ -186,43 +203,64 @@ namespace BEN.Scripts.FSM
             }
         }
 
-        private IEnumerator DestroyImmediate(UnityEngine.Object[] objectsToDestroy) 
+        private IEnumerator DestroyImmediate(UnityEngine.Object[] objectsToDestroy, float delay) 
         {
-            yield return new EditorWaitForSeconds(0.02f); 
+            yield return new EditorWaitForSeconds(delay); 
             foreach (var item in objectsToDestroy) 
             {
                 DestroyImmediate(item, false); 
             } 
         }
-        
-        
-#endregion
+
+#endregion 
 
 #region Unity Callbacks
+
+        void Awake()
+        {
+            _fsm = StateMachine<States>.Initialize(this);
+            _fsm.ChangeState(States.Init, StateTransition.Safe);
+            _destroying = 0;
+            Debug.Log("awake"); 
+        }
 
         private void OnEnable()
         {
             OnRequireStateChange += TransitionToNewState;
+            AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
+            AssemblyReloadEvents.afterAssemblyReload += OnAfterAssemblyReload;
         } 
 
-        private void OnDisable()
-        {
-            OnRequireStateChange -= TransitionToNewState; 
-        }
-
-        void Awake()
-        {
-            _fsm = StateMachine<States>.Initialize(this); 
-            _fsm.ChangeState(States.Init, StateTransition.Safe);
-        }
- 
         private void Start()
         {
             _patrol = GetComponent<FsmPatrol>();
             _agent = GetComponent<NavMeshAgent>();
 
             _agent.speed = defaultSpeed;
+        }
+
+        private void OnDisable()
+        {
+            OnRequireStateChange -= TransitionToNewState;
+            AssemblyReloadEvents.beforeAssemblyReload -= OnBeforeAssemblyReload;
+            AssemblyReloadEvents.afterAssemblyReload -= OnAfterAssemblyReload;
         } 
+
+        private void OnDestroy()
+        {
+            _destroying = 1;
+            Debug.Log("destroy"); 
+        }
+        
+        public void OnBeforeAssemblyReload()
+        {
+            Debug.Log("Before Assembly Reload");
+        } 
+
+        public void OnAfterAssemblyReload()
+        {
+            Debug.Log("After Assembly Reload");
+        }
 
         #endregion 
 
@@ -258,14 +296,16 @@ namespace BEN.Scripts.FSM
             Debug.Log("entering default state");
             yield return new WaitForSeconds(0.04f); 
 
+            // idle when waiting at a patrol node point 
+
             switch (type)
             {
-                case AIType.Monkey:
-                    _aIAnimation.PlayAnimation(AnimationState.IdleRight); // make it dynamic direction instead 
+                case AIType.Monkey: 
+                    _aIAnimation.PlayAnimation(AnimationState.WalkRight); // make it dynamic direction instead 
                     break;
                 case AIType.MonkeyBall:
-                    /* var scriptableAnimation = GameManager.Instance.scriptableAnimationList[0];
-                    _aIAnimation.SetScriptable(scriptableAnimation); */
+                    _aIAnimation.PlayAnimation(AnimationState.WalkRight); // make it dynamic direction instead
+                    // _ballAnimation.PlayAnimation(); 
                     break;
                 case AIType.Mascotte: 
                     _aIAnimation.PlayAnimation(AnimationState.WalkLeft); // make it dynamic direction instead  
@@ -353,7 +393,8 @@ namespace BEN.Scripts.FSM
             {
                 _agent.destination = transform.position; // risky floating-point error; 
                 return;
-            } // archi crade façon d'arrêter
+                Debug.Log("STOPPING");
+            } // archi crade façon d'arrêter 
 
             _agent.destination = PlayerMovement_Alan.sPlayerPos; 
             Debug.Log("Attacking fixedUpdate");
