@@ -107,9 +107,9 @@ GameObject:
   - component: {fileID: 554421524130511496}
   - component: {fileID: 4961911341470120790}
   - component: {fileID: 7707753843237276816}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sword
-  m_TagString: Untagged
+  m_TagString: EnemyWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,8 +142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e537c1dd034477479c656e3d57213cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  amplitude: 2
+  speedMultiplier: 5
+  curvature: 20
 --- !u!65 &7707753843237276816
 BoxCollider:
   m_ObjectHideFlags: 0

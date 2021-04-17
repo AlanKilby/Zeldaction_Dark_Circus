@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using BEN.Scripts.FSM;
+using BEN.Scripts; 
 using BEN; 
 
 public class Boomerang : MonoBehaviour
@@ -20,7 +21,8 @@ public class Boomerang : MonoBehaviour
     public float comebackTimer;
     float comebackTimerHolder;
 
-    private AIType enemyType; 
+    private AIType enemyType;
+    public LayerMask swordLayer; 
 
     private void Start()
     {
@@ -174,20 +176,23 @@ public class Boomerang : MonoBehaviour
             isGoing = false;
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-        {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy")) 
+        { 
             Debug.Log("Collision with Enemy");
             enemyType = other.GetComponent<BasicAIBrain>().Type; 
-            float value = Vector3.Dot(other.transform.localPosition.normalized, transform.localPosition.normalized); 
+            float value = Vector3.Dot(other.transform.localPosition.normalized, transform.localPosition.normalized);
 
-            if (enemyType == AIType.Mascotte && value > 0f) 
+            if (enemyType == AIType.Mascotte && value < 0f)
             {
-                Destroy(other.gameObject); 
-            } 
-            else if (enemyType != AIType.Mascotte)
-            { 
-                Destroy(other.gameObject);
+                isComingBack = true;
+                return;
             }
+            Destroy(other.gameObject);        
+        }
+
+        if (other.CompareTag("EnemyWeapon")) // fakir weapon
+        {
+            other.GetComponent<ParabolicFunction>().InvertDirection(); 
         }
     }
 }

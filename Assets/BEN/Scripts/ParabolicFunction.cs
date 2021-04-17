@@ -18,7 +18,9 @@ namespace BEN.Scripts
             _propsLayer = 6,
             _playerLayer = 10;
         private Vector3 _target; // until I fix parabolic formula
+        public Vector3 _CasterPosition { get; set; }
 
+        private bool invert = false; 
 
         private void Start()
         {
@@ -34,11 +36,18 @@ namespace BEN.Scripts
             time += frameDelta * speed;
             time = Mathf.Repeat(time, distance + Mathf.Epsilon);
             transform.position = new Vector2(time, DoParabolicFunction() * distance * _curvature); */
-            transform.Translate((_target - transform.position).normalized * Time.fixedDeltaTime * speedMultiplier, Space.Self); 
+            if (!invert)
+                transform.Translate((_target - transform.position).normalized * Time.fixedDeltaTime * speedMultiplier, Space.Self);
+            else
+            {
+                transform.Translate((_CasterPosition - transform.position).normalized * Time.fixedDeltaTime * speedMultiplier * 4f, Space.Self);
+            }
         }
 
         private void OnTriggerEnter(Collider other)
         {
+            // temporary 
+
             if (other.gameObject.layer == _playerLayer)
             {
                 Destroy(gameObject);
@@ -48,8 +57,19 @@ namespace BEN.Scripts
             {
                 Destroy(gameObject); 
             }
+            else if (other.CompareTag("Enemy") && invert) 
+            {
+                Destroy(other.gameObject);
+                Destroy(gameObject); 
+            }
+
         } 
 
         float DoParabolicFunction() => (orientation * ((time * time))) + (distance * time);  
+
+        public void InvertDirection()
+        {
+            invert = true; 
+        }
     }
 }

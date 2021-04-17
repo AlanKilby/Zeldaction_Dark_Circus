@@ -47,10 +47,13 @@ namespace BEN.Scripts.FSM
         
         // used for conditionalShow's property drawer until I know how to directly use enum 
         [HideInInspector] public bool isMonkeyBall;
-         
+        [HideInInspector] public bool isFakir;
+
         [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _monkeyBallProjectile;
+        [SerializeField, ConditionalShow("isFakir", true)] private GameObject _fakirProjectile; 
         [SerializeField, Tooltip("Speed when patrolling"), Range(0.5f, 5f)] private float defaultSpeed = 2f;
         [SerializeField, Tooltip("Wait time between each attack"), Range(2f, 8f)] private float monkeyBallAttackRate = 4f;
+        [SerializeField, Tooltip("Wait time between each attack"), Range(2f, 8f)] private float fakirAttackRate = 4f;
         [SerializeField, Tooltip("Delay before jumping back to ball again"), Range(2f, 5f)] private float monkeyBallProvocDuration = 3f;
         [SerializeField, Tooltip("DefaultSpeed increse when rushing toward the player. 1 = no increase"), Range(1f, 3f)] private float attackStateSpeedMultiplier = 1.25f;
         [SerializeField, Tooltip("Delay from Idle to Attack State when player is detected"), Range(0f, 5f)] private float attackDelay = 1f; 
@@ -87,14 +90,32 @@ namespace BEN.Scripts.FSM
 
         [Header("-- DEBUG --")]
         [SerializeField] private EditorDebuggerSO debugger;
+        [SerializeField] public bool refresh;
+        private Collider monkeyBallCollider;
+        private Collider ballCollider; 
 
 #region Editor
 
         private void OnValidate()
         {
             if (Application.isPlaying || _destroying != -1) return;
+            if (!_patrol && debugger.PatrolAmount == 1)
+            {
+                _patrol = GetComponent<FsmPatrol>(); 
+            } 
+
+            // terrible 
+            if (type == AIType.Undefined || type == AIType.Ball)
+            {
+                debugger.PatrolAmount = 0; 
+            }
+            else
+            {
+                debugger.PatrolAmount = 1;
+            }
 
             isMonkeyBall = false;
+            isFakir = false;
 
             if (Type == AIType.MonkeyBall && !_ball)
             {
@@ -123,7 +144,7 @@ namespace BEN.Scripts.FSM
                 {
                     _graphics.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"{Type}_idle_resource");
                 }
-                catch (Exception e)
+                catch (Exception e) 
                 {
                     _graphics = transform.GetChild(1).gameObject;
                     Debug.Log($"Catching error message {e.Message}"); 
@@ -148,7 +169,7 @@ namespace BEN.Scripts.FSM
                         _ball.AddComponent<SphereCollider>().isTrigger = true;
                         _ballAnimation = _ball.AddComponent<AIAnimation>();
                         _ballAnimation.SetType(AIType.Ball);
-                        debugger.BallAmount++;
+                        debugger.BallAmount++; 
                     }
 
                     // _ball.AddComponent<NavMeshAgent>(); 
@@ -160,6 +181,7 @@ namespace BEN.Scripts.FSM
                     break;
                 case AIType.Fakir:
                     _graphics.transform.localPosition = Vector3.up * 0.25f;
+                    isFakir = true; 
                     break;
                 default: 
                     _graphics.transform.localPosition = Vector3.zero;
@@ -172,7 +194,7 @@ namespace BEN.Scripts.FSM
                 UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] { _ball };
                 EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy, 0.02f), this);
             }
-            else if (_patrolZone && (Type == AIType.Undefined || Type == AIType.Ball))
+            if (_patrol && (Type == AIType.Undefined || Type == AIType.Ball)) 
             {
                 UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] { _patrolZone, _patrol };
                 EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy, 0.02f), this);
@@ -180,7 +202,7 @@ namespace BEN.Scripts.FSM
             }
 
             // create sibling and add script
-            if (_patrolZone || Type == AIType.Ball || Type == AIType.Undefined) return; // WARNING : logic flaw with precedent block
+            if (_patrol || Type == AIType.Ball || Type == AIType.Undefined) return; // WARNING : logic flaw with precedent block
 
             _patrolZone = new GameObject(); 
             _patrolZone.transform.SetParent(transform.parent); 
@@ -192,13 +214,13 @@ namespace BEN.Scripts.FSM
 
             debugger.PatrolAmount++;
 
-            if (debugger.PatrolAmount > 1)
+            if (debugger.PatrolAmount > 2) 
             {
                 UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] { _patrolZone, _patrol };
                 EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy, 0f), this);
 
                 debugger.PatrolAmount = 1; 
-            }
+            } 
 
             // add default amount of children
             for (var i = 0; i < 2; i++)
@@ -266,7 +288,13 @@ namespace BEN.Scripts.FSM
         {
             _patrol = GetComponent<FsmPatrol>(); 
             _agent = GetComponent<NavMeshAgent>();
-            _checkSurroundings = GetComponentInChildren<CheckSurroundings>(); 
+            _checkSurroundings = GetComponentInChildren<CheckSurroundings>();
+
+            if (Type == AIType.MonkeyBall)
+            {
+                monkeyBallCollider = GetComponent<BoxCollider>();
+                ballCollider = GetComponentInChildren<SphereCollider>();
+            }
 
             if (Type == AIType.MonkeyBall && !_ball)
             {
@@ -398,7 +426,7 @@ namespace BEN.Scripts.FSM
             Debug.Log($"Attacking in {attackDelay} seconds"); 
             
             _agent.destination = TargetToAttackPosition;
-            _agent.speed *= attackStateSpeedMultiplier;
+            _agent.speed = defaultSpeed * attackStateSpeedMultiplier; 
             
             switch (type) 
             {
@@ -418,7 +446,9 @@ namespace BEN.Scripts.FSM
                     break;
                 case AIType.Fakir:
                     Debug.Log("Fakir => attacking");
-                    _aIAnimation.PlayAnimation(AnimationState.AtkRight);  
+                    _aIAnimation.PlayAnimation(AnimationState.AtkRight);
+                    _agent.speed = 0f;
+                    InvokeRepeating(nameof(FakirAttack), 0f, fakirAttackRate);
                     break;
                 default:
                     Debug.Log("Default => breaking");
@@ -433,9 +463,9 @@ namespace BEN.Scripts.FSM
             {
                 _agent.speed = 0f; // risky floating-point error; 
             } // archi crade façon d'arrêter 
-            else 
+            else if (type != AIType.Fakir)
             {
-                _agent.speed = defaultSpeed;
+                _agent.speed = defaultSpeed; 
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
             }
 
@@ -446,14 +476,20 @@ namespace BEN.Scripts.FSM
         {
             GameObject reference = Instantiate(_monkeyBallProjectile, _graphics.transform.position, _graphics.transform.rotation);
             reference.transform.position = _graphics.transform.position;
-            Debug.Log("INSTANTIATING"); 
-        } 
+        }
+
+        private void FakirAttack()
+        {
+            GameObject reference = Instantiate(_fakirProjectile, _graphics.transform.position, _graphics.transform.rotation);
+            reference.transform.position = _graphics.transform.position;
+            reference.GetComponent<ParabolicFunction>()._CasterPosition = transform.position; // ugly
+        }
 
         void Attack_Exit()
         {
             Debug.Log("Attacking exit");
             _agent.destination = _positionBeforeAttacking;
-            _agent.speed /= attackStateSpeedMultiplier; 
+            _agent.speed = defaultSpeed / attackStateSpeedMultiplier; 
             _aIAnimation.PlayAnimation(AnimationState.WalkRight); // make it dynamic direction instead 
                                                                   // _ballAnimation.StopAnimating(); only when initial position is reached
 
@@ -461,10 +497,13 @@ namespace BEN.Scripts.FSM
             {
                 case AIType.MonkeyBall: 
                     Debug.Log("MonkeyBall => exit attack");
-                    _aIAnimation.PlayAnimation(AnimationState.WalkRight);
                     CancelInvoke(nameof(MonkeyBallAttack)); 
                     break;
-            }
+                case AIType.Fakir:
+                    Debug.Log("Fakir => exit attack");
+                    CancelInvoke(nameof(FakirAttack)); 
+                    break; 
+            } 
         }
 
         #endregion
@@ -478,9 +517,15 @@ namespace BEN.Scripts.FSM
             _graphics.transform.localPosition = Vector3.zero; 
             _ball.SetActive(false);
             _aIAnimation.PlayAnimation(11); // miss 
-            _checkSurroundings.CanDodgeProjectile = false; 
+            _checkSurroundings.CanDodgeProjectile = false;
+            monkeyBallCollider.enabled = false;
+            ballCollider.enabled = false;
 
-            yield return new WaitForSeconds(monkeyBallProvocDuration); 
+            yield return new WaitForSeconds(1f);
+            monkeyBallCollider.enabled = true;
+            ballCollider.enabled = true;
+
+            yield return new WaitForSeconds(monkeyBallProvocDuration - 1f); 
             OnRequireStateChange(States.Attack, StateTransition.Safe); 
         }
 
@@ -491,6 +536,7 @@ namespace BEN.Scripts.FSM
             _graphics.transform.localPosition = Vector3.up; 
             _ball.SetActive(true);
             _aIAnimation.PlayAnimation(AnimationState.AtkRight);
+
             Invoke(nameof(ResetBool), 8f); 
         }
 

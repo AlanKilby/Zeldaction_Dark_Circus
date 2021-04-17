@@ -113,9 +113,8 @@ namespace BEN
 
         private void OnTriggerExit(Collider other)
         {
-            if (!other.CompareTag("Player")) return; // || !_patrol.playerDetected) return;
-            // _patrol.SetDestination(Vector3.zero, 2f, false); // reset speed internally because you don't know initial value here 
-            // monkey 
+            if (!other.CompareTag("Player") || bearerType == AIType.Mascotte) return; // mascotte follows players for ever once detected 
+
             _notified = false;  
             BasicAIBrain.OnRequireStateChange(States.Default, StateTransition.Overwrite); 
         }
