@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using BEN.Scripts.FSM; 
+using BEN.Scripts.FSM;
+using BEN; 
 
 public class Boomerang : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class Boomerang : MonoBehaviour
 
     public float comebackTimer;
     float comebackTimerHolder;
+
+    private AIType enemyType; 
 
     private void Start()
     {
@@ -174,17 +177,17 @@ public class Boomerang : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             Debug.Log("Collision with Enemy");
-            BasicAIBrain tempBrain = other.transform.GetComponent<BasicAIBrain>(); // debug
-            AIType type = tempBrain.Type;
+            enemyType = other.GetComponent<BasicAIBrain>().Type; 
+            float value = Vector3.Dot(other.transform.localPosition.normalized, transform.localPosition.normalized); 
 
-            if (type == AIType.Mascotte && !isComingBack)
+            if (enemyType == AIType.Mascotte && value > 0f) 
             {
-                isComingBack = true;
-                return;
+                Destroy(other.gameObject); 
+            } 
+            else if (enemyType != AIType.Mascotte)
+            { 
+                Destroy(other.gameObject);
             }
-
-            Destroy(other.gameObject);
-
         }
     }
 }

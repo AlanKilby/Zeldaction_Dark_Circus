@@ -22,11 +22,10 @@ namespace BEN
         private float _smallestValue;
 
         private bool _notified; // DEBUG 
-        private bool _projectileDetected; // DEBUG 
         private BasicAIBrain _brain; // NOT SAFE
 
-        private byte _playerWeaponLayer = 7;
-        private AIType bearerType; 
+        private AIType bearerType;
+        public bool CanDodgeProjectile { get; set; } 
 
         public CheckSurroundings(Collider[] detectedCollidersArray)
         {
@@ -39,7 +38,8 @@ namespace BEN
             // _patrol = GetComponentInParent<FsmPatrol>(); 
             _agent = GetComponentInParent<NavMeshAgent>();
             _brain = GetComponentInParent<BasicAIBrain>();
-            bearerType = GetComponentInParent<BasicAIBrain>().Type; 
+            bearerType = GetComponentInParent<BasicAIBrain>().Type;
+            CanDodgeProjectile = true; 
         }
 
         private void FixedUpdate()  
@@ -63,14 +63,16 @@ namespace BEN
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag("PlayerWeapon") && bearerType == AIType.MonkeyBall && !_projectileDetected) 
+            if (other.CompareTag("PlayerWeapon") && bearerType == AIType.MonkeyBall && CanDodgeProjectile) 
             {
-                _projectileDetected = true; 
-                BasicAIBrain.OnRequireStateChange(States.Defend, StateTransition.Overwrite);  
+                try
+                {
+                    BasicAIBrain.OnRequireStateChange(States.Defend, StateTransition.Overwrite);
+                }
+                catch (System.Exception e) { Debug.Log(e.Message); }
             } 
 
-            if (!other.CompareTag("Player")) return;
-            _projectileDetected = false; 
+            if (!other.CompareTag("Player")) return; 
 
             Debug.DrawRay(transform.position, other.transform.position - transform.position, Color.red);
             // use RaycastNonAlloc instead !!

@@ -83,6 +83,7 @@ namespace BEN.Scripts.FSM
         private sbyte _destroying = -1;
 
         private Stack<FsmPatrol> _patrolStack = new Stack<FsmPatrol>();
+        private CheckSurroundings _checkSurroundings; 
 
         [Header("-- DEBUG --")]
         [SerializeField] private EditorDebuggerSO debugger;
@@ -265,6 +266,7 @@ namespace BEN.Scripts.FSM
         {
             _patrol = GetComponent<FsmPatrol>(); 
             _agent = GetComponent<NavMeshAgent>();
+            _checkSurroundings = GetComponentInChildren<CheckSurroundings>(); 
 
             if (Type == AIType.MonkeyBall && !_ball)
             {
@@ -411,7 +413,8 @@ namespace BEN.Scripts.FSM
                     break;
                 case AIType.Mascotte:
                     Debug.Log("Mascotte => attacking");
-                    _aIAnimation.PlayAnimation(AnimationState.AtkLeft); 
+                    _aIAnimation.PlayAnimation(AnimationState.AtkLeft);
+                    _graphics.transform.rotation = Quaternion.Euler(0f, 0f, 0f); 
                     break;
                 case AIType.Fakir:
                     Debug.Log("Fakir => attacking");
@@ -451,40 +454,49 @@ namespace BEN.Scripts.FSM
             Debug.Log("Attacking exit");
             _agent.destination = _positionBeforeAttacking;
             _agent.speed /= attackStateSpeedMultiplier; 
-            _aIAnimation.PlayAnimation(AnimationState.IdleRight); // make it dynamic direction instead 
+            _aIAnimation.PlayAnimation(AnimationState.WalkRight); // make it dynamic direction instead 
                                                                   // _ballAnimation.StopAnimating(); only when initial position is reached
 
             switch (type)
             {
                 case AIType.MonkeyBall: 
-                    Debug.Log("MonkeyBall => attacking");
-                    _aIAnimation.PlayAnimation(AnimationState.AtkRight);
+                    Debug.Log("MonkeyBall => exit attack");
+                    _aIAnimation.PlayAnimation(AnimationState.WalkRight);
                     CancelInvoke(nameof(MonkeyBallAttack)); 
                     break;
             }
-        } 
+        }
+
+        #endregion
+
+        #region Defend
 
         IEnumerator Defend_Enter()
-        {
+        { 
             Debug.Log("defend enter");
             _agent.speed = 0f;
             _graphics.transform.localPosition = Vector3.zero; 
             _ball.SetActive(false);
             _aIAnimation.PlayAnimation(11); // miss 
+            _checkSurroundings.CanDodgeProjectile = false; 
 
             yield return new WaitForSeconds(monkeyBallProvocDuration); 
             OnRequireStateChange(States.Attack, StateTransition.Safe); 
         }
 
-        IEnumerator Defend_Exit()
-        {
+        void Defend_Exit() 
+        { 
             Debug.Log("Defend_Exit");
             _agent.speed = defaultSpeed;
             _graphics.transform.localPosition = Vector3.up; 
             _ball.SetActive(true);
+            _aIAnimation.PlayAnimation(AnimationState.AtkRight);
+            Invoke(nameof(ResetBool), 8f); 
+        }
 
-            yield return new WaitForSeconds(0.75f); 
-            _aIAnimation.PlayAnimation(AnimationState.AtkRight); 
+        void ResetBool()
+        {
+            _checkSurroundings.CanDodgeProjectile = true; 
         }
 
         #endregion
