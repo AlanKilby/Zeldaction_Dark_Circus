@@ -22,7 +22,11 @@ namespace BEN
         private float _smallestValue;
 
         private bool _notified; // DEBUG 
+        private bool _projectileDetected; // DEBUG 
         private BasicAIBrain _brain; // NOT SAFE
+
+        private byte _playerWeaponLayer = 7;
+        private AIType bearerType; 
 
         public CheckSurroundings(Collider[] detectedCollidersArray)
         {
@@ -34,7 +38,8 @@ namespace BEN
             _selfCollider = GetComponent<BoxCollider>();
             // _patrol = GetComponentInParent<FsmPatrol>(); 
             _agent = GetComponentInParent<NavMeshAgent>();
-            _brain = GetComponentInParent<BasicAIBrain>(); 
+            _brain = GetComponentInParent<BasicAIBrain>();
+            bearerType = GetComponentInParent<BasicAIBrain>().Type; 
         }
 
         private void FixedUpdate()  
@@ -55,10 +60,17 @@ namespace BEN
 
         } */ 
         }
-        
+
         private void OnTriggerStay(Collider other)
         {
+            if (other.CompareTag("PlayerWeapon") && bearerType == AIType.MonkeyBall && !_projectileDetected) 
+            {
+                _projectileDetected = true; 
+                BasicAIBrain.OnRequireStateChange(States.Defend, StateTransition.Overwrite);  
+            } 
+
             if (!other.CompareTag("Player")) return;
+            _projectileDetected = false; 
 
             Debug.DrawRay(transform.position, other.transform.position - transform.position, Color.red);
             // use RaycastNonAlloc instead !!
@@ -104,6 +116,8 @@ namespace BEN
             // monkey 
             _notified = false;  
             BasicAIBrain.OnRequireStateChange(States.Default, StateTransition.Overwrite); 
-        } 
+        }
+
+        private bool IsFacingProjectile(Vector3 projectile) => (Mathf.Sign(Vector3.Dot(transform.position, projectile)) > 0); 
     }
 }

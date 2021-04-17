@@ -90,7 +90,7 @@ namespace BEN.Scripts
             var reference = Instantiate(objToThrow, transform.position, Quaternion.identity);
             reference.transform.LookAt(Camera.main.transform);
 
-            reference.GetComponent<ParabolicFunction>().SetTargetPosition(_agent.destination, transform.position);
+            // reference.GetComponent<ParabolicFunction>().SetTargetPosition(_agent.destination, transform.position);
 
             StartCoroutine(SetBool()); 
         } 

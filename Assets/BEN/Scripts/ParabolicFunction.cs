@@ -4,57 +4,52 @@ namespace BEN.Scripts
 {
     public class ParabolicFunction : MonoBehaviour
     {
-        [Range(1f, 10f)] public float speed = 5f;
-        [Range(1f, 10f)] public float amplitude = 2f;
+        [SerializeField, Range(1, 10)] private float speedMultiplier = 5f; 
+        [Tooltip("0 = straight line. 2 = height will be double of distance"), Range(0f, 100f)] public float curvature = 20f;
+        private float distance; // from start to end point  
+        private sbyte orientation = -1;
+        private float time = 0f;
 
-        private Vector3 m_Target;
-        private bool _targetIsSet;
-        private Vector3 _direction;
+        private float frameDelta;
+        private const float frameDeltaInitialValue = 0.02f;
+        private float _curvature;
 
-        private bool _hasBeenHit;
-        private Vector3 m_Caster;
+        private byte
+            _propsLayer = 6,
+            _playerLayer = 10;
+        private Vector3 _target; // until I fix parabolic formula
+
 
         private void Start()
         {
-            Destroy(gameObject, 5f); 
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-                _hasBeenHit = true;
-        }
+            Destroy(gameObject, 5f);
+            frameDelta = frameDeltaInitialValue;
+            _target = PlayerMovement_Alan.sPlayerPos; 
+            distance = Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos);
+        } 
 
         private void FixedUpdate()
         {
-            if (!_targetIsSet) return;
-            _direction = _hasBeenHit ? (m_Caster - transform.position).normalized * 3f : (m_Target - transform.position).normalized; 
-            transform.Translate(_direction * Time.fixedDeltaTime * speed, Space.World);
-        } 
-
-        public void SetTargetPosition(Vector3 target, Vector3 caster)
-        {
-            _targetIsSet = true; 
-            m_Target = target;
-            m_Caster = caster; 
-        } 
-
-        private void DoParabolicTranslation()
-        {
-            //
+            /* _curvature = distance * 0.0005f * curvature;
+            time += frameDelta * speed;
+            time = Mathf.Repeat(time, distance + Mathf.Epsilon);
+            transform.position = new Vector2(time, DoParabolicFunction() * distance * _curvature); */
+            transform.Translate((_target - transform.position).normalized * Time.fixedDeltaTime * speedMultiplier, Space.Self); 
         }
 
-        private void OnTriggerEnter(Collider other) 
+        private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Enemy") && _hasBeenHit)
+            if (other.gameObject.layer == _playerLayer)
             {
-                Destroy(other.transform.root.gameObject);
                 Destroy(gameObject);
-            } 
-            else if (other.CompareTag("Player"))
-            {
-                Destroy(gameObject);  
+                // apply damage
             }
-        }
+            else if (other.gameObject.layer == _propsLayer)
+            {
+                Destroy(gameObject); 
+            }
+        } 
+
+        float DoParabolicFunction() => (orientation * ((time * time))) + (distance * time);  
     }
 }

@@ -35,7 +35,8 @@ namespace BEN.Scripts.FSM
         Init = 1, 
         Default = 2, 
         Attack = 4,
-        Clear = 8 
+        Defend = 8,
+        Clear = 16
     } 
     
     [RequireComponent(typeof(NavMeshAgent))]
@@ -49,10 +50,12 @@ namespace BEN.Scripts.FSM
          
         [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _monkeyBallProjectile;
         [SerializeField, Tooltip("Speed when patrolling"), Range(0.5f, 5f)] private float defaultSpeed = 2f;
+        [SerializeField, Tooltip("Wait time between each attack"), Range(2f, 8f)] private float monkeyBallAttackRate = 4f;
+        [SerializeField, Tooltip("Delay before jumping back to ball again"), Range(2f, 5f)] private float monkeyBallProvocDuration = 3f;
         [SerializeField, Tooltip("DefaultSpeed increse when rushing toward the player. 1 = no increase"), Range(1f, 3f)] private float attackStateSpeedMultiplier = 1.25f;
         [SerializeField, Tooltip("Delay from Idle to Attack State when player is detected"), Range(0f, 5f)] private float attackDelay = 1f; 
         [SerializeField, Range(3f, 10f)] private float distanceRange = 8f;
-        [SerializeField, Range(1f, 3f)] private float cacRange = 1.5f; 
+        [SerializeField, Range(1f, 3f)] private float cacRange = 1.5f;  
         private StateMachine<States> _fsm; 
 
         public static Func<Transform[]> OnQueryingChildPosition;
@@ -82,7 +85,7 @@ namespace BEN.Scripts.FSM
         private Stack<FsmPatrol> _patrolStack = new Stack<FsmPatrol>();
 
         [Header("-- DEBUG --")]
-        [SerializeField] private EditorDebuggerSO debugger; 
+        [SerializeField] private EditorDebuggerSO debugger;
 
 #region Editor
 
@@ -91,6 +94,28 @@ namespace BEN.Scripts.FSM
             if (Application.isPlaying || _destroying != -1) return;
 
             isMonkeyBall = false;
+
+            if (Type == AIType.MonkeyBall && !_ball)
+            {
+                try
+                {
+                    _ball = transform.GetChild(2).gameObject;
+                }
+                catch (Exception) { };
+            }
+
+            if (_ball)
+            {
+                debugger.BallAmount = 1; 
+            }
+            else 
+            {
+                debugger.BallAmount = 0; 
+            }
+
+            // trying to get reference after having it to null on destroy when playing with MonkeyBall
+            // use Get/Set instead 
+
             if (Type != AIType.Undefined && Type != AIType.Ball)
             {
                 try
@@ -110,21 +135,26 @@ namespace BEN.Scripts.FSM
                     _graphics.transform.localPosition = Vector3.zero;
                     break;
                 case AIType.MonkeyBall when !_ball:
-                    _ball = new GameObject();
-                    _ball.transform.SetParent(transform);
-                    _ball.transform.SetAsLastSibling();
-                    _ball.transform.localPosition = Vector3.zero;
-                    _ball.name = "Ball_Graphics";
-                    _ballAnimator = _ball.AddComponent<Animator>();
-                    _ball.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ball_resource"); // use static list in manager instead
-                    _ball.AddComponent<SphereCollider>().isTrigger = true;
-                    _ballAnimation = _ball.AddComponent<AIAnimation>(); 
-                    _ballAnimation.SetType(AIType.Ball); 
+                    if (debugger.BallAmount == 0)
+                    {
+                        _ball = new GameObject();
+                        _ball.transform.SetParent(transform);
+                        _ball.transform.SetAsLastSibling();
+                        _ball.transform.localPosition = Vector3.zero;
+                        _ball.name = "Ball_Graphics";
+                        _ballAnimator = _ball.AddComponent<Animator>();
+                        _ball.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ball_resource"); // use static list in manager instead
+                        _ball.AddComponent<SphereCollider>().isTrigger = true;
+                        _ballAnimation = _ball.AddComponent<AIAnimation>();
+                        _ballAnimation.SetType(AIType.Ball);
+                        debugger.BallAmount++;
+                    }
+
                     // _ball.AddComponent<NavMeshAgent>(); 
-                    _graphics.transform.localPosition = Vector3.up;
+                    _graphics.transform.localPosition = Vector3.up; 
                     isMonkeyBall = true;
                     break;
-                case AIType.Mascotte:
+                case AIType.Mascotte: 
                     _graphics.transform.localPosition = Vector3.up * 0.3f; 
                     break;
                 case AIType.Fakir:
@@ -134,18 +164,18 @@ namespace BEN.Scripts.FSM
                     _graphics.transform.localPosition = Vector3.zero;
                     _graphics.GetComponent<SpriteRenderer>().sprite = null; // WARNING : very unnefficient 
                     break; 
-            }
+            } 
 
-            if (_ball && Type != AIType.MonkeyBall) 
+            if (debugger.BallAmount > 0 && Type != AIType.MonkeyBall) 
             {
-                UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] {_ball };
+                UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] { _ball };
                 EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy, 0.02f), this);
             }
             else if (_patrolZone && (Type == AIType.Undefined || Type == AIType.Ball))
             {
                 UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] { _patrolZone, _patrol };
                 EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy, 0.02f), this);
-                debugger.Amount--; 
+                debugger.PatrolAmount--; 
             }
 
             // create sibling and add script
@@ -159,14 +189,14 @@ namespace BEN.Scripts.FSM
             _patrol = gameObject.AddComponent<FsmPatrol>();
             _patrol.points = new Transform[2];
 
-            debugger.Amount++;
+            debugger.PatrolAmount++;
 
-            if (debugger.Amount > 1)
+            if (debugger.PatrolAmount > 1)
             {
                 UnityEngine.Object[] objectsToDestroy = new UnityEngine.Object[] { _patrolZone, _patrol };
                 EditorCoroutineUtility.StartCoroutine(DestroyImmediate(objectsToDestroy, 0f), this);
 
-                debugger.Amount = 1; 
+                debugger.PatrolAmount = 1; 
             }
 
             // add default amount of children
@@ -210,11 +240,11 @@ namespace BEN.Scripts.FSM
             {
                 DestroyImmediate(item, false); 
             } 
-        }
+        } 
 
-#endregion 
+        #endregion
 
-#region Unity Callbacks
+        #region Unity Callbacks
 
         void Awake()
         {
@@ -233,8 +263,17 @@ namespace BEN.Scripts.FSM
 
         private void Start()
         {
-            _patrol = GetComponent<FsmPatrol>();
+            _patrol = GetComponent<FsmPatrol>(); 
             _agent = GetComponent<NavMeshAgent>();
+
+            if (Type == AIType.MonkeyBall && !_ball)
+            {
+                try
+                {
+                    _ball = transform.GetChild(2).gameObject;
+                }
+                catch (Exception) { };
+            }
 
             _agent.speed = defaultSpeed;
         }
@@ -367,37 +406,44 @@ namespace BEN.Scripts.FSM
                     break;
                 case AIType.MonkeyBall:
                     Debug.Log("MonkeyBall => attacking");
-                    _aIAnimation.PlayAnimation(AnimationState.AtkRight); // invert 
-                    _ballAnimation.PlayAnimation(_moveRight); // hardcoded 
+                    _aIAnimation.PlayAnimation(AnimationState.AtkRight);
+                    InvokeRepeating(nameof(MonkeyBallAttack), 0f, monkeyBallAttackRate); 
                     break;
                 case AIType.Mascotte:
                     Debug.Log("Mascotte => attacking");
-                    _aIAnimation.PlayAnimation(AnimationState.AtkLeft); // invert 
+                    _aIAnimation.PlayAnimation(AnimationState.AtkLeft); 
                     break;
                 case AIType.Fakir:
                     Debug.Log("Fakir => attacking");
-                    _aIAnimation.PlayAnimation(AnimationState.AtkRight); // invert 
+                    _aIAnimation.PlayAnimation(AnimationState.AtkRight);  
                     break;
                 default:
                     Debug.Log("Default => breaking");
                     break;
             }
-
-
             // abstracted away => this should be standard // make it dynamic direction instead 
         } 
 
-        void Attack_FixedUpdate()  
+        private void Attack_FixedUpdate()  
         {
             if (Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos) <= 1.5f) // <= hardcodé
             {
-                _agent.destination = transform.position; // risky floating-point error; 
-                return;
-                Debug.Log("STOPPING");
+                _agent.speed = 0f; // risky floating-point error; 
             } // archi crade façon d'arrêter 
+            else 
+            {
+                _agent.speed = defaultSpeed;
+                _agent.destination = PlayerMovement_Alan.sPlayerPos;
+            }
 
-            _agent.destination = PlayerMovement_Alan.sPlayerPos; 
             Debug.Log("Attacking fixedUpdate");
+        }
+
+        private void MonkeyBallAttack()
+        {
+            GameObject reference = Instantiate(_monkeyBallProjectile, _graphics.transform.position, _graphics.transform.rotation);
+            reference.transform.position = _graphics.transform.position;
+            Debug.Log("INSTANTIATING"); 
         } 
 
         void Attack_Exit()
@@ -406,11 +452,43 @@ namespace BEN.Scripts.FSM
             _agent.destination = _positionBeforeAttacking;
             _agent.speed /= attackStateSpeedMultiplier; 
             _aIAnimation.PlayAnimation(AnimationState.IdleRight); // make it dynamic direction instead 
-            // _ballAnimation.StopAnimating(); only when initial position is reached
-        } 
-        
-#endregion        
+                                                                  // _ballAnimation.StopAnimating(); only when initial position is reached
 
-#endregion
+            switch (type)
+            {
+                case AIType.MonkeyBall: 
+                    Debug.Log("MonkeyBall => attacking");
+                    _aIAnimation.PlayAnimation(AnimationState.AtkRight);
+                    CancelInvoke(nameof(MonkeyBallAttack)); 
+                    break;
+            }
+        } 
+
+        IEnumerator Defend_Enter()
+        {
+            Debug.Log("defend enter");
+            _agent.speed = 0f;
+            _graphics.transform.localPosition = Vector3.zero; 
+            _ball.SetActive(false);
+            _aIAnimation.PlayAnimation(11); // miss 
+
+            yield return new WaitForSeconds(monkeyBallProvocDuration); 
+            OnRequireStateChange(States.Attack, StateTransition.Safe); 
+        }
+
+        IEnumerator Defend_Exit()
+        {
+            Debug.Log("Defend_Exit");
+            _agent.speed = defaultSpeed;
+            _graphics.transform.localPosition = Vector3.up; 
+            _ball.SetActive(true);
+
+            yield return new WaitForSeconds(0.75f); 
+            _aIAnimation.PlayAnimation(AnimationState.AtkRight); 
+        }
+
+        #endregion
+
+        #endregion
     }
 }
