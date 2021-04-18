@@ -249,9 +249,29 @@ namespace BEN.Scripts.FSM
                 {
                     Gizmos.color = Color.blue;
                 }
-
                 Gizmos.DrawWireSphere(_patrol.points[i].position, 0.25f);
-                Gizmos.color = Color.cyan;
+
+                // this is art
+                if (Type == AIType.Monkey)
+                {
+                    Gizmos.color = Color.white;
+
+                } 
+                else if (Type == AIType.MonkeyBall)
+                {
+                    Gizmos.color = Color.black; 
+
+                }
+                else if (Type == AIType.Mascotte) 
+                {
+                    Gizmos.color = Color.cyan;
+
+                }
+                else if (Type == AIType.Fakir)
+                {
+                    Gizmos.color = Color.red; 
+
+                }
                 Gizmos.DrawLine(_patrol.points[i].position, _patrol.points[(int)Mathf.Repeat(i + 1, _patrol.points.Length)].position);
             }
         }
