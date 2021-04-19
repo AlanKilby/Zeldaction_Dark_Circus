@@ -41,6 +41,9 @@ public class BossAIBrain : MonoBehaviour
     private StateMachine<States> _fsm;
     private EditorCoroutine _editorCoroutine;
     private AIAnimation _aIAnimation;
+    [SerializeField] private List<Switch> _switchedList = new List<Switch>();
+    [SerializeField] private byte maxActiveSwitches = 2;
+    private byte activeSwtiches; 
 
     public static Action<States, StateTransition> OnRequireStateChange;
 
@@ -59,6 +62,7 @@ public class BossAIBrain : MonoBehaviour
     public bool doSpawns = true;
 
     public LayerMask playerLayer;
+    private bool _showActivatableLigths = true;  // this should not be here 
 
     #region Unity Callbacks
 
@@ -143,6 +147,21 @@ public class BossAIBrain : MonoBehaviour
         {
             Attack();  
         }
+
+        if (_showActivatableLigths)
+        {
+            for (int i = 0; i < _switchedList.Count && activeSwtiches < maxActiveSwitches; i++)
+            {
+                var selector = UnityEngine.Random.Range(0, 2);  
+                if (selector > 0)
+                {
+                    _switchedList[i].ShowIsDeactivatable();
+                    activeSwtiches++; 
+                }
+            }
+            activeSwtiches = 0;
+            StartCoroutine(SetSwitchesCooldown(15f)); 
+        }
     }
 
     void Attack_Exit()
@@ -222,7 +241,7 @@ public class BossAIBrain : MonoBehaviour
     // possible : have a reference ray casting to the player and the others spreading from there 
     private IEnumerator CastRayToPlayer(List<Vector3> direction)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f); 
         Debug.Log("debugging ray cast"); 
 
         for (int i = 0; i < direction.Count; i++)
@@ -258,6 +277,15 @@ public class BossAIBrain : MonoBehaviour
 
         yield return new WaitForSeconds(delay); 
         _canAttack = true;
+    }
+
+    // SUPER DRY
+    IEnumerator SetSwitchesCooldown(float delay)
+    {
+        _showActivatableLigths = false;
+
+        yield return new WaitForSeconds(delay);
+        _showActivatableLigths = true;
     }
     #endregion
 }
