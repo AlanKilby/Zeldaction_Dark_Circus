@@ -31,20 +31,22 @@ public class BossAIBrain : MonoBehaviour
     [SerializeField, Space] private GameObject _spawner; // upgrade to have more creative control and use less prefabs 
     [SerializeField] private List<SpawnableEntity> _spawnableEntitiesList; // use a HashSet instead to avoid duplicates 
     [SerializeField, Range(5, 60)] private float invocationDelay = 20f;
-    [SerializeField, Range(1, 15)] private float vulnerabilityDuration = 5f; 
+    private List<Vector3> _spawnPositions = new List<Vector3>();
+
+    [Header("Attack")]
+    public bool ray;
+    public bool bombing; 
+
+    [Header("Switches")]
+    [SerializeField] private List<Switch> _switchedList = new List<Switch>();
+    [SerializeField] private byte maxActiveSwitches = 2;
+    [SerializeField, Range(1, 15)] private float vulnerabilityDuration = 5f;
+    [SerializeField, Range(5, 50)] private float percentOfDamageBeforeSwitchReset = 25f;
     public static float sBossVulnerabilityDuration; 
-    private List<Vector3> _spawnPositions = new List<Vector3>(); 
-     
-    [Header("Patterns")]
-    public bool attackPatterns;
-    public bool spawnPatterns;
-    public bool lightGlowPatterns; 
-     
+
     private StateMachine<States> _fsm;
     private EditorCoroutine _editorCoroutine;
     private AIAnimation _aIAnimation;
-    [SerializeField] private List<Switch> _switchedList = new List<Switch>();
-    [SerializeField] private byte maxActiveSwitches = 2;
     private byte activeSwtiches; 
 
     public static Action<States, StateTransition> OnRequireStateChange;
@@ -52,7 +54,7 @@ public class BossAIBrain : MonoBehaviour
     private float m_invocationSelector; 
     private int m_entityToInvokeSelector;
 
-    private bool m_canInvoke = true;
+    private bool m_canInvoke = true; 
     private bool _canAttack = true; 
     private bool _lightsAreOff; 
 
@@ -213,7 +215,7 @@ public class BossAIBrain : MonoBehaviour
                 if (m_invocationSelector <= invocationProbability)
                 { 
                     // if invocation, select entity
-                    m_entityToInvokeSelector = UnityEngine.Random.Range(0, _spawnableEntitiesList.Count);
+                    m_entityToInvokeSelector = UnityEngine.Random.Range(0, _spawnableEntitiesList.Count); // upgrade with individual probability if needed 
                     GameObject instanceReference = Instantiate(_spawnableEntitiesList[m_entityToInvokeSelector].Prefab, _spawnPositions[i], Quaternion.identity);
                     BasicAIBrain basicAIBrain = instanceReference.GetComponent<BasicAIBrain>();
                     basicAIBrain.HasBeenInvokedByBoss = true;
@@ -256,14 +258,12 @@ public class BossAIBrain : MonoBehaviour
 
         for (int i = 0; i < direction.Count; i++)
         {
-            Debug.DrawLine(transform.position, (direction[i] - transform.position).normalized * 30f, Color.red, 2f, false);   
-            if (Physics.Raycast(transform.position, (direction[i] - transform.position).normalized, out RaycastHit hitInfo, 30f,
+            Debug.DrawLine(transform.position, (direction[i] - transform.position).normalized * 30f, Color.red, 0.25f, false);   
+            if (Physics.Raycast(transform.position, (direction[i] - transform.position).normalized * 30f, out RaycastHit hitInfo, 30f,
                                      playerLayer, QueryTriggerInteraction.Collide))
             {
-                Destroy(hitInfo.transform.gameObject);
-                Debug.Log(hitInfo.transform.gameObject.layer); 
-                Debug.Log("hitting player");
-            } 
+                Destroy(hitInfo.transform.root.gameObject); 
+            }  
         }
 
         for (int i = 0; i < rayPlaceholderVisuals.Count; i++)

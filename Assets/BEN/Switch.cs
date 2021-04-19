@@ -7,7 +7,6 @@ public class Switch : MonoBehaviour
     [SerializeField] private Color activeSwitchColor;
     private Light _light;
     private Color _initialColor;
-    public bool IsOff { get; set; }
     public bool CanBeDeactivated { get; set; }
 
     private void Start()
@@ -22,23 +21,22 @@ public class Switch : MonoBehaviour
         {
             Debug.Log("PlayerIsDetected");
             CanBeDeactivated = false;  
-            IsOff = true;
             _light.color = Color.black;
             BossAIBrain.OnRequireStateChange(States.Defend, StateTransition.Overwrite);  
-            Invoke(nameof(ResetState), BossAIBrain.sBossVulnerabilityDuration);    
+            Invoke(nameof(ResetState), 0f);     
         } 
     } 
 
     public void ShowIsDeactivatable() 
     { 
         _light.color = activeSwitchColor;
-        CanBeDeactivated = true; 
+        CanBeDeactivated = true;
+        Invoke(nameof(ResetState), 5f);  
     }
 
     private void ResetState() 
     { 
         CanBeDeactivated = false;
-        IsOff = false;
         _light.color = _initialColor;  
     }
 }

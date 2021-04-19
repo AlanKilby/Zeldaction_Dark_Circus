@@ -490,7 +490,7 @@ namespace BEN.Scripts.FSM
             {
                 _agent.speed = 0f; // risky floating-point error; 
             } // archi crade façon d'arrêter 
-            else if (type != AIType.Fakir)
+            else if (type != AIType.Fakir) 
             {
                 _agent.speed = defaultSpeed; 
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
@@ -514,6 +514,11 @@ namespace BEN.Scripts.FSM
 
         void Attack_Exit()
         {
+            if (HasBeenInvokedByBoss)
+            {
+                TransitionToNewState(States.Attack, StateTransition.Overwrite); // debug               
+            }
+
             Debug.Log("Attacking exit");
             _agent.destination = _positionBeforeAttacking;
             _agent.speed = defaultSpeed / attackStateSpeedMultiplier; 
