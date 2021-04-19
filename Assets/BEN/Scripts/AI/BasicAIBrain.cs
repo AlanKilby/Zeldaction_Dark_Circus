@@ -35,15 +35,16 @@ namespace BEN.Scripts.FSM
         Init = 1, 
         Default = 2, 
         Attack = 4,
-        Defend = 8,
+        Defend = 8,  
         Clear = 16
     } 
     
     [RequireComponent(typeof(NavMeshAgent))]
+    [DefaultExecutionOrder(0)] 
     public class BasicAIBrain : MonoBehaviour
     {
         [SerializeField] private AIType type;
-        public AIType Type => type; 
+        public AIType Type { get => type; set => Type = value; } 
         
         // used for conditionalShow's property drawer until I know how to directly use enum 
         [HideInInspector] public bool isMonkeyBall;
@@ -295,11 +296,11 @@ namespace BEN.Scripts.FSM
         {
             _fsm = StateMachine<States>.Initialize(this);
             _fsm.ChangeState(States.Init, StateTransition.Safe);
-            _destroying = 0;
+            _destroying = 0; 
             Debug.Log("awake"); 
         }
 
-        private void OnEnable()
+        private void OnEnable() 
         {
             OnRequireStateChange += TransitionToNewState;
             AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
@@ -307,12 +308,10 @@ namespace BEN.Scripts.FSM
         } 
 
         private void Start()
-        {
-
-            _patrol = GetComponent<FsmPatrol>();       
-            if (HasBeenInvokedByBoss)
-            { 
-                _patrol.enabled = false; 
+        {    
+            if (!HasBeenInvokedByBoss)
+            {
+                _patrol = GetComponent<FsmPatrol>();
             } 
 
             _agent = GetComponent<NavMeshAgent>();
@@ -324,7 +323,7 @@ namespace BEN.Scripts.FSM
                 ballCollider = GetComponentInChildren<SphereCollider>();
             }
 
-            if (Type == AIType.MonkeyBall && !_ball)
+            if (Type == AIType.MonkeyBall && !_ball) 
             {
                 try
                 {

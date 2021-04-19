@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a88608858ab1c6642b17ed3e9443a891, type: 2}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 1.46875, y: 1.90625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &2472270174803752916
@@ -191,7 +191,6 @@ GameObject:
   - component: {fileID: 2472270175368074729}
   - component: {fileID: 2472270175368074728}
   - component: {fileID: 2472270175368074741}
-  - component: {fileID: 5947275975680597124}
   m_Layer: 9
   m_Name: Monkey_Entity
   m_TagString: Enemy
@@ -327,7 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb53eba7af440494ea9bdade38eb66c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: -1
   isMonkeyBall: 0
   isFakir: 0
   _monkeyBallProjectile: {fileID: 2745454191333491136, guid: 74380e312f9f8dc47a82ed86733489e5, type: 3}
@@ -344,19 +343,3 @@ MonoBehaviour:
   playerDetected: 0
   debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
---- !u!114 &5947275975680597124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2472270175368074733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bff1e5ff7fc5aa14ab0c65221352ea82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  points:
-  - {fileID: 0}
-  - {fileID: 0}
-  playerDetected: 0
