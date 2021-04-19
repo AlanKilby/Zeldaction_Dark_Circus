@@ -16,35 +16,41 @@ public class SpawnableEntity
 {
     [SerializeField] private string _name;
     [SerializeField] private GameObject _prefab;
-    [SerializeField, Range(0f, 100f)] private float _spawnProbability = 30f;  
+    [SerializeField, Range(0f, 100f)] private float _spawnProbability = 30f;   
+    public float SpawnProbability { get => _spawnProbability; }
+    public GameObject Prefab { get => _prefab; } 
 }
 
 // temporary all in one solution
-// will upgrade to a Behaviour Tree very soon
+// will upgrade to a Behaviour Tree very soon  
 public class BossAIBrain : MonoBehaviour
 {
     // [SerializeField] private GameObject _graphics;
     [Header("Spawn")]
-    [SerializeField, Space] private List<Transform> _spawnPointsList;
-    [SerializeField] private List<SpawnableEntity> _spawnableEntitiesList;
-    [SerializeField, Range(5, 20)] private float invocationDelay = 10f;
-
+    [SerializeField, Space] private GameObject _spawner; // upgrade to have more creative control and use less prefabs 
+    [SerializeField] private List<SpawnableEntity> _spawnableEntitiesList; // use a HashSet instead to avoid duplicates 
+    [SerializeField, Range(5, 30)] private float invocationDelay = 15f;
+    private List<Vector3> _spawnPositions = new List<Vector3>(); 
+     
     [Header("Patterns")]
     public bool attackPatterns;
     public bool spawnPatterns;
     public bool lightGlowPatterns; 
 
-    private List<SpawnableEntity> _spawnablesList = new List<SpawnableEntity>();
     private StateMachine<States> _fsm;
     private EditorCoroutine _editorCoroutine;
     private AIAnimation _aIAnimation;
 
     public static Action<States, StateTransition> OnRequireStateChange;
 
-    private float m_invocationSelector;
-    private int m_platypusToInvokeSelector;
+    private float m_invocationSelector; 
+    private int m_entityToInvokeSelector;
 
     private bool m_canInvoke;
+    private bool _lightsAreOff; 
+
+    [Header("DEBUG")]
+    public bool invokeOnStart; 
 
     #region Unity Callbacks
 
@@ -67,8 +73,19 @@ public class BossAIBrain : MonoBehaviour
 
     void Start()
     {
-        _aIAnimation = GetComponentInChildren<AIAnimation>(); 
-    } 
+        _aIAnimation = GetComponentInChildren<AIAnimation>();
+        for (int i = 0; i < _spawner.transform.childCount; i++)
+        {
+            _spawnPositions.Add(_spawner.transform.GetChild(i).position);
+        } 
+
+        if (invokeOnStart)
+        {
+            InvokeEntity(1f); 
+        }
+
+        StartCoroutine(SetInvocationCooldown(invocationDelay));
+    }
 
     private void TransitionToNewState(States newState, StateTransition transition)
     {
@@ -85,29 +102,12 @@ public class BossAIBrain : MonoBehaviour
         Debug.Log("Initializing Default State");
         // _aIAnimation = _graphics.GetComponent<AIAnimation>(); 
 
-        _fsm.ChangeState(States.Default, StateTransition.Safe);
+        _fsm.ChangeState(States.Attack, StateTransition.Safe);
     }
 
     void Init_Exit()
     {
         Debug.Log("Transition to default state");
-    }
-#endregion
-
-#region Default
-    void Default_Enter()
-    {
-
-    }
-
-    void Default__FixedUpdate()
-    {
-
-    }
-
-    void Default_Exit()
-    {
-
     }
 #endregion
 
@@ -119,7 +119,10 @@ public class BossAIBrain : MonoBehaviour
 #region Attack
     void Attack_FixedUpdate()
     {
-
+        if (m_canInvoke)
+        {
+            InvokeEntity(1f); 
+        }
     }
 
     void Attack_Exit()
@@ -131,7 +134,7 @@ public class BossAIBrain : MonoBehaviour
 #region Defend
     void Defend_Enter()
     {
-
+        // when lights are off
     }
 
     void Defend_FixedUpdate()
@@ -141,17 +144,17 @@ public class BossAIBrain : MonoBehaviour
 
     void Defend_Exit() 
     {
-
+        // when lights are out 
     }
     #endregion
 
     #endregion
 
     #region Functionality
-    private void TryInvokePlatypus(float invocationProbability)
+    private void InvokeEntity(float invocationProbability)
     {
         // try invoking for each spawn point
-        for (int i = 0; i < _spawnableEntitiesList.Count; i++)
+        for (int i = 0; i < _spawner.transform.childCount; i++)  
         {
             // try invoking
             m_invocationSelector = UnityEngine.Random.Range(0f, 1f);
@@ -159,17 +162,19 @@ public class BossAIBrain : MonoBehaviour
             if (m_invocationSelector <= invocationProbability)
             {
                 // if invocation, select entity
-                m_platypusToInvokeSelector = UnityEngine.Random.Range(0, _spawnablesList.Count);
+                m_entityToInvokeSelector = UnityEngine.Random.Range(0, _spawnableEntitiesList.Count);
+                GameObject instanceReference = Instantiate(_spawnableEntitiesList[i].Prefab, _spawnPositions[i], Quaternion.identity); 
+                instanceReference.GetComponent<BasicAIBrain>().HasBeenInvokedByBoss = true;  
             }
         }
 
         // why not increase invocation probability if it failed 
-        StartCoroutine(InvocationCooldown(invocationDelay));
+        StartCoroutine(SetInvocationCooldown(invocationDelay));
     }
 
-    IEnumerator InvocationCooldown(float delay)
+    IEnumerator SetInvocationCooldown(float delay)
     {
-        m_canInvoke = false;
+        m_canInvoke = false; 
 
         yield return new WaitForSeconds(delay);
         m_canInvoke = true;
