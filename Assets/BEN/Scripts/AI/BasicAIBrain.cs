@@ -86,7 +86,9 @@ namespace BEN.Scripts.FSM
         private sbyte _destroying = -1;
 
         private Stack<FsmPatrol> _patrolStack = new Stack<FsmPatrol>();
-        private CheckSurroundings _checkSurroundings; 
+        private CheckSurroundings _checkSurroundings;
+
+        public bool HasBeenInvokedByBoss { get; set; } 
 
         [Header("-- DEBUG --")]
         [SerializeField] private EditorDebuggerSO debugger;
@@ -306,7 +308,13 @@ namespace BEN.Scripts.FSM
 
         private void Start()
         {
-            _patrol = GetComponent<FsmPatrol>(); 
+
+            _patrol = GetComponent<FsmPatrol>();       
+            if (HasBeenInvokedByBoss)
+            { 
+                _patrol.enabled = false; 
+            } 
+
             _agent = GetComponent<NavMeshAgent>();
             _checkSurroundings = GetComponentInChildren<CheckSurroundings>();
 
@@ -359,9 +367,9 @@ namespace BEN.Scripts.FSM
             _fsm.ChangeState(newState, transition); 
         }
 
-#region FSM
+        #region FSM
 
-#region Init 
+        #region Init 
 
         void Init_Enter()
         {
@@ -528,7 +536,7 @@ namespace BEN.Scripts.FSM
 
         #endregion
 
-        #region Defend
+#region Defend
 
         IEnumerator Defend_Enter()
         { 
@@ -567,6 +575,6 @@ namespace BEN.Scripts.FSM
 
         #endregion
 
-        #endregion
+#endregion
     }
 }
