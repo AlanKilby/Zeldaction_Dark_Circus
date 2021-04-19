@@ -1,4 +1,6 @@
 using UnityEngine;
+using BEN.Scripts.FSM;
+using MonsterLove.StateMachine; 
 
 public class Switch : MonoBehaviour
 {
@@ -21,9 +23,10 @@ public class Switch : MonoBehaviour
             Debug.Log("PlayerIsDetected");
             CanBeDeactivated = false;  
             IsOff = true;
-            _light.color = Color.black; 
-            Invoke(nameof(ResetState), 5f);   
-        }
+            _light.color = Color.black;
+            BossAIBrain.OnRequireStateChange(States.Defend, StateTransition.Overwrite);  
+            Invoke(nameof(ResetState), BossAIBrain.sBossVulnerabilityDuration);    
+        } 
     } 
 
     public void ShowIsDeactivatable() 
@@ -32,10 +35,10 @@ public class Switch : MonoBehaviour
         CanBeDeactivated = true; 
     }
 
-    private void ResetState()
+    private void ResetState() 
     { 
         CanBeDeactivated = false;
         IsOff = false;
-        _light.color = Color.black;  
+        _light.color = _initialColor;  
     }
 }

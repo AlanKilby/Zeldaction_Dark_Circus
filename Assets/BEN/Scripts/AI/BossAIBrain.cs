@@ -31,6 +31,8 @@ public class BossAIBrain : MonoBehaviour
     [SerializeField, Space] private GameObject _spawner; // upgrade to have more creative control and use less prefabs 
     [SerializeField] private List<SpawnableEntity> _spawnableEntitiesList; // use a HashSet instead to avoid duplicates 
     [SerializeField, Range(5, 60)] private float invocationDelay = 20f;
+    [SerializeField, Range(1, 15)] private float vulnerabilityDuration = 5f; 
+    public static float sBossVulnerabilityDuration; 
     private List<Vector3> _spawnPositions = new List<Vector3>(); 
      
     [Header("Patterns")]
@@ -75,7 +77,7 @@ public class BossAIBrain : MonoBehaviour
 
     private void OnEnable()
     {
-        OnRequireStateChange += TransitionToNewState;
+        OnRequireStateChange += TransitionToNewState; 
     }
 
     private void OnDisable()
@@ -86,6 +88,7 @@ public class BossAIBrain : MonoBehaviour
     void Start()
     {
         _aIAnimation = GetComponentInChildren<AIAnimation>();
+        sBossVulnerabilityDuration = vulnerabilityDuration; 
         for (int i = 0; i < _spawner.transform.childCount; i++)
         {
             _spawnPositions.Add(_spawner.transform.GetChild(i).position);
@@ -109,6 +112,11 @@ public class BossAIBrain : MonoBehaviour
         _fsm.ChangeState(newState, transition);
     }
 
+    private void SetLightOffState()
+    {
+        _lightsAreOff = true; 
+    }
+
     #endregion
 
     #region FSM
@@ -128,7 +136,7 @@ public class BossAIBrain : MonoBehaviour
     }
 #endregion
 
-    void Attack_Enter()
+    void Attack_Enter() 
     {
 
     }
@@ -160,7 +168,7 @@ public class BossAIBrain : MonoBehaviour
                 }
             }
             activeSwtiches = 0;
-            StartCoroutine(SetSwitchesCooldown(15f)); 
+            StartCoroutine(SetSwitchesCooldown(10f + vulnerabilityDuration)); 
         }
     }
 
@@ -171,14 +179,16 @@ public class BossAIBrain : MonoBehaviour
 #endregion
 
 #region Defend
-    void Defend_Enter()
+    IEnumerator Defend_Enter()
     {
         // when lights are off
+        yield return new WaitForSeconds(vulnerabilityDuration);
+        TransitionToNewState(States.Attack, StateTransition.Safe);  
     }
 
     void Defend_FixedUpdate()
     {
-
+        Debug.Log("Ligth are off and boss is vulnerable"); 
     }
 
     void Defend_Exit() 
