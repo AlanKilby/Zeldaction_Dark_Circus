@@ -7,6 +7,19 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="AK" t="Include">
+          <e p="AK_Player" t="Include">
+            <e p="Boomerang.cs" t="Include" />
+            <e p="HatAnimator.cs" t="Include" />
+            <e p="PlayerAnimations.cs" t="Include" />
+            <e p="PlayerMovement_Alan.cs" t="Include" />
+          </e>
+          <e p="AK_Traps" t="Include">
+            <e p="AK_CottonCandy.cs" t="Include" />
+            <e p="AK_SlowingZone.cs" t="Include" />
+            <e p="AK_TrapChest.cs" t="Include" />
+          </e>
+        </e>
         <e p="BEN" t="Include">
           <e p="_Imported" t="Include">
             <e p="Examples" t="Include">
@@ -56,15 +69,23 @@
                 <e p="NavMeshSurface.cs" t="Include" />
               </e>
             </e>
+            <e p="ReverseAnimationContext.cs" t="Include" />
           </e>
           <e p="CallMethodOnPhysiscEvent.cs" t="Include" />
           <e p="CameraController.cs" t="Include" />
           <e p="CheckSurroundings.cs" t="Include" />
           <e p="GameplayMaker.cs" t="Include" />
-          <e p="PlayerMovement.cs" t="Include" />
           <e p="ProcessInputs.cs" t="Include" />
           <e p="Scripts" t="Include">
             <e p="AgentPatrol.cs" t="Include" />
+            <e p="AI" t="Include">
+              <e p="Architecture" t="Include">
+                <e p="BehaviorTree.cs" t="Include" />
+                <e p="FsmPatrol.cs" t="Include" />
+              </e>
+              <e p="BasicAIBrain.cs" t="Include" />
+              <e p="BossAIBrain.cs" t="Include" />
+            </e>
             <e p="AIAlgorithmTests.cs" t="Include" />
             <e p="AIAnimation.cs" t="Include" />
             <e p="Animations" t="Include">
@@ -80,17 +101,11 @@
             <e p="Editor" t="Include">
               <e p="BasicAIBrainEditor.cs" t="Include" />
             </e>
-            <e p="FSM" t="Include">
-              <e p="BasicAIBrain.cs" t="Include" />
-              <e p="FiniteStateMachine.cs" t="Include" />
-              <e p="FsmPatrol.cs" t="Include" />
-            </e>
+            <e p="EditorDebuggerSO.cs" t="Include" />
             <e p="GameEvent" t="Include">
-              <e p="AI.cs" t="Include" />
               <e p="GameEventListener.cs" t="Include" />
               <e p="GameEventSO.cs" t="Include" />
               <e p="MainCam.cs" t="Include" />
-              <e p="UI.cs" t="Include" />
             </e>
             <e p="GameManager.cs" t="Include" />
             <e p="Gameplay (deprecated)" t="Include">
@@ -119,15 +134,9 @@
             <e p="SimpleCameraController.cs" t="Include" />
             <e p="Utility.cs" t="Include" />
           </e>
+          <e p="Switch.cs" t="Include" />
         </e>
         <e p="Mirror.cs" t="Include" />
-        <e p="Player" t="Include">
-          <e p="Boomerang.cs" t="Include" />
-          <e p="BoomerangThrow.cs" t="Include" />
-          <e p="HatAnimator.cs" t="Include" />
-          <e p="PlayerAnimations.cs" t="Include" />
-          <e p="PlayerMovement_Alan.cs" t="Include" />
-        </e>
         <e p="SendChildPositionOnEvent.cs" t="Include" />
       </e>
       <e p="NavMeshComponents.csproj" t="IncludeRecursive" />

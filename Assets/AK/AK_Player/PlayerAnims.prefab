@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6242788996356416055}
   - component: {fileID: 6242788996356416054}
   - component: {fileID: 6242788996356416059}
-  - component: {fileID: 6242788996356416056}
   - component: {fileID: 6242788996356416057}
   m_Layer: 0
   m_Name: PlayerAnims
@@ -48,6 +47,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   currentState: 
+  PLAYER_IDLE_HAT: idleh
+  PLAYER_DOWN_HAT: Walkingdownh
+  PLAYER_LEFT_HAT: WalkingLefth
+  PLAYER_RIGHT_HAT: Walkingrighth
+  PLAYER_TOP_HAT: Walkingtoph
+  PLAYER_IDLE_NO_HAT: idlewh
+  PLAYER_DOWN_NO_HAT: WalkingdownNh
+  PLAYER_LEFT_NO_HAT: WalkingleftNh
+  PLAYER_RIGHT_NO_HAT: WalkingrightNh
+  PLAYER_TOP_NO_HAT: WalkingtopNh
+  PLAYER_THROWING_HAT: throwinghat
 --- !u!212 &6242788996356416059
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -63,6 +73,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -98,21 +109,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!111 &6242788996356416056
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6242788996356416052}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!95 &6242788996356416057
 Animator:
   serializedVersion: 3
