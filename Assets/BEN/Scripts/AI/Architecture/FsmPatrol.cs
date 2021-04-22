@@ -4,6 +4,7 @@ using UnityEngine.Serialization;
 
 namespace BEN.Scripts.FSM
 {
+    [DefaultExecutionOrder(10)]
     public class FsmPatrol : MonoBehaviour
     {
         public Transform[] points;

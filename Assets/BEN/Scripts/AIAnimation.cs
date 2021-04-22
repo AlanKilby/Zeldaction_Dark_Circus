@@ -35,8 +35,12 @@ namespace BEN.Scripts
 
         public void SetType(AIType type) // called on Awake or from Editor
         {
-            _type = type;
-            _animationSo = GameManager.Instance.scriptableAnimationList[(int) _type]; 
+            try
+            {
+                _type = type;
+                _animationSo = GameManager.Instance.scriptableAnimationList[(int)_type];
+            }
+            catch (Exception e) { Debug.Log("WARNING : " + e.Message); } // sending null ref when called from a boss-spawned entity 
         }
 
         public void PlayAnimation(AnimationState clip)

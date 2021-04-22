@@ -35,15 +35,16 @@ namespace BEN.Scripts.FSM
         Init = 1, 
         Default = 2, 
         Attack = 4,
-        Defend = 8,
+        Defend = 8,  
         Clear = 16
     } 
     
     [RequireComponent(typeof(NavMeshAgent))]
+    [DefaultExecutionOrder(0)] 
     public class BasicAIBrain : MonoBehaviour
     {
         [SerializeField] private AIType type;
-        public AIType Type => type; 
+        public AIType Type { get => type; set => Type = value; } 
         
         // used for conditionalShow's property drawer until I know how to directly use enum 
         [HideInInspector] public bool isMonkeyBall;
@@ -86,7 +87,9 @@ namespace BEN.Scripts.FSM
         private sbyte _destroying = -1;
 
         private Stack<FsmPatrol> _patrolStack = new Stack<FsmPatrol>();
-        private CheckSurroundings _checkSurroundings; 
+        private CheckSurroundings _checkSurroundings;
+
+        public bool HasBeenInvokedByBoss { get; set; } 
 
         [Header("-- DEBUG --")]
         [SerializeField] private EditorDebuggerSO debugger;
@@ -249,9 +252,29 @@ namespace BEN.Scripts.FSM
                 {
                     Gizmos.color = Color.blue;
                 }
-
                 Gizmos.DrawWireSphere(_patrol.points[i].position, 0.25f);
-                Gizmos.color = Color.cyan;
+
+                // this is art
+                if (Type == AIType.Monkey)
+                {
+                    Gizmos.color = Color.white;
+
+                } 
+                else if (Type == AIType.MonkeyBall)
+                {
+                    Gizmos.color = Color.black; 
+
+                }
+                else if (Type == AIType.Mascotte) 
+                {
+                    Gizmos.color = Color.cyan;
+
+                }
+                else if (Type == AIType.Fakir)
+                {
+                    Gizmos.color = Color.red; 
+
+                }
                 Gizmos.DrawLine(_patrol.points[i].position, _patrol.points[(int)Mathf.Repeat(i + 1, _patrol.points.Length)].position);
             }
         }
@@ -273,11 +296,11 @@ namespace BEN.Scripts.FSM
         {
             _fsm = StateMachine<States>.Initialize(this);
             _fsm.ChangeState(States.Init, StateTransition.Safe);
-            _destroying = 0;
+            _destroying = 0; 
             Debug.Log("awake"); 
         }
 
-        private void OnEnable()
+        private void OnEnable() 
         {
             OnRequireStateChange += TransitionToNewState;
             AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
@@ -285,8 +308,12 @@ namespace BEN.Scripts.FSM
         } 
 
         private void Start()
-        {
-            _patrol = GetComponent<FsmPatrol>(); 
+        {    
+            if (!HasBeenInvokedByBoss)
+            {
+                _patrol = GetComponent<FsmPatrol>();
+            } 
+
             _agent = GetComponent<NavMeshAgent>();
             _checkSurroundings = GetComponentInChildren<CheckSurroundings>();
 
@@ -296,7 +323,7 @@ namespace BEN.Scripts.FSM
                 ballCollider = GetComponentInChildren<SphereCollider>();
             }
 
-            if (Type == AIType.MonkeyBall && !_ball)
+            if (Type == AIType.MonkeyBall && !_ball) 
             {
                 try
                 {
@@ -339,9 +366,9 @@ namespace BEN.Scripts.FSM
             _fsm.ChangeState(newState, transition); 
         }
 
-#region FSM
+        #region FSM
 
-#region Init 
+        #region Init 
 
         void Init_Enter()
         {
@@ -463,7 +490,7 @@ namespace BEN.Scripts.FSM
             {
                 _agent.speed = 0f; // risky floating-point error; 
             } // archi crade façon d'arrêter 
-            else if (type != AIType.Fakir)
+            else if (type != AIType.Fakir) 
             {
                 _agent.speed = defaultSpeed; 
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
@@ -487,6 +514,11 @@ namespace BEN.Scripts.FSM
 
         void Attack_Exit()
         {
+            if (HasBeenInvokedByBoss)
+            {
+                TransitionToNewState(States.Attack, StateTransition.Overwrite); // debug               
+            }
+
             Debug.Log("Attacking exit");
             _agent.destination = _positionBeforeAttacking;
             _agent.speed = defaultSpeed / attackStateSpeedMultiplier; 
@@ -508,7 +540,7 @@ namespace BEN.Scripts.FSM
 
         #endregion
 
-        #region Defend
+#region Defend
 
         IEnumerator Defend_Enter()
         { 
@@ -547,6 +579,6 @@ namespace BEN.Scripts.FSM
 
         #endregion
 
-        #endregion
+#endregion
     }
 }
