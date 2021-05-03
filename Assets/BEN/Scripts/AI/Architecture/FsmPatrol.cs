@@ -1,5 +1,3 @@
-using System;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -46,7 +44,7 @@ namespace BEN.AI
                 return;
 
             _agent.destination = Points[DestPoint].position;
-            DestPoint = (DestPoint + 1) % Points.Length; 
+            DestPoint = (DestPoint + 1) % Points.Length;
         } 
     }
 }

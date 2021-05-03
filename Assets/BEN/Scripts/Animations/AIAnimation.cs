@@ -10,6 +10,8 @@ namespace BEN.Animation
         Walk,
         Atk,
         Hit,
+        SecondaryAtk,
+        Miss,
         Die 
     }
 
@@ -59,7 +61,7 @@ namespace BEN.Animation
             catch (Exception e)
             {
                 Debug.LogError($"{e.Message} thrown by {gameObject.name}");
-            }
+            } 
         }
 
         public void StopAnimating()

@@ -82,16 +82,19 @@ namespace BEN.AI
         private Sprite _sprite;
 
         private CheckSurroundings _checkSurroundings; 
+        
+        private AnimDirection _animDirection;
+        private int _previousParentRotation;
+        private int _currentParentRotation; 
 
         public bool HasBeenInvokedByBoss { get; set; } 
+
 
         [Header("-- DEBUG --")]
         [SerializeField] private EditorDebuggerSO debugger;
         [SerializeField] public bool refresh;
         private Collider monkeyBallCollider;
         private Collider ballCollider;
-        public AnimState animState;
-        public AnimDirection animDirection; 
 
         #region Editor
 
@@ -181,16 +184,12 @@ namespace BEN.AI
                 }
             }
 
-            _agent.speed = defaultSpeed; 
+            _agent.speed = defaultSpeed;
         } 
 
-        private void FixedUpdate() 
+        private void FixedUpdate()
         {
-            Debug.Log("rotation index is " + Mathf.FloorToInt(transform.rotation.eulerAngles.y / 90)); // use this to set anim direction
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                _aIAnimation.PlayAnimation(animState, animDirection);
-            }
+            CheckAnimDirection();
         }
 
         private void OnDisable()
@@ -205,6 +204,36 @@ namespace BEN.AI
         private void TransitionToNewState(States newState, StateTransition transition)
         {
             _fsm.ChangeState(newState, transition); 
+        }
+
+        private void CheckAnimDirection()
+        {
+            _currentParentRotation = (Mathf.FloorToInt(transform.rotation.eulerAngles.y / 90));
+            _animDirection = (AnimDirection) (_currentParentRotation);
+
+            if (_currentParentRotation == _previousParentRotation) return;
+            
+            _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+            _previousParentRotation = _currentParentRotation;
+            StartCoroutine(nameof(ChangeGraphicsRotation)); 
+        } 
+        
+        private void CheckAnimDirection(AnimState state)
+        {
+            _currentParentRotation = (Mathf.FloorToInt(transform.rotation.eulerAngles.y / 90));
+            _animDirection = (AnimDirection) (_currentParentRotation);
+
+            if (_currentParentRotation == _previousParentRotation) return;
+            
+            _aIAnimation.PlayAnimation(state, _animDirection);
+            _previousParentRotation = _currentParentRotation;
+            StartCoroutine(nameof(ChangeGraphicsRotation)); 
+        } 
+
+        private IEnumerator ChangeGraphicsRotation()
+        {
+            yield return new WaitForSeconds(1.5f);
+            _graphics.transform.localRotation = Quaternion.identity; 
         }
 
 #region FSM
@@ -226,33 +255,20 @@ namespace BEN.AI
         #region Default
         IEnumerator Default_Enter()  
         { 
-            yield return new WaitForSeconds(0.04f); 
+            yield return new WaitForSeconds(0.03f);
+            _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection); 
+        }
 
-            // idle when waiting at a patrol node point 
-
-            /* switch (type)
-            {
-                case AIType.Monkey: 
-                    _aIAnimation.PlayAnimation(AnimState.WalkRight); // make it dynamic direction instead 
-                    break;
-                case AIType.MonkeySurBall:
-                    _aIAnimation.PlayAnimation(AnimState.WalkRight); // make it dynamic direction instead
-                    // _ballAnimation.PlayAnimation(); 
-                    break;
-                case AIType.Mascotte: 
-                    _aIAnimation.PlayAnimation(AnimState.WalkLeft); // make it dynamic direction instead  
-                    break;
-                case AIType.Fakir:
-                    _aIAnimation.PlayAnimation(AnimState.WalkRight); // make it dynamic direction instead  
-                    break;
-            } */
+        private void SetNewAnimationOnPatrol()
+        {
+            _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);  
         } 
 
         void Default_FixedUpdate() 
         { 
             switch (type)
             {
-                case AIType.Monkey:
+                case AIType.Monkey: 
                     break;
                 case AIType.MonkeySurBall:
                     break;
@@ -286,28 +302,27 @@ namespace BEN.AI
             _agent.destination = TargetToAttackPosition;
             _agent.speed = 0f; 
 
-            // make the enemy predict the future player position instead of aiming at it's current one
+            // UPGRADE : make the enemy predict the future player position instead of aiming at it's current one
             switch (type) 
             {
                 case AIType.Monkey:
-                    // _aIAnimation.PlayAnimation(AnimState.AtkRight); 
+                    _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
                     break;
                 case AIType.MonkeySurBall:
-                    // _aIAnimation.PlayAnimation(AnimState.AtkRight);
+                    _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
                     InvokeRepeating(nameof(MonkeyBallAttack), 0f, attackRate); 
                     break;
                 case AIType.Mascotte:
-                    // _aIAnimation.PlayAnimation(AnimState.AtkLeft);
+                    _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
                     break;
                 case AIType.Fakir:
-                    // _aIAnimation.PlayAnimation(AnimState.AtkRight);
+                    _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
                     _agent.speed = 0f;
                     InvokeRepeating(nameof(FakirAttack), 0f, attackRate); 
                     break;
                 default:
                     break; 
             } 
-            // abstracted away => this should be standard // make it dynamic direction instead 
         }
 
         private void Attack_FixedUpdate()  
@@ -320,20 +335,24 @@ namespace BEN.AI
             {
                 _agent.speed = defaultSpeed * attackStateSpeedMultiplier; 
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
-            }
+                CheckAnimDirection(AnimState.Atk); 
+            } 
 
         } 
  
         private void MonkeyBallAttack()
         {
             GameObject reference = Instantiate(_monkeyBallProjectile, _graphics.transform.position, _graphics.transform.rotation);
-            reference.transform.position = _graphics.transform.position; 
+            reference.transform.position = _graphics.transform.position;
+            Debug.Log("monkeyball projectile");
         }
 
         private void FakirAttack() // WARNING : Duplicate
         {
             GameObject reference = Instantiate(_fakirProjectile, _graphics.transform.position, _graphics.transform.rotation);
             reference.transform.position = _graphics.transform.position;
+            Debug.Log("fakir projectile");
+
         }
 
         void Attack_Exit()
