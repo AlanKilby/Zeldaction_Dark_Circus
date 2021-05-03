@@ -2,24 +2,28 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
-namespace BEN.Scripts.FSM
+namespace BEN.AI
 {
     [DefaultExecutionOrder(10)]
     public class FsmPatrol : MonoBehaviour
     {
-        public Transform[] points;
-        private int _destPoint = 0;
+        public Transform patrolZone;  
+        public Transform[] Points { get; private set; }
+        public int DestPoint { get; private set; }
         private NavMeshAgent _agent;
         [FormerlySerializedAs("_playerDetected")] public bool playerDetected;
-        private float _distanceFromTarget;
 
         private void Start()
         {
+            Points = new Transform[patrolZone.childCount]; 
+            for (int i = 0; i < patrolZone.childCount; i++)
+            {
+                Points[i] = patrolZone.GetChild(i); 
+            }
+
             _agent = GetComponent<NavMeshAgent>();
 
-            // Disabling auto-braking allows for continuous movement
-            // between points (ie, the agent doesn't slow down as it
-            // approaches a destination point).
+            DestPoint = 0; 
             _agent.autoBraking = false;
 
             GotoNextPoint(); 
@@ -27,41 +31,17 @@ namespace BEN.Scripts.FSM
 
         private void FixedUpdate() 
         { 
-            // Choose the next destination point when the agent gets
-            // close to the current one. 
             if (!_agent.pathPending && _agent.remainingDistance < 0.5f && !playerDetected)
                 GotoNextPoint();
-
-
-            if (!playerDetected) return;
-            _distanceFromTarget = Vector3.Distance(transform.position, _agent.destination); 
-            _agent.speed = 0f;
         } 
 
         void GotoNextPoint() 
         {
-            // Returns if no points have been set up
-            if (points.Length == 0)
+            if (Points.Length == 0)
                 return;
 
-            // Set the agent to go to the currently selected destination.
-            _agent.destination = points[_destPoint].position;
-
-            // Choose the next point in the array as the destination,
-            // cycling to the start if necessary.
-            _destPoint = (_destPoint + 1) % points.Length;
-        }
-
-        public void SetDestination(Vector3 newDestination, float speed, bool plDetected)
-        {
-            _agent.destination = newDestination;
-            playerDetected = plDetected;
-            _agent.speed = speed; 
-        }
-
-        public void Stop()
-        {
-            _agent.speed = 0f; 
-        }
+            _agent.destination = Points[DestPoint].position;
+            DestPoint = (DestPoint + 1) % Points.Length;
+        } 
     }
 }

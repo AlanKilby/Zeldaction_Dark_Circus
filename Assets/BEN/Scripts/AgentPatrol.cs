@@ -2,8 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using BEN.Utility; 
 
-namespace BEN.Scripts
+namespace BEN.AI
 {
     [RequireComponent(typeof(NavMeshAgent))] 
     public class AgentPatrol : MonoBehaviour
@@ -43,7 +44,7 @@ namespace BEN.Scripts
 
             if (!playerDetected) return;
             _distanceFromTarget = Vector3.Distance(transform.position, _agent.destination); 
-            _agent.speed = 0f + Utility.BoolToInt(isMascotte);
+            _agent.speed = 0f + Base.BoolToInt(isMascotte);
 
             if (_canThrowObject && !isMascotte)
                 ThrowObject();

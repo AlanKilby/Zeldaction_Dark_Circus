@@ -1,5 +1,5 @@
 using UnityEngine;
-using BEN.Scripts.FSM;
+using BEN.AI;
 using MonsterLove.StateMachine; 
 
 public class Switch : MonoBehaviour

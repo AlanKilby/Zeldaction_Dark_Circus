@@ -1,5 +1,5 @@
-using BEN.Scripts; 
-using BEN.Scripts.FSM;
+using BEN.AI;
+using BEN.Animation;
 using System; 
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 #endif
  
-[System.Serializable]
+[Serializable]
 public class SpawnableEntity
 {
     [SerializeField] private AIType _type;

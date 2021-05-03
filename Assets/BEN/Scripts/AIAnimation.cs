@@ -1,11 +1,11 @@
 using System;
-using BEN.Scripts.FSM;
+using BEN.AI;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace BEN.Scripts
+namespace BEN.Animation
 {
-    public enum AnimationState
+    public enum AnimState
     {
         IdleRight = 0,
         IdleLeft, 
@@ -43,7 +43,7 @@ namespace BEN.Scripts
             catch (Exception e) { Debug.Log("WARNING : " + e.Message); } // sending null ref when called from a boss-spawned entity 
         }
 
-        public void PlayAnimation(AnimationState clip)
+        public void PlayAnimation(AnimState clip)
         {
             if (!_animator) _animator = GetComponent<Animator>(); 
             if (!_animator.runtimeAnimatorController)

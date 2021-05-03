@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BEN.Scripts
+namespace BEN.Math
 {
     public class ParabolicFunction : MonoBehaviour
     {
@@ -20,7 +20,12 @@ namespace BEN.Scripts
         private Vector3 _target; // until I fix parabolic formula
         public Vector3 _CasterPosition { get; set; }
 
-        private bool invert = false; 
+        private bool invert = false;
+
+        private void Awake()
+        {
+            _CasterPosition = transform.position; 
+        }
 
         private void Start()
         {

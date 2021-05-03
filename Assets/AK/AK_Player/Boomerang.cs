@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using BEN.Scripts.FSM;
-using BEN.Scripts; 
-using BEN; 
+using BEN.AI;
+using BEN.Math; 
 
 public class Boomerang : MonoBehaviour
 {

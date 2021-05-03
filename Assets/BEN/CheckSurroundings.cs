@@ -1,11 +1,8 @@
-using BEN.Scripts;
 using UnityEngine;
-using System.Reflection;
-using BEN.Scripts.FSM;
 using MonsterLove.StateMachine;
 using UnityEngine.AI; 
 
-namespace BEN
+namespace BEN.AI 
 {
     [RequireComponent(typeof(BoxCollider))]
     public class CheckSurroundings : MonoBehaviour
@@ -63,7 +60,7 @@ namespace BEN
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag("PlayerWeapon") && bearerType == AIType.MonkeyBall && CanDodgeProjectile) 
+            if (other.CompareTag("PlayerWeapon") && bearerType == AIType.MonkeySurBall && CanDodgeProjectile) 
             {
                 try
                 {
@@ -97,8 +94,8 @@ namespace BEN
 
                 if (!_playerDetected || _notified) continue;
                 
-                // go to attackState 
-                if (!_notified) 
+                // go to attackState  
+                if (!_notified && other) 
                 { 
                     _brain.TargetToAttackPosition = other.transform.position;
                     BasicAIBrain.OnRequireStateChange(States.Attack, StateTransition.Overwrite); 

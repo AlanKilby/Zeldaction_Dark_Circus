@@ -1,5 +1,7 @@
-using BEN.Scripts;
+using BEN.Utility;
+using BEN.AI; 
 using UnityEngine;
+
 
 // TODO : extend it so it can be called on any type of collider (box and sphere mostly)
 namespace BEN
@@ -67,7 +69,7 @@ namespace BEN
             // rush toward player => move elsewhere
             if (other.CompareTag("Player") && !_patrolBehaviour.playerDetected && _playerDetected)
             {
-                _patrolBehaviour.SetDestination(other.transform.position, 0f + Utility.BoolToInt(isMascotte), _playerDetected); 
+                _patrolBehaviour.SetDestination(other.transform.position, 0f + Base.BoolToInt(isMascotte), _playerDetected); 
             }
         }
 
@@ -101,7 +103,7 @@ namespace BEN
                 _notified = true; 
                 
                 // attack player from distance or rush toward it 
-                _patrolBehaviour.SetDestination(other.transform.position, 0f + Utility.BoolToInt(isMascotte), _playerDetected);
+                _patrolBehaviour.SetDestination(other.transform.position, 0f + Base.BoolToInt(isMascotte), _playerDetected);
                 
             } 
             // blockedByWall = Physics.Raycast(transform.position, other.transform.position - transform.position, out RaycastHit hit, 15f, props);

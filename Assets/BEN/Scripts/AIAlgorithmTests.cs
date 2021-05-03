@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BEN.Scripts;
+using BEN.Utility;
 using UnityEngine;
 using UnityEngine.AI; 
 
@@ -62,6 +62,6 @@ public class AIAlgorithmTests : MonoBehaviour
          * DFS(start_node); */
     }
 
-    bool IsVisited() => Utility.IntToBool(neighbours.Value); 
+    bool IsVisited() => Base.IntToBool(neighbours.Value); 
 
 }
