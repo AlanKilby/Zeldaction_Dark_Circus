@@ -13,7 +13,6 @@ public class Boomerang : MonoBehaviour
 
     private Rigidbody rb;
 
-    bool isGoing;
     bool isComingBack;
 
     bool holder = true;
@@ -28,7 +27,6 @@ public class Boomerang : MonoBehaviour
     {
         comebackTimerHolder = comebackTimer;
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
-        isGoing = true;
         isComingBack = false;
         rb = gameObject.GetComponent<Rigidbody>();
         aimPos = playerPos.GetComponent<PlayerMovement_Alan>().aim.transform.position;
@@ -56,7 +54,6 @@ public class Boomerang : MonoBehaviour
         else if(comebackTimer <= 0)
         {
             isComingBack = true;
-            isGoing = false;
         }
 
 
@@ -110,7 +107,6 @@ public class Boomerang : MonoBehaviour
         {
             playerPos.position = new Vector3(transform.position.x, playerPos.position.y, transform.position.z);
             isComingBack = true;
-            isGoing = false;
             playerPos.GetComponent<PlayerMovement_Alan>().canThrow = true;
             Destroy(gameObject);
             
@@ -173,7 +169,6 @@ public class Boomerang : MonoBehaviour
             Debug.Log("Collision with Wall");
 
             isComingBack = true;
-            isGoing = false;
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy")) 
