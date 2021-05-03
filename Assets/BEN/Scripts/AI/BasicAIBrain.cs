@@ -98,15 +98,16 @@ namespace BEN.AI
             isFakir = type == AIType.Fakir;
             isMonkeyBall = type == AIType.MonkeySurBall;
             isCaster = isFakir || isMonkeyBall; 
+            _patrol.SetPoints(); 
         } 
 
         private void OnDrawGizmos() 
-        { 
+        {
             try
             {
                 for (var i = 0; i < _patrol.Points.Length; i++)
                 {
-                    if (i == 0) 
+                    if (i == 0)
                     {
                         Gizmos.color = Color.yellow;
                     }
@@ -114,7 +115,7 @@ namespace BEN.AI
                     {
                         Gizmos.color = Color.white;
                     }
-                    else if (Type == AIType.MonkeySurBall) 
+                    else if (Type == AIType.MonkeySurBall)
                     {
                         Gizmos.color = Color.black;
                     }
@@ -127,11 +128,14 @@ namespace BEN.AI
                         Gizmos.color = Color.red;
                     }
 
-                    Gizmos.DrawLine(_patrol.Points[i].position, _patrol.Points[(int)Mathf.Repeat(i + 1, _patrol.Points.Length)].position);
+                    Gizmos.DrawLine(_patrol.Points[i].position, _patrol.Points[(int) Mathf.Repeat(i + 1, _patrol.Points.Length)].position);
                     Gizmos.DrawWireSphere(_patrol.Points[i].position, 0.25f);
                 }
             }
-            catch (NullReferenceException) { Debug.Log("ERROR : no transform is assigned in fsm Script !"); } 
+            catch (NullReferenceException nullRef)
+            {
+                _patrol = GetComponent<FsmPatrol>();
+            } 
         }
 
 #endregion

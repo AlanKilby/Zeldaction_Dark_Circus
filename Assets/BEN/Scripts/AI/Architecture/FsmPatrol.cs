@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -15,12 +16,6 @@ namespace BEN.AI
 
         private void Start()
         {
-            Points = new Transform[patrolZone.childCount]; 
-            for (int i = 0; i < patrolZone.childCount; i++)
-            {
-                Points[i] = patrolZone.GetChild(i); 
-            }
-
             _agent = GetComponent<NavMeshAgent>();
 
             DestPoint = 0; 
@@ -33,15 +28,24 @@ namespace BEN.AI
         { 
             if (!_agent.pathPending && _agent.remainingDistance < 0.5f && !playerDetected)
                 GotoNextPoint();
-        } 
+        }
 
-        void GotoNextPoint() 
+        public void SetPoints()
+        {
+            Points = new Transform[patrolZone.childCount]; 
+            for (int i = 0; i < patrolZone.childCount; i++)
+            {
+                Points[i] = patrolZone.GetChild(i); 
+            } 
+        }
+
+        private void GotoNextPoint() 
         {
             if (Points.Length == 0)
                 return;
 
             _agent.destination = Points[DestPoint].position;
-            DestPoint = (DestPoint + 1) % Points.Length;
+            DestPoint = (DestPoint + 1) % Points.Length; 
         } 
     }
 }
