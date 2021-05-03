@@ -57,7 +57,7 @@ namespace BEN.AI
         [SerializeField, ConditionalShow("isMonkeyBall", true), Tooltip("Delay before jumping back to ball again"), Range(2f, 5f)] private float monkeyBallProvocDuration = 3f;
         [SerializeField, Tooltip("DefaultSpeed increse when rushing toward the player. 1 = no increase"), Range(1f, 3f)] private float attackStateSpeedMultiplier = 1.25f;
         [SerializeField, Tooltip("Delay from Idle to Attack State when player is detected"), Range(0f, 5f)] private float attackDelay = 1f; 
-        [SerializeField, Range(1f, 10f)] private float attackRange = 1f;   
+        [SerializeField, Range(1f, 30f)] private float attackRange = 1f;   
 
         private StateMachine<States> _fsm; 
         private GameObject _patrolZone; 
@@ -181,7 +181,7 @@ namespace BEN.AI
 
         private void FixedUpdate() 
         {
-            Debug.Log("rotation index is " + Mathf.FloorToInt(transform.rotation.eulerAngles.y / 90));  
+            Debug.Log("rotation index is " + Mathf.FloorToInt(transform.rotation.eulerAngles.y / 90)); // use this to set anim direction
         }
 
         private void OnDisable()
@@ -217,8 +217,6 @@ namespace BEN.AI
         {
             Debug.Log("Initializing Default State"); 
             _aIAnimation = _graphics.GetComponent<AIAnimation>();
-            _aIAnimation.SetType(type);
-
             _fsm.ChangeState(States.Default, StateTransition.Safe);
         }
 
@@ -237,7 +235,7 @@ namespace BEN.AI
 
             // idle when waiting at a patrol node point 
 
-            switch (type)
+            /* switch (type)
             {
                 case AIType.Monkey: 
                     _aIAnimation.PlayAnimation(AnimState.WalkRight); // make it dynamic direction instead 
@@ -252,7 +250,7 @@ namespace BEN.AI
                 case AIType.Fakir:
                     _aIAnimation.PlayAnimation(AnimState.WalkRight); // make it dynamic direction instead  
                     break;
-            } 
+            } */
         } 
 
         void Default_FixedUpdate() 
@@ -295,35 +293,36 @@ namespace BEN.AI
             Debug.Log($"Attacking in {attackDelay} seconds"); 
             
             _agent.destination = TargetToAttackPosition;
-            _agent.speed = defaultSpeed * attackStateSpeedMultiplier; 
-            
+            _agent.speed = 0f; 
+
+            // make the enemy predict the future player position instead of aiming at it's current one
             switch (type) 
             {
                 case AIType.Monkey:
                     Debug.Log("Monkey => attacking");
-                    _aIAnimation.PlayAnimation(AnimState.AtkRight); 
+                    // _aIAnimation.PlayAnimation(AnimState.AtkRight); 
                     break;
                 case AIType.MonkeySurBall:
                     Debug.Log("MonkeyBall => attacking");
-                    _aIAnimation.PlayAnimation(AnimState.AtkRight);
+                    // _aIAnimation.PlayAnimation(AnimState.AtkRight);
                     InvokeRepeating(nameof(MonkeyBallAttack), 0f, attackRate); 
                     break;
                 case AIType.Mascotte:
                     Debug.Log("Mascotte => attacking");
-                    _aIAnimation.PlayAnimation(AnimState.AtkLeft);
+                    // _aIAnimation.PlayAnimation(AnimState.AtkLeft);
                     break;
                 case AIType.Fakir:
                     Debug.Log("Fakir => attacking"); 
-                    _aIAnimation.PlayAnimation(AnimState.AtkRight);
+                    // _aIAnimation.PlayAnimation(AnimState.AtkRight);
                     _agent.speed = 0f;
                     InvokeRepeating(nameof(FakirAttack), 0f, attackRate); 
                     break;
                 default:
                     Debug.Log("Default => breaking");
-                    break;
-            }
+                    break; 
+            } 
             // abstracted away => this should be standard // make it dynamic direction instead 
-        } 
+        }
 
         private void Attack_FixedUpdate()  
         {
@@ -333,13 +332,13 @@ namespace BEN.AI
             } 
             else 
             {
-                _agent.speed = defaultSpeed; 
+                _agent.speed = defaultSpeed * attackStateSpeedMultiplier; 
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
             }
 
             Debug.Log("Attacking fixedUpdate");
         } 
-
+ 
         private void MonkeyBallAttack()
         {
             GameObject reference = Instantiate(_monkeyBallProjectile, _graphics.transform.position, _graphics.transform.rotation);
@@ -360,9 +359,9 @@ namespace BEN.AI
             }
 
             Debug.Log("Attacking exit");
-            _agent.destination = _patrol.Points[_patrol.DestPoint].position; // going back to last visited node
+            _agent.destination = _patrol.Points[_patrol.DestPoint].position; // TODO : use closest point of list instead
             _agent.speed = defaultSpeed / attackStateSpeedMultiplier; 
-            _aIAnimation.PlayAnimation(AnimState.WalkRight); // make it dynamic direction instead 
+            // _aIAnimation.PlayAnimation(AnimState.WalkRight); // make it dynamic direction instead 
                                                                   // _ballAnimation.StopAnimating(); only when initial position is reached
 
             switch (type)
@@ -388,7 +387,7 @@ namespace BEN.AI
             _agent.speed = 0f;
             _graphics.transform.localPosition = Vector3.zero; 
             _ball.SetActive(false);
-            _aIAnimation.PlayAnimation(11); // miss 
+            // _aIAnimation.PlayAnimation(11); 
             _checkSurroundings.CanDodgeProjectile = false;
             monkeyBallCollider.enabled = false;
             ballCollider.enabled = false;
@@ -407,7 +406,7 @@ namespace BEN.AI
             _agent.speed = defaultSpeed;
             _graphics.transform.localPosition = Vector3.up; 
             _ball.SetActive(true);
-            _aIAnimation.PlayAnimation(AnimState.AtkRight);
+            // _aIAnimation.PlayAnimation(AnimState.AtkRight); 
 
             Invoke(nameof(ResetBool), 8f); 
         }

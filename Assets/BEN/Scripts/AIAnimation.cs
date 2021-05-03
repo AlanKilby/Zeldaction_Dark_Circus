@@ -1,25 +1,27 @@
 using System;
 using BEN.AI;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace BEN.Animation
 {
     public enum AnimState
     {
-        IdleRight = 0,
-        IdleLeft, 
+        Idle,
+        Walk,
+        Atk,
         Hit,
-        WalkTop,
-        WalkRight, 
-        WalkBot, 
-        WalkLeft, 
-        AtkTop,
-        AtkRight,
-        AtkBot, 
-        AtkLeft 
+        Die 
     }
-    
+
+    public enum AnimDirection
+    {
+        None = -1,
+        Top, 
+        Right, 
+        Bottom, 
+        Left
+    }
+
     [RequireComponent(typeof(Animator))]
     public class AIAnimation : MonoBehaviour
     {
@@ -31,19 +33,10 @@ namespace BEN.Animation
         {
             _animator = GetComponent<Animator>();
             _animator.runtimeAnimatorController = _animationSo.controller;
+            _animationSo.PopulateDictionary(); 
         }
 
-        public void SetType(AIType type) // called on Awake or from Editor
-        {
-            try
-            {
-                _type = type;
-                _animationSo = GameManager.Instance.scriptableAnimationList[(int)_type];
-            }
-            catch (Exception e) { Debug.Log("WARNING : " + e.Message); } // sending null ref when called from a boss-spawned entity 
-        }
-
-        public void PlayAnimation(AnimState clip)
+        /* public void PlayAnimation(AnimState clip)
         {
             if (!_animator) _animator = GetComponent<Animator>(); 
             if (!_animator.runtimeAnimatorController)
@@ -54,13 +47,13 @@ namespace BEN.Animation
             if (!_animator.enabled)
                 _animator.enabled = true;  
 
-            _animator.speed = _animationSo.clipList[(int)clip].speedMultiplier;
+            _animator.speed = _animationSo.clipListArray[(int)clip].speedMultiplier;
 
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipList[(int) clip].clipContainer.name)) return;
-            _animator.Play(_animationSo.clipList[(int)clip].clipContainer.name);
-        }
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipListArray[(int) clip].clipContainer.name)) return;
+            _animator.Play(_animationSo.clipListArray[(int)clip].clipContainer.name);
+        } */
         
-        public void PlayAnimation(int animIndex)
+        /* public void PlayAnimation(int animIndex)
         {
             if (!_animator) return;
             if (!_animator.runtimeAnimatorController) 
@@ -71,11 +64,11 @@ namespace BEN.Animation
             if (!_animator.enabled)
                 _animator.enabled = true; 
 
-            _animator.speed = _animationSo.clipList[animIndex].speedMultiplier;
+            _animator.speed = _animationSo.clipListArray[animIndex].speedMultiplier;
 
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipList[animIndex].clipContainer.name)) return;
-            _animator.Play(_animationSo.clipList[animIndex].clipContainer.name);
-        }
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipListArray[animIndex].clipContainer.name)) return;
+            _animator.Play(_animationSo.clipListArray[animIndex].clipContainer.name);
+        } */
 
         public void StopAnimating()
         {

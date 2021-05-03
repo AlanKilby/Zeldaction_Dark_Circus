@@ -21,18 +21,14 @@ namespace BEN.Math
         public Vector3 _CasterPosition { get; set; }
 
         private bool invert = false;
-
-        private void Awake()
-        {
-            _CasterPosition = transform.position; 
-        }
+        private Vector3 initialPosition;
 
         private void Start()
         {
             Destroy(gameObject, 5f);
-            frameDelta = frameDeltaInitialValue;
+            _CasterPosition = transform.position; // TODO : get caster's position when player projectile hits enemy's projectile
+            // frameDelta = frameDeltaInitialValue;
             _target = PlayerMovement_Alan.sPlayerPos; 
-            distance = Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos);
         } 
 
         private void FixedUpdate()
@@ -42,18 +38,20 @@ namespace BEN.Math
             time = Mathf.Repeat(time, distance + Mathf.Epsilon);
             transform.position = new Vector2(time, DoParabolicFunction() * distance * _curvature); */
             if (!invert)
-                transform.Translate((_target - transform.position).normalized * Time.fixedDeltaTime * speedMultiplier, Space.Self);
-            else
-            {
-                transform.Translate((_CasterPosition - transform.position).normalized * Time.fixedDeltaTime * speedMultiplier * 4f, Space.Self);
-            }
+                transform.Translate(Vector3.forward * Time.fixedDeltaTime * speedMultiplier, Space.Self);
+            else 
+            { 
+                transform.Translate((_target - transform.position).normalized * Time.fixedDeltaTime * speedMultiplier * 4f, Space.Self); 
+            } 
+
+            Debug.DrawLine(_target, transform.position, Color.cyan); 
         }
 
         private void OnTriggerEnter(Collider other)
         {
             // temporary 
 
-            if (other.gameObject.layer == _playerLayer)
+            if (other.gameObject.layer == _playerLayer) 
             {
                 Destroy(gameObject);
                 // apply damage
@@ -74,7 +72,8 @@ namespace BEN.Math
 
         public void InvertDirection()
         {
-            invert = true; 
+            invert = true;
+            _target = _CasterPosition;
         }
     }
 }

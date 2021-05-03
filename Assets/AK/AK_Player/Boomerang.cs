@@ -192,6 +192,6 @@ public class Boomerang : MonoBehaviour
         if (other.CompareTag("EnemyWeapon")) // fakir weapon
         {
             other.GetComponent<ParabolicFunction>().InvertDirection(); 
-        }
+        } 
     }
 }

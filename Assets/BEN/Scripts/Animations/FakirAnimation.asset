@@ -14,36 +14,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 9100000, guid: 3f2118f72f8f0c248b9ed01614165c8e, type: 2}
   clipList:
-  - clipName: idleRight
+  - clipType: 0
     clipContainer: {fileID: 7400000, guid: 3e56a6d6e09ff4445b336cc1fe58423d, type: 2}
     speedMultiplier: 1
-  - clipName: idleLeft
-    clipContainer: {fileID: 7400000, guid: 3e56a6d6e09ff4445b336cc1fe58423d, type: 2}
-    speedMultiplier: 1
-  - clipName: HIT
-    clipContainer: {fileID: 7400000, guid: 12d21e7fbdb106b489126402dedc2f5c, type: 2}
-    speedMultiplier: 1
-  - clipName: walkingTop
+  - clipType: 1
     clipContainer: {fileID: 7400000, guid: 99382aec396e9ca45890fb7ddf5ab027, type: 2}
     speedMultiplier: 1
-  - clipName: walkingRight
+  - clipType: 1
     clipContainer: {fileID: 7400000, guid: 719f7902b9803c24084c0979033d2ff7, type: 2}
     speedMultiplier: 1
-  - clipName: walkingBot
+  - clipType: 1
     clipContainer: {fileID: 7400000, guid: d427e14954d1a5a4da0aaa7cd2757480, type: 2}
     speedMultiplier: 1
-  - clipName: walkingLeft
+  - clipType: 1
     clipContainer: {fileID: 7400000, guid: 4b6a91b3161acc64ca319488babe9e33, type: 2}
     speedMultiplier: 1
-  - clipName: atkTop
+  - clipType: 2
     clipContainer: {fileID: 7400000, guid: 24c613238a3dee641b96c24f27ce505e, type: 2}
-    speedMultiplier: 1.2
-  - clipName: atkRight
+    speedMultiplier: 1.5
+  - clipType: 2
     clipContainer: {fileID: 7400000, guid: 2b5ee73f4abe2b6489e401e5590e93e5, type: 2}
-    speedMultiplier: 1.2
-  - clipName: atkBot
-    clipContainer: {fileID: 7400000, guid: 3a1f7c568f9c20f43940da126af5ca74, type: 2}
-    speedMultiplier: 1.2
-  - clipName: atkLeft
+    speedMultiplier: 1.5
+  - clipType: 2
     clipContainer: {fileID: 7400000, guid: 87f2a3ea231b4bd4683b75e1596538ac, type: 2}
-    speedMultiplier: 1.2
+    speedMultiplier: 1.5
+  - clipType: 2
+    clipContainer: {fileID: 7400000, guid: 3a1f7c568f9c20f43940da126af5ca74, type: 2}
+    speedMultiplier: 1.5
+  - clipType: 3
+    clipContainer: {fileID: 7400000, guid: 12d21e7fbdb106b489126402dedc2f5c, type: 2}
+    speedMultiplier: 1

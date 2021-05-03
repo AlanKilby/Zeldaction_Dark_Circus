@@ -217,7 +217,7 @@ public class BossAIBrain : MonoBehaviour
                     // if invocation, select entity
                     m_entityToInvokeSelector = UnityEngine.Random.Range(0, _spawnableEntitiesList.Count); // upgrade with individual probability if needed 
                     GameObject instanceReference = Instantiate(_spawnableEntitiesList[m_entityToInvokeSelector].Prefab, _spawnPositions[i], Quaternion.identity);
-                    BasicAIBrain basicAIBrain = instanceReference.GetComponent<BasicAIBrain>();
+                    BasicAIBrain basicAIBrain = instanceReference.GetComponentInChildren<BasicAIBrain>();
                     basicAIBrain.HasBeenInvokedByBoss = true;
                     basicAIBrain.TargetToAttackPosition = PlayerMovement_Alan.sPlayerPos;
                     BasicAIBrain.OnRequireStateChange(States.Attack, StateTransition.Overwrite); 
