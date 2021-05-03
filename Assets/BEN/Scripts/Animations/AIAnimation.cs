@@ -33,11 +33,13 @@ namespace BEN.Animation
         {
             _animator = GetComponent<Animator>();
             _animator.runtimeAnimatorController = _animationSo.controller;
-            _animationSo.PopulateDictionary(); 
-        }
+        } 
 
-        /* public void PlayAnimation(AnimState clip)
+        public void PlayAnimation(AnimState key, AnimDirection direction)
         {
+            var clipToPlay = _animationSo.GetAnimClipFromDictionary(key, direction);
+            Debug.Log($"clip to play is {clipToPlay.clipContainer.name} from {_animationSo.name}");
+            
             if (!_animator) _animator = GetComponent<Animator>(); 
             if (!_animator.runtimeAnimatorController)
             {
@@ -45,30 +47,20 @@ namespace BEN.Animation
             }
 
             if (!_animator.enabled)
-                _animator.enabled = true;  
+                _animator.enabled = true;
 
-            _animator.speed = _animationSo.clipListArray[(int)clip].speedMultiplier;
-
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipListArray[(int) clip].clipContainer.name)) return;
-            _animator.Play(_animationSo.clipListArray[(int)clip].clipContainer.name);
-        } */
-        
-        /* public void PlayAnimation(int animIndex)
-        {
-            if (!_animator) return;
-            if (!_animator.runtimeAnimatorController) 
+            try
             {
-                _animator.runtimeAnimatorController = _animationSo.controller;
+                _animator.speed = clipToPlay.speedMultiplier; 
+
+                if (_animator.GetCurrentAnimatorStateInfo(0).IsName(clipToPlay.clipContainer.name)) return;
+                _animator.Play(clipToPlay.clipContainer.name);
             }
-
-            if (!_animator.enabled)
-                _animator.enabled = true; 
-
-            _animator.speed = _animationSo.clipListArray[animIndex].speedMultiplier;
-
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationSo.clipListArray[animIndex].clipContainer.name)) return;
-            _animator.Play(_animationSo.clipListArray[animIndex].clipContainer.name);
-        } */
+            catch (Exception e)
+            {
+                Debug.LogError($"{e.Message} thrown by {gameObject.name}");
+            }
+        }
 
         public void StopAnimating()
         {

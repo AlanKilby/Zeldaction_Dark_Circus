@@ -1,24 +1,33 @@
 using UnityEngine;
 using System.Collections.Generic;
 using BEN.Animation; 
+using Sirenix.OdinInspector; 
 
 [CreateAssetMenu(fileName = "New AI Animation", menuName = "AI/Animation")]
-public class AIAnimationSO : ScriptableObject
+public class AIAnimationSO : SerializedScriptableObject
 {
-    public RuntimeAnimatorController controller; 
-    public Dictionary<AnimState, Clips[]> clipListDictionary; // serialize this 
+    public RuntimeAnimatorController controller;
+    public Dictionary<AnimState, Clip[]> clipListDictionary = new Dictionary<AnimState, Clip[]>();
 
-    public void PopulateDictionary()
+    public Clip GetAnimClipFromDictionary(AnimState key, AnimDirection direction)
     {
-        
+        for (var i = 0; i < clipListDictionary[key].Length; i++)
+        {
+            if (direction == clipListDictionary[key][i].clipDirection)
+            {
+                return clipListDictionary[key][i]; 
+            } 
+        }
+        return null; 
     }
 } 
 
 [System.Serializable] 
-public class Clips 
+public class Clip 
 {
-    public AnimState clipType;
-    public AnimState clipDirection; // to avoid OutOfRangeException 
+    public AnimDirection clipDirection; // to avoid OutOfRangeException 
     public AnimationClip clipContainer;
     [Range(0f, 5f)] public float speedMultiplier = 1f; 
 } 
+
+

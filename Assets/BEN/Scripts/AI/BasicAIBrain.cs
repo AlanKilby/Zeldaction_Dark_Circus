@@ -90,6 +90,8 @@ namespace BEN.AI
         [SerializeField] public bool refresh;
         private Collider monkeyBallCollider;
         private Collider ballCollider;
+        public AnimState animState;
+        public AnimDirection animDirection; 
 
         #region Editor
 
@@ -185,6 +187,10 @@ namespace BEN.AI
         private void FixedUpdate() 
         {
             Debug.Log("rotation index is " + Mathf.FloorToInt(transform.rotation.eulerAngles.y / 90)); // use this to set anim direction
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                _aIAnimation.PlayAnimation(animState, animDirection);
+            }
         }
 
         private void OnDisable()
@@ -207,14 +213,12 @@ namespace BEN.AI
 
         void Init_Enter()
         {
-            Debug.Log("Initializing Default State"); 
             _aIAnimation = _graphics.GetComponent<AIAnimation>();
             _fsm.ChangeState(States.Default, StateTransition.Safe);
         }
 
         void Init_Exit()
         {
-            Debug.Log("Transition to default state");
         }
         
         #endregion  
@@ -222,7 +226,6 @@ namespace BEN.AI
         #region Default
         IEnumerator Default_Enter()  
         { 
-            Debug.Log("entering default state");
             yield return new WaitForSeconds(0.04f); 
 
             // idle when waiting at a patrol node point 
@@ -247,7 +250,6 @@ namespace BEN.AI
 
         void Default_FixedUpdate() 
         { 
-            Debug.Log("updating default state");
             switch (type)
             {
                 case AIType.Monkey:
@@ -265,13 +267,11 @@ namespace BEN.AI
         
         void Default_Exit()
         {
-            Debug.Log("exiting default state");
             //Reset object to desired configuration
         }
         
         void Default_Finally()
         {
-            Debug.Log("finally of default state");
             //Reset object to desired configuration
         } 
         
@@ -282,7 +282,6 @@ namespace BEN.AI
         private IEnumerator Attack_Enter() // UPGRADE : use async-await coroutines
         {
             yield return new WaitForSeconds(attackDelay); 
-            Debug.Log($"Attacking in {attackDelay} seconds"); 
             
             _agent.destination = TargetToAttackPosition;
             _agent.speed = 0f; 
@@ -291,26 +290,21 @@ namespace BEN.AI
             switch (type) 
             {
                 case AIType.Monkey:
-                    Debug.Log("Monkey => attacking");
                     // _aIAnimation.PlayAnimation(AnimState.AtkRight); 
                     break;
                 case AIType.MonkeySurBall:
-                    Debug.Log("MonkeyBall => attacking");
                     // _aIAnimation.PlayAnimation(AnimState.AtkRight);
                     InvokeRepeating(nameof(MonkeyBallAttack), 0f, attackRate); 
                     break;
                 case AIType.Mascotte:
-                    Debug.Log("Mascotte => attacking");
                     // _aIAnimation.PlayAnimation(AnimState.AtkLeft);
                     break;
                 case AIType.Fakir:
-                    Debug.Log("Fakir => attacking"); 
                     // _aIAnimation.PlayAnimation(AnimState.AtkRight);
                     _agent.speed = 0f;
                     InvokeRepeating(nameof(FakirAttack), 0f, attackRate); 
                     break;
                 default:
-                    Debug.Log("Default => breaking");
                     break; 
             } 
             // abstracted away => this should be standard // make it dynamic direction instead 
@@ -328,7 +322,6 @@ namespace BEN.AI
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
             }
 
-            Debug.Log("Attacking fixedUpdate");
         } 
  
         private void MonkeyBallAttack()
@@ -350,7 +343,6 @@ namespace BEN.AI
                 TransitionToNewState(States.Attack, StateTransition.Overwrite); // debug crados             
             }
 
-            Debug.Log("Attacking exit");
             _agent.destination = _patrol.Points[_patrol.DestPoint].position; // TODO : use closest point of list instead
             _agent.speed = defaultSpeed / attackStateSpeedMultiplier; 
             // _aIAnimation.PlayAnimation(AnimState.WalkRight); // make it dynamic direction instead 
@@ -359,11 +351,9 @@ namespace BEN.AI
             switch (type)
             {
                 case AIType.MonkeySurBall: 
-                    Debug.Log("MonkeyBall => exit attack");
                     CancelInvoke(nameof(MonkeyBallAttack)); 
                     break;
                 case AIType.Fakir:
-                    Debug.Log("Fakir => exit attack");
                     CancelInvoke(nameof(FakirAttack)); 
                     break; 
             } 
@@ -375,7 +365,6 @@ namespace BEN.AI
 
         IEnumerator Defend_Enter()
         { 
-            Debug.Log("defend enter");
             _agent.speed = 0f;
             _graphics.transform.localPosition = Vector3.zero; 
             _ball.SetActive(false);
@@ -394,7 +383,6 @@ namespace BEN.AI
 
         void Defend_Exit() 
         { 
-            Debug.Log("Defend_Exit");
             _agent.speed = defaultSpeed;
             _graphics.transform.localPosition = Vector3.up; 
             _ball.SetActive(true);
