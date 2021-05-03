@@ -1,11 +1,12 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 namespace BEN.AI
 {
-    [DefaultExecutionOrder(10)]
+    [DefaultExecutionOrder(5)]
     public class FsmPatrol : MonoBehaviour
     {
         public Transform patrolZone;  

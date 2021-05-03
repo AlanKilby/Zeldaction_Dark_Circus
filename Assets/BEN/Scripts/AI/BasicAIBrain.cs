@@ -39,7 +39,7 @@ namespace BEN.AI
     } 
     
     [RequireComponent(typeof(NavMeshAgent))]
-    [DefaultExecutionOrder(0)] 
+    [DefaultExecutionOrder(10)] 
     public class BasicAIBrain : MonoBehaviour
     {
         [SerializeField] private AIType type;
@@ -93,13 +93,27 @@ namespace BEN.AI
 
         #region Editor
 
+        #endregion
+
+#region Unity Callbacks
+
+        private void Awake()
+        {
+            _fsm = StateMachine<States>.Initialize(this);
+            _fsm.ChangeState(States.Init, StateTransition.Safe);
+        }
+
+        private void OnEnable() 
+        {
+            OnRequireStateChange += TransitionToNewState;
+        } 
+        
         private void OnValidate()
         {
             isFakir = type == AIType.Fakir;
             isMonkeyBall = type == AIType.MonkeySurBall;
             isCaster = isFakir || isMonkeyBall; 
-            _patrol.SetPoints(); 
-        } 
+        }
 
         private void OnDrawGizmos() 
         {
@@ -132,28 +146,13 @@ namespace BEN.AI
                     Gizmos.DrawWireSphere(_patrol.Points[i].position, 0.25f);
                 }
             }
-            catch (NullReferenceException nullRef)
+            catch (Exception e)
             {
+                Debug.Log($"{ e.Message} thrown by {gameObject.name}"); 
                 _patrol = GetComponent<FsmPatrol>();
+                _patrol.SetPoints();
             } 
         }
-
-#endregion
-
-#region Unity Callbacks
-
-        void Awake()
-        {
-            _fsm = StateMachine<States>.Initialize(this);
-            _fsm.ChangeState(States.Init, StateTransition.Safe);
-        }
-
-        private void OnEnable() 
-        {
-            OnRequireStateChange += TransitionToNewState;
-            AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
-            AssemblyReloadEvents.afterAssemblyReload += OnAfterAssemblyReload;
-        } 
 
         private void Start()
         {    
@@ -181,7 +180,7 @@ namespace BEN.AI
             }
 
             _agent.speed = defaultSpeed; 
-        }
+        } 
 
         private void FixedUpdate() 
         {
@@ -191,20 +190,9 @@ namespace BEN.AI
         private void OnDisable()
         {
             OnRequireStateChange -= TransitionToNewState;
-            AssemblyReloadEvents.beforeAssemblyReload -= OnBeforeAssemblyReload;
-            AssemblyReloadEvents.afterAssemblyReload -= OnAfterAssemblyReload;
         } 
         
-        public void OnBeforeAssemblyReload()
-        {
-            Debug.Log("Before Assembly Reload");
-        } 
-
-        public void OnAfterAssemblyReload()
-        {
-            Debug.Log("After Assembly Reload");
-        }
-
+        
 #endregion 
 
         // called by event OnRequireStateChange
