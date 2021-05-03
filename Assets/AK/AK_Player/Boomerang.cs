@@ -7,6 +7,8 @@ public class Boomerang : MonoBehaviour
 {
     public float distance;
     public float speed;
+    float goingSpeed;
+    float comingSpeed;
 
     public Vector3 aimPos;
     public Transform playerPos;
@@ -16,6 +18,14 @@ public class Boomerang : MonoBehaviour
     bool isComingBack;
 
     bool holder = true;
+
+    [Tooltip("Percentage of speed reduction after throw.")]
+    [Range(0f,1f)]
+    public float reductionCoef;
+
+    [Tooltip("Percentage of speed augmentation when Hat is coming back.")]
+    [Range(0f, 1f)]
+    public float accelerationCoef;
 
     public float comebackTimer;
     float comebackTimerHolder;
@@ -30,6 +40,8 @@ public class Boomerang : MonoBehaviour
         isComingBack = false;
         rb = gameObject.GetComponent<Rigidbody>();
         aimPos = playerPos.GetComponent<PlayerMovement_Alan>().aim.transform.position;
+        goingSpeed = speed;
+        comingSpeed = speed;
         //rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
         //Throw();
     }
@@ -48,7 +60,13 @@ public class Boomerang : MonoBehaviour
 
         if (comebackTimer > 0)
         {
-            rb.MovePosition(transform.position + transform.forward * speed * Time.deltaTime); // Test for the hat movement
+            rb.MovePosition(transform.position + transform.forward * goingSpeed * Time.deltaTime); // Test for the hat movement
+
+            // Speed reduction Limit
+            if(goingSpeed > speed * 0.75)
+            {
+                goingSpeed -= (goingSpeed * (1-reductionCoef)) * Time.deltaTime;
+            }
             comebackTimer -= Time.deltaTime;
         }
         else if(comebackTimer <= 0)
@@ -69,7 +87,9 @@ public class Boomerang : MonoBehaviour
 
             //rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
 
-            rb.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
+            rb.MovePosition(transform.position + transform.forward * comingSpeed * Time.deltaTime);
+
+            comingSpeed += (goingSpeed * (1 + accelerationCoef)) * Time.deltaTime;
 
             holder = false;
         }
