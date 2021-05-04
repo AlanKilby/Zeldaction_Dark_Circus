@@ -11,12 +11,12 @@ public class AK_TrapChest : MonoBehaviour
 
     private void Awake()
     {
-        chestCollider = this.GetComponent<Collider>();
+        chestCollider = GetComponent<Collider>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player") || other.gameObject.layer == LayerMask.NameToLayer("Hat"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player") || other.gameObject.layer == LayerMask.NameToLayer("PlayerWeapon"))
         {
             chestCollider.enabled = false;
             EnemySpawn();
@@ -25,6 +25,6 @@ public class AK_TrapChest : MonoBehaviour
 
     public void EnemySpawn()
     {
-        Instantiate(enemy, this.transform.position, Quaternion.identity);
-    }
+        Instantiate(enemy, transform.position, Quaternion.identity);
+    } 
 }

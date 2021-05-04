@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using BEN.Scripts.FSM;
-using BEN.Scripts; 
-using BEN; 
+using BEN.AI;
+using BEN.Math; 
 
 public class Boomerang : MonoBehaviour
 {
@@ -193,6 +192,6 @@ public class Boomerang : MonoBehaviour
         if (other.CompareTag("EnemyWeapon")) // fakir weapon
         {
             other.GetComponent<ParabolicFunction>().InvertDirection(); 
-        }
+        } 
     }
 }
