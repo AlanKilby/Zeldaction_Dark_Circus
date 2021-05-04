@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1245166777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1245166778}
+  - component: {fileID: 1245166779}
+  m_Layer: 9
+  m_Name: Mascotte_Rotation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1245166778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245166777}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7725771847202023910}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1245166779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245166777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f929e75638cf7a7408d91dd3c07c9661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 7725771847202023904}
+  angle: 1.6038579
+  myModifiedAngle: 0
+  angleIndex: 0
 --- !u!1 &3982106213023558240
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,6 +337,7 @@ Transform:
   m_Children:
   - {fileID: 7725771847332921777}
   - {fileID: 7725771846700993473}
+  - {fileID: 1245166778}
   m_Father: {fileID: 3982106213023558243}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -418,9 +466,10 @@ MonoBehaviour:
   attackDelay: 0.5
   attackRange: 2
   _graphics: {fileID: 7725771846700993472}
-  playerDetected: 0
+  _placeholderDestination: {fileID: 1245166779}
   debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
+  angle: 0
 --- !u!114 &7725771847202023908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,7 +510,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7725771847332921776}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.96}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7725771847202023910}
@@ -478,8 +527,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 3, z: 9.25}
-  m_Center: {x: 0, y: 0, z: 3.55}
+  m_Size: {x: 3, y: 3, z: 8.70893}
+  m_Center: {x: 0, y: 0, z: 4.4983993}
 --- !u!114 &7725771847332921778
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,10 +18,10 @@ namespace BEN.Animation
     public enum AnimDirection
     {
         None = -1,
-        Top, 
-        Right, 
-        Bottom, 
-        Left
+        Top = 0, 
+        Right = 1, 
+        Bottom = 2, 
+        Left = 3
     }
 
     [RequireComponent(typeof(Animator))]
