@@ -11,7 +11,8 @@ namespace BEN.AI
         public Transform[] Points { get; private set; }
         public int DestPoint { get; private set; }
         private NavMeshAgent _agent;
-        [FormerlySerializedAs("_playerDetected")] public bool playerDetected;
+        
+        public bool IsDead { get; set; }
 
         private void Start()
         {
@@ -25,12 +26,16 @@ namespace BEN.AI
 
         private void FixedUpdate() 
         { 
-            if (!_agent.pathPending && _agent.remainingDistance < 0.5f && !playerDetected)
+            if (IsDead) return;
+
+            if (!_agent.pathPending && _agent.remainingDistance < 0.5f)
                 GotoNextPoint();
         }
 
         public void SetPoints()
         {
+            if (IsDead) return;
+
             Points = new Transform[patrolZone.childCount]; 
             for (int i = 0; i < patrolZone.childCount; i++)
             {

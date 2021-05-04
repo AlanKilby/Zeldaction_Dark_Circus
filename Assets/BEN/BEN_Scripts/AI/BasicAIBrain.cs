@@ -35,7 +35,7 @@ namespace BEN.AI
         Default,  
         Attack,
         Defend,  
-        Clear
+        Die
     } 
     
     [RequireComponent(typeof(NavMeshAgent))]
@@ -53,8 +53,8 @@ namespace BEN.AI
         [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _monkeyBallProjectile;
         [SerializeField, ConditionalShow("isFakir", true)] private GameObject _fakirProjectile; 
         [SerializeField, Tooltip("Speed when patrolling"), Range(0.5f, 5f)] private float defaultSpeed = 2f;
-        [SerializeField, ConditionalShow("isCaster"), Tooltip("Wait time between each attack for MSB and Fakir"), Range(2f, 8f)] private float attackRate = 4f;
-        [SerializeField, ConditionalShow("isMonkeyBall"), Tooltip("Delay before jumping back to ball again"), Range(2f, 5f)] private float monkeyBallProvocDuration = 3f;
+        [SerializeField, ConditionalShow("isCaster"), Tooltip("Wait time between each attack for MSB and Fakir")] private float attackRate = 4f;
+        [SerializeField, ConditionalShow("isMonkeyBall"), Tooltip("Delay before jumping back to ball again")] private float monkeyBallProvocDuration = 3f;
         [SerializeField, Tooltip("DefaultSpeed increse when rushing toward the player. 1 = no increase"), Range(1f, 3f)] private float attackStateSpeedMultiplier = 1.25f;
         [SerializeField, Tooltip("Delay from Idle to Attack State when player is detected"), Range(0f, 5f)] private float attackDelay = 1f; 
         [SerializeField, Range(1f, 30f)] private float attackRange = 1f;   
@@ -141,7 +141,7 @@ namespace BEN.AI
                     {
                         Gizmos.color = Color.red;
                     }
-
+                    
                     Gizmos.DrawLine(_patrol.Points[i].position, _patrol.Points[(int) Mathf.Repeat(i + 1, _patrol.Points.Length)].position);
                     Gizmos.DrawWireSphere(_patrol.Points[i].position, 0.25f);
                 }
@@ -186,7 +186,13 @@ namespace BEN.AI
         private void FixedUpdate()
         {
             _checkSurroundings.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.angle, 0f);
-            CheckAnimDirection(); 
+            CheckAnimDirection();
+
+            // DEBUG
+            if (Input.GetKeyUp(KeyCode.Space)) 
+            { 
+                OnRequireStateChange(States.Die, StateTransition.Overwrite); 
+            }
         }
 
         private void OnDisable()
@@ -259,11 +265,6 @@ namespace BEN.AI
             _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection); 
         }
 
-        private void SetNewAnimationOnPatrol()
-        {
-            _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);  
-        } 
-
         void Default_FixedUpdate() 
         { 
             switch (type)
@@ -286,11 +287,6 @@ namespace BEN.AI
             //Reset object to desired configuration
         }
         
-        void Default_Finally()
-        {
-            //Reset object to desired configuration
-        } 
-        
         #endregion 
 
         #region Attack
@@ -300,7 +296,6 @@ namespace BEN.AI
             yield return new WaitForSeconds(attackDelay); 
             
             _agent.destination = TargetToAttackPosition;
-            _agent.speed = 0f; 
 
             // UPGRADE : make the enemy predict the future player position instead of aiming at it's current one
             switch (type) 
@@ -319,8 +314,6 @@ namespace BEN.AI
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
                     _agent.speed = 0f;
                     InvokeRepeating(nameof(FakirAttack), 0f, attackRate); 
-                    break;
-                default:
                     break; 
             } 
         }
@@ -415,6 +408,24 @@ namespace BEN.AI
             _checkSurroundings.CanDodgeProjectile = true; 
         }
 
+        IEnumerator Die_Enter()
+        {
+            _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
+            
+            yield return new WaitForSeconds(0.5f);  
+            CancelInvoke();
+
+            try
+            {
+                _aIAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None);
+            }
+            catch (Exception e) 
+            {
+                Debug.Log("death anim not found or wrong naming"); 
+                _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None);
+            }
+        } 
+        
         #endregion
 
 #endregion

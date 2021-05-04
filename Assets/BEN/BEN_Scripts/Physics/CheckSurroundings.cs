@@ -23,14 +23,17 @@ namespace BEN.AI
 
         private AIType bearerType;
         public bool CanDodgeProjectile { get; set; } 
+        public bool IsDead { get; set; }
 
         public CheckSurroundings(Collider[] detectedCollidersArray)
         {
             _detectedCollidersArray = detectedCollidersArray;
         }
 
-        private void Start() 
+        private void Start()
         {
+            IsDead = false; 
+            
             _selfCollider = GetComponent<BoxCollider>();
             // _patrol = GetComponentInParent<FsmPatrol>(); 
             _agent = GetComponentInParent<NavMeshAgent>();
@@ -60,6 +63,8 @@ namespace BEN.AI
 
         private void OnTriggerStay(Collider other)
         {
+            if (IsDead) return; 
+            
             if (other.CompareTag("PlayerWeapon") && bearerType == AIType.MonkeySurBall && CanDodgeProjectile) 
             {
                 try
@@ -88,7 +93,7 @@ namespace BEN.AI
 
                 _distances[i] = _detectedColliders[i].distance;
 
-                if (!_detectedColliders[i].transform.gameObject.CompareTag("Player")) continue;
+                if (!_detectedColliders[i].transform.gameObject.CompareTag("Player")) return;
                 // player is detected if his collider is the closest to enemy
                 _playerDetected = Mathf.Approximately(_smallestValue, _detectedColliders[i].distance);
 
@@ -106,14 +111,16 @@ namespace BEN.AI
             
             // attack 
             // blockedByWall = Physics.Raycast(transform.position, other.transform.position - transform.position, out RaycastHit hit, 15f, props); 
-        }
+        } 
 
         private void OnTriggerExit(Collider other)
         {
+            if (IsDead) return;
+
             if (!other.CompareTag("Player") || bearerType == AIType.Mascotte) return; // mascotte follows players for ever once detected 
 
-            _notified = false;  
-            BasicAIBrain.OnRequireStateChange(States.Default, StateTransition.Overwrite); 
+            _notified = false;
+            BasicAIBrain.OnRequireStateChange(States.Default, StateTransition.Safe);  
         }
 
         private bool IsFacingProjectile(Vector3 projectile) => (Mathf.Sign(Vector3.Dot(transform.position, projectile)) > 0); 

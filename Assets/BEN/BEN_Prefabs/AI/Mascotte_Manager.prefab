@@ -62,7 +62,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3982106213023558243
 Transform:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3982106213544782125}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -0.77, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3982106213429601075}
@@ -179,7 +179,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3982106214049016101}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.68, y: 1, z: -0.47}
+  m_LocalPosition: {x: 11.1, y: 1, z: -0.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3982106213429601075}
@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 7725771846700993475}
   - component: {fileID: 7725771846700993500}
   - component: {fileID: 7725771846700993474}
+  - component: {fileID: 1370060806}
   m_Layer: 0
   m_Name: Mascotte_Graphics
   m_TagString: Untagged
@@ -279,7 +280,7 @@ Animator:
   m_GameObject: {fileID: 7725771846700993472}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3f2118f72f8f0c248b9ed01614165c8e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1edf017cdbf3cae43b91983d28c5df06, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -301,6 +302,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationSo: {fileID: 11400000, guid: e0ba16adabfe864499dd0f3a714dd26b, type: 2}
+--- !u!114 &1370060806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725771846700993472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc706559421f664ea51e170583aa4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetToDestroy: {fileID: 3982106213023558240}
+  destroyDelay: 0.25
 --- !u!1 &7725771847202023909
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolZone: {fileID: 3982106213429601075}
-  playerDetected: 0
+  loopPath: 1
 --- !u!1 &7725771847332921776
 GameObject:
   m_ObjectHideFlags: 0

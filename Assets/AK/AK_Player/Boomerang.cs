@@ -21,7 +21,9 @@ public class Boomerang : MonoBehaviour
     float comebackTimerHolder;
 
     private AIType enemyType;
-    public LayerMask swordLayer; 
+    public LayerMask swordLayer;
+
+    [Tooltip("otherwise mob is killed from animation event")] public bool simulateAutoDestroy; 
 
     private void Start()
     {
@@ -179,13 +181,14 @@ public class Boomerang : MonoBehaviour
         { 
             Debug.Log("Collision with Enemy");
             enemyType = other.GetComponent<BasicAIBrain>().Type; 
-            float value = Vector3.Dot(other.transform.localPosition.normalized, transform.localPosition.normalized);
 
-            if (enemyType == AIType.Mascotte && value < 0f)
+            if (enemyType == AIType.Mascotte && !isComingBack) // change this so you can kill from behind, not only on the way back 
             {
-                isComingBack = true;
+                isComingBack = true; 
                 return;
             }
+
+            if (!simulateAutoDestroy) return; 
             Destroy(other.gameObject);        
         }
 
