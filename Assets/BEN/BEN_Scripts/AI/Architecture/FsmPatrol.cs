@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace BEN.AI
 {
@@ -20,8 +19,6 @@ namespace BEN.AI
 
             DestPoint = 0; 
             _agent.autoBraking = false;
-
-            GotoNextPoint();
         }
 
         private void FixedUpdate() 

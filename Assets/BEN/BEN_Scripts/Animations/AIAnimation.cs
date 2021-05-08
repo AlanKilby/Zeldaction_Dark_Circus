@@ -39,8 +39,7 @@ namespace BEN.Animation
 
         public void PlayAnimation(AnimState key, AnimDirection direction)
         {
-            var clipToPlay = _animationSo.GetAnimClipFromDictionary(key, direction);
-            Debug.Log($"clip to play is {clipToPlay.clipContainer.name} from {_animationSo.name}");
+            var clipToPlay = _animationSo.GetAnimClipFromDictionary(key, direction); 
             
             if (!_animator) _animator = GetComponent<Animator>(); 
             if (!_animator.runtimeAnimatorController)

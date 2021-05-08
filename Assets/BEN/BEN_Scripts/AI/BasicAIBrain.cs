@@ -9,8 +9,9 @@ using UnityEngine.AI;
 using UnityEditor;
 #endif
 using BEN.Animation;
+using BEN.Math; 
 
- 
+
 /* 
  Very simple architecture (enum-based FSM) to avoid multiple classes and costly virtual calls
  
@@ -62,7 +63,8 @@ namespace BEN.AI
         private StateMachine<States> _fsm;
         private GameObject _ball; 
         [SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
-        
+        [SerializeField] private GameObject _detection;
+
         private FsmPatrol _patrol;
         
         private NavMeshAgent _agent; 
@@ -322,7 +324,13 @@ namespace BEN.AI
         {
             if (Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos) <= attackRange) 
             {
-                _agent.speed = 0f;  
+                _agent.speed = 0f;
+                
+                // to simulate player killed from CAC. Distance is done from projectile
+                if (type == AIType.Monkey || type == AIType.Mascotte)
+                {
+                    Destroy(PlayerMovement_Alan.sPlayer); 
+                }
             } 
             else 
             {
@@ -335,15 +343,16 @@ namespace BEN.AI
  
         private void MonkeyBallAttack()
         {
-            GameObject reference = Instantiate(_monkeyBallProjectile, _graphics.transform.position, _graphics.transform.rotation);
+            GameObject reference = Instantiate(_monkeyBallProjectile, _graphics.transform.position, _detection.transform.rotation);
             reference.transform.position = _graphics.transform.position;
             Debug.Log("monkeyball projectile");
         }
 
-        private void FakirAttack() // WARNING : Duplicate
+        private void FakirAttack() // WARNING : Duplicate 
         {
-            GameObject reference = Instantiate(_fakirProjectile, _graphics.transform.position, _graphics.transform.rotation);
+            GameObject reference = Instantiate(_fakirProjectile, _graphics.transform.position, _detection.transform.rotation);
             reference.transform.position = _graphics.transform.position;
+            reference.GetComponent<ParabolicFunction>().CasterTransform = _graphics.transform; 
             Debug.Log("fakir projectile");
 
         }

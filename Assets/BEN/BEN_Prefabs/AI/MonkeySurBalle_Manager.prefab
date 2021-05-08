@@ -47,66 +47,6 @@ MonoBehaviour:
   angle: 1.6038579
   myModifiedAngle: 0
   angleIndex: 0
---- !u!1 &1243835334
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1243835335}
-  m_Layer: 0
-  m_Name: patrolPoint_1 (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1243835335
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1243835334}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.46, y: 0, z: 3.36}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5659020958473677208}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2133571356
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2133571357}
-  m_Layer: 0
-  m_Name: patrolPoint_1 (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2133571357
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133571356}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.76, y: 0, z: 3.36}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5659020958473677208}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &776753432634876680
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,8 +77,6 @@ Transform:
   m_Children:
   - {fileID: 1156762879089541633}
   - {fileID: 500272835572802735}
-  - {fileID: 1243835335}
-  - {fileID: 2133571357}
   m_Father: {fileID: 2651920672806243564}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -315,8 +253,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 3, z: 8.110897}
-  m_Center: {x: 0, y: 0, z: 4.1195517}
+  m_Size: {x: 3, y: 3, z: 10.337646}
+  m_Center: {x: 0, y: 0, z: 5.232926}
 --- !u!114 &797199752267424714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,7 +370,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.35, y: 1.75, z: 1}
+  m_Size: {x: 1.35, y: 4.16, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &797199752371587993
 Rigidbody:
@@ -497,6 +435,7 @@ MonoBehaviour:
   attackDelay: 0.5
   attackRange: 10
   _graphics: {fileID: 797199751803070904}
+  _detection: {fileID: 797199752267424712}
   _placeholderDestination: {fileID: 610376292}
   debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
@@ -514,7 +453,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolZone: {fileID: 5659020958473677208}
-  loopPath: 0
 --- !u!1 &2533886171375916998
 GameObject:
   m_ObjectHideFlags: 0

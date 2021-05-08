@@ -17,18 +17,16 @@ namespace BEN.Math
         private byte
             _propsLayer = 6,
             _playerLayer = 10;
-        private Vector3 _target; // until I fix parabolic formula
-        public Vector3 _CasterPosition { get; set; }
 
-        private bool invert = false;
-        private Vector3 initialPosition;
+        private bool _invert = false;
+        public Transform CasterTransform { get; set; }
+        private Vector3 direction; 
 
         private void Start()
         {
             Destroy(gameObject, 5f);
-            _CasterPosition = transform.position; // TODO : get caster's position when player projectile hits enemy's projectile
             // frameDelta = frameDeltaInitialValue;
-            _target = PlayerMovement_Alan.sPlayerPos; 
+            direction = (PlayerMovement_Alan.sPlayerPos - transform.position).normalized; 
         } 
 
         private void FixedUpdate()
@@ -37,30 +35,31 @@ namespace BEN.Math
             time += frameDelta * speed;
             time = Mathf.Repeat(time, distance + Mathf.Epsilon);
             transform.position = new Vector2(time, DoParabolicFunction() * distance * _curvature); */
-            if (!invert)
-                transform.Translate(Vector3.forward * Time.fixedDeltaTime * speedMultiplier, Space.Self);
+            if (!_invert)
+            {
+                transform.Translate(direction * Time.fixedDeltaTime * speedMultiplier, Space.World);
+            }
             else 
             { 
-                transform.Translate((_target - transform.position).normalized * Time.fixedDeltaTime * speedMultiplier * 4f, Space.Self); 
+                transform.Translate(direction * Time.fixedDeltaTime * speedMultiplier * 4f, Space.World); // :(
             } 
-
-            Debug.DrawLine(_target, transform.position, Color.cyan); 
-        }
+        } 
 
         private void OnTriggerEnter(Collider other)
         {
             // temporary 
 
-            if (other.gameObject.layer == _playerLayer) 
+            if (other.CompareTag("Player")) 
             {
-                Destroy(gameObject);
+                Destroy(other.transform.parent.gameObject); // placeholder 
+                Destroy(gameObject); 
                 // apply damage
             }
             else if (other.gameObject.layer == _propsLayer)
             {
                 Destroy(gameObject); 
             }
-            else if (other.CompareTag("Enemy") && invert) 
+            else if (other.CompareTag("Enemy") && _invert) 
             {
                 Destroy(other.gameObject);
                 Destroy(gameObject); 
@@ -72,8 +71,8 @@ namespace BEN.Math
 
         public void InvertDirection()
         {
-            invert = true;
-            _target = _CasterPosition;
+            _invert = true;
+            direction = (CasterTransform.position - transform.position).normalized;
         }
     }
 }
