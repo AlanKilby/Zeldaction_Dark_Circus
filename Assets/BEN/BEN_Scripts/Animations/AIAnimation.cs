@@ -28,6 +28,7 @@ namespace BEN.Animation
     public class AIAnimation : MonoBehaviour
     {
         [SerializeField] private AIAnimationSO _animationSo;
+
         private Animator _animator;
         private AIType _type;
 
@@ -35,7 +36,7 @@ namespace BEN.Animation
         {
             _animator = GetComponent<Animator>();
             _animator.runtimeAnimatorController = _animationSo.controller;
-        } 
+        }
 
         public void PlayAnimation(AnimState key, AnimDirection direction)
         {

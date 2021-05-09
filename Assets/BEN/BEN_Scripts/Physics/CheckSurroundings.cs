@@ -69,7 +69,7 @@ namespace BEN.AI
             {
                 try
                 {
-                    BasicAIBrain.OnRequireStateChange(States.Defend, StateTransition.Overwrite);
+                    _brain.OnRequireStateChange(States.Defend, StateTransition.Overwrite);
                 }
                 catch (System.Exception e) { Debug.Log(e.Message); }
             } 
@@ -103,7 +103,7 @@ namespace BEN.AI
                 if (!_notified && other) 
                 { 
                     _brain.TargetToAttackPosition = other.transform.position;
-                    BasicAIBrain.OnRequireStateChange(States.Attack, StateTransition.Overwrite); 
+                    _brain.OnRequireStateChange(States.Attack, StateTransition.Overwrite); 
                 } 
                 _notified = true; 
                 // _patrol.SetDestination(other.transform.position, 0.5f, _playerDetected); if have FSMpatrol 
@@ -113,14 +113,14 @@ namespace BEN.AI
             // blockedByWall = Physics.Raycast(transform.position, other.transform.position - transform.position, out RaycastHit hit, 15f, props); 
         } 
 
-        private void OnTriggerExit(Collider other)
+        private void OnTriggerExit(Collider other) 
         {
             if (IsDead) return;
 
             if (!other.CompareTag("Player") || bearerType == AIType.Mascotte) return; // mascotte follows players for ever once detected 
 
             _notified = false;
-            BasicAIBrain.OnRequireStateChange(States.Default, StateTransition.Safe);  
+            _brain.OnRequireStateChange(States.Default, StateTransition.Safe);  
         }
 
         private bool IsFacingProjectile(Vector3 projectile) => (Mathf.Sign(Vector3.Dot(transform.position, projectile)) > 0); 

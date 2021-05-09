@@ -220,7 +220,7 @@ public class BossAIBrain : MonoBehaviour
                     BasicAIBrain basicAIBrain = instanceReference.GetComponentInChildren<BasicAIBrain>();
                     basicAIBrain.HasBeenInvokedByBoss = true;
                     basicAIBrain.TargetToAttackPosition = PlayerMovement_Alan.sPlayerPos;
-                    BasicAIBrain.OnRequireStateChange(States.Attack, StateTransition.Overwrite); 
+                    basicAIBrain.OnRequireStateChange(States.Attack, StateTransition.Overwrite); 
                     // basicAIBrain.Type = _spawnableEntitiesList[m_entityToInvokeSelector].Type; // warning risk of having basicAIBrain Type and type different 
                 }
             }

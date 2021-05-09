@@ -6,6 +6,7 @@ public class Boomerang : MonoBehaviour
 {
     public float distance;
     public float speed;
+    [Range(1, 10)] public sbyte boomerangDamage = 1;  
 
     public Vector3 aimPos;
     public Transform playerPos;
@@ -182,11 +183,11 @@ public class Boomerang : MonoBehaviour
 
             if (enemyType == AIType.Mascotte && !isComingBack) // change this so you can kill from behind, not only on the way back 
             {
-                isComingBack = true; 
+                isComingBack = true;  
                 return;
-            }      
+            }
 
-            // reference Health script
+            other.GetComponent<Health>().DecreaseHp(boomerangDamage); 
         }
 
         if (other.CompareTag("EnemyWeapon")) // fakir weapon

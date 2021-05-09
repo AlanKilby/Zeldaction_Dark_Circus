@@ -54,22 +54,24 @@ namespace BEN.AI
         [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _monkeyBallProjectile;
         [SerializeField, ConditionalShow("isFakir", true)] private GameObject _fakirProjectile; 
         [SerializeField, Tooltip("Speed when patrolling"), Range(0.5f, 5f)] private float defaultSpeed = 2f;
-        [SerializeField, ConditionalShow("isCaster"), Tooltip("Wait time between each attack for MSB and Fakir")] private float attackRate = 4f;
+        [SerializeField, Range(0.5f, 5f), Tooltip("Wait time between each attack")] private float attackRate = 2f;
         [SerializeField, ConditionalShow("isMonkeyBall"), Tooltip("Delay before jumping back to ball again")] private float monkeyBallProvocDuration = 3f;
         [SerializeField, Tooltip("DefaultSpeed increse when rushing toward the player. 1 = no increase"), Range(1f, 3f)] private float attackStateSpeedMultiplier = 1.25f;
         [SerializeField, Tooltip("Delay from Idle to Attack State when player is detected"), Range(0f, 5f)] private float attackDelay = 1f; 
-        [SerializeField, Range(1f, 30f)] private float attackRange = 1f;   
+        [SerializeField, Range(1f, 30f)] private float attackRange = 1f;
+        [SerializeField, Range(1, 5)] private sbyte attackDamage = 1;
 
         private StateMachine<States> _fsm;
         private GameObject _ball; 
         [SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
         [SerializeField] private GameObject _detection;
+        [SerializeField] private AgentGameplayData _agentHp;
 
         private FsmPatrol _patrol;
         
         private NavMeshAgent _agent; 
 
-        public static Action<States, StateTransition> OnRequireStateChange;
+        public Action<States, StateTransition> OnRequireStateChange; 
         public Vector3 TargetToAttackPosition { get; set; }
 
         private AIAnimation _aIAnimation; // MOVE TO AIANIMATION
@@ -84,6 +86,7 @@ namespace BEN.AI
         
         public bool HasBeenInvokedByBoss { get; set; }
         [SerializeField] private PlaceholderDestination _placeholderDestination;
+        private Health _playerHealth; 
 
 
         [Header("-- DEBUG --")]
@@ -91,7 +94,8 @@ namespace BEN.AI
         [SerializeField] public bool refresh;
         private Collider monkeyBallCollider;
         private Collider ballCollider;
-        public float angle; 
+        public float angle;
+        private bool hasCalledFakeCAC; 
 
         #region Editor
 
@@ -157,11 +161,14 @@ namespace BEN.AI
         }
 
         private void Start()
-        {    
+        {
+            _playerHealth = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>(); 
+
             if (!HasBeenInvokedByBoss)
             {
                 _patrol = GetComponent<FsmPatrol>();
-            } 
+                _patrol.SetPoints(); // debug 
+            }
 
             _agent = GetComponent<NavMeshAgent>();
             _checkSurroundings = GetComponentInChildren<CheckSurroundings>();
@@ -190,9 +197,8 @@ namespace BEN.AI
             _checkSurroundings.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.angle, 0f);
             CheckAnimDirection();
 
-            // DEBUG
-            if (Input.GetKeyUp(KeyCode.Space)) 
-            { 
+            if (_agentHp.CurrentHealth <= 0 && !_patrol.IsDead)
+            {
                 OnRequireStateChange(States.Die, StateTransition.Overwrite); 
             }
         }
@@ -327,10 +333,11 @@ namespace BEN.AI
                 _agent.speed = 0f;
                 
                 // to simulate player killed from CAC. Distance is done from projectile
-                if (type == AIType.Monkey || type == AIType.Mascotte)
+                if ((type == AIType.Monkey || type == AIType.Mascotte) && !hasCalledFakeCAC) 
                 {
-                    Destroy(PlayerMovement_Alan.sPlayer); 
-                }
+                    hasCalledFakeCAC = true;
+                    InvokeRepeating(nameof(FakeCAC), 0.5f, attackRate); 
+                } 
             } 
             else 
             {
@@ -338,9 +345,13 @@ namespace BEN.AI
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
                 CheckAnimDirection(AnimState.Atk); 
             } 
-
         } 
- 
+
+        private void FakeCAC()
+        {
+            _playerHealth.DecreaseHp(attackDamage); 
+        }
+
         private void MonkeyBallAttack()
         {
             GameObject reference = Instantiate(_monkeyBallProjectile, _graphics.transform.position, _detection.transform.rotation);
@@ -377,7 +388,9 @@ namespace BEN.AI
                 case AIType.Fakir:
                     CancelInvoke(nameof(FakirAttack)); 
                     break; 
-            } 
+            }
+
+            hasCalledFakeCAC = false; 
         }
 
         #endregion
@@ -416,8 +429,10 @@ namespace BEN.AI
         {
             _checkSurroundings.CanDodgeProjectile = true; 
         }
+        #endregion
 
-        IEnumerator Die_Enter()
+        #region Die
+        IEnumerator Die_Enter() 
         {
             _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
             

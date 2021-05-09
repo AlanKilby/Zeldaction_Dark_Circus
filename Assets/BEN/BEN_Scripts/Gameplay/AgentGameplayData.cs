@@ -4,7 +4,7 @@ using UnityEngine;
 public class AgentGameplayData : ScriptableObject
 {
     [SerializeField, Range(1, 100)] private sbyte _startingHealth = 2; 
-    public sbyte CurrentHealth { get => _startingHealth ; set => _startingHealth = value ; } 
+    public sbyte CurrentHealth { get => CurrentHealth; set => CurrentHealth = value ; } 
 
     public void Initialise() 
     {
