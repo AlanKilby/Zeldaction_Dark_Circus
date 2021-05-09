@@ -7,6 +7,7 @@ public class AnimEventDestroyTarget : MonoBehaviour
     
     public void DestroyTarget()
     { 
-        Destroy(targetToDestroy, destroyDelay); 
+        Destroy(targetToDestroy, destroyDelay);
+        Debug.Log("destroying target from animation event"); 
     } 
 }

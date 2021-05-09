@@ -23,8 +23,6 @@ public class Boomerang : MonoBehaviour
     private AIType enemyType;
     public LayerMask swordLayer;
 
-    [Tooltip("otherwise mob is killed from animation event")] public bool simulateAutoDestroy; 
-
     private void Start()
     {
         comebackTimerHolder = comebackTimer;
@@ -186,10 +184,9 @@ public class Boomerang : MonoBehaviour
             {
                 isComingBack = true; 
                 return;
-            }
+            }      
 
-            if (!simulateAutoDestroy) return; 
-            Destroy(other.gameObject);        
+            // reference Health script
         }
 
         if (other.CompareTag("EnemyWeapon")) // fakir weapon
