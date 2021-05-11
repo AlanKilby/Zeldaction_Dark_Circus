@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 using BEN.Scripts.FSM;
 using BEN.Scripts; 
-using BEN; 
+using BEN;
+using System;
 
 public class Boomerang : MonoBehaviour
 {
-    public float distance;
+   
     public float speed;
     float goingSpeed;
     float comingSpeed;
 
     public Vector3 aimPos;
     public Transform playerPos;
+
+    public LayerMask mirrorMask;
 
     private Rigidbody rb;
 
@@ -95,6 +98,7 @@ public class Boomerang : MonoBehaviour
         }
 
         Teleport();
+        Bounce();
     }
 
     // This method and coroutine are no longer used, all is done in the Update =================================================
@@ -130,6 +134,20 @@ public class Boomerang : MonoBehaviour
             playerPos.GetComponent<PlayerMovement_Alan>().canThrow = true;
             Destroy(gameObject);
             
+        }
+    }
+
+    public void Bounce()
+    {
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 0.5f, mirrorMask))
+        {
+            Vector3 reflectDir = Vector3.Reflect(ray.direction, hit.normal);
+            float rot = 90 - Mathf.Atan2(reflectDir.z, reflectDir.x) * Mathf.Rad2Deg;
+            transform.eulerAngles = new Vector3(0, rot, 0);
+            comebackTimer++;
         }
     }
     // ========================= WIP =============================================

@@ -62,10 +62,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f51f7e567b1367f449a0c656fe10de55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 0
   speed: 10
   aimPos: {x: 0, y: 0, z: 0}
   playerPos: {fileID: 0}
+  mirrorMask:
+    serializedVersion: 2
+    m_Bits: 4096
   reductionCoef: 0.05
   accelerationCoef: 0.8
   comebackTimer: 2
@@ -171,7 +173,7 @@ GameObject:
   - component: {fileID: 2947837350326145000}
   - component: {fileID: 6757749617921083887}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Hat Anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
