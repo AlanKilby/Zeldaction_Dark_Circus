@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-using BEN.Scripts.FSM;
-using BEN.Scripts; 
-using BEN; 
+using BEN.AI;
+using BEN.Math; 
 
 public class Boomerang : MonoBehaviour
 {
     public float distance;
     public float speed;
+    [Range(1, 10)] public sbyte boomerangDamage = 1;  
     float goingSpeed;
     float comingSpeed;
 
@@ -31,7 +31,7 @@ public class Boomerang : MonoBehaviour
     float comebackTimerHolder;
 
     private AIType enemyType;
-    public LayerMask swordLayer; 
+    public LayerMask swordLayer;
 
     private void Start()
     {
@@ -63,9 +63,9 @@ public class Boomerang : MonoBehaviour
             rb.MovePosition(transform.position + transform.forward * goingSpeed * Time.deltaTime); // Test for the hat movement
 
             // Speed reduction Limit
-            if(goingSpeed > speed * 0.75)
-            {
-                goingSpeed -= (goingSpeed * (1-reductionCoef)) * Time.deltaTime;
+            if(goingSpeed > speed * 0.75)
+            {
+                goingSpeed -= (goingSpeed * (1-reductionCoef)) * Time.deltaTime;
             }
             comebackTimer -= Time.deltaTime;
         }
@@ -195,19 +195,19 @@ public class Boomerang : MonoBehaviour
         { 
             Debug.Log("Collision with Enemy");
             enemyType = other.GetComponent<BasicAIBrain>().Type; 
-            float value = Vector3.Dot(other.transform.localPosition.normalized, transform.localPosition.normalized);
 
-            if (enemyType == AIType.Mascotte && value < 0f)
+            if (enemyType == AIType.Mascotte && !isComingBack) // change this so you can kill from behind, not only on the way back 
             {
-                isComingBack = true;
+                isComingBack = true;  
                 return;
             }
-            Destroy(other.gameObject);        
+
+            other.GetComponent<Health>().DecreaseHp(boomerangDamage); 
         }
 
         if (other.CompareTag("EnemyWeapon")) // fakir weapon
         {
             other.GetComponent<ParabolicFunction>().InvertDirection(); 
-        }
+        } 
     }
 }

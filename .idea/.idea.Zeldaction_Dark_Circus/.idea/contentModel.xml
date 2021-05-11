@@ -21,7 +21,7 @@
           </e>
         </e>
         <e p="BEN" t="Include">
-          <e p="_Imported" t="Include">
+          <e p="_BEN_Imported" t="Include">
             <e p="Examples" t="Include">
               <e p="Editor" t="Include">
                 <e p="NavMeshComponentsExamplesEditor.asmdef" t="Include" />
@@ -69,26 +69,56 @@
                 <e p="NavMeshSurface.cs" t="Include" />
               </e>
             </e>
+            <e p="Plugins" t="Include">
+              <e p="Sirenix" t="Include">
+                <e p="Assemblies" t="Include">
+                  <e p="link.xml" t="Include" />
+                  <e p="Sirenix.OdinInspector.Attributes.xml" t="Include" />
+                  <e p="Sirenix.OdinInspector.Editor.xml" t="Include" />
+                  <e p="Sirenix.Serialization.Config.xml" t="Include" />
+                  <e p="Sirenix.Utilities.Editor.xml" t="Include" />
+                  <e p="Sirenix.Utilities.xml" t="Include" />
+                </e>
+                <e p="Odin Inspector" t="Include">
+                  <e p="Scripts" t="Include">
+                    <e p="Editor" t="Include">
+                      <e p="AssemblyImportSettingsAutomation.cs" t="Include" />
+                      <e p="BuildAOTAutomation.cs" t="Include" />
+                      <e p="EnsureOdinInspectorDefine.cs" t="Include" />
+                      <e p="FixBrokenUnityObjectWrapperDrawer.cs" t="Include" />
+                      <e p="Sirenix.OdinInspector.CompatibilityLayer.Editor.asmdef" t="Include" />
+                      <e p="SyncListDrawer.cs" t="Include" />
+                      <e p="SyncVarAttributeDrawer.cs" t="Include" />
+                      <e p="Vector2IntMinMaxAttributeDrawer.cs" t="Include" />
+                      <e p="VectorIntDrawers.cs" t="Include" />
+                      <e p="VectorIntPropertyResolvers.cs" t="Include" />
+                    </e>
+                    <e p="SerializedNetworkBehaviour.cs" t="Include" />
+                    <e p="Sirenix.OdinInspector.CompatibilityLayer.asmdef" t="Include" />
+                    <e p="VectorIntFormatters.cs" t="Include" />
+                  </e>
+                </e>
+                <e p="Readme.txt" t="Include" />
+              </e>
+            </e>
             <e p="ReverseAnimationContext.cs" t="Include" />
           </e>
-          <e p="CallMethodOnPhysiscEvent.cs" t="Include" />
-          <e p="CameraController.cs" t="Include" />
-          <e p="CheckSurroundings.cs" t="Include" />
-          <e p="GameplayMaker.cs" t="Include" />
-          <e p="ProcessInputs.cs" t="Include" />
-          <e p="Scripts" t="Include">
-            <e p="AgentPatrol.cs" t="Include" />
+          <e p="BEN_Scripts" t="Include">
+            <e p="3C" t="Include">
+              <e p="CameraController.cs" t="Include" />
+              <e p="ProcessInputs.cs" t="Include" />
+            </e>
             <e p="AI" t="Include">
               <e p="Architecture" t="Include">
                 <e p="BehaviorTree.cs" t="Include" />
                 <e p="FsmPatrol.cs" t="Include" />
               </e>
+              <e p="AvoidObject.cs" t="Include" />
               <e p="BasicAIBrain.cs" t="Include" />
               <e p="BossAIBrain.cs" t="Include" />
             </e>
-            <e p="AIAlgorithmTests.cs" t="Include" />
-            <e p="AIAnimation.cs" t="Include" />
             <e p="Animations" t="Include">
+              <e p="AIAnimation.cs" t="Include" />
               <e p="Scriptables_Source" t="Include">
                 <e p="AIAnimationSO.cs" t="Include" />
               </e>
@@ -96,48 +126,37 @@
             <e p="Attributes" t="Include">
               <e p="ConditionalShowAttribute.cs" t="Include" />
             </e>
-            <e p="AvoidObject.cs" t="Include" />
-            <e p="BasicAI.cs" t="Include" />
             <e p="Editor" t="Include">
               <e p="BasicAIBrainEditor.cs" t="Include" />
             </e>
-            <e p="EditorDebuggerSO.cs" t="Include" />
             <e p="GameEvent" t="Include">
               <e p="GameEventListener.cs" t="Include" />
               <e p="GameEventSO.cs" t="Include" />
               <e p="MainCam.cs" t="Include" />
             </e>
             <e p="GameManager.cs" t="Include" />
-            <e p="Gameplay (deprecated)" t="Include">
-              <e p="Arrow.cs" t="Include" />
-              <e p="CAC.cs" t="Include" />
-              <e p="Defense.cs" t="Include" />
-              <e p="Distance.cs" t="Include" />
-              <e p="DragPlayer.cs" t="Include" />
-              <e p="Gameplay.cs" t="Include" />
-              <e p="Grapling.cs" t="Include" />
-              <e p="ScriptableObjects" t="Include">
-                <e p="CAC_SO.cs" t="Include" />
-                <e p="Defense_SO.cs" t="Include" />
-                <e p="Distance_SO.cs" t="Include" />
-                <e p="Gameplay_SO.cs" t="Include" />
-                <e p="Grapling_SO.cs" t="Include" />
-                <e p="LoadedActions_SO.cs" t="Include" />
-              </e>
+            <e p="Gameplay" t="Include">
+              <e p="AnimEventDestroyTarget.cs" t="Include" />
+              <e p="CallAnimEvent.cs" t="Include" />
+              <e p="Switch.cs" t="Include" />
             </e>
-            <e p="MoveTo.cs" t="Include" />
-            <e p="ParabolicFunction.cs" t="Include" />
-            <e p="Pathfinding_Waypoints.cs" t="Include" />
+            <e p="Physics" t="Include">
+              <e p="CallMethodOnPhysiscEvent.cs" t="Include" />
+              <e p="CheckSurroundings.cs" t="Include" />
+            </e>
             <e p="PropertyDrawers" t="Include">
               <e p="ConditionalShowPropertyDrawer.cs" t="Include" />
             </e>
-            <e p="SimpleCameraController.cs" t="Include" />
-            <e p="Utility.cs" t="Include" />
+            <e p="Utility" t="Include">
+              <e p="Base.cs" t="Include" />
+              <e p="EditorDebuggerSO.cs" t="Include" />
+              <e p="NotifyTransformChange.cs" t="Include" />
+              <e p="ParabolicFunction.cs" t="Include" />
+              <e p="PlaceholderDestination.cs" t="Include" />
+            </e>
           </e>
-          <e p="Switch.cs" t="Include" />
         </e>
         <e p="Mirror.cs" t="Include" />
-        <e p="SendChildPositionOnEvent.cs" t="Include" />
       </e>
       <e p="NavMeshComponents.csproj" t="IncludeRecursive" />
       <e p="NavMeshComponentsEditor.csproj" t="IncludeRecursive" />
@@ -145,6 +164,8 @@
       <e p="NavMeshComponentsExamplesEditor.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
+      <e p="Sirenix.OdinInspector.CompatibilityLayer.csproj" t="IncludeRecursive" />
+      <e p="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj" t="IncludeRecursive" />
       <e p="Temp\Bin" t="ExcludeRecursive" />
       <e p="Zeldaction_Dark_Circus.sln" t="IncludeFlat" />
     </e>

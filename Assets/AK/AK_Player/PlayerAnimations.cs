@@ -23,6 +23,9 @@ public class PlayerAnimations : MonoBehaviour
     public string PLAYER_TOP_NO_HAT = "WalkingtopNh";
 
     public string PLAYER_THROWING_HAT = "throwinghat";
+    public string PLAYER_DEAD = "playerFakeDeath";  
+
+    [Space, SerializeField] private AgentGameplayData _playerHp;
 
     private void Start()
     {
@@ -30,20 +33,22 @@ public class PlayerAnimations : MonoBehaviour
         playerMovement = player.GetComponent<PlayerMovement_Alan>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         transform.position = player.transform.position;
+
+        if (_playerHp.CurrentHealth <= 0 && !animator.GetCurrentAnimatorStateInfo(0).IsName("playerFakeDeath"))
+        {
+            ChangeAnimationState(PLAYER_DEAD); 
+            Debug.Log("player death animation"); 
+        }
     }
 
     public void ChangeAnimationState(string newState)
     {
-        if (currentState == newState) return;
+        if (currentState == newState || animator.GetCurrentAnimatorStateInfo(0).IsName("playerFakeDeath")) return;
 
         animator.Play(newState);
-
         currentState = newState;
-    }
-
-
-
+    } 
 }
