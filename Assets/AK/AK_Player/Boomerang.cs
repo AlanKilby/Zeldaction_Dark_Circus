@@ -14,7 +14,13 @@ public class Boomerang : MonoBehaviour
     public Vector3 aimPos;
     public Transform playerPos;
 
-    public LayerMask mirrorMask;
+    
+    public LayerMask mirrorLayer;
+    /*
+    public LayerMask playerLayer;
+    public LayerMask enemyLayer;
+    public LayerMask obstacleLayer;
+    */
 
     private Rigidbody rb;
 
@@ -142,7 +148,7 @@ public class Boomerang : MonoBehaviour
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 0.5f, mirrorMask))
+        if (Physics.Raycast(ray, out hit, 0.5f, mirrorLayer))
         {
             Vector3 reflectDir = Vector3.Reflect(ray.direction, hit.normal);
             float rot = 90 - Mathf.Atan2(reflectDir.z, reflectDir.x) * Mathf.Rad2Deg;

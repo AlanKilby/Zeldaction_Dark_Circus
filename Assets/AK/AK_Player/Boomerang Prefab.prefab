@@ -65,9 +65,18 @@ MonoBehaviour:
   speed: 10
   aimPos: {x: 0, y: 0, z: 0}
   playerPos: {fileID: 0}
-  mirrorMask:
+  mirrorLayer:
     serializedVersion: 2
     m_Bits: 4096
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 2048
   reductionCoef: 0.05
   accelerationCoef: 0.8
   comebackTimer: 2
