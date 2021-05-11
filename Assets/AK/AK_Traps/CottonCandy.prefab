@@ -44,8 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca628f4fe02ba7049904a8db32741493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hat: PlayerWeapon
-  player: Player
+  hatLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!136 &7551593466044073398
 CapsuleCollider:
   m_ObjectHideFlags: 0
