@@ -59,6 +59,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -83,6 +84,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &2956700054374101377
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -113,8 +115,12 @@ MonoBehaviour:
   speed: 4
   aimPos: {x: 0, y: 0, z: 0}
   playerPos: {fileID: 0}
+  reductionCoef: 0.5
+  accelerationCoef: 0.8
   comebackTimer: 2
-  comebackTimerHolder: 0
+  swordLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!54 &6297847334616416221
 Rigidbody:
   m_ObjectHideFlags: 0

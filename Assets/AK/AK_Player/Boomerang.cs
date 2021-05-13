@@ -7,16 +7,25 @@ public class Boomerang : MonoBehaviour
     public float distance;
     public float speed;
     [Range(1, 10)] public sbyte boomerangDamage = 1;  
+    float goingSpeed;
+    float comingSpeed;
 
     public Vector3 aimPos;
     public Transform playerPos;
 
     private Rigidbody rb;
 
-    bool isGoing;
     bool isComingBack;
 
     bool holder = true;
+
+    [Tooltip("Percentage of speed reduction after throw.")]
+    [Range(0f,1f)]
+    public float reductionCoef;
+
+    [Tooltip("Percentage of speed augmentation when Hat is coming back.")]
+    [Range(0f, 1f)]
+    public float accelerationCoef;
 
     public float comebackTimer;
     float comebackTimerHolder;
@@ -28,10 +37,11 @@ public class Boomerang : MonoBehaviour
     {
         comebackTimerHolder = comebackTimer;
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
-        isGoing = true;
         isComingBack = false;
         rb = gameObject.GetComponent<Rigidbody>();
         aimPos = playerPos.GetComponent<PlayerMovement_Alan>().aim.transform.position;
+        goingSpeed = speed;
+        comingSpeed = speed;
         //rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
         //Throw();
     }
@@ -50,13 +60,18 @@ public class Boomerang : MonoBehaviour
 
         if (comebackTimer > 0)
         {
-            rb.MovePosition(transform.position + transform.forward * speed * Time.deltaTime); // Test for the hat movement
+            rb.MovePosition(transform.position + transform.forward * goingSpeed * Time.deltaTime); // Test for the hat movement
+
+            // Speed reduction Limit
+            if(goingSpeed > speed * 0.75)
+            {
+                goingSpeed -= (goingSpeed * (1-reductionCoef)) * Time.deltaTime;
+            }
             comebackTimer -= Time.deltaTime;
         }
         else if(comebackTimer <= 0)
         {
             isComingBack = true;
-            isGoing = false;
         }
 
 
@@ -72,7 +87,9 @@ public class Boomerang : MonoBehaviour
 
             //rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
 
-            rb.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
+            rb.MovePosition(transform.position + transform.forward * comingSpeed * Time.deltaTime);
+
+            comingSpeed += (goingSpeed * (1 + accelerationCoef)) * Time.deltaTime;
 
             holder = false;
         }
@@ -110,7 +127,6 @@ public class Boomerang : MonoBehaviour
         {
             playerPos.position = new Vector3(transform.position.x, playerPos.position.y, transform.position.z);
             isComingBack = true;
-            isGoing = false;
             playerPos.GetComponent<PlayerMovement_Alan>().canThrow = true;
             Destroy(gameObject);
             
@@ -173,7 +189,6 @@ public class Boomerang : MonoBehaviour
             Debug.Log("Collision with Wall");
 
             isComingBack = true;
-            isGoing = false;
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy")) 
