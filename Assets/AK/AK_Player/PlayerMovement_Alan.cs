@@ -28,12 +28,13 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     // add static reference to pos => BEN 
     public static Vector3 sPlayerPos = Vector3.zero; 
+    public static GameObject sPlayer; // debug to simulate death call from AI 
 
     void Start()
     {
         canThrow = true;
         throwingTime = minThrowTime;
-
+        sPlayer = transform.root.gameObject; 
     }
 
     void Update()
