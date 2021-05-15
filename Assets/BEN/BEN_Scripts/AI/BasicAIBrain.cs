@@ -44,6 +44,7 @@ namespace BEN.AI
     public class BasicAIBrain : MonoBehaviour
     {
         [SerializeField] private AIType type;
+        [SerializeField] private bool _canPatrol = true; 
         public AIType Type { get => type; set => Type = value; } 
         
         // used for conditionalShow's property drawer until I know how to directly use enum 
@@ -169,10 +170,12 @@ namespace BEN.AI
             _agentHp = GetComponent<Health>();
             _agentHp.IsAI = true;
 
-            if (!HasBeenInvokedByBoss)
+            _patrol = GetComponent<FsmPatrol>();
+            _patrol.SetPoints(); 
+
+            if (HasBeenInvokedByBoss || !_canPatrol)
             {
-                _patrol = GetComponent<FsmPatrol>();
-                _patrol.SetPoints(); // debug 
+                _patrol.enabled = false; 
             }
 
             _agent = GetComponent<NavMeshAgent>();
@@ -268,7 +271,15 @@ namespace BEN.AI
         IEnumerator Default_Enter()  
         { 
             yield return new WaitForSeconds(0.03f);
-            _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection); 
+
+            if (_canPatrol)
+            {
+                _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+            }
+            else
+            {
+                _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);
+            }
         }
 
         void Default_FixedUpdate() 
