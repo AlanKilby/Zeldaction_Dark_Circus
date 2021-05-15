@@ -63,9 +63,12 @@ public class Boomerang : MonoBehaviour
             rb.MovePosition(transform.position + transform.forward * goingSpeed * Time.deltaTime); // Test for the hat movement
 
             // Speed reduction Limit
-            if(goingSpeed > speed * 0.75)
-            {
-                goingSpeed -= (goingSpeed * (1-reductionCoef)) * Time.deltaTime;
+            if(goingSpeed > speed * 0.75)
+
+            {
+
+                goingSpeed -= (goingSpeed * (1-reductionCoef)) * Time.deltaTime;
+
             }
             comebackTimer -= Time.deltaTime;
         }
@@ -202,7 +205,7 @@ public class Boomerang : MonoBehaviour
                 return;
             }
 
-            other.GetComponent<Health>().DecreaseHp(boomerangDamage); 
+            other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
         }
 
         if (other.CompareTag("EnemyWeapon")) // fakir weapon

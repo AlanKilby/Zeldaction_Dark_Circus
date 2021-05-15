@@ -40,6 +40,7 @@ namespace BEN.AI
     } 
     
     [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(Health))]
     [DefaultExecutionOrder(10)] 
     public class BasicAIBrain : MonoBehaviour
     {
@@ -65,7 +66,7 @@ namespace BEN.AI
         private GameObject _ball; 
         [SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
         [SerializeField] private GameObject _detection;
-        [SerializeField] private AgentGameplayData _agentHp;
+        private Health _agentHp;
 
         private FsmPatrol _patrol;
         
@@ -86,7 +87,7 @@ namespace BEN.AI
         
         public bool HasBeenInvokedByBoss { get; set; }
         [SerializeField] private PlaceholderDestination _placeholderDestination;
-        private Health _playerHealth; 
+        private Health _playerHP; 
 
 
         [Header("-- DEBUG --")]
@@ -162,7 +163,8 @@ namespace BEN.AI
 
         private void Start()
         {
-            _playerHealth = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>(); 
+            _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>(); 
+            _agentHp = GetComponent<Health>(); 
 
             if (!HasBeenInvokedByBoss)
             {
@@ -197,13 +199,14 @@ namespace BEN.AI
             _checkSurroundings.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.angle, 0f);
             CheckAnimDirection();
 
-            if (_agentHp.CurrentHealth <= 0 && !_patrol.IsDead)
+            if (_agentHp.CurrentValue <= 0 && !_patrol.IsDead)
             {
-                OnRequireStateChange(States.Die, StateTransition.Overwrite); 
+                Debug.Log("transition to death state"); 
+                OnRequireStateChange(States.Die, StateTransition.Safe); 
             }
         }
 
-        private void OnDisable()
+        private void OnDisable() 
         {
             OnRequireStateChange -= TransitionToNewState;
         } 
@@ -212,7 +215,7 @@ namespace BEN.AI
 #endregion 
 
         // called by event OnRequireStateChange
-        private void TransitionToNewState(States newState, StateTransition transition)
+        private void TransitionToNewState(States newState, StateTransition transition) 
         {
             _fsm.ChangeState(newState, transition); 
         }
@@ -349,7 +352,7 @@ namespace BEN.AI
 
         private void FakeCAC()
         {
-            _playerHealth.DecreaseHp(attackDamage); 
+            _playerHP.DecreaseHp(attackDamage); 
         }
 
         private void MonkeyBallAttack()
@@ -435,8 +438,9 @@ namespace BEN.AI
         IEnumerator Die_Enter() 
         {
             _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
+            Debug.Log("die_enter"); 
             
-            yield return new WaitForSeconds(0.5f);  
+            yield return new WaitForSeconds(0.25f);  
             CancelInvoke();
 
             try
@@ -445,7 +449,7 @@ namespace BEN.AI
             }
             catch (Exception e) 
             {
-                Debug.Log("death anim not found or wrong naming"); 
+                Debug.Log($"{e.Message }. \n callind Die state instead of Hit state"); 
                 _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None);
             }
         } 
