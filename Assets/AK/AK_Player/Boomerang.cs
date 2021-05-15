@@ -30,7 +30,7 @@ public class Boomerang : MonoBehaviour
     public float comebackTimer;
     float comebackTimerHolder;
 
-    private AIType enemyType;
+    private BasicAIBrain enemy;
     public LayerMask swordLayer;
 
     private void Start()
@@ -197,9 +197,9 @@ public class Boomerang : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy")) 
         { 
             Debug.Log("Collision with Enemy");
-            enemyType = other.GetComponent<BasicAIBrain>().Type; 
+            enemy = other.GetComponent<BasicAIBrain>(); 
 
-            if (enemyType == AIType.Mascotte && !isComingBack) // change this so you can kill from behind, not only on the way back 
+            if (enemy.Type == AIType.Mascotte && !isComingBack) // change this so you can kill from behind, not only on the way back 
             {
                 isComingBack = true;  
                 return;

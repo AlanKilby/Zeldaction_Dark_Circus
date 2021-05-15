@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic; 
 using UnityEngine;
 using MonsterLove.StateMachine;
 using Debug = UnityEngine.Debug;
@@ -61,8 +60,12 @@ namespace BEN.AI
         [SerializeField, Tooltip("Delay from Idle to Attack State when player is detected"), Range(0f, 5f)] private float attackDelay = 1f; 
         [SerializeField, Range(1f, 30f)] private float attackRange = 1f;
         [SerializeField, Range(1, 5)] private sbyte attackDamage = 1;
+        [SerializeField, Range(0f, 1f)] private float monkeyBallDodgeReactionTime = 0.5f;
+        [SerializeField, Range(0.5f, 2f)] private float monkeyBallInvulnerabilityTime = 1f;
 
         private StateMachine<States> _fsm;
+        public States CurrentState { get; private set; }
+
         [SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
         [SerializeField] private GameObject _detection;
         private Health _agentHp;
@@ -177,7 +180,7 @@ namespace BEN.AI
 
             if (Type == AIType.MonkeySurBall)
             {
-                monkeyBallCollider = GetComponent<BoxCollider>();
+                monkeyBallCollider = GetComponent<BoxCollider>(); 
                 ballCollider = GetComponentInChildren<SphereCollider>();
             }
 
@@ -208,7 +211,8 @@ namespace BEN.AI
         // called by event OnRequireStateChange
         private void TransitionToNewState(States newState, StateTransition transition) 
         {
-            _fsm.ChangeState(newState, transition); 
+            _fsm.ChangeState(newState, transition);
+            CurrentState = newState; 
         }
         
         // MOVE ALL THIS TO AIANIMATION ===>
@@ -337,7 +341,8 @@ namespace BEN.AI
             {
                 _agent.speed = defaultSpeed * attackStateSpeedMultiplier; 
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
-                CheckAnimDirection(AnimState.Atk); 
+                CheckAnimDirection(AnimState.Atk);
+                CancelInvoke(nameof(FakeCAC)); 
             } 
         } 
 
@@ -393,6 +398,7 @@ namespace BEN.AI
 
         IEnumerator Defend_Enter()
         {
+            yield return new WaitForSeconds(monkeyBallDodgeReactionTime);
             _graphics.transform.DetachChildren();
             _agent.speed = 0f;
             _graphics.transform.localPosition = new Vector3(2f, -1f, 0f);  
@@ -401,12 +407,14 @@ namespace BEN.AI
             monkeyBallCollider.enabled = false;
             ballCollider.enabled = false;
 
-            yield return new WaitForSeconds(1f);
+            // si chapeau lancé loin, monkey est de nouveau vulnérable au moment du retour 
+            yield return new WaitForSeconds(monkeyBallInvulnerabilityTime);
             monkeyBallCollider.enabled = true;
             ballCollider.enabled = true;
 
-            yield return new WaitForSeconds(monkeyBallProvocDuration - 1f); 
-            OnRequireStateChange(States.Attack, StateTransition.Safe); 
+            // ne remonte pas tout de suite sur la balle
+            yield return new WaitForSeconds(monkeyBallProvocDuration); 
+            OnRequireStateChange(States.Attack, StateTransition.Safe);  // risky if the player has gone outside of detection collider.. should I use a HFSM instead ? 
         } 
 
         void Defend_Exit() 
@@ -438,11 +446,14 @@ namespace BEN.AI
 
             try
             {
-                clipToPlay = _aIAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None); 
-            }
+                if (Type != AIType.MonkeySurBall) // because of bad naming conventions... 
+                {
+                    clipToPlay = _aIAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None);
+                } 
+            } 
             catch (Exception) { }
 
-            if (clipToPlay == null)
+            if (clipToPlay == null) 
             {
                 Debug.Log("Calling Die state instead of Hit state");
                 _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None); // need consistent naming across all mobs, not Die or Hit for same result.. 

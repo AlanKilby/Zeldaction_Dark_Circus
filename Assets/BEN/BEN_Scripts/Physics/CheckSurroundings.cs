@@ -69,7 +69,7 @@ namespace BEN.AI
             {
                 try
                 {
-                    _brain.OnRequireStateChange(States.Defend, StateTransition.Overwrite);
+                    _brain.OnRequireStateChange(States.Defend, StateTransition.Safe); 
                 }
                 catch (System.Exception e) { Debug.Log(e.Message); }
             } 
@@ -103,7 +103,7 @@ namespace BEN.AI
                 if (!_notified && other) 
                 { 
                     _brain.TargetToAttackPosition = other.transform.position;
-                    _brain.OnRequireStateChange(States.Attack, StateTransition.Overwrite); 
+                    _brain.OnRequireStateChange(States.Attack, StateTransition.Safe); 
                 } 
                 _notified = true; 
                 // _patrol.SetDestination(other.transform.position, 0.5f, _playerDetected); if have FSMpatrol 
