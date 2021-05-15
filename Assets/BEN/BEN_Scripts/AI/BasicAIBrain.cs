@@ -63,7 +63,6 @@ namespace BEN.AI
         [SerializeField, Range(1, 5)] private sbyte attackDamage = 1;
 
         private StateMachine<States> _fsm;
-        private GameObject _ball; 
         [SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
         [SerializeField] private GameObject _detection;
         private Health _agentHp;
@@ -76,7 +75,7 @@ namespace BEN.AI
         public Vector3 TargetToAttackPosition { get; set; }
 
         private AIAnimation _aIAnimation; // MOVE TO AIANIMATION
-        private AIAnimation _ballAnimation; // MOVE TO AIANIMATION
+        private AIAnimation _ballAnimation; // MOVE TO AIANIMATION + not used
 
         // private Vector3 _positionBeforeAttacking; // a node or single position 
 
@@ -96,7 +95,7 @@ namespace BEN.AI
         private Collider monkeyBallCollider;
         private Collider ballCollider;
         public float angle;
-        private bool hasCalledFakeCAC; 
+        private bool hasCalledFakeCAC;
 
         #region Editor
 
@@ -164,7 +163,8 @@ namespace BEN.AI
         private void Start()
         {
             _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>(); 
-            _agentHp = GetComponent<Health>(); 
+            _agentHp = GetComponent<Health>();
+            _agentHp.IsAI = true;
 
             if (!HasBeenInvokedByBoss)
             {
@@ -179,19 +179,10 @@ namespace BEN.AI
             {
                 monkeyBallCollider = GetComponent<BoxCollider>();
                 ballCollider = GetComponentInChildren<SphereCollider>();
-
-                if (!_ball)
-                {
-                    try
-                    {
-                        _ball = transform.GetChild(2).gameObject;
-                    }
-                    catch (Exception e) { Debug.Log(e.Message); } 
-                }
             }
 
             _agent.speed = defaultSpeed;
-            _previousParentRotation = _placeholderDestination.angleIndex; 
+            _previousParentRotation = _placeholderDestination.angleIndex;
         } 
 
         private void FixedUpdate()
@@ -401,11 +392,11 @@ namespace BEN.AI
         #region Defend
 
         IEnumerator Defend_Enter()
-        { 
+        {
+            _graphics.transform.DetachChildren();
             _agent.speed = 0f;
-            _graphics.transform.localPosition = Vector3.zero; 
-            _ball.SetActive(false);
-            // _aIAnimation.PlayAnimation(11); 
+            _graphics.transform.localPosition = new Vector3(2f, -1f, 0f);  
+           
             _checkSurroundings.CanDodgeProjectile = false;
             monkeyBallCollider.enabled = false;
             ballCollider.enabled = false;
@@ -416,13 +407,14 @@ namespace BEN.AI
 
             yield return new WaitForSeconds(monkeyBallProvocDuration - 1f); 
             OnRequireStateChange(States.Attack, StateTransition.Safe); 
-        }
+        } 
 
         void Defend_Exit() 
         { 
             _agent.speed = defaultSpeed;
-            _graphics.transform.localPosition = Vector3.up; 
-            _ball.SetActive(true);
+            _graphics.transform.localPosition = Vector3.up;
+            _graphics.SetActive(true);
+
             // _aIAnimation.PlayAnimation(AnimState.AtkRight); 
 
             Invoke(nameof(ResetBool), 8f); 

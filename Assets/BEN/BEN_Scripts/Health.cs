@@ -3,7 +3,8 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private AgentGameplayData _agentStartingHP; 
-    public sbyte CurrentValue { get; set; } 
+    public sbyte CurrentValue { get; set; } // only for mobs. Player current value should be stored in a scriptable object that inherits from AgentGameplayData
+    public bool IsAI { get; set; }
 
     private void Awake()
     {
