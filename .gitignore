@@ -58,3 +58,14 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+
+# Relative to Odin Serializer
+# Ignore the auto-generated AOT compatibility dll.
+/Assets/BEN/_Imported/Plugins/Sirenix/Assemblies/AOT/*
+
+# Ignore all unpacked demos.
+/Assets/BEN/_Imported/Plugins/Sirenix/Demos/*
+
+# But keep the demo packages themselves.
+!/Assets/BEN/_Imported/Plugins/Sirenix/Demos/*.unitypackage 
+
