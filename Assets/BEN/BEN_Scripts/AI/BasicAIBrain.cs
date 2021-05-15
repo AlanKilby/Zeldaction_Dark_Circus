@@ -442,15 +442,18 @@ namespace BEN.AI
             
             yield return new WaitForSeconds(0.25f);  
             CancelInvoke();
+            Clip clipToPlay = null;  
 
             try
             {
-                _aIAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None);
+                clipToPlay = _aIAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None); 
             }
-            catch (Exception e) 
+            catch (Exception) { }
+
+            if (clipToPlay == null)
             {
-                Debug.Log($"{e.Message }. \n callind Die state instead of Hit state"); 
-                _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None);
+                Debug.Log("Calling Die state instead of Hit state");
+                _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None); // need consistent naming across all mobs, not Die or Hit for same result.. 
             }
         } 
         
