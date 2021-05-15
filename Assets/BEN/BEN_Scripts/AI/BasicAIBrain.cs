@@ -271,7 +271,8 @@ namespace BEN.AI
         void Init_Enter()
         {
             _aIAnimation = _graphics.GetComponent<AIAnimation>();
-            _fsm.ChangeState(NewState = States.Default, StateTransition.Safe); 
+            _fsm.ChangeState(NewState = States.Default, StateTransition.Safe);
+            Debug.Log("init_enter");
         }
 
         void Init_Exit()
@@ -284,12 +285,13 @@ namespace BEN.AI
         IEnumerator Default_Enter()  
         { 
             yield return new WaitForSeconds(0.03f);
+            Debug.Log("default_enter");
 
             if (_canPatrol || GoingBackToPositionBeforeIdling) 
             {
                 _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
             } 
-            else
+            else 
             {
                 _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);
             }
@@ -328,6 +330,7 @@ namespace BEN.AI
             _agent.destination = TargetToAttackPosition;
             _idlePositionBeforeAttacking = transform.position;
             _agent.speed = defaultSpeed;
+            Debug.Log("attack_enter");
 
             // UPGRADE : make the enemy predict the future player position instead of aiming at it's current one
             switch (type) 
@@ -426,8 +429,9 @@ namespace BEN.AI
             yield return new WaitForSeconds(monkeyBallDodgeReactionTime);
             _graphics.transform.DetachChildren();
             _agent.speed = 0f;
-            _graphics.transform.localPosition = new Vector3(2f, -1f, 0f);  
-           
+            _graphics.transform.localPosition = new Vector3(2f, -1f, 0f);
+            Debug.Log("defend_enter");
+
             _checkSurroundings.CanDodgeProjectile = false;
             monkeyBallCollider.enabled = false;
             ballCollider.enabled = false;

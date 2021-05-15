@@ -110,7 +110,7 @@ namespace BEN.AI
             if (!other.CompareTag("Player") || bearerType == AIType.Mascotte) return; // mascotte follows players for ever once detected 
 
             _notified = false;
-            StartCoroutine(nameof(CallDefaultStateAfterDelay)); 
+            StartCoroutine(nameof(CallDefaultStateAfterDelay));  
         } 
 
         IEnumerator CallDefaultStateAfterDelay() 
