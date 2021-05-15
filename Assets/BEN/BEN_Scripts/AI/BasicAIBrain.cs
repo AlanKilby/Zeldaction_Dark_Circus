@@ -63,9 +63,11 @@ namespace BEN.AI
         [SerializeField, Range(1, 5)] private sbyte attackDamage = 1;
         [SerializeField, Range(0f, 1f)] private float monkeyBallDodgeReactionTime = 0.5f;
         [SerializeField, Range(0.5f, 2f)] private float monkeyBallInvulnerabilityTime = 1f;
-
+        [SerializeField, Range(0f, 5f)] private float _delayBeforeBackToDefaultState = 3f;
+        public float DelayBeforeBackToDefaultState { get ; private set ; } 
+         
         private StateMachine<States> _fsm;
-        public States CurrentState { get; private set; }
+        public States NewState { get; private set; }
 
         [SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
         [SerializeField] private GameObject _detection;
@@ -77,11 +79,12 @@ namespace BEN.AI
 
         public Action<States, StateTransition> OnRequireStateChange; 
         public Vector3 TargetToAttackPosition { get; set; }
+        public bool GoingBackToPositionBeforeIdling { get; set; }
 
         private AIAnimation _aIAnimation; // MOVE TO AIANIMATION
         private AIAnimation _ballAnimation; // MOVE TO AIANIMATION + not used
 
-        // private Vector3 _positionBeforeAttacking; // a node or single position 
+        private Vector3 _idlePositionBeforeAttacking; // when not patrolling
 
         private CheckSurroundings _checkSurroundings; 
         
@@ -90,7 +93,8 @@ namespace BEN.AI
         
         public bool HasBeenInvokedByBoss { get; set; }
         [SerializeField] private PlaceholderDestination _placeholderDestination;
-        private Health _playerHP; 
+        private Health _playerHP;
+        private bool exitingAttackState; 
 
 
         [Header("-- DEBUG --")]
@@ -169,6 +173,8 @@ namespace BEN.AI
             _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>(); 
             _agentHp = GetComponent<Health>();
             _agentHp.IsAI = true;
+            DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
+            GoingBackToPositionBeforeIdling = false; 
 
             _patrol = GetComponent<FsmPatrol>();
             _patrol.SetPoints(); 
@@ -201,6 +207,13 @@ namespace BEN.AI
                 Debug.Log("transition to death state"); 
                 OnRequireStateChange(States.Die, StateTransition.Safe); 
             }
+
+            if (!_canPatrol && Vector3.Distance(transform.position, _idlePositionBeforeAttacking) <= 0.25f && exitingAttackState) 
+            {
+                exitingAttackState = false; 
+                _agent.speed = 0f;
+                _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); // use AnimDirection according to where you come from . 
+            }
         }
 
         private void OnDisable() 
@@ -215,7 +228,7 @@ namespace BEN.AI
         private void TransitionToNewState(States newState, StateTransition transition) 
         {
             _fsm.ChangeState(newState, transition);
-            CurrentState = newState; 
+            NewState = newState; 
         }
         
         // MOVE ALL THIS TO AIANIMATION ===>
@@ -258,7 +271,7 @@ namespace BEN.AI
         void Init_Enter()
         {
             _aIAnimation = _graphics.GetComponent<AIAnimation>();
-            _fsm.ChangeState(States.Default, StateTransition.Safe);
+            _fsm.ChangeState(NewState = States.Default, StateTransition.Safe); 
         }
 
         void Init_Exit()
@@ -272,15 +285,15 @@ namespace BEN.AI
         { 
             yield return new WaitForSeconds(0.03f);
 
-            if (_canPatrol)
+            if (_canPatrol || GoingBackToPositionBeforeIdling) 
             {
                 _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
-            }
+            } 
             else
             {
                 _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);
             }
-        }
+        } 
 
         void Default_FixedUpdate() 
         { 
@@ -313,6 +326,8 @@ namespace BEN.AI
             yield return new WaitForSeconds(attackDelay); 
             
             _agent.destination = TargetToAttackPosition;
+            _idlePositionBeforeAttacking = transform.position;
+            _agent.speed = defaultSpeed;
 
             // UPGRADE : make the enemy predict the future player position instead of aiming at it's current one
             switch (type) 
@@ -333,7 +348,7 @@ namespace BEN.AI
                     InvokeRepeating(nameof(FakirAttack), 0f, attackRate); 
                     break; 
             } 
-        }
+        } 
 
         private void Attack_FixedUpdate()  
         {
@@ -385,10 +400,8 @@ namespace BEN.AI
                 TransitionToNewState(States.Attack, StateTransition.Overwrite); // debug crados             
             }
 
-            _agent.destination = _patrol.Points[_patrol.DestPoint].position; // TODO : use closest point of list instead
-            _agent.speed = defaultSpeed / attackStateSpeedMultiplier; 
-            // _aIAnimation.PlayAnimation(AnimState.WalkRight); // make it dynamic direction instead 
-                                                                  // _ballAnimation.StopAnimating(); only when initial position is reached
+            _agent.destination = _canPatrol ? _patrol.Points[_patrol.DestPoint].position : _idlePositionBeforeAttacking; // TODO : use closest point of list instead (when patrolling)
+            _agent.speed = defaultSpeed / attackStateSpeedMultiplier;
 
             switch (type)
             {
@@ -400,7 +413,8 @@ namespace BEN.AI
                     break; 
             }
 
-            hasCalledFakeCAC = false; 
+            hasCalledFakeCAC = false;
+            exitingAttackState = true; // problematic to not have this on that kind of state machine (tradeoff for simplicity) 
         }
 
         #endregion
