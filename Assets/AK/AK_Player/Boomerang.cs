@@ -133,7 +133,7 @@ public class Boomerang : MonoBehaviour
 
     public void Teleport()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetButtonUp("PlayerAttack"))
         {
             playerPos.position = new Vector3(transform.position.x, playerPos.position.y, transform.position.z);
             isComingBack = true;

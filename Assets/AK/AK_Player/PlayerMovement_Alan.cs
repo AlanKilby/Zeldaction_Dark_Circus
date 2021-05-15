@@ -42,12 +42,12 @@ public class PlayerMovement_Alan : MonoBehaviour
 
         if (canThrow == true)
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetButton("PlayerAttack"))
             {
                 canMove = false;
                 throwingTime += Time.deltaTime;
             }
-            if (Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetButtonUp("PlayerAttack"))
             {
                 Debug.Log("No Longer Pressing");
                 Attack(throwingTime);
@@ -69,7 +69,7 @@ public class PlayerMovement_Alan : MonoBehaviour
 
 
         // Movement direction (x,y,z)
-        Vector3 move = new Vector3(horizontalMove, 0f, -verticalMove).normalized;
+        Vector3 move = new Vector3(horizontalMove, 0f, verticalMove).normalized;
 
 
         // Lock player movement if !canMove
@@ -90,11 +90,11 @@ public class PlayerMovement_Alan : MonoBehaviour
         {
             playerAnim.ChangeAnimationState(playerAnim.PLAYER_IDLE_HAT);
         }
-        else if(verticalMove > 0 && canThrow == true)
+        else if(verticalMove < 0 && canThrow == true)
         {
             playerAnim.ChangeAnimationState(playerAnim.PLAYER_DOWN_HAT);
         }
-        else if (verticalMove < 0 && canThrow == true)
+        else if (verticalMove > 0 && canThrow == true)
         {
             playerAnim.ChangeAnimationState(playerAnim.PLAYER_TOP_HAT); 
         }
