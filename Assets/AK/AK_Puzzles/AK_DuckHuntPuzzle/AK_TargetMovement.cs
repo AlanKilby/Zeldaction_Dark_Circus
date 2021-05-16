@@ -24,11 +24,11 @@ public class AK_TargetMovement : MonoBehaviour
             transform.Translate(transform.right * movementSpeed * Time.deltaTime);
         }
 
-        if(transform.position == targetLeft.transform.position)
+        if(transform.position.x <= targetLeft.transform.position.x)
         {
             movingRight = true;
         }
-        else if(transform.position == targetRight.transform.position)
+        else if(transform.position.x >= targetRight.transform.position.x)
         {
             movingRight = false;
         }
