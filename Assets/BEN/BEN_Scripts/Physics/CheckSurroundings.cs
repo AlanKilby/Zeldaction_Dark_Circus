@@ -1,6 +1,7 @@
 using UnityEngine;
 using MonsterLove.StateMachine;
-using UnityEngine.AI; 
+using UnityEngine.AI;
+using System.Collections; 
 
 namespace BEN.AI 
 {
@@ -42,23 +43,12 @@ namespace BEN.AI
             CanDodgeProjectile = true; 
         }
 
-        private void FixedUpdate()  
+        private void OnTriggerEnter(Collider other)
         {
-            /* detectedCollidersArray = Physics.OverlapBox(transform.position, 
-                                                    new Vector3(selfCollider.size.x, selfCollider.size.y, selfCollider.size.z), 
-                                                    Quaternion.identity, 
-                                                    detectableTargetsLayer);
-
-        if (detectedCollidersArray.Length > 0 && !patrolBehaviour.playerDetected)
-        {
-            Debug.Log("Player is detected");
-            patrolBehaviour.SetDestination(detectedCollidersArray[0].transform.position); 
-        }
-        else
-        {
-
-
-        } */ 
+            if (other.CompareTag("Player"))
+            {
+                StopCoroutine(nameof(CallDefaultStateAfterDelay)); 
+            }
         }
 
         private void OnTriggerStay(Collider other)
@@ -69,7 +59,7 @@ namespace BEN.AI
             {
                 try
                 {
-                    _brain.OnRequireStateChange(States.Defend, StateTransition.Overwrite);
+                    _brain.OnRequireStateChange(States.Defend, StateTransition.Safe); 
                 }
                 catch (System.Exception e) { Debug.Log(e.Message); }
             } 
@@ -103,7 +93,7 @@ namespace BEN.AI
                 if (!_notified && other) 
                 { 
                     _brain.TargetToAttackPosition = other.transform.position;
-                    _brain.OnRequireStateChange(States.Attack, StateTransition.Overwrite); 
+                    _brain.OnRequireStateChange(States.Attack, StateTransition.Safe); 
                 } 
                 _notified = true; 
                 // _patrol.SetDestination(other.transform.position, 0.5f, _playerDetected); if have FSMpatrol 
@@ -120,7 +110,14 @@ namespace BEN.AI
             if (!other.CompareTag("Player") || bearerType == AIType.Mascotte) return; // mascotte follows players for ever once detected 
 
             _notified = false;
-            _brain.OnRequireStateChange(States.Default, StateTransition.Safe);  
+            StartCoroutine(nameof(CallDefaultStateAfterDelay));  
+        } 
+
+        IEnumerator CallDefaultStateAfterDelay() 
+        {
+            yield return new WaitForSeconds(_brain.DelayBeforeBackToDefaultState);
+            _brain.GoingBackToPositionBeforeIdling = true; 
+            _brain.OnRequireStateChange(States.Default, StateTransition.Safe); 
         }
 
         private bool IsFacingProjectile(Vector3 projectile) => (Mathf.Sign(Vector3.Dot(transform.position, projectile)) > 0); 

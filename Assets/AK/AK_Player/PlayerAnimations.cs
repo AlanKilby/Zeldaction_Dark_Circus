@@ -25,19 +25,20 @@ public class PlayerAnimations : MonoBehaviour
     public string PLAYER_THROWING_HAT = "throwinghat";
     public string PLAYER_DEAD = "playerFakeDeath";  
 
-    [Space, SerializeField] private AgentGameplayData _playerHp;
+    [Space, SerializeField] private Health _playerHp;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         playerMovement = player.GetComponent<PlayerMovement_Alan>();
+        _playerHp.IsAI = false; 
     }
 
     private void FixedUpdate()
     {
         transform.position = player.transform.position;
 
-        if (_playerHp.CurrentHealth <= 0 && !animator.GetCurrentAnimatorStateInfo(0).IsName("playerFakeDeath"))
+        if (_playerHp.CurrentValue <= 0 && !animator.GetCurrentAnimatorStateInfo(0).IsName("playerFakeDeath"))
         {
             ChangeAnimationState(PLAYER_DEAD); 
             Debug.Log("player death animation"); 

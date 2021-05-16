@@ -62,7 +62,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3982106213023558243
 Transform:
   m_ObjectHideFlags: 0
@@ -470,6 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  _canPatrol: 1
   isMonkeyBall: 0
   isFakir: 0
   isCaster: 0
@@ -482,9 +483,11 @@ MonoBehaviour:
   attackDelay: 0.5
   attackRange: 2
   attackDamage: 1
+  monkeyBallDodgeReactionTime: 0.5
+  monkeyBallInvulnerabilityTime: 1
+  _delayBeforeBackToDefaultState: 3
   _graphics: {fileID: 7725771846700993472}
   _detection: {fileID: 7725771847332921776}
-  _agentHp: {fileID: 11400000, guid: 14942007862bd6d46835dbe4dec6db3a, type: 2}
   _placeholderDestination: {fileID: 1245166779}
   debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
@@ -514,7 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e7f1a20bc890444ad3faf57daaf855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agentHp: {fileID: 11400000, guid: 14942007862bd6d46835dbe4dec6db3a, type: 2}
+  _agentStartingHP: {fileID: 11400000, guid: 14942007862bd6d46835dbe4dec6db3a, type: 2}
 --- !u!1 &7725771847332921776
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,8 +561,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 3, z: 8.70893}
-  m_Center: {x: 0, y: 0, z: 4.4983993}
+  m_Size: {x: 8, y: 3, z: 8.7}
+  m_Center: {x: 0, y: 0, z: 4.5}
 --- !u!114 &7725771847332921778
 MonoBehaviour:
   m_ObjectHideFlags: 0
