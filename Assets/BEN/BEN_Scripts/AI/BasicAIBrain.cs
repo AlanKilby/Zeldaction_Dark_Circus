@@ -361,7 +361,13 @@ namespace BEN.AI
             if (Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos) <= attackRange) 
             {
                 _agent.speed = 0f;
-                
+
+                if (LoadSceneOnPlayerDeath.playerIsDead)
+                {
+                    _fsm.ChangeState(States.Default, StateTransition.Safe);
+                    CancelInvoke(nameof(FakeCAC));
+                }
+
                 // to simulate player killed from CAC. Distance is done from projectile
                 if ((type == AIType.Monkey || type == AIType.Mascotte) && !hasCalledFakeCAC) 
                 {
@@ -374,7 +380,8 @@ namespace BEN.AI
                 _agent.speed = defaultSpeed * attackStateSpeedMultiplier; 
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
                 CheckAnimDirection(AnimState.Atk);
-                CancelInvoke(nameof(FakeCAC)); 
+                CancelInvoke(nameof(FakeCAC));
+                hasCalledFakeCAC = false; 
             } 
         } 
 
