@@ -114,12 +114,12 @@ namespace BEN.AI
         private void Awake()
         {
             _fsm = StateMachine<States>.Initialize(this);
-            _fsm.ChangeState(States.Init, StateTransition.Safe);
+            _fsm.ChangeState(States.Init, StateTransition.Safe); 
         }
 
         private void OnEnable() 
         {
-            OnRequireStateChange += TransitionToNewState;
+            OnRequireStateChange += TransitionToNewState; 
         } 
         
         private void OnValidate()
@@ -194,13 +194,16 @@ namespace BEN.AI
             }
 
             _agent.speed = defaultSpeed;
-            _previousParentRotation = _placeholderDestination.angleIndex;
+            _previousParentRotation = _placeholderDestination.angleIndex; 
         } 
 
         private void FixedUpdate()
         {
-            _checkSurroundings.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.angle, 0f);
-            CheckAnimDirection();
+            if (_canPatrol)
+            {
+                _detection.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.angle, 0f);
+            }
+            CheckAnimDirection(); // remove from state machine 
 
             if (_agentHp.CurrentValue <= 0 && !_patrol.IsDead)
             {
