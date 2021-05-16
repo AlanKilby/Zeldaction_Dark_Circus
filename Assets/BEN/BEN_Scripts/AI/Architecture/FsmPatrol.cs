@@ -13,7 +13,7 @@ namespace BEN.AI
         
         public bool IsDead { get; set; }
 
-        private void Start()
+        private void Start() 
         {
             _agent = GetComponent<NavMeshAgent>();
 
