@@ -18,7 +18,7 @@ public class AK_LockedDoorDetectionZone : MonoBehaviour
         {
             AK_KeyManager playerKeyList = other.GetComponent<AK_KeyManager>();
 
-            for(int i = 0; i < playerKeyList.keyIDList.Length; i++)
+            for(int i = 0; i <= playerKeyList.keyIDList.Count; i++)
             {
                 if (playerKeyList.keyIDList[i] == doorID)
                 {

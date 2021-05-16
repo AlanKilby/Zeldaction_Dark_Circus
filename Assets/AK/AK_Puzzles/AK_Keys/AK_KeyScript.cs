@@ -13,8 +13,9 @@ public class AK_KeyScript : MonoBehaviour
         {
             AK_KeyManager playerKeyList = other.GetComponent<AK_KeyManager>();
 
-            playerKeyList.keyIDList[playerKeyList.keyIDList.Length] = keyID;
-            playerKeyList.keyNameList[playerKeyList.keyNameList.Length] = KeyName;
+            playerKeyList.keyIDList.Add(keyID);
+            playerKeyList.keyNameList.Add(KeyName);
+            Destroy(gameObject);
         }
     }
 }

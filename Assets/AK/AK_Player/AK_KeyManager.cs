@@ -5,8 +5,8 @@ using UnityEngine;
 public class AK_KeyManager : MonoBehaviour
 {
     [Tooltip("List of the keys the player has by Name.")]
-    public string[] keyNameList;
+    public List<string> keyNameList = new List<string>();
 
     [Tooltip("List of the keys the player has by ID.")]
-    public int[] keyIDList;
+    public List<int> keyIDList = new List<int>();
 }
