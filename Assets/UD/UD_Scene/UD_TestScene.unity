@@ -2170,6 +2170,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UD_PlayerVCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 6654703847501073377, guid: 6e883efb81a5fbd458f2dd2a458af026, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6654703847501073406, guid: 6e883efb81a5fbd458f2dd2a458af026, type: 3}
       propertyPath: m_Follow
       value: 
@@ -2200,15 +2204,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6654703847501073407, guid: 6e883efb81a5fbd458f2dd2a458af026, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.26693356
+      value: 0.2669336
       objectReference: {fileID: 0}
     - target: {fileID: 6654703847501073407, guid: 6e883efb81a5fbd458f2dd2a458af026, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000028720944
+      value: 3.4238033e-15
       objectReference: {fileID: 0}
     - target: {fileID: 6654703847501073407, guid: 6e883efb81a5fbd458f2dd2a458af026, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000000795524
+      value: -1.836517e-15
       objectReference: {fileID: 0}
     - target: {fileID: 6654703847501073407, guid: 6e883efb81a5fbd458f2dd2a458af026, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2320,22 +2324,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1723755519}
     m_Modifications:
-    - target: {fileID: 2648203343848301014, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2648203343848301014, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2648203343848301016, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
-      propertyPath: minThrowTime
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2648203343848301017, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: 5aee0e3c14148dd4586c148a3d5d5c14, type: 2}
     - target: {fileID: 2648203343996164132, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
       propertyPath: m_Name
       value: UD_Player
@@ -2384,10 +2372,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7947157173063223367, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
-      propertyPath: _agentStartingHP
-      value: 
-      objectReference: {fileID: 11400000, guid: 85a53167c0644404ca50fc031f94b3b6, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
 --- !u!1001 &7541813525567433756

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e7f1a20bc890444ad3faf57daaf855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agentHp: {fileID: 11400000, guid: 85a53167c0644404ca50fc031f94b3b6, type: 2}
+  _agentStartingHP: {fileID: 11400000, guid: 85a53167c0644404ca50fc031f94b3b6, type: 2}
 --- !u!1001 &7503289491963194189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24,6 +24,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 1.31
       objectReference: {fileID: 0}
+    - target: {fileID: 5539784748974113977, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: _playerHp
+      value: 
+      objectReference: {fileID: 7947157173063223367}
     - target: {fileID: 5539784749608317798, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -92,9 +96,21 @@ PrefabInstance:
       propertyPath: boomerang
       value: 
       objectReference: {fileID: 8180312727480140719, guid: 26b0da404dab94043b0f85adb65709ad, type: 3}
+    - target: {fileID: 5539784749741460117, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: minThrowTime
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 5539784749741460122, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539784749741460123, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539784749741460123, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5539784749741460119, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
