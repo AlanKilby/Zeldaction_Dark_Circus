@@ -6,9 +6,13 @@ public class Health : MonoBehaviour
     public sbyte CurrentValue { get; set; } // only for mobs. Player current value should be stored in a scriptable object that inherits from AgentGameplayData
     public bool IsAI { get; set; }
 
+    public static System.Action OnPlayerDeath;
+    private bool _notified; // replace with global game state to avoid same bool spread accross codebase
+    private BoxCollider _playercollider; 
+
     private void Awake()
     {
-        Initialise(); 
+        Initialise();
     } 
 
     public void Initialise()
@@ -20,5 +24,13 @@ public class Health : MonoBehaviour
     {
         CurrentValue -= value; 
         Debug.Log($"decreasing hp by {value}. New value is {CurrentValue}"); 
+
+        if (!IsAI && CurrentValue <= 0 && !_notified)
+        {
+            _notified = true;
+            _playercollider = GetComponent<BoxCollider>();
+            _playercollider.enabled = false; 
+            OnPlayerDeath(); 
+        }
     } 
 }
