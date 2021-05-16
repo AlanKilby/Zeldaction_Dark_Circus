@@ -234,40 +234,46 @@ namespace BEN.AI
             NewState = newState; 
         }
         
-        // MOVE ALL THIS TO AIANIMATION ===>
+        // MOVE ALL THIS TO AIANIMATION ===> WARNING : duplicate 
 
         private void CheckAnimDirection()
         {
-            _animDirection = (AnimDirection) (_placeholderDestination.angleIndex);
+            if (Type == AIType.Fakir && !_canPatrol) return; // modfy is fakir needs repositionning 
+            Debug.Log("check anim direction");
+
+            _animDirection = (AnimDirection) (_placeholderDestination.angleIndex); 
 
             if (_placeholderDestination.angleIndex == _previousParentRotation) return;
             
             _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
             _previousParentRotation = _placeholderDestination.angleIndex;
-            StartCoroutine(nameof(ChangeGraphicsRotation)); 
+            StartCoroutine(nameof(ChangeGraphicsRotation));
         } 
         
         private void CheckAnimDirection(AnimState state)
         {
+            Debug.Log("check anim direction with state");
+            // if (Type == AIType.Fakir && !_canPatrol && NewState == States.Attack) return; // modify is fakir needs repositionning 
+
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex);
 
-            if (_placeholderDestination.angleIndex == _previousParentRotation) return;
+            if (_placeholderDestination.angleIndex == _previousParentRotation) return; 
             
             _aIAnimation.PlayAnimation(state, _animDirection);
             
             _previousParentRotation = _placeholderDestination.angleIndex;
-            StartCoroutine(nameof(ChangeGraphicsRotation)); 
+            StartCoroutine(nameof(ChangeGraphicsRotation));
         } 
 
         private IEnumerator ChangeGraphicsRotation()
         {
             yield return new WaitForSeconds(1.5f);
-            _graphics.transform.localRotation = Quaternion.identity; 
+            _graphics.transform.localRotation = Quaternion.identity;
         }
-        
+
         // <===
 
-#region FSM
+        #region FSM
 
         #region Init 
 
@@ -292,7 +298,14 @@ namespace BEN.AI
 
             if (_canPatrol || GoingBackToPositionBeforeIdling) 
             {
-                _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+                if (Type == AIType.Fakir && !_canPatrol)
+                {
+                    _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); 
+                }
+                else
+                {
+                    _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+                }
             } 
             else 
             {
@@ -362,6 +375,11 @@ namespace BEN.AI
             {
                 _agent.speed = 0f;
 
+                if (Type == AIType.Fakir && !_canPatrol && NewState == States.Attack)
+                {
+                    CheckAnimDirection(AnimState.Atk);
+                } 
+
                 if (LoadSceneOnPlayerDeath.playerIsDead)
                 {
                     _fsm.ChangeState(States.Default, StateTransition.Safe);
@@ -379,9 +397,10 @@ namespace BEN.AI
             {
                 _agent.speed = defaultSpeed * attackStateSpeedMultiplier; 
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
-                CheckAnimDirection(AnimState.Atk);
+
                 CancelInvoke(nameof(FakeCAC));
-                hasCalledFakeCAC = false; 
+                hasCalledFakeCAC = false;
+                CheckAnimDirection(AnimState.Atk); 
             } 
         } 
 
@@ -413,9 +432,6 @@ namespace BEN.AI
                 TransitionToNewState(States.Attack, StateTransition.Overwrite); // debug crados             
             }
 
-            _agent.destination = _canPatrol ? _patrol.Points[_patrol.DestPoint].position : _idlePositionBeforeAttacking; // TODO : use closest point of list instead (when patrolling)
-            _agent.speed = defaultSpeed / attackStateSpeedMultiplier;
-
             switch (type)
             {
                 case AIType.MonkeySurBall: 
@@ -428,6 +444,16 @@ namespace BEN.AI
 
             hasCalledFakeCAC = false;
             exitingAttackState = true; // problematic to not have this on that kind of state machine (tradeoff for simplicity) 
+
+            if (Type == AIType.Fakir && !_canPatrol) 
+            { 
+                _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);  
+            }
+            else
+            {
+                _agent.destination = _canPatrol ? _patrol.Points[_patrol.DestPoint].position : _idlePositionBeforeAttacking; // TODO : use closest point of list instead (when patrolling)
+                _agent.speed = defaultSpeed / attackStateSpeedMultiplier;
+            }
         }
 
         #endregion
