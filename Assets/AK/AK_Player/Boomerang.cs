@@ -28,6 +28,8 @@ public class Boomerang : MonoBehaviour
 
     bool holder = true;
 
+    bool hasWand;
+
     [Tooltip("Percentage of speed reduction after throw.")]
     [Range(0f,1f)]
     public float reductionCoef;
@@ -46,6 +48,7 @@ public class Boomerang : MonoBehaviour
     {
         comebackTimerHolder = comebackTimer;
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        hasWand = playerPos.GetComponent<PlayerMovement_Alan>().hasWand;
         isComingBack = false;
         rb = gameObject.GetComponent<Rigidbody>();
         aimPos = playerPos.GetComponent<PlayerMovement_Alan>().aim.transform.position;
@@ -133,7 +136,7 @@ public class Boomerang : MonoBehaviour
 
     public void Teleport()
     {
-        if (Input.GetButtonUp("PlayerAttack"))
+        if (Input.GetButtonUp("PlayerAttack") && hasWand)
         {
             playerPos.position = new Vector3(transform.position.x, playerPos.position.y, transform.position.z);
             isComingBack = true;

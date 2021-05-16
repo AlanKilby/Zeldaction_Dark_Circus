@@ -2,9 +2,6 @@
 
 public class PlayerMovement_Alan : MonoBehaviour
 {
-
-    public int playerHp;
-
     public float movementSpeed = 5f; 
 
     public Rigidbody playerRB;
@@ -15,6 +12,9 @@ public class PlayerMovement_Alan : MonoBehaviour
     public GameObject aim;
 
     public bool canThrow;
+
+    [Tooltip("If the player has the Wand he can teleport to his hat.")]
+    public bool hasWand;
 
     GameObject boomerangInstance;
 
