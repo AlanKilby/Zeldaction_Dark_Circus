@@ -6,6 +6,7 @@ public class AK_DuckScript : MonoBehaviour
 {
     public bool wasShot;
 
+    public Sprite symbol;
     public int ID;
 
     public GameObject[] otherDucks;
@@ -20,11 +21,11 @@ public class AK_DuckScript : MonoBehaviour
             {
                 wasShot = true;
             }
-            else if (ID == 2 && otherDucks[0].GetComponent<AK_DuckScript>().wasShot && otherDucks[1].GetComponent<AK_DuckScript>().wasShot && otherDucks[2].GetComponent<AK_DuckScript>().wasShot)
+            else if (ID == 2 && otherDucks[0].GetComponent<AK_DuckScript>().wasShot && !otherDucks[1].GetComponent<AK_DuckScript>().wasShot && !otherDucks[2].GetComponent<AK_DuckScript>().wasShot)
             {
                 wasShot = true;
             }
-            else if (ID == 3 && otherDucks[0].GetComponent<AK_DuckScript>().wasShot && otherDucks[1].GetComponent<AK_DuckScript>().wasShot && otherDucks[2].GetComponent<AK_DuckScript>().wasShot)
+            else if (ID == 3 && otherDucks[0].GetComponent<AK_DuckScript>().wasShot && otherDucks[1].GetComponent<AK_DuckScript>().wasShot && !otherDucks[2].GetComponent<AK_DuckScript>().wasShot)
             {
                 wasShot = true;
             }
