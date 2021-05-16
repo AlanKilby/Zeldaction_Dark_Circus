@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UD_UIHealthPoint : MonoBehaviour
 {
-    List<GameObject> HealthPointSprites;
+    public List<GameObject> HealthPointSprites;
 
     Health He;
 
@@ -17,14 +17,14 @@ public class UD_UIHealthPoint : MonoBehaviour
     {
         for (int i = 0; i < HealthPointSprites.Count; i++)
         {
-            //if (He.CurrentValue < i)
-            //{
-            //    HealthPointSprites[i].SetActive(false);
-            //}
-            //else
-            //{
-            //    HealthPointSprites[i].SetActive(true);
-            //}
+            if (He.CurrentValue <= i)
+            {
+                HealthPointSprites[i].SetActive(false);
+            }
+            else
+            {
+                HealthPointSprites[i].SetActive(true);
+            }
         }
     }
 }
