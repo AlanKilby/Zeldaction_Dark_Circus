@@ -444,63 +444,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73eef59a99faf0b419ddf6e152dd6078, type: 3}
---- !u!1001 &1124200010
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 875935715233594756}
-    m_Modifications:
-    - target: {fileID: 2444107463082279338, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
-      propertyPath: m_Name
-      value: WeightPuzzleRoom
-      objectReference: {fileID: 0}
-    - target: {fileID: 2444107463082279341, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
-      propertyPath: m_RootOrder
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 2444107463082279341, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 130.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2444107463082279341, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2444107463082279341, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 270
-      objectReference: {fileID: 0}
-    - target: {fileID: 2444107463082279341, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2444107463082279341, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2444107463082279341, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2444107463082279341, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2444107463082279341, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2444107463082279341, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2444107463082279341, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6174c033ffb2b5841b5da4ff631b5cb1, type: 3}
 --- !u!1 &1219302685
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,22 +544,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 118537526}
     m_Modifications:
-    - target: {fileID: 2648203343848301014, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2648203343848301014, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2648203343848301016, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
-      propertyPath: minThrowTime
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2648203343848301017, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: 5aee0e3c14148dd4586c148a3d5d5c14, type: 2}
     - target: {fileID: 2648203343996164132, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
       propertyPath: m_Name
       value: UD_Player
@@ -690,7 +617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 875935714787725504, guid: fa6dec01f5b461f40b987b0f619027d6, type: 3}
       propertyPath: m_Name
-      value: DungeonWithoutPuzzle&Hall
+      value: DungeonWithPuzzle&Hall
       objectReference: {fileID: 0}
     - target: {fileID: 875935714787725511, guid: fa6dec01f5b461f40b987b0f619027d6, type: 3}
       propertyPath: m_RootOrder
@@ -810,8 +737,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa6dec01f5b461f40b987b0f619027d6, type: 3}
---- !u!4 &875935715233594756 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 875935714787725511, guid: fa6dec01f5b461f40b987b0f619027d6, type: 3}
-  m_PrefabInstance: {fileID: 875935715233594755}
-  m_PrefabAsset: {fileID: 0}

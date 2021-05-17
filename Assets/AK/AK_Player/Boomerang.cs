@@ -69,24 +69,7 @@ public class Boomerang : MonoBehaviour
         //}
 
 
-        if (comebackTimer > 0)
-        {
-            rb.MovePosition(transform.position + transform.forward * goingSpeed * Time.deltaTime); // Test for the hat movement
-
-            // Speed reduction Limit
-            if(goingSpeed > speed * 0.75)
-
-            {
-
-                goingSpeed -= (goingSpeed * (1-reductionCoef)) * Time.deltaTime;
-
-            }
-            comebackTimer -= Time.deltaTime;
-        }
-        else if(comebackTimer <= 0)
-        {
-            isComingBack = true;
-        }
+        
 
 
         if (isComingBack)
@@ -110,6 +93,28 @@ public class Boomerang : MonoBehaviour
 
         Teleport();
         Bounce();
+    }
+
+    private void FixedUpdate()
+    {
+        if (comebackTimer > 0)
+        {
+            rb.MovePosition(transform.position + transform.forward * goingSpeed * Time.deltaTime); // Test for the hat movement
+
+            // Speed reduction Limit
+            if (goingSpeed > speed * 0.75)
+
+            {
+
+                goingSpeed -= (goingSpeed * (1 - reductionCoef)) * Time.deltaTime;
+
+            }
+            comebackTimer -= Time.deltaTime;
+        }
+        else if (comebackTimer <= 0)
+        {
+            isComingBack = true;
+        }
     }
 
     // This method and coroutine are no longer used, all is done in the Update =================================================
