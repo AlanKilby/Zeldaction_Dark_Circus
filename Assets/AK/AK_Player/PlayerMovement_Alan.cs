@@ -26,6 +26,8 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public float minThrowTime;
 
+    public float maxThrowTime;
+
     // add static reference to pos => BEN 
     public static Vector3 sPlayerPos = Vector3.zero; 
     public static GameObject sPlayer; // debug to simulate death call from AI 
@@ -46,7 +48,10 @@ public class PlayerMovement_Alan : MonoBehaviour
             if (Input.GetButton("PlayerAttack"))
             {
                 canMove = false;
-                throwingTime += Time.deltaTime;
+                if(throwingTime <= maxThrowTime)
+                {
+                    throwingTime += Time.deltaTime;
+                }
             }
             if (Input.GetButtonUp("PlayerAttack"))
             {
