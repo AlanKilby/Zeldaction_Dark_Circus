@@ -68,6 +68,9 @@
         },
         {
             "m_Id": "1890b29cbf2b405f913f549461f4cf1a"
+        },
+        {
+            "m_Id": "0d0b34b5deb147c1a2dd989270c497cd"
         }
     ],
     "m_GroupDatas": [],
@@ -226,6 +229,9 @@
             },
             {
                 "m_Id": "6bf20d189a9949e1ae16d6f8072c9b6a"
+            },
+            {
+                "m_Id": "0d0b34b5deb147c1a2dd989270c497cd"
             }
         ]
     },
@@ -359,6 +365,38 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BlockNode",
+    "m_ObjectId": "0d0b34b5deb147c1a2dd989270c497cd",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "SurfaceDescription.Alpha",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "29b73ebd3e014f2bb3269e4d88a47b1f"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedDescriptor": "SurfaceDescription.Alpha"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
     "m_ObjectId": "0ff39e9833ea4f2292c6d4dcc6a590b0",
     "m_Group": {
         "m_Id": ""
@@ -420,7 +458,7 @@
     "m_ActiveSubTarget": {
         "m_Id": "b8ed69c79f554bc4b772fe52a0d091b6"
     },
-    "m_SurfaceType": 0,
+    "m_SurfaceType": 1,
     "m_AlphaMode": 0,
     "m_TwoSided": false,
     "m_AlphaClip": false,
@@ -580,6 +618,21 @@
     "m_StageCapability": 2,
     "m_Value": 0.5,
     "m_DefaultValue": 0.5,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "29b73ebd3e014f2bb3269e4d88a47b1f",
+    "m_Id": 0,
+    "m_DisplayName": "Alpha",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Alpha",
+    "m_StageCapability": 2,
+    "m_Value": 1.0,
+    "m_DefaultValue": 1.0,
     "m_Labels": []
 }
 
