@@ -47,13 +47,11 @@ namespace BEN.Math
 
         private void OnTriggerEnter(Collider other)
         {
-            // temporary 
-
+            // TEMPORARY 
             if (other.CompareTag("Player")) 
             {
-                Destroy(other.transform.parent.gameObject); // placeholder 
-                Destroy(gameObject); 
-                // apply damage
+                Destroy(gameObject);
+                other.GetComponent<Health>().DecreaseHp(1); // super temporary
             }
             else if (other.gameObject.layer == _propsLayer)
             {
@@ -61,7 +59,7 @@ namespace BEN.Math
             }
             else if (other.CompareTag("Enemy") && _invert) 
             {
-                Destroy(other.gameObject);
+                Destroy(other.gameObject);  
                 Destroy(gameObject); 
             }
 

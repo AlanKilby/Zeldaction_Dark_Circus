@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e7f1a20bc890444ad3faf57daaf855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agentHp: {fileID: 11400000, guid: 85a53167c0644404ca50fc031f94b3b6, type: 2}
+  _agentStartingHP: {fileID: 11400000, guid: 85a53167c0644404ca50fc031f94b3b6, type: 2}
 --- !u!114 &1477849736271555270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +65,7 @@ PrefabInstance:
     - target: {fileID: 5539784748974113977, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: _playerHp
       value: 
-      objectReference: {fileID: 11400000, guid: 85a53167c0644404ca50fc031f94b3b6, type: 2}
+      objectReference: {fileID: 3642643065435347103}
     - target: {fileID: 5539784748974113977, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: PLAYER_DEAD
       value: playerFakeDeath
@@ -116,7 +116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5539784749608317801, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_Name
-      value: Player_Manager
+      value: Player_Manager Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5539784749608317801, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_IsActive

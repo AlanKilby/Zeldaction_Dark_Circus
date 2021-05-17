@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic; 
 using UnityEngine;
 using MonsterLove.StateMachine;
 using Debug = UnityEngine.Debug;
@@ -40,10 +39,12 @@ namespace BEN.AI
     } 
     
     [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(Health))]
     [DefaultExecutionOrder(10)] 
     public class BasicAIBrain : MonoBehaviour
     {
         [SerializeField] private AIType type;
+        [SerializeField] private bool _canPatrol = true; 
         public AIType Type { get => type; set => Type = value; } 
         
         // used for conditionalShow's property drawer until I know how to directly use enum 
@@ -60,12 +61,17 @@ namespace BEN.AI
         [SerializeField, Tooltip("Delay from Idle to Attack State when player is detected"), Range(0f, 5f)] private float attackDelay = 1f; 
         [SerializeField, Range(1f, 30f)] private float attackRange = 1f;
         [SerializeField, Range(1, 5)] private sbyte attackDamage = 1;
-
+        [SerializeField, Range(0f, 1f)] private float monkeyBallDodgeReactionTime = 0.5f;
+        [SerializeField, Range(0.5f, 2f)] private float monkeyBallInvulnerabilityTime = 1f;
+        [SerializeField, Range(0f, 5f)] private float _delayBeforeBackToDefaultState = 3f;
+        public float DelayBeforeBackToDefaultState { get ; private set ; } 
+         
         private StateMachine<States> _fsm;
-        private GameObject _ball; 
+        public States NewState { get; private set; }
+
         [SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
         [SerializeField] private GameObject _detection;
-        [SerializeField] private AgentGameplayData _agentHp;
+        private Health _agentHp;
 
         private FsmPatrol _patrol;
         
@@ -73,11 +79,12 @@ namespace BEN.AI
 
         public Action<States, StateTransition> OnRequireStateChange; 
         public Vector3 TargetToAttackPosition { get; set; }
+        public bool GoingBackToPositionBeforeIdling { get; set; }
 
         private AIAnimation _aIAnimation; // MOVE TO AIANIMATION
-        private AIAnimation _ballAnimation; // MOVE TO AIANIMATION
+        private AIAnimation _ballAnimation; // MOVE TO AIANIMATION + not used
 
-        // private Vector3 _positionBeforeAttacking; // a node or single position 
+        private Vector3 _idlePositionBeforeAttacking; // when not patrolling
 
         private CheckSurroundings _checkSurroundings; 
         
@@ -86,7 +93,8 @@ namespace BEN.AI
         
         public bool HasBeenInvokedByBoss { get; set; }
         [SerializeField] private PlaceholderDestination _placeholderDestination;
-        private Health _playerHealth; 
+        private Health _playerHP;
+        private bool exitingAttackState; 
 
 
         [Header("-- DEBUG --")]
@@ -95,7 +103,7 @@ namespace BEN.AI
         private Collider monkeyBallCollider;
         private Collider ballCollider;
         public float angle;
-        private bool hasCalledFakeCAC; 
+        private bool hasCalledFakeCAC;
 
         #region Editor
 
@@ -106,12 +114,12 @@ namespace BEN.AI
         private void Awake()
         {
             _fsm = StateMachine<States>.Initialize(this);
-            _fsm.ChangeState(States.Init, StateTransition.Safe);
+            _fsm.ChangeState(States.Init, StateTransition.Safe); 
         }
 
         private void OnEnable() 
         {
-            OnRequireStateChange += TransitionToNewState;
+            OnRequireStateChange += TransitionToNewState; 
         } 
         
         private void OnValidate()
@@ -162,12 +170,18 @@ namespace BEN.AI
 
         private void Start()
         {
-            _playerHealth = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>(); 
+            _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>(); 
+            _agentHp = GetComponent<Health>();
+            _agentHp.IsAI = true;
+            DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
+            GoingBackToPositionBeforeIdling = false; 
 
-            if (!HasBeenInvokedByBoss)
+            _patrol = GetComponent<FsmPatrol>();
+            _patrol.SetPoints(); 
+
+            if (HasBeenInvokedByBoss || !_canPatrol)
             {
-                _patrol = GetComponent<FsmPatrol>();
-                _patrol.SetPoints(); // debug 
+                _patrol.enabled = false; 
             }
 
             _agent = GetComponent<NavMeshAgent>();
@@ -175,17 +189,8 @@ namespace BEN.AI
 
             if (Type == AIType.MonkeySurBall)
             {
-                monkeyBallCollider = GetComponent<BoxCollider>();
+                monkeyBallCollider = GetComponent<BoxCollider>(); 
                 ballCollider = GetComponentInChildren<SphereCollider>();
-
-                if (!_ball)
-                {
-                    try
-                    {
-                        _ball = transform.GetChild(2).gameObject;
-                    }
-                    catch (Exception e) { Debug.Log(e.Message); } 
-                }
             }
 
             _agent.speed = defaultSpeed;
@@ -194,16 +199,27 @@ namespace BEN.AI
 
         private void FixedUpdate()
         {
-            _checkSurroundings.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.angle, 0f);
-            CheckAnimDirection();
-
-            if (_agentHp.CurrentHealth <= 0 && !_patrol.IsDead)
+            if (_canPatrol)
             {
-                OnRequireStateChange(States.Die, StateTransition.Overwrite); 
+                _detection.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.angle, 0f);
+            }
+            CheckAnimDirection(); // remove from state machine 
+
+            if (_agentHp.CurrentValue <= 0 && !_patrol.IsDead)
+            {
+                Debug.Log("transition to death state"); 
+                OnRequireStateChange(States.Die, StateTransition.Safe); 
+            }
+
+            if (!_canPatrol && Vector3.Distance(transform.position, _idlePositionBeforeAttacking) <= 0.25f && exitingAttackState) 
+            {
+                exitingAttackState = false; 
+                _agent.speed = 0f;
+                _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); // use AnimDirection according to where you come from . 
             }
         }
 
-        private void OnDisable()
+        private void OnDisable() 
         {
             OnRequireStateChange -= TransitionToNewState;
         } 
@@ -212,52 +228,60 @@ namespace BEN.AI
 #endregion 
 
         // called by event OnRequireStateChange
-        private void TransitionToNewState(States newState, StateTransition transition)
+        private void TransitionToNewState(States newState, StateTransition transition) 
         {
-            _fsm.ChangeState(newState, transition); 
+            _fsm.ChangeState(newState, transition);
+            NewState = newState; 
         }
         
-        // MOVE ALL THIS TO AIANIMATION ===>
+        // MOVE ALL THIS TO AIANIMATION ===> WARNING : duplicate 
 
         private void CheckAnimDirection()
         {
-            _animDirection = (AnimDirection) (_placeholderDestination.angleIndex);
+            if (Type == AIType.Fakir && !_canPatrol) return; // modfy is fakir needs repositionning 
+            Debug.Log("check anim direction");
+
+            _animDirection = (AnimDirection) (_placeholderDestination.angleIndex); 
 
             if (_placeholderDestination.angleIndex == _previousParentRotation) return;
             
             _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
             _previousParentRotation = _placeholderDestination.angleIndex;
-            StartCoroutine(nameof(ChangeGraphicsRotation)); 
+            StartCoroutine(nameof(ChangeGraphicsRotation));
         } 
         
         private void CheckAnimDirection(AnimState state)
         {
+            Debug.Log("check anim direction with state");
+            // if (Type == AIType.Fakir && !_canPatrol && NewState == States.Attack) return; // modify is fakir needs repositionning 
+
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex);
 
-            if (_placeholderDestination.angleIndex == _previousParentRotation) return;
+            if (_placeholderDestination.angleIndex == _previousParentRotation) return; 
             
             _aIAnimation.PlayAnimation(state, _animDirection);
             
             _previousParentRotation = _placeholderDestination.angleIndex;
-            StartCoroutine(nameof(ChangeGraphicsRotation)); 
+            StartCoroutine(nameof(ChangeGraphicsRotation));
         } 
 
         private IEnumerator ChangeGraphicsRotation()
         {
             yield return new WaitForSeconds(1.5f);
-            _graphics.transform.localRotation = Quaternion.identity; 
+            _graphics.transform.localRotation = Quaternion.identity;
         }
-        
+
         // <===
 
-#region FSM
+        #region FSM
 
         #region Init 
 
         void Init_Enter()
         {
             _aIAnimation = _graphics.GetComponent<AIAnimation>();
-            _fsm.ChangeState(States.Default, StateTransition.Safe);
+            _fsm.ChangeState(NewState = States.Default, StateTransition.Safe);
+            Debug.Log("init_enter");
         }
 
         void Init_Exit()
@@ -270,8 +294,24 @@ namespace BEN.AI
         IEnumerator Default_Enter()  
         { 
             yield return new WaitForSeconds(0.03f);
-            _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection); 
-        }
+            Debug.Log("default_enter");
+
+            if (_canPatrol || GoingBackToPositionBeforeIdling) 
+            {
+                if (Type == AIType.Fakir && !_canPatrol)
+                {
+                    _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); 
+                }
+                else
+                {
+                    _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+                }
+            } 
+            else 
+            {
+                _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);
+            }
+        } 
 
         void Default_FixedUpdate() 
         { 
@@ -304,6 +344,9 @@ namespace BEN.AI
             yield return new WaitForSeconds(attackDelay); 
             
             _agent.destination = TargetToAttackPosition;
+            _idlePositionBeforeAttacking = transform.position;
+            _agent.speed = defaultSpeed;
+            Debug.Log("attack_enter");
 
             // UPGRADE : make the enemy predict the future player position instead of aiming at it's current one
             switch (type) 
@@ -324,14 +367,25 @@ namespace BEN.AI
                     InvokeRepeating(nameof(FakirAttack), 0f, attackRate); 
                     break; 
             } 
-        }
+        } 
 
         private void Attack_FixedUpdate()  
         {
             if (Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos) <= attackRange) 
             {
                 _agent.speed = 0f;
-                
+
+                if (Type == AIType.Fakir && !_canPatrol && NewState == States.Attack)
+                {
+                    CheckAnimDirection(AnimState.Atk);
+                } 
+
+                if (LoadSceneOnPlayerDeath.playerIsDead)
+                {
+                    _fsm.ChangeState(States.Default, StateTransition.Safe);
+                    CancelInvoke(nameof(FakeCAC));
+                }
+
                 // to simulate player killed from CAC. Distance is done from projectile
                 if ((type == AIType.Monkey || type == AIType.Mascotte) && !hasCalledFakeCAC) 
                 {
@@ -343,13 +397,16 @@ namespace BEN.AI
             {
                 _agent.speed = defaultSpeed * attackStateSpeedMultiplier; 
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
+
+                CancelInvoke(nameof(FakeCAC));
+                hasCalledFakeCAC = false;
                 CheckAnimDirection(AnimState.Atk); 
             } 
         } 
 
         private void FakeCAC()
         {
-            _playerHealth.DecreaseHp(attackDamage); 
+            _playerHP.DecreaseHp(attackDamage); 
         }
 
         private void MonkeyBallAttack()
@@ -375,11 +432,6 @@ namespace BEN.AI
                 TransitionToNewState(States.Attack, StateTransition.Overwrite); // debug crados             
             }
 
-            _agent.destination = _patrol.Points[_patrol.DestPoint].position; // TODO : use closest point of list instead
-            _agent.speed = defaultSpeed / attackStateSpeedMultiplier; 
-            // _aIAnimation.PlayAnimation(AnimState.WalkRight); // make it dynamic direction instead 
-                                                                  // _ballAnimation.StopAnimating(); only when initial position is reached
-
             switch (type)
             {
                 case AIType.MonkeySurBall: 
@@ -390,7 +442,18 @@ namespace BEN.AI
                     break; 
             }
 
-            hasCalledFakeCAC = false; 
+            hasCalledFakeCAC = false;
+            exitingAttackState = true; // problematic to not have this on that kind of state machine (tradeoff for simplicity) 
+
+            if (Type == AIType.Fakir && !_canPatrol) 
+            { 
+                _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);  
+            }
+            else
+            {
+                _agent.destination = _canPatrol ? _patrol.Points[_patrol.DestPoint].position : _idlePositionBeforeAttacking; // TODO : use closest point of list instead (when patrolling)
+                _agent.speed = defaultSpeed / attackStateSpeedMultiplier;
+            }
         }
 
         #endregion
@@ -398,28 +461,33 @@ namespace BEN.AI
         #region Defend
 
         IEnumerator Defend_Enter()
-        { 
+        {
+            yield return new WaitForSeconds(monkeyBallDodgeReactionTime);
+            _graphics.transform.DetachChildren();
             _agent.speed = 0f;
-            _graphics.transform.localPosition = Vector3.zero; 
-            _ball.SetActive(false);
-            // _aIAnimation.PlayAnimation(11); 
+            _graphics.transform.localPosition = new Vector3(2f, -1f, 0f);
+            Debug.Log("defend_enter");
+
             _checkSurroundings.CanDodgeProjectile = false;
             monkeyBallCollider.enabled = false;
             ballCollider.enabled = false;
 
-            yield return new WaitForSeconds(1f);
+            // si chapeau lancé loin, monkey est de nouveau vulnérable au moment du retour 
+            yield return new WaitForSeconds(monkeyBallInvulnerabilityTime);
             monkeyBallCollider.enabled = true;
             ballCollider.enabled = true;
 
-            yield return new WaitForSeconds(monkeyBallProvocDuration - 1f); 
-            OnRequireStateChange(States.Attack, StateTransition.Safe); 
-        }
+            // ne remonte pas tout de suite sur la balle
+            yield return new WaitForSeconds(monkeyBallProvocDuration); 
+            OnRequireStateChange(States.Attack, StateTransition.Safe);  // risky if the player has gone outside of detection collider.. should I use a HFSM instead ? 
+        } 
 
         void Defend_Exit() 
         { 
             _agent.speed = defaultSpeed;
-            _graphics.transform.localPosition = Vector3.up; 
-            _ball.SetActive(true);
+            _graphics.transform.localPosition = Vector3.up;
+            _graphics.SetActive(true);
+
             // _aIAnimation.PlayAnimation(AnimState.AtkRight); 
 
             Invoke(nameof(ResetBool), 8f); 
@@ -435,18 +503,25 @@ namespace BEN.AI
         IEnumerator Die_Enter() 
         {
             _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
+            Debug.Log("die_enter"); 
             
-            yield return new WaitForSeconds(0.5f);  
+            yield return new WaitForSeconds(0.25f);  
             CancelInvoke();
+            Clip clipToPlay = null;  
 
             try
             {
-                _aIAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None);
-            }
-            catch (Exception e) 
+                if (Type != AIType.MonkeySurBall) // because of bad naming conventions... 
+                {
+                    clipToPlay = _aIAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None);
+                } 
+            } 
+            catch (Exception) { }
+
+            if (clipToPlay == null) 
             {
-                Debug.Log("death anim not found or wrong naming"); 
-                _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None);
+                Debug.Log("Calling Die state instead of Hit state");
+                _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None); // need consistent naming across all mobs, not Die or Hit for same result.. 
             }
         } 
         

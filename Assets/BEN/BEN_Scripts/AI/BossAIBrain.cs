@@ -123,7 +123,7 @@ public class BossAIBrain : MonoBehaviour
 
     #region FSM
 
-    #region Init
+#region Init
     void Init_Enter()
     {
         Debug.Log("Initializing Default State");
@@ -136,14 +136,10 @@ public class BossAIBrain : MonoBehaviour
     {
         Debug.Log("Transition to default state");
     }
-#endregion
+    #endregion
 
-    void Attack_Enter() 
-    {
+#region Attack 
 
-    }
-
-#region Attack
     void Attack_FixedUpdate()
     {
         // spawns and attack will sometimes overlap and the delay between one and the other will change over time (not same modulo) 
