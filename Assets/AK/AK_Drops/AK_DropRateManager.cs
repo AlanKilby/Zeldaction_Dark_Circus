@@ -73,7 +73,7 @@ public class AK_DropRateManager : MonoBehaviour
         if(Random.Range(0,101) <= currentDropRate)
         {
             currentDropRate = minDropRate;
-            PotionDrop();
+            ObjectDrop();
         }
         else
         {
@@ -81,7 +81,7 @@ public class AK_DropRateManager : MonoBehaviour
         }
     }
 
-    public void PotionDrop()
+    public void ObjectDrop()
     {
         float randomPicker = Random.Range(0, 101);
 
