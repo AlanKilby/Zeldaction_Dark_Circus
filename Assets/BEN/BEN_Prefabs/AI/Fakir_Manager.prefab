@@ -71,7 +71,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692901491524727519}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.24, y: 1, z: 7.71}
+  m_LocalPosition: {x: 0.02, y: 1, z: -8.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7049274541335308754}
@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 3196105207163711238}
   - component: {fileID: 7335009159249139243}
   - component: {fileID: 2080959550}
+  - component: {fileID: 99377281}
   m_Layer: 9
   m_Name: Fakir_Entity
   m_TagString: Enemy
@@ -231,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
-  _canPatrol: 1
+  _canPatrol: 0
   isMonkeyBall: 0
   isFakir: 1
   isCaster: 1
@@ -279,6 +280,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agentStartingHP: {fileID: 11400000, guid: 21d805e30c4c1384db0e835d8f18e708, type: 2}
+--- !u!114 &99377281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3196105207163711262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2caf98d607255b43b98d6eed478597c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _AIBrain: {fileID: 3196105207163711238}
+  _event:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3196105207235364683
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,13 +321,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3196105207235364683}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3196105207163711261}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &3196105207235364680
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -322,8 +339,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 12, y: 1, z: 13}
-  m_Center: {x: 0, y: 0, z: 6.5}
+  m_Size: {x: 12, y: 1, z: 9.929154}
+  m_Center: {x: 0, y: 0, z: 4.964577}
 --- !u!114 &3196105207235364681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -485,7 +502,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5953828729676287934
 Transform:
   m_ObjectHideFlags: 0

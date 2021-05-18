@@ -239,7 +239,6 @@ namespace BEN.AI
         private void CheckAnimDirection()
         {
             if (Type == AIType.Fakir && !_canPatrol) return; // modfy is fakir needs repositionning 
-            Debug.Log("check anim direction");
 
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex); 
 
@@ -252,7 +251,6 @@ namespace BEN.AI
         
         private void CheckAnimDirection(AnimState state)
         {
-            Debug.Log("check anim direction with state");
             // if (Type == AIType.Fakir && !_canPatrol && NewState == States.Attack) return; // modify is fakir needs repositionning 
 
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex);
@@ -411,14 +409,14 @@ namespace BEN.AI
 
         private void MonkeyBallAttack()
         {
-            GameObject reference = Instantiate(_monkeyBallProjectile, _graphics.transform.position, _detection.transform.rotation);
+            var reference = Instantiate(_monkeyBallProjectile, _graphics.transform.position, _detection.transform.rotation);
             reference.transform.position = _graphics.transform.position;
             Debug.Log("monkeyball projectile");
         }
 
         private void FakirAttack() // WARNING : Duplicate 
         {
-            GameObject reference = Instantiate(_fakirProjectile, _graphics.transform.position, _detection.transform.rotation);
+            var reference = Instantiate(_fakirProjectile, _graphics.transform.position, _detection.transform.rotation);
             reference.transform.position = _graphics.transform.position;
             reference.GetComponent<ParabolicFunction>().CasterTransform = _graphics.transform; 
             Debug.Log("fakir projectile");
@@ -472,7 +470,7 @@ namespace BEN.AI
             monkeyBallCollider.enabled = false;
             ballCollider.enabled = false;
 
-            // si chapeau lancé loin, monkey est de nouveau vulnérable au moment du retour 
+            // si chapeau lancÃ© loin, monkey est de nouveau vulnÃ©rable au moment du retour 
             yield return new WaitForSeconds(monkeyBallInvulnerabilityTime);
             monkeyBallCollider.enabled = true;
             ballCollider.enabled = true;
