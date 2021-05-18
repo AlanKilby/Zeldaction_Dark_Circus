@@ -4,7 +4,7 @@ using BEN.Math;
 
 public class Boomerang : MonoBehaviour
 {
-    public float distance;
+   
     public float speed;
     [Range(1, 10)] public sbyte boomerangDamage = 1;  
     float goingSpeed;
@@ -13,11 +13,21 @@ public class Boomerang : MonoBehaviour
     public Vector3 aimPos;
     public Transform playerPos;
 
+    
+    public LayerMask mirrorLayer;
+    /*
+    public LayerMask playerLayer;
+    public LayerMask enemyLayer;
+    public LayerMask obstacleLayer;
+    */
+
     private Rigidbody rb;
 
     bool isComingBack;
 
     bool holder = true;
+
+    bool hasWand;
 
     [Tooltip("Percentage of speed reduction after throw.")]
     [Range(0f,1f)]
@@ -37,6 +47,7 @@ public class Boomerang : MonoBehaviour
     {
         comebackTimerHolder = comebackTimer;
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        hasWand = playerPos.GetComponent<PlayerMovement_Alan>().hasWand;
         isComingBack = false;
         rb = gameObject.GetComponent<Rigidbody>();
         aimPos = playerPos.GetComponent<PlayerMovement_Alan>().aim.transform.position;
@@ -58,24 +69,7 @@ public class Boomerang : MonoBehaviour
         //}
 
 
-        if (comebackTimer > 0)
-        {
-            rb.MovePosition(transform.position + transform.forward * goingSpeed * Time.deltaTime); // Test for the hat movement
-
-            // Speed reduction Limit
-            if(goingSpeed > speed * 0.75)
-
-            {
-
-                goingSpeed -= (goingSpeed * (1-reductionCoef)) * Time.deltaTime;
-
-            }
-            comebackTimer -= Time.deltaTime;
-        }
-        else if(comebackTimer <= 0)
-        {
-            isComingBack = true;
-        }
+        
 
 
         if (isComingBack)
@@ -98,6 +92,29 @@ public class Boomerang : MonoBehaviour
         }
 
         Teleport();
+        Bounce();
+    }
+
+    private void FixedUpdate()
+    {
+        if (comebackTimer > 0)
+        {
+            rb.MovePosition(transform.position + transform.forward * goingSpeed * Time.deltaTime); // Test for the hat movement
+
+            // Speed reduction Limit
+            if (goingSpeed > speed * 0.75)
+
+            {
+
+                goingSpeed -= (goingSpeed * (1 - reductionCoef)) * Time.deltaTime;
+
+            }
+            comebackTimer -= Time.deltaTime;
+        }
+        else if (comebackTimer <= 0)
+        {
+            isComingBack = true;
+        }
     }
 
     // This method and coroutine are no longer used, all is done in the Update =================================================
@@ -126,13 +143,27 @@ public class Boomerang : MonoBehaviour
 
     public void Teleport()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetButtonUp("PlayerAttack") && hasWand)
         {
             playerPos.position = new Vector3(transform.position.x, playerPos.position.y, transform.position.z);
             isComingBack = true;
             playerPos.GetComponent<PlayerMovement_Alan>().canThrow = true;
             Destroy(gameObject);
             
+        }
+    }
+
+    public void Bounce()
+    {
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 0.5f, mirrorLayer))
+        {
+            Vector3 reflectDir = Vector3.Reflect(ray.direction, hit.normal);
+            float rot = 90 - Mathf.Atan2(reflectDir.z, reflectDir.x) * Mathf.Rad2Deg;
+            transform.eulerAngles = new Vector3(0, rot, 0);
+            comebackTimer++;
         }
     }
     // ========================= WIP =============================================
