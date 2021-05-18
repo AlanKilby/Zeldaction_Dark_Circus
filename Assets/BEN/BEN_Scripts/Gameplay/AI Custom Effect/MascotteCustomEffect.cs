@@ -7,12 +7,17 @@ public class MascotteCustomEffect : AICustomEffectOnZoneSlow
 {
     public MyEventClass myMultiParamsEvents;
 
-    public override void InvokeCustomEvent()
+    public override void InvokeCustomEventOnEnter()
     {
         Debug.Log($"custom effect on {gameObject.name}");
     }
     
-    public void AnotherFuncWithAnArguments(float arg, Transform transf, Vector3 pos, bool isValid)
+    public override void InvokeCustomEventOnExit()
+    {
+        Debug.Log($"custom effect exit on {gameObject.name}");
+    }
+    
+    public void FuncWithManyArguments(float arg, Transform transf, Vector3 pos, bool isValid)
     { 
         
     }  

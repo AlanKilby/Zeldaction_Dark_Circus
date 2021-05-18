@@ -54,7 +54,7 @@ namespace BEN.AI
 
         [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _monkeyBallProjectile;
         [SerializeField, ConditionalShow("isFakir", true)] private GameObject _fakirProjectile; 
-        [SerializeField, Tooltip("Speed when patrolling"), Range(0.5f, 5f)] private float defaultSpeed = 2f;
+        [SerializeField, Tooltip("Speed when patrolling"), Range(0f, 5f)] private float defaultSpeed = 2f;
         [SerializeField, Range(0.5f, 5f), Tooltip("Wait time between each attack")] private float attackRate = 2f;
         [SerializeField, ConditionalShow("isMonkeyBall"), Tooltip("Delay before jumping back to ball again")] private float monkeyBallProvocDuration = 3f;
         [SerializeField, Tooltip("DefaultSpeed increse when rushing toward the player. 1 = no increase"), Range(1f, 3f)] private float attackStateSpeedMultiplier = 1.25f;
@@ -65,6 +65,7 @@ namespace BEN.AI
         [SerializeField, Range(0.5f, 2f)] private float monkeyBallInvulnerabilityTime = 1f;
         [SerializeField, Range(0f, 5f)] private float _delayBeforeBackToDefaultState = 3f;
         public float DelayBeforeBackToDefaultState { get ; private set ; } 
+        public float DefaultSpeed { get; set; }
          
         private StateMachine<States> _fsm;
         public States NewState { get; private set; }
@@ -174,7 +175,8 @@ namespace BEN.AI
             _agentHp = GetComponent<Health>();
             _agentHp.IsAI = true;
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
-            GoingBackToPositionBeforeIdling = false; 
+            GoingBackToPositionBeforeIdling = false;
+            DefaultSpeed = defaultSpeed;
 
             _patrol = GetComponent<FsmPatrol>();
             _patrol.SetPoints(); 
@@ -193,7 +195,7 @@ namespace BEN.AI
                 ballCollider = GetComponentInChildren<SphereCollider>();
             }
 
-            _agent.speed = defaultSpeed;
+            _agent.speed = DefaultSpeed;
             _previousParentRotation = _placeholderDestination.angleIndex; 
         } 
 
@@ -343,7 +345,7 @@ namespace BEN.AI
             
             _agent.destination = TargetToAttackPosition;
             _idlePositionBeforeAttacking = transform.position;
-            _agent.speed = defaultSpeed;
+            _agent.speed = DefaultSpeed;
             Debug.Log("attack_enter");
 
             // UPGRADE : make the enemy predict the future player position instead of aiming at it's current one
@@ -393,7 +395,7 @@ namespace BEN.AI
             } 
             else 
             {
-                _agent.speed = defaultSpeed * attackStateSpeedMultiplier; 
+                _agent.speed = DefaultSpeed * attackStateSpeedMultiplier; 
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
 
                 CancelInvoke(nameof(FakeCAC));
@@ -450,7 +452,7 @@ namespace BEN.AI
             else
             {
                 _agent.destination = _canPatrol ? _patrol.Points[_patrol.DestPoint].position : _idlePositionBeforeAttacking; // TODO : use closest point of list instead (when patrolling)
-                _agent.speed = defaultSpeed / attackStateSpeedMultiplier;
+                _agent.speed = DefaultSpeed / attackStateSpeedMultiplier;
             }
         }
 
@@ -482,7 +484,7 @@ namespace BEN.AI
 
         void Defend_Exit() 
         { 
-            _agent.speed = defaultSpeed;
+            _agent.speed = DefaultSpeed;
             _graphics.transform.localPosition = Vector3.up;
             _graphics.SetActive(true);
 

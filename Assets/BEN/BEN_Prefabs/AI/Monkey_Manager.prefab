@@ -354,7 +354,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -453,49 +453,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0873ad07418629841acd77224c342ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AIBrain: {fileID: 8072824808094687805}
-  _event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1016997737}
-        m_TargetAssemblyTypeName: MonkeyCustomEffect, Assembly-CSharp
-        m_MethodName: DoCustomEffectOnZoneSlow
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  myMultiParamsEvents:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1016997737}
-        m_TargetAssemblyTypeName: AICustomEffectOnZoneSlow, Assembly-CSharp
-        m_MethodName: SomeFuncWithAnArguments
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1016997737}
-        m_TargetAssemblyTypeName: AICustomEffectOnZoneSlow, Assembly-CSharp
-        m_MethodName: AnotherFuncWithAnArguments
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &8835960570973703075
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,7 +509,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8835960571330059566}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.22, y: 0, z: 8.04}
+  m_LocalPosition: {x: 4.53, y: 0, z: -0.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8835960572897015646}
