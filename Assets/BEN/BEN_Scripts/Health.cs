@@ -30,7 +30,7 @@ public class Health : MonoBehaviour
             _notified = true;
             _playercollider = GetComponent<BoxCollider>();
             _playercollider.enabled = false; 
-            OnPlayerDeath(); 
+            OnPlayerDeath();  
         }
     } 
 }
