@@ -35,4 +35,10 @@ public class CHM_Pause : MonoBehaviour
             Time.timeScale = 1;
         }
     }
+
+    public void ChangePauseState()
+    {
+        gameIsPaused = !gameIsPaused;
+        PauseGame();
+    }
 }
