@@ -9,13 +9,41 @@
       <e p="Assets" t="Include">
         <e p="AK" t="Include">
           <e p="AK_Player" t="Include">
+            <e p="AK_KeyManager.cs" t="Include" />
+            <e p="AK_PlayerPotionManager.cs" t="Include" />
+            <e p="AK_Potion.cs" t="Include" />
+            <e p="AK_Wand.cs" t="Include" />
             <e p="Boomerang.cs" t="Include" />
             <e p="HatAnimator.cs" t="Include" />
             <e p="PlayerAnimations.cs" t="Include" />
             <e p="PlayerMovement_Alan.cs" t="Include" />
           </e>
+          <e p="AK_Puzzles" t="Include">
+            <e p="AK_CounterWeight" t="Include">
+              <e p="AK_CounterWeight.cs" t="Include" />
+              <e p="AK_DetectionZone.cs" t="Include" />
+            </e>
+            <e p="AK_DuckHuntPuzzle" t="Include">
+              <e p="AK_DuckPuzzleManager.cs" t="Include" />
+              <e p="AK_DuckScript.cs" t="Include" />
+              <e p="AK_SymbolScreen.cs" t="Include" />
+              <e p="AK_TargetMovement.cs" t="Include" />
+            </e>
+            <e p="AK_JumpPad" t="Include">
+              <e p="AK_HatJumpPad.cs" t="Include" />
+            </e>
+            <e p="AK_Keys" t="Include">
+              <e p="AK_KeyScript.cs" t="Include" />
+              <e p="AK_LockedDoorDetectionZone.cs" t="Include" />
+            </e>
+            <e p="AK_PressurePlatePuzzles" t="Include">
+              <e p="AK_PressureDoor.cs" t="Include" />
+              <e p="AK_PressurePlate.cs" t="Include" />
+            </e>
+          </e>
           <e p="AK_Traps" t="Include">
             <e p="AK_CottonCandy.cs" t="Include" />
+            <e p="AK_LootDrop.cs" t="Include" />
             <e p="AK_SlowingZone.cs" t="Include" />
             <e p="AK_TrapChest.cs" t="Include" />
           </e>
@@ -136,10 +164,26 @@
             </e>
             <e p="GameManager.cs" t="Include" />
             <e p="Gameplay" t="Include">
-              <e p="AnimEventDestroyTarget.cs" t="Include" />
-              <e p="CallAnimEvent.cs" t="Include" />
+              <e p="AI Custom Effect" t="Include">
+                <e p="AICustomEffectOnZoneSlow.cs" t="Include" />
+                <e p="FakirCustomEffect.cs" t="Include" />
+                <e p="MascotteCustomEffect.cs" t="Include" />
+                <e p="MonkeyBallCustomEffect.cs" t="Include" />
+                <e p="MonkeyCustomEffect.cs" t="Include" />
+              </e>
+              <e p="AnimEvents" t="Include">
+                <e p="AnimEventDestroyTarget.cs" t="Include" />
+                <e p="AnimEventInstantiateObject.cs" t="Include" />
+                <e p="AnimEventPlaySound.cs" t="Include" />
+              </e>
+              <e p="FakeSlowZoneDetection.cs" t="Include" />
+              <e p="GameplayData" t="Include">
+                <e p="AgentGameplayData.cs" t="Include" />
+              </e>
               <e p="Switch.cs" t="Include" />
             </e>
+            <e p="Health.cs" t="Include" />
+            <e p="LoadSceneOnPlayerDeath.cs" t="Include" />
             <e p="Physics" t="Include">
               <e p="CallMethodOnPhysiscEvent.cs" t="Include" />
               <e p="CheckSurroundings.cs" t="Include" />
@@ -156,7 +200,22 @@
             </e>
           </e>
         </e>
+        <e p="CHARLES" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="CHM_ButtonScripts.cs" t="Include" />
+            <e p="CHM_Dialogue.cs" t="Include" />
+            <e p="CHM_DialogueManager.cs" t="Include" />
+            <e p="CHM_NPCDialogue.cs" t="Include" />
+            <e p="CHM_NPCTrigger.cs" t="Include" />
+            <e p="CHM_Pause.cs" t="Include" />
+          </e>
+        </e>
         <e p="Mirror.cs" t="Include" />
+        <e p="UD" t="Include">
+          <e p="UD_Script" t="Include">
+            <e p="UD_UIHealthPoint.cs" t="Include" />
+          </e>
+        </e>
       </e>
       <e p="NavMeshComponents.csproj" t="IncludeRecursive" />
       <e p="NavMeshComponentsEditor.csproj" t="IncludeRecursive" />

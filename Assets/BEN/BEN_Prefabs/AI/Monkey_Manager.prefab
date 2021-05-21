@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 8072824808094687805}
   - component: {fileID: 8072824808094687783}
   - component: {fileID: 817321280}
+  - component: {fileID: 1016997737}
   m_Layer: 9
   m_Name: Monkey_Entity
   m_TagString: Enemy
@@ -440,6 +441,61 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agentStartingHP: {fileID: 11400000, guid: acc96ab8db828304eae4fed59fee9df1, type: 2}
+--- !u!114 &1016997737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8072824808094687781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0873ad07418629841acd77224c342ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _AIBrain: {fileID: 8072824808094687805}
+  _event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1016997737}
+        m_TargetAssemblyTypeName: MonkeyCustomEffect, Assembly-CSharp
+        m_MethodName: DoCustomEffectOnZoneSlow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  myMultiParamsEvents:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1016997737}
+        m_TargetAssemblyTypeName: AICustomEffectOnZoneSlow, Assembly-CSharp
+        m_MethodName: SomeFuncWithAnArguments
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1016997737}
+        m_TargetAssemblyTypeName: AICustomEffectOnZoneSlow, Assembly-CSharp
+        m_MethodName: AnotherFuncWithAnArguments
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8835960570973703075
 GameObject:
   m_ObjectHideFlags: 0
