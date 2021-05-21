@@ -105,7 +105,6 @@ namespace BEN.AI
         private Collider ballCollider;
         public float angle;
         private bool hasCalledFakeCAC;
-
         #region Editor
 
         #endregion
@@ -359,7 +358,7 @@ namespace BEN.AI
                     InvokeRepeating(nameof(MonkeyBallAttack), 0f, attackRate); 
                     break;
                 case AIType.Mascotte:
-                    _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
+                    _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
                     break;
                 case AIType.Fakir:
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
@@ -387,11 +386,15 @@ namespace BEN.AI
                 }
 
                 // to simulate player killed from CAC. Distance is done from projectile
-                if ((type == AIType.Monkey || type == AIType.Mascotte) && !hasCalledFakeCAC) 
+                if ((type != AIType.Monkey && type != AIType.Mascotte) || hasCalledFakeCAC) return;
+                hasCalledFakeCAC = true;
+
+                if (type == AIType.Mascotte)
                 {
-                    hasCalledFakeCAC = true;
-                    InvokeRepeating(nameof(FakeCAC), 0.5f, attackRate); 
-                } 
+                    _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);  
+                }
+                 
+                InvokeRepeating(nameof(FakeCAC), 0.5f, attackRate);
             } 
             else 
             {
@@ -400,7 +403,15 @@ namespace BEN.AI
 
                 CancelInvoke(nameof(FakeCAC));
                 hasCalledFakeCAC = false;
-                CheckAnimDirection(AnimState.Atk); 
+                if (type == AIType.Mascotte)
+                {
+                    _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+                }
+                else
+                {
+                    CheckAnimDirection(AnimState.Atk);  
+                }
+                
             } 
         } 
 
