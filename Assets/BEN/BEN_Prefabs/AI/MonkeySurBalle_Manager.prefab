@@ -283,7 +283,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectableTargetsLayer:
     serializedVersion: 2
+    m_Bits: 3264
+  player:
+    serializedVersion: 2
     m_Bits: 1024
+  playerWeapon:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &797199752371587997
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,10 +506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976fd72cbe4483b4a8a378cdaad41b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AIBrain: {fileID: 797199752371587973}
-  _event:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2533886171375916998
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2651920672806243564
 Transform:
   m_ObjectHideFlags: 0

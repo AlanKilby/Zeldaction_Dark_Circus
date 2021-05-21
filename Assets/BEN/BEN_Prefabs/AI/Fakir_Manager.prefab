@@ -292,10 +292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2caf98d607255b43b98d6eed478597c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AIBrain: {fileID: 3196105207163711238}
-  _event:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &3196105207235364683
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +351,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectableTargetsLayer:
     serializedVersion: 2
+    m_Bits: 3264
+  wall:
+    serializedVersion: 2
+    m_Bits: 2048
+  player:
+    serializedVersion: 2
     m_Bits: 1024
+  playerWeapon:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &3196105207732227387
 GameObject:
   m_ObjectHideFlags: 0
