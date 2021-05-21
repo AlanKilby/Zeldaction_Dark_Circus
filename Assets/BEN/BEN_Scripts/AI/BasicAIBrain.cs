@@ -200,6 +200,8 @@ namespace BEN.AI
 
         private void FixedUpdate()
         {
+            // if (NewState == States.Die) Destroy(transform.parent.gameObject, 1f);  
+            
             if (_canPatrol)
             {
                 _detection.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.angle, 0f);

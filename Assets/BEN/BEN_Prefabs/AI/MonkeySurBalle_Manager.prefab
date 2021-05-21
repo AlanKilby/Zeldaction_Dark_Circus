@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 2651920672806243565}
-  destroyDelay: 0.25
+  destroyDelay: 0
 --- !u!1 &797199752267424712
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,6 +284,9 @@ MonoBehaviour:
   detectableTargetsLayer:
     serializedVersion: 2
     m_Bits: 3264
+  wall:
+    serializedVersion: 2
+    m_Bits: 2048
   player:
     serializedVersion: 2
     m_Bits: 1024
@@ -530,7 +533,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2533886171375916998}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5659020958473677208}
@@ -551,7 +554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2651920672806243564
 Transform:
   m_ObjectHideFlags: 0

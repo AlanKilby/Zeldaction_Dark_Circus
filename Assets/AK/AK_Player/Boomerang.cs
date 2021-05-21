@@ -13,8 +13,8 @@ public class Boomerang : MonoBehaviour
     public Vector3 aimPos;
     public Transform playerPos;
 
-    
-    public LayerMask mirrorLayer;
+
+    public LayerMask mirrorLayer, playerLayer, WallLayer, EnemyLayer, EnemyWeaponLayer; 
     /*
     public LayerMask playerLayer;
     public LayerMask enemyLayer;
@@ -210,7 +210,7 @@ public class Boomerang : MonoBehaviour
         }
         */
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player")) 
+        if (Mathf.Pow(2, other.gameObject.layer) == playerLayer) 
         {
             Debug.Log("Collision with Player");
             playerPos.GetComponent<PlayerMovement_Alan>().canThrow = true;
@@ -218,14 +218,14 @@ public class Boomerang : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        if (Mathf.Pow(2, other.gameObject.layer) == WallLayer)
         {
             Debug.Log("Collision with Wall");
 
             isComingBack = true;
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy")) 
+        if (Mathf.Pow(2, other.gameObject.layer) == EnemyLayer) 
         { 
             Debug.Log("Collision with Enemy");
             enemy = other.GetComponent<BasicAIBrain>(); 
@@ -234,12 +234,12 @@ public class Boomerang : MonoBehaviour
             {
                 isComingBack = true;  
                 return;
-            }
+            } 
 
             other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
         }
 
-        if (other.CompareTag("EnemyWeapon")) // fakir weapon
+        if (Mathf.Pow(2, other.gameObject.layer) == EnemyWeaponLayer) // fakir weapon
         {
             other.GetComponent<ParabolicFunction>().InvertDirection(); 
         } 
