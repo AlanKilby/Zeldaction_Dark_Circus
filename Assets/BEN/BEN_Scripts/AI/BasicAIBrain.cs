@@ -64,6 +64,7 @@ namespace BEN.AI
         [SerializeField, Range(0f, 1f)] private float monkeyBallDodgeReactionTime = 0.5f;
         [SerializeField, Range(0.5f, 2f)] private float monkeyBallInvulnerabilityTime = 1f;
         [SerializeField, Range(0f, 5f)] private float _delayBeforeBackToDefaultState = 3f;
+        [SerializeField, Range(1f, 20f)] private float _allyNotifyRadius = 8f; 
         public float DelayBeforeBackToDefaultState { get ; private set ; } 
         public float DefaultSpeed { get; set; }
          
@@ -139,25 +140,22 @@ namespace BEN.AI
                     {
                         Gizmos.color = Color.yellow;
                     }
-                    else if (Type == AIType.Monkey)
-                    {
-                        Gizmos.color = Color.white;
-                    }
-                    else if (Type == AIType.MonkeySurBall)
-                    {
-                        Gizmos.color = Color.black;
-                    }
-                    else if (Type == AIType.Mascotte)
-                    {
-                        Gizmos.color = Color.blue;
-                    }
                     else
-                    {
-                        Gizmos.color = Color.red;
-                    }
-                    
+                        Gizmos.color = Type switch
+                        {
+                            AIType.Monkey => Color.white,
+                            AIType.MonkeySurBall => Color.black,
+                            AIType.Mascotte => Color.blue,
+                            _ => Color.red
+                        };
+
                     Gizmos.DrawLine(_patrol.Points[i].position, _patrol.Points[(int) Mathf.Repeat(i + 1, _patrol.Points.Length)].position);
                     Gizmos.DrawWireSphere(_patrol.Points[i].position, 0.25f);
+                    
+#if  UNITY_EDITOR
+                    Handles.color = Color.red; 
+                    Handles.DrawWireDisc(transform.position ,Vector3.up, _allyNotifyRadius); 
+#endif
                 }
             }
             catch (Exception e)
