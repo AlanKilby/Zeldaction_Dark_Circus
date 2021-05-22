@@ -24,7 +24,7 @@ public class CHM_DialogueManager : MonoBehaviour
         nameText.text = dialogue.name;
 
         sentences.Clear();
-
+        
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
