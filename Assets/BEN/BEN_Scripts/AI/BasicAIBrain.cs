@@ -79,10 +79,12 @@ namespace BEN.AI
         [Space, SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
         [SerializeField] private GameObject _detection;
         [SerializeField] private PlaceholderDestination _placeholderDestination;
+        [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _ballGraphics;
 
         [Header("-- DEBUG --")]
         [SerializeField] private EditorDebuggerSO _debugger;
         [SerializeField] private bool refresh;
+        private bool wasMonkeyBall; 
         
 #endregion
 
@@ -134,11 +136,15 @@ namespace BEN.AI
         {
             _fsm = StateMachine<States>.Initialize(this);
             _fsm.ChangeState(States.Init, StateTransition.Safe); 
+            
+            _agentHp = GetComponent<Health>();
+            _agentHp.IsAI = true; 
         }
 
         private void OnEnable() 
         {
-            OnRequireStateChange += TransitionToNewState; 
+            OnRequireStateChange += TransitionToNewState;
+            _agentHp.OnMonkeyBallTransitionToNormalMonkey += BecomeNormalMonkey; 
         } 
         
         private void OnValidate()
@@ -186,9 +192,7 @@ namespace BEN.AI
 
         private void Start()
         {
-            _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>(); 
-            _agentHp = GetComponent<Health>();
-            _agentHp.IsAI = true;
+            _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>();
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
             DefaultSpeed = _defaultSpeed; 
@@ -225,7 +229,7 @@ namespace BEN.AI
             }
             CheckAnimDirection(); // remove from state machine 
 
-            if (_agentHp.CurrentValue <= 0 && !_patrol.IsDead)
+            if (_agentHp.CurrentValue <= 0 && !_patrol.IsDead && Type != AIType.MonkeySurBall) 
             {
                 Debug.Log("transition to death state"); 
                 OnRequireStateChange(States.Die, StateTransition.Safe); 
@@ -242,6 +246,7 @@ namespace BEN.AI
         private void OnDisable() 
         {
             OnRequireStateChange -= TransitionToNewState;
+            _agentHp.OnMonkeyBallTransitionToNormalMonkey -= BecomeNormalMonkey;
         } 
         
         
@@ -373,7 +378,7 @@ namespace BEN.AI
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
                     break;
                 case AIType.MonkeySurBall:
-                    _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
+                    _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection); 
                     InvokeRepeating(nameof(MonkeyBallAttack), 0f, _attackRate); 
                     break;
                 case AIType.Mascotte:
@@ -453,14 +458,27 @@ namespace BEN.AI
             reference.transform.position = _graphics.transform.position;
             reference.GetComponent<ParabolicFunction>().CasterTransform = _graphics.transform; 
             Debug.Log("fakir projectile");
+        }
 
+        // only called if monkey ball is dead 
+        private void BecomeNormalMonkey()
+        {
+            _ballGraphics.SetActive(false);
+            transform.position = new Vector3(transform.position.x, -0.75f, transform.position.z);
+            _graphics.transform.localPosition = Vector3.zero; 
+            _checkSurroundings.BearerType = type = AIType.Monkey; 
+            _agentHp.CurrentValue = 1; 
+            _attackRange = 1f; // would have been better to store each mob General stats into a scriptable object so that I can assign the right values 
+            wasMonkeyBall = true; 
+            
+            OnRequireStateChange(States.Attack, StateTransition.Safe); 
         }
 
         void Attack_Exit()
         {
             if (HasBeenInvokedByBoss)
             {
-                TransitionToNewState(States.Attack, StateTransition.Overwrite); // debug crados             
+                TransitionToNewState(States.Attack, StateTransition.Safe); // debug crados             
             }
 
             switch (type)
@@ -503,6 +521,7 @@ namespace BEN.AI
             yield return new WaitForSeconds(0.1f);  
             _monkeyBallCollider.enabled = true;
             _ballCollider.enabled = true;
+            _aIAnimation.PlayAnimation(AnimState.Miss, AnimDirection.None); 
             
             // MISS anim 
             
@@ -515,7 +534,7 @@ namespace BEN.AI
         { 
             _agent.speed = DefaultSpeed;
             _checkSurroundings.RightWallDetected = _checkSurroundings.LeftWallDetected = false; 
-            _checkSurroundings.CanDodgeProjectile = true;
+            _checkSurroundings.CanDodgeProjectile = true; 
         }
 
         #endregion
@@ -529,21 +548,16 @@ namespace BEN.AI
             yield return new WaitForSeconds(0.25f);  
             CancelInvoke();
             Clip clipToPlay = null;  
-
+ 
             try
             {
-                if (Type != AIType.MonkeySurBall) // because of bad naming conventions... 
-                {
-                    clipToPlay = _aIAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None);
-                } 
+                clipToPlay = _aIAnimation.PlayAnimation(wasMonkeyBall ? AnimState.Die : AnimState.Hit, AnimDirection.None);
             } 
             catch (Exception) { }
 
-            if (clipToPlay == null) 
-            {
-                Debug.Log("Calling Die state instead of Hit state");
-                _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None); // need consistent naming across all mobs, not Die or Hit for same result.. 
-            }
+            if (clipToPlay != null) yield break;
+            Debug.Log("Calling Die state instead of Hit state");
+            _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None); // need consistent naming across all mobs, not Die or Hit for same result.. 
         } 
         
         #endregion

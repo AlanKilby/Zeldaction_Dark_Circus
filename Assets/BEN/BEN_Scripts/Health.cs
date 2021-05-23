@@ -1,5 +1,7 @@
+using BEN.AI;
 using UnityEngine;
 
+[DefaultExecutionOrder(12)]  
 public class Health : MonoBehaviour
 {
     [SerializeField] private AgentGameplayData _agentStartingHP; 
@@ -7,17 +9,15 @@ public class Health : MonoBehaviour
     public bool IsAI { get; set; }
 
     public static System.Action OnPlayerDeath;
-    private bool _notified; // replace with global game state to avoid same bool spread accross codebase
-    private BoxCollider _playercollider; 
+    private bool _notifiedDeath; // replace with global game state to avoid same bool spread accross codebase
+    private BoxCollider _playercollider;
+    private BasicAIBrain _brain;
+    public System.Action OnMonkeyBallTransitionToNormalMonkey; 
 
-    private void Awake()
-    {
-        Initialise();
-    } 
-
-    public void Initialise()
+    private void Start()
     {
         CurrentValue = _agentStartingHP.Value;
+        _brain = IsAI ? GetComponent<BasicAIBrain>() : null; 
     }
 
     public void DecreaseHp(sbyte value)
@@ -25,12 +25,20 @@ public class Health : MonoBehaviour
         CurrentValue -= value; 
         Debug.Log($"decreasing hp by {value}. New value is {CurrentValue}"); 
 
-        if (!IsAI && CurrentValue <= 0 && !_notified)
+        if (CurrentValue <= 0 && !_notifiedDeath)
         {
-            _notified = true;
-            _playercollider = GetComponent<BoxCollider>();
-            _playercollider.enabled = false; 
-            OnPlayerDeath();  
+            if (!IsAI)
+            {
+                _notifiedDeath = true;
+                _playercollider = GetComponent<BoxCollider>();
+                _playercollider.enabled = false; 
+                OnPlayerDeath();  
+            }
+            else if (_brain.Type == AIType.MonkeySurBall)
+            {
+                _notifiedDeath = true;
+                OnMonkeyBallTransitionToNormalMonkey(); 
+            }
         }
     } 
 }

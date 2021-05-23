@@ -27,7 +27,7 @@ namespace BEN.AI
         private bool _notified; // DEBUG 
         private BasicAIBrain _brain; // NOT SAFE
 
-        private AIType bearerType;
+        public AIType BearerType;
         public bool CanDodgeProjectile { get; set; } 
         public bool IsDead { get; set; }
         private Vector3 playerPosition;
@@ -56,7 +56,7 @@ namespace BEN.AI
             // _patrol = GetComponentInParent<FsmPatrol>(); 
             _agent = GetComponentInParent<NavMeshAgent>();
             _brain = GetComponentInParent<BasicAIBrain>();
-            bearerType = GetComponentInParent<BasicAIBrain>().Type;
+            BearerType = GetComponentInParent<BasicAIBrain>().Type;
             CanDodgeProjectile = true; 
         }
 
@@ -75,10 +75,10 @@ namespace BEN.AI
             if (!_playerDetected || IsDead) return; 
             playerPosition = other.gameObject.transform.position; 
             
-            if (Mathf.Pow(2, other.gameObject.layer) == playerWeapon && bearerType == AIType.MonkeySurBall && CanDodgeProjectile)
+            if (Mathf.Pow(2, other.gameObject.layer) == playerWeapon && BearerType == AIType.MonkeySurBall && CanDodgeProjectile)
             {
-                if (Vector3.Distance(other.transform.position, transform.parent.position) > 5f) return;  
-                 
+                if (Vector3.Distance(other.transform.position, transform.parent.position) > 5f) return; 
+
                 try 
                 {
                     _localLeftDirection = transform.InverseTransformDirection(Vector3.left);
@@ -152,7 +152,7 @@ namespace BEN.AI
 
         private void OnTriggerExit(Collider other) 
         {
-            if (IsDead || Mathf.Pow(2, other.gameObject.layer) != player || bearerType == AIType.Mascotte) return;
+            if (IsDead || Mathf.Pow(2, other.gameObject.layer) != player || BearerType == AIType.Mascotte) return;
             Boomerang.s_SeenByEnemy = Mathf.Pow(2, other.gameObject.layer) == playerWeapon;
 
             if (Mathf.Pow(2, other.gameObject.layer) == player)
