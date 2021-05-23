@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 797199752371587992}
-  angle: 1.6038579
-  myModifiedAngle: 0
+  EulerAnglesY: 0
+  myModifiedEulerAnglesY: 0
   angleIndex: 0
 --- !u!1 &776753432634876680
 GameObject:
@@ -326,7 +326,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 797199752371587997}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 4.96, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3683318711155199436}
@@ -453,25 +453,24 @@ MonoBehaviour:
   isMonkeyBall: 1
   isFakir: 0
   isCaster: 1
-  _monkeyBallProjectile: {fileID: 2745454191333491136, guid: 74380e312f9f8dc47a82ed86733489e5, type: 3}
   _fakirProjectile: {fileID: 554421524130511497, guid: 6b3644fcc3a2b2749b4068030141afc7, type: 3}
+  _monkeyBallProjectile: {fileID: 2745454191333491136, guid: 74380e312f9f8dc47a82ed86733489e5, type: 3}
   _defaultSpeed: 2
   _attackRate: 2
-  _monkeyBallProvocDuration: 3
   _attackStateSpeedMultiplier: 1.25
   _attackDelay: 1
   _attackRange: 1
   _attackDamage: 1
-  _monkeyBallDodgeReactionTime: 0.5
-  _monkeyBallInvulnerabilityTime: 1
   _delayBeforeBackToDefaultState: 3
   _allyNotifyRadius: 8
+  _monkeyBallProvocDuration: 3
+  _monkeyBallDodgeReactionTime: 0.5
+  _monkeyBallDodgeDistance: 2
   _graphics: {fileID: 797199751803070904}
   _detection: {fileID: 797199752267424712}
   _placeholderDestination: {fileID: 610376292}
   _debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
-  angle: 0
 --- !u!114 &402169396915351271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,7 +533,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2533886171375916998}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.73}
+  m_LocalPosition: {x: 4.88, y: 0, z: -0.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5659020958473677208}
@@ -555,7 +554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2651920672806243564
 Transform:
   m_ObjectHideFlags: 0
@@ -726,7 +725,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6982587735585248565}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.03, y: 0, z: 7.5}
+  m_LocalPosition: {x: -12.38, y: 0, z: -0.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5659020958473677208}

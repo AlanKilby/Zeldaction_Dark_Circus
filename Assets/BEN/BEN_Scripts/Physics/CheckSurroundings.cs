@@ -1,7 +1,8 @@
 using UnityEngine;
 using MonsterLove.StateMachine;
 using UnityEngine.AI;
-using System.Collections; 
+using System.Collections;
+using Random = System.Random;
 
 namespace BEN.AI 
 {
@@ -33,8 +34,12 @@ namespace BEN.AI
         private Vector3 direction;
         private bool wallIsHidingPlayer; 
         
-        public bool CanDodgeLeft { get; set; } 
-        public bool CanDodgeRight { get; set; }  
+        public bool LeftWallDetected { get; set; } 
+        public bool RightWallDetected { get; set; }
+
+        private Vector3 _dodgeDirection; 
+        public Vector3 DodgeDirection { get; private set; }
+        private Vector3 _localLeftDirection, _localRightDirection; 
 
 
         public CheckSurroundings(Collider[] detectedCollidersArray)
@@ -45,7 +50,7 @@ namespace BEN.AI
         private void Start()
         {
             IsDead = false;
-            CanDodgeLeft = CanDodgeRight = false; 
+            LeftWallDetected = RightWallDetected = false; 
             
             _selfCollider = GetComponent<BoxCollider>();
             // _patrol = GetComponentInParent<FsmPatrol>(); 
@@ -72,19 +77,27 @@ namespace BEN.AI
             
             if (Mathf.Pow(2, other.gameObject.layer) == playerWeapon && bearerType == AIType.MonkeySurBall && CanDodgeProjectile)
             {
-                if (Vector3.Distance(other.transform.position, transform.parent.position) > 3f) return;  
-                
+                if (Vector3.Distance(other.transform.position, transform.parent.position) > 5f) return;  
+                 
                 try 
-                { 
-                    CanDodgeLeft = Physics.Raycast(transform.position, transform.InverseTransformDirection(Vector3.left), 
-                        _brain.MonkeyBallDodgeDistance, wall);
-                    CanDodgeRight = Physics.Raycast(transform.position, transform.InverseTransformDirection(Vector3.right), 
-                        _brain.MonkeyBallDodgeDistance, wall);
+                {
+                    _localLeftDirection = transform.InverseTransformDirection(Vector3.left);
+                    _localRightDirection = transform.InverseTransformDirection(Vector3.right);
+                    
+                    LeftWallDetected = Physics.Raycast(transform.position, _localLeftDirection, _brain.MonkeyBallDodgeDistance, wall);
+                    RightWallDetected = Physics.Raycast(transform.position, _localRightDirection, _brain.MonkeyBallDodgeDistance, wall); 
 
-                    Debug.DrawRay(transform.position, transform.InverseTransformDirection(Vector3.left), Color.red, 1f); 
-                    Debug.DrawRay(transform.position, transform.InverseTransformDirection(Vector3.right), Color.blue, 1f); 
+                    Debug.DrawRay(transform.position, _localLeftDirection, Color.yellow, 5f); 
+                    Debug.DrawRay(transform.position, _localRightDirection, Color.red, 5f);   
+                    
+                    Debug.Log("before return dodge");
 
-                    if (!CanDodgeLeft && !CanDodgeRight) return; 
+                    if (LeftWallDetected && RightWallDetected) return;
+                     
+                    Debug.Log("after return dodge");
+                    var directionRandomSelector = UnityEngine.Random.Range(0, 2) == 0 ? _localLeftDirection : _localRightDirection;
+                    _dodgeDirection = LeftWallDetected && RightWallDetected ? directionRandomSelector : (LeftWallDetected ? _localLeftDirection : _localRightDirection);
+                    DodgeDirection = transform.TransformDirection(_dodgeDirection); 
                     
                     _brain.OnRequireStateChange(States.Defend, StateTransition.Safe); 
                 }

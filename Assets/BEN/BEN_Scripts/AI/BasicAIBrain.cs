@@ -498,17 +498,13 @@ namespace BEN.AI
 
             _agent.speed = 0f;
             _checkSurroundings.CanDodgeProjectile = _monkeyBallCollider.enabled = _ballCollider.enabled = false;
-
-            sbyte dodgeDirection = UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1;
-            transform.localPosition = _checkSurroundings.CanDodgeRight && _checkSurroundings.CanDodgeLeft ? 
-                new Vector3(transform.position.x + (5f * dodgeDirection), transform.position.y, transform.position.z) : 
-                    (_checkSurroundings.CanDodgeRight ? 
-                        new Vector3(transform.position.x + _monkeyBallDodgeDistance, transform.position.y, transform.position.z) : 
-                        new Vector3(transform.position.x - _monkeyBallDodgeDistance, transform.position.y, transform.position.z)); 
+            transform.position = _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
             
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.1f);  
             _monkeyBallCollider.enabled = true;
             _ballCollider.enabled = true;
+            
+            // MISS anim 
             
             yield return new WaitForSeconds(_monkeyBallProvocDuration); 
             OnRequireStateChange(States.Attack, StateTransition.Safe); 
@@ -518,7 +514,7 @@ namespace BEN.AI
         void Defend_Exit()  
         { 
             _agent.speed = DefaultSpeed;
-            _checkSurroundings.CanDodgeRight = _checkSurroundings.CanDodgeLeft = false; 
+            _checkSurroundings.RightWallDetected = _checkSurroundings.LeftWallDetected = false; 
             _checkSurroundings.CanDodgeProjectile = true;
         }
 
