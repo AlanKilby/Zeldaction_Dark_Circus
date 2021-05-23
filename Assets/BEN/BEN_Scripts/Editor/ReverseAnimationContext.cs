@@ -2,7 +2,9 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor.Animations;
+#endif
 
 public static class ReverseAnimationContext
 {
