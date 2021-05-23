@@ -9,7 +9,6 @@ using UnityEditor;
 #endif
 using BEN.Animation;
 using BEN.Math;
-using Random = System.Random;
 
 
 /* 
@@ -65,10 +64,10 @@ namespace BEN.AI
         [SerializeField, Range(0.5f, 5f), Tooltip("Wait time between each attack")] private float _attackRate = 2f;
         [SerializeField, Tooltip("DefaultSpeed increase when rushing toward the player. 1 = no increase"), Range(1f, 3f)] private float _attackStateSpeedMultiplier = 1.25f;
         [SerializeField, Tooltip("Delay from Default to Attack State when player is detected"), Range(0f, 5f)] private float _attackDelay = 1f; 
-        [SerializeField, Range(1f, 30f)] private float _attackRange = 1f;
+        [SerializeField, Range(1f, 30f)] private float _attackRange = 1f; 
         [SerializeField, Range(1, 5)] private sbyte _attackDamage = 1;
-        [SerializeField, Range(0f, 5f)] private float _delayBeforeBackToDefaultState = 3f;
-        [SerializeField, Range(1f, 20f)] private float _allyNotifyRadius = 8f; 
+        [SerializeField, Range(0f, 5f), Tooltip("Delay from Attack to Default State when player is not detected anymore")] private float _delayBeforeBackToDefaultState = 3f;
+        [SerializeField, Range(1f, 20f), Tooltip("Radius of ally notification when player is detected. Notified allies start chasing the player too")] private float _allyNotifyRadius = 8f; 
         
         [Header("Specific")]
         [Space, SerializeField, ConditionalShow("isMonkeyBall"), Tooltip("Delay before jumping back to ball again")] private float _monkeyBallProvocDuration = 3f;
@@ -408,7 +407,7 @@ namespace BEN.AI
                 {
                     _fsm.ChangeState(States.Default, StateTransition.Safe);
                     CancelInvoke(nameof(FakeCAC));
-                }
+                } 
 
                 // to simulate player killed from CAC. Distance is done from projectile
                 if ((type != AIType.Monkey && type != AIType.Mascotte) || _hasCalledFakeCac) return;
