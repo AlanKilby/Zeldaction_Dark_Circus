@@ -32,6 +32,10 @@ namespace BEN.AI
         private Vector3 playerPosition;
         private Vector3 direction;
         private bool wallIsHidingPlayer; 
+        
+        public bool CanDodgeLeft { get; set; } 
+        public bool CanDodgeRight { get; set; }  
+
 
         public CheckSurroundings(Collider[] detectedCollidersArray)
         {
@@ -40,7 +44,8 @@ namespace BEN.AI
 
         private void Start()
         {
-            IsDead = false; 
+            IsDead = false;
+            CanDodgeLeft = CanDodgeRight = false; 
             
             _selfCollider = GetComponent<BoxCollider>();
             // _patrol = GetComponentInParent<FsmPatrol>(); 
@@ -70,13 +75,24 @@ namespace BEN.AI
                 if (Vector3.Distance(other.transform.position, transform.parent.position) > 3f) return;  
                 
                 try 
-                {
+                { 
+                    CanDodgeLeft = Physics.Raycast(transform.position, transform.InverseTransformDirection(Vector3.left), 
+                        _brain.MonkeyBallDodgeDistance, wall);
+                    CanDodgeRight = Physics.Raycast(transform.position, transform.InverseTransformDirection(Vector3.right), 
+                        _brain.MonkeyBallDodgeDistance, wall);
+
+                    Debug.DrawRay(transform.position, transform.InverseTransformDirection(Vector3.left), Color.red, 1f); 
+                    Debug.DrawRay(transform.position, transform.InverseTransformDirection(Vector3.right), Color.blue, 1f); 
+
+                    if (!CanDodgeLeft && !CanDodgeRight) return; 
+                    
                     _brain.OnRequireStateChange(States.Defend, StateTransition.Safe); 
                 }
                 catch (System.Exception e) { Debug.Log(e.Message); }
             } 
             
-            _detectedColliders = Physics.RaycastAll(transform.position, other.transform.position - transform.position, 15f, detectableTargetsLayer);
+            _detectedColliders = Physics.RaycastAll(transform.position, other.transform.position - transform.position, 
+                                                    15f, detectableTargetsLayer);
             // _distances = new float[_detectedColliders.Length];
             
             wallIsHidingPlayer = Physics.Raycast(transform.position, (playerPosition - transform.position).normalized, 

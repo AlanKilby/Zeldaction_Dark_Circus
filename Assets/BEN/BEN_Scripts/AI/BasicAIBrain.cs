@@ -8,7 +8,8 @@ using UnityEngine.AI;
 using UnityEditor;
 #endif
 using BEN.Animation;
-using BEN.Math; 
+using BEN.Math;
+using Random = System.Random;
 
 
 /* 
@@ -72,8 +73,8 @@ namespace BEN.AI
         [Header("Specific")]
         [Space, SerializeField, ConditionalShow("isMonkeyBall"), Tooltip("Delay before jumping back to ball again")] private float _monkeyBallProvocDuration = 3f;
         [SerializeField, ConditionalShow("isMonkeyBall")] private float _monkeyBallDodgeReactionTime = 0.5f;
-        [SerializeField, ConditionalShow("isMonkeyBall")] private float _monkeyBallInvulnerabilityTime = 1f;
-        
+        [SerializeField, ConditionalShow("isMonkeyBall"), Tooltip("how far monkey ball goes when dodging")] private float _monkeyBallDodgeDistance = 5f;
+
         [Header("Other")] 
         [Space, SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
         [SerializeField] private GameObject _detection;
@@ -123,6 +124,7 @@ namespace BEN.AI
         public Vector3 TargetToAttackPosition { get; set; }
         public bool GoingBackToPositionBeforeIdling { get; set; }
         public bool HasBeenInvokedByBoss { get; set; }
+        public float MonkeyBallDodgeDistance { get; private set; }
         
 #endregion
 
@@ -189,7 +191,8 @@ namespace BEN.AI
             _agentHp.IsAI = true;
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
-            DefaultSpeed = _defaultSpeed;
+            DefaultSpeed = _defaultSpeed; 
+            MonkeyBallDodgeDistance = _monkeyBallDodgeDistance; 
 
             _patrol = GetComponent<FsmPatrol>();
             _patrol.SetPoints(); 
@@ -395,6 +398,7 @@ namespace BEN.AI
                     CheckAnimDirection(AnimState.Atk);
                 } 
 
+                // back to default when player has been killed
                 if (LoadSceneOnPlayerDeath.playerIsDead)
                 {
                     _fsm.ChangeState(States.Default, StateTransition.Safe);
@@ -490,40 +494,34 @@ namespace BEN.AI
         IEnumerator Defend_Enter()
         {
             yield return new WaitForSeconds(_monkeyBallDodgeReactionTime);
-            _graphics.transform.DetachChildren();
-            _agent.speed = 0f;
-            _graphics.transform.localPosition = new Vector3(2f, -1f, 0f);
             Debug.Log("defend_enter");
 
-            _checkSurroundings.CanDodgeProjectile = false;
-            _monkeyBallCollider.enabled = false;
-            _ballCollider.enabled = false;
+            _agent.speed = 0f;
+            _checkSurroundings.CanDodgeProjectile = _monkeyBallCollider.enabled = _ballCollider.enabled = false;
 
-            // si chapeau lancé loin, monkey est de nouveau vulnérable au moment du retour 
-            yield return new WaitForSeconds(_monkeyBallInvulnerabilityTime);
+            sbyte dodgeDirection = UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1;
+            transform.localPosition = _checkSurroundings.CanDodgeRight && _checkSurroundings.CanDodgeLeft ? 
+                new Vector3(transform.position.x + (5f * dodgeDirection), transform.position.y, transform.position.z) : 
+                    (_checkSurroundings.CanDodgeRight ? 
+                        new Vector3(transform.position.x + _monkeyBallDodgeDistance, transform.position.y, transform.position.z) : 
+                        new Vector3(transform.position.x - _monkeyBallDodgeDistance, transform.position.y, transform.position.z)); 
+            
+            yield return new WaitForSeconds(0.1f);
             _monkeyBallCollider.enabled = true;
             _ballCollider.enabled = true;
-
-            // ne remonte pas tout de suite sur la balle
+            
             yield return new WaitForSeconds(_monkeyBallProvocDuration); 
-            OnRequireStateChange(States.Attack, StateTransition.Safe);  // risky if the player has gone outside of detection collider.. should I use a HFSM instead ? 
+            OnRequireStateChange(States.Attack, StateTransition.Safe); 
+            // risky if the player has gone outside of detection collider.. should I use a HFSM instead ? 
         } 
 
-        void Defend_Exit() 
+        void Defend_Exit()  
         { 
             _agent.speed = DefaultSpeed;
-            _graphics.transform.localPosition = Vector3.up;
-            _graphics.SetActive(true);
-
-            // _aIAnimation.PlayAnimation(AnimState.AtkRight); 
-
-            Invoke(nameof(ResetBool), 8f); 
+            _checkSurroundings.CanDodgeRight = _checkSurroundings.CanDodgeLeft = false; 
+            _checkSurroundings.CanDodgeProjectile = true;
         }
 
-        void ResetBool()
-        {
-            _checkSurroundings.CanDodgeProjectile = true; 
-        }
         #endregion
 
         #region Die
