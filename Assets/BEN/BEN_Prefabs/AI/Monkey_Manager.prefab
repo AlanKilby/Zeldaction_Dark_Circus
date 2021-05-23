@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 8835960570973703075}
-  destroyDelay: 0.25
+  destroyDelay: 0
 --- !u!1 &8072824808082983536
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +237,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectableTargetsLayer:
     serializedVersion: 2
-    m_Bits: 3136
+    m_Bits: 3264
+  wall:
+    serializedVersion: 2
+    m_Bits: 2048
+  player:
+    serializedVersion: 2
+    m_Bits: 1024
+  playerWeapon:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &8072824808094687781
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +363,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -399,20 +408,21 @@ MonoBehaviour:
   isCaster: 0
   _monkeyBallProjectile: {fileID: 2745454191333491136, guid: 74380e312f9f8dc47a82ed86733489e5, type: 3}
   _fakirProjectile: {fileID: 554421524130511497, guid: 6b3644fcc3a2b2749b4068030141afc7, type: 3}
-  defaultSpeed: 1.25
-  attackRate: 2
-  monkeyBallProvocDuration: 3
-  attackStateSpeedMultiplier: 1.25
-  attackDelay: 0.5
-  attackRange: 1
-  attackDamage: 1
-  monkeyBallDodgeReactionTime: 0.5
-  monkeyBallInvulnerabilityTime: 1
+  _defaultSpeed: 2
+  _attackRate: 2
+  _monkeyBallProvocDuration: 3
+  _attackStateSpeedMultiplier: 1.25
+  _attackDelay: 1
+  _attackRange: 1
+  _attackDamage: 1
+  _monkeyBallDodgeReactionTime: 0.5
+  _monkeyBallInvulnerabilityTime: 1
   _delayBeforeBackToDefaultState: 2
+  _allyNotifyRadius: 8
   _graphics: {fileID: 8072824807585136640}
   _detection: {fileID: 8072824808082983536}
   _placeholderDestination: {fileID: 382907032}
-  debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
+  _debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
   angle: 0
 --- !u!114 &8072824808094687783
@@ -453,49 +463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0873ad07418629841acd77224c342ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AIBrain: {fileID: 8072824808094687805}
-  _event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1016997737}
-        m_TargetAssemblyTypeName: MonkeyCustomEffect, Assembly-CSharp
-        m_MethodName: DoCustomEffectOnZoneSlow
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  myMultiParamsEvents:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1016997737}
-        m_TargetAssemblyTypeName: AICustomEffectOnZoneSlow, Assembly-CSharp
-        m_MethodName: SomeFuncWithAnArguments
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1016997737}
-        m_TargetAssemblyTypeName: AICustomEffectOnZoneSlow, Assembly-CSharp
-        m_MethodName: AnotherFuncWithAnArguments
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &8835960570973703075
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,7 +478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8835960570973703084
 Transform:
   m_ObjectHideFlags: 0
@@ -552,7 +519,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8835960571330059566}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.22, y: 0, z: 8.04}
+  m_LocalPosition: {x: 0.37, y: 0, z: 5.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8835960572897015646}

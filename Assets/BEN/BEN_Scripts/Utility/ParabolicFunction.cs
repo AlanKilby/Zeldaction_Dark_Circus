@@ -14,9 +14,9 @@ namespace BEN.Math
         private const float frameDeltaInitialValue = 0.02f;
         private float _curvature;
 
-        private byte
-            _propsLayer = 6,
-            _playerLayer = 10;
+        public LayerMask
+            _wallLayer,
+            _playerLayer;
 
         private bool _invert = false;
         public Transform CasterTransform { get; set; }
@@ -48,12 +48,12 @@ namespace BEN.Math
         private void OnTriggerEnter(Collider other)
         {
             // TEMPORARY 
-            if (other.CompareTag("Player")) 
+            if (Mathf.Pow(2f, other.gameObject.layer) == _playerLayer) 
             {
                 Destroy(gameObject);
                 other.GetComponent<Health>().DecreaseHp(1); // super temporary
             }
-            else if (other.gameObject.layer == _propsLayer)
+            else if (Mathf.Pow(2f, other.gameObject.layer) == _wallLayer)  
             {
                 Destroy(gameObject); 
             }

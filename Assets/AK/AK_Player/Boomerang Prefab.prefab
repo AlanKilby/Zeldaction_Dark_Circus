@@ -63,6 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  boomerangDamage: 1
   aimPos: {x: 0, y: 0, z: 0}
   playerPos: {fileID: 0}
   mirrorLayer:
@@ -71,19 +72,21 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 1024
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  obstacleLayer:
+  WallLayer:
     serializedVersion: 2
     m_Bits: 2048
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  EnemyWeaponLayer:
+    serializedVersion: 2
+    m_Bits: 256
   reductionCoef: 0.05
   accelerationCoef: 0.8
   comebackTimer: 2
   swordLayer:
     serializedVersion: 2
     m_Bits: 256
-  simulateAutoDestroy: 0
 --- !u!54 &6562525557809070716
 Rigidbody:
   m_ObjectHideFlags: 0

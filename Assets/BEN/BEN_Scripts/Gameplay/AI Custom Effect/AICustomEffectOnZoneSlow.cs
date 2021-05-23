@@ -1,18 +1,17 @@
-using System;
 using BEN.AI;
 using UnityEngine;
-using UnityEngine.Events; 
 
 [RequireComponent(typeof(BasicAIBrain))]
 public abstract class AICustomEffectOnZoneSlow : MonoBehaviour
 {
-    protected BasicAIBrain _AIBrain; 
+    protected BasicAIBrain AIBrain; 
 
     private void Awake()
     {
-        _AIBrain = GetComponent<BasicAIBrain>();
+        AIBrain = GetComponent<BasicAIBrain>();
     }
 
-    public abstract void InvokeCustomEvent(); 
+    public abstract void InvokeCustomEventOnEnter();
+    public abstract void InvokeCustomEventOnExit();  
 }
 
