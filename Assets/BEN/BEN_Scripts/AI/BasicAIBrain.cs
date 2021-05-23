@@ -17,6 +17,8 @@ using BEN.Math;
  All calls and processing are made from here with a switch based on AIType
  
  Upgrade to class-based FSM only if needed
+ 
+ Separate flow-control and behaviours if needed
  */
 
 namespace BEN.AI 
@@ -43,72 +45,86 @@ namespace BEN.AI
     [DefaultExecutionOrder(10)] 
     public class BasicAIBrain : MonoBehaviour
     {
+#region Serialized Variables
+
         [SerializeField] private AIType type;
         [SerializeField] private bool _canPatrol = true; 
         public AIType Type { get => type; set => Type = value; } 
         
         // used for conditionalShow's property drawer until I know how to directly use enum 
         [HideInInspector] public bool isMonkeyBall;
-        [HideInInspector] public bool isFakir;
+        [HideInInspector] public bool isFakir; 
         [HideInInspector] public bool isCaster; 
-
-        [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _monkeyBallProjectile;
+        
         [SerializeField, ConditionalShow("isFakir", true)] private GameObject _fakirProjectile; 
-        [SerializeField, Tooltip("Speed when patrolling"), Range(0f, 5f)] private float defaultSpeed = 2f;
-        [SerializeField, Range(0.5f, 5f), Tooltip("Wait time between each attack")] private float attackRate = 2f;
-        [SerializeField, ConditionalShow("isMonkeyBall"), Tooltip("Delay before jumping back to ball again")] private float monkeyBallProvocDuration = 3f;
-        [SerializeField, Tooltip("DefaultSpeed increse when rushing toward the player. 1 = no increase"), Range(1f, 3f)] private float attackStateSpeedMultiplier = 1.25f;
-        [SerializeField, Tooltip("Delay from Idle to Attack State when player is detected"), Range(0f, 5f)] private float attackDelay = 1f; 
-        [SerializeField, Range(1f, 30f)] private float attackRange = 1f;
-        [SerializeField, Range(1, 5)] private sbyte attackDamage = 1;
-        [SerializeField, Range(0f, 1f)] private float monkeyBallDodgeReactionTime = 0.5f;
-        [SerializeField, Range(0.5f, 2f)] private float monkeyBallInvulnerabilityTime = 1f;
+        [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _monkeyBallProjectile;
+        
+        [Header("General")]
+        [Space, SerializeField, Tooltip("Speed when patrolling"), Range(0f, 5f)] private float _defaultSpeed = 2f;
+        [SerializeField, Range(0.5f, 5f), Tooltip("Wait time between each attack")] private float _attackRate = 2f;
+        [SerializeField, Tooltip("DefaultSpeed increase when rushing toward the player. 1 = no increase"), Range(1f, 3f)] private float _attackStateSpeedMultiplier = 1.25f;
+        [SerializeField, Tooltip("Delay from Default to Attack State when player is detected"), Range(0f, 5f)] private float _attackDelay = 1f; 
+        [SerializeField, Range(1f, 30f)] private float _attackRange = 1f;
+        [SerializeField, Range(1, 5)] private sbyte _attackDamage = 1;
         [SerializeField, Range(0f, 5f)] private float _delayBeforeBackToDefaultState = 3f;
         [SerializeField, Range(1f, 20f)] private float _allyNotifyRadius = 8f; 
-        public float DelayBeforeBackToDefaultState { get ; private set ; } 
-        public float DefaultSpeed { get; set; }
-         
-        private StateMachine<States> _fsm;
-        public States NewState { get; private set; }
-
-        [SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
+        
+        [Header("Specific")]
+        [Space, SerializeField, ConditionalShow("isMonkeyBall"), Tooltip("Delay before jumping back to ball again")] private float _monkeyBallProvocDuration = 3f;
+        [SerializeField, ConditionalShow("isMonkeyBall")] private float _monkeyBallDodgeReactionTime = 0.5f;
+        [SerializeField, ConditionalShow("isMonkeyBall")] private float _monkeyBallInvulnerabilityTime = 1f;
+        
+        [Header("Other")] 
+        [Space, SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
         [SerializeField] private GameObject _detection;
-        private Health _agentHp;
-
-        private FsmPatrol _patrol;
-        
-        private NavMeshAgent _agent; 
-
-        public Action<States, StateTransition> OnRequireStateChange; 
-        public Vector3 TargetToAttackPosition { get; set; }
-        public bool GoingBackToPositionBeforeIdling { get; set; }
-
-        private AIAnimation _aIAnimation; // MOVE TO AIANIMATION
-        private AIAnimation _ballAnimation; // MOVE TO AIANIMATION + not used
-
-        private Vector3 _idlePositionBeforeAttacking; // when not patrolling
-
-        private CheckSurroundings _checkSurroundings; 
-        
-        private AnimDirection _animDirection; // MOVE TO AIANIMATION
-        private int _previousParentRotation; // MOVE TO AIANIMATION
-        
-        public bool HasBeenInvokedByBoss { get; set; }
         [SerializeField] private PlaceholderDestination _placeholderDestination;
-        private Health _playerHP;
-        private bool exitingAttackState; 
-
 
         [Header("-- DEBUG --")]
-        [SerializeField] private EditorDebuggerSO debugger;
-        [SerializeField] public bool refresh;
-        private Collider monkeyBallCollider;
-        private Collider ballCollider;
-        public float angle;
-        private bool hasCalledFakeCAC;
-        #region Editor
+        [SerializeField] private EditorDebuggerSO _debugger;
+        [SerializeField] private bool refresh;
+        
+#endregion
 
-        #endregion
+#region Public Variables
+        public Action<States, StateTransition> OnRequireStateChange;
+#endregion
+
+#region Private & Protected Variables
+
+    private StateMachine<States> _fsm;
+    private Health _agentHp;
+    private FsmPatrol _patrol;
+    private NavMeshAgent _agent; 
+    
+    private AIAnimation _aIAnimation; // MOVE TO AIANIMATION
+    private AIAnimation _ballAnimation; // MOVE TO AIANIMATION + not used
+
+    private Vector3 _idlePositionBeforeAttacking; // when not patrolling
+
+    private CheckSurroundings _checkSurroundings; 
+        
+    private AnimDirection _animDirection; // MOVE TO AIANIMATION
+    private int _previousParentRotation; // MOVE TO AIANIMATION
+        
+    private Health _playerHP;
+    private bool _exitingAttackState;
+
+    private Collider _monkeyBallCollider;
+    private Collider _ballCollider; 
+    private bool _hasCalledFakeCac;
+
+#endregion
+
+#region Properties
+
+        public float DelayBeforeBackToDefaultState { get ; private set ; } 
+        public float DefaultSpeed { get; set; }
+        public States NewState { get; private set; }
+        public Vector3 TargetToAttackPosition { get; set; }
+        public bool GoingBackToPositionBeforeIdling { get; set; }
+        public bool HasBeenInvokedByBoss { get; set; }
+        
+#endregion
 
 #region Unity Callbacks
 
@@ -173,7 +189,7 @@ namespace BEN.AI
             _agentHp.IsAI = true;
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
-            DefaultSpeed = defaultSpeed;
+            DefaultSpeed = _defaultSpeed;
 
             _patrol = GetComponent<FsmPatrol>();
             _patrol.SetPoints(); 
@@ -188,8 +204,8 @@ namespace BEN.AI
 
             if (Type == AIType.MonkeySurBall)
             {
-                monkeyBallCollider = GetComponent<BoxCollider>(); 
-                ballCollider = GetComponentInChildren<SphereCollider>();
+                _monkeyBallCollider = GetComponent<BoxCollider>(); 
+                _ballCollider = GetComponentInChildren<SphereCollider>();
             }
 
             _agent.speed = DefaultSpeed;
@@ -202,7 +218,7 @@ namespace BEN.AI
             
             if (_canPatrol)
             {
-                _detection.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.angle, 0f);
+                _detection.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.EulerAnglesY, 0f);
             }
             CheckAnimDirection(); // remove from state machine 
 
@@ -212,9 +228,9 @@ namespace BEN.AI
                 OnRequireStateChange(States.Die, StateTransition.Safe); 
             }
 
-            if (!_canPatrol && Vector3.Distance(transform.position, _idlePositionBeforeAttacking) <= 0.25f && exitingAttackState) 
+            if (!_canPatrol && Vector3.Distance(transform.position, _idlePositionBeforeAttacking) <= 0.25f && _exitingAttackState) 
             {
-                exitingAttackState = false; 
+                _exitingAttackState = false; 
                 _agent.speed = 0f;
                 _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); // use AnimDirection according to where you come from . 
             }
@@ -239,7 +255,7 @@ namespace BEN.AI
 
         private void CheckAnimDirection()
         {
-            if (Type == AIType.Fakir && !_canPatrol) return; // modfy is fakir needs repositionning 
+            if (Type == AIType.Fakir && !_canPatrol) return; // modify is fakir needs repositionning 
 
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex); 
 
@@ -252,7 +268,7 @@ namespace BEN.AI
         
         private void CheckAnimDirection(AnimState state)
         {
-            // if (Type == AIType.Fakir && !_canPatrol && NewState == States.Attack) return; // modify is fakir needs repositionning 
+            // if (Type == AIType.Fakir && !_canPatrol && NewState == States.Attack) return; // modify if fakir needs repositionning 
 
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex);
 
@@ -340,7 +356,7 @@ namespace BEN.AI
         
         private IEnumerator Attack_Enter() // UPGRADE : use async-await coroutines
         {
-            yield return new WaitForSeconds(attackDelay); 
+            yield return new WaitForSeconds(_attackDelay); 
             
             _agent.destination = TargetToAttackPosition;
             _idlePositionBeforeAttacking = transform.position;
@@ -355,7 +371,7 @@ namespace BEN.AI
                     break;
                 case AIType.MonkeySurBall:
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
-                    InvokeRepeating(nameof(MonkeyBallAttack), 0f, attackRate); 
+                    InvokeRepeating(nameof(MonkeyBallAttack), 0f, _attackRate); 
                     break;
                 case AIType.Mascotte:
                     _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
@@ -363,14 +379,14 @@ namespace BEN.AI
                 case AIType.Fakir:
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
                     _agent.speed = 0f;
-                    InvokeRepeating(nameof(FakirAttack), 0f, attackRate); 
+                    InvokeRepeating(nameof(FakirAttack), 0f, _attackRate); 
                     break; 
             } 
         } 
 
         private void Attack_FixedUpdate()  
         {
-            if (Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos) <= attackRange) 
+            if (Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos) <= _attackRange) 
             {
                 _agent.speed = 0f;
 
@@ -386,23 +402,23 @@ namespace BEN.AI
                 }
 
                 // to simulate player killed from CAC. Distance is done from projectile
-                if ((type != AIType.Monkey && type != AIType.Mascotte) || hasCalledFakeCAC) return;
-                hasCalledFakeCAC = true;
+                if ((type != AIType.Monkey && type != AIType.Mascotte) || _hasCalledFakeCac) return;
+                _hasCalledFakeCac = true;
 
                 if (type == AIType.Mascotte)
                 {
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);  
                 }
                  
-                InvokeRepeating(nameof(FakeCAC), 0.5f, attackRate);
+                InvokeRepeating(nameof(FakeCAC), 0.5f, _attackRate);
             } 
             else 
             {
-                _agent.speed = DefaultSpeed * attackStateSpeedMultiplier; 
+                _agent.speed = DefaultSpeed * _attackStateSpeedMultiplier; 
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
 
                 CancelInvoke(nameof(FakeCAC));
-                hasCalledFakeCAC = false;
+                _hasCalledFakeCac = false;
                 if (type == AIType.Mascotte)
                 {
                     _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
@@ -417,7 +433,7 @@ namespace BEN.AI
 
         private void FakeCAC()
         {
-            _playerHP.DecreaseHp(attackDamage); 
+            _playerHP.DecreaseHp(_attackDamage); 
         }
 
         private void MonkeyBallAttack()
@@ -453,8 +469,8 @@ namespace BEN.AI
                     break; 
             }
 
-            hasCalledFakeCAC = false;
-            exitingAttackState = true; // problematic to not have this on that kind of state machine (tradeoff for simplicity) 
+            _hasCalledFakeCac = false;
+            _exitingAttackState = true; // problematic to not have this on that kind of state machine (tradeoff for simplicity) 
 
             if (Type == AIType.Fakir && !_canPatrol) 
             { 
@@ -463,7 +479,7 @@ namespace BEN.AI
             else
             {
                 _agent.destination = _canPatrol ? _patrol.Points[_patrol.DestPoint].position : _idlePositionBeforeAttacking; // TODO : use closest point of list instead (when patrolling)
-                _agent.speed = DefaultSpeed / attackStateSpeedMultiplier;
+                _agent.speed = DefaultSpeed / _attackStateSpeedMultiplier;
             }
         }
 
@@ -473,23 +489,23 @@ namespace BEN.AI
 
         IEnumerator Defend_Enter()
         {
-            yield return new WaitForSeconds(monkeyBallDodgeReactionTime);
+            yield return new WaitForSeconds(_monkeyBallDodgeReactionTime);
             _graphics.transform.DetachChildren();
             _agent.speed = 0f;
             _graphics.transform.localPosition = new Vector3(2f, -1f, 0f);
             Debug.Log("defend_enter");
 
             _checkSurroundings.CanDodgeProjectile = false;
-            monkeyBallCollider.enabled = false;
-            ballCollider.enabled = false;
+            _monkeyBallCollider.enabled = false;
+            _ballCollider.enabled = false;
 
             // si chapeau lancé loin, monkey est de nouveau vulnérable au moment du retour 
-            yield return new WaitForSeconds(monkeyBallInvulnerabilityTime);
-            monkeyBallCollider.enabled = true;
-            ballCollider.enabled = true;
+            yield return new WaitForSeconds(_monkeyBallInvulnerabilityTime);
+            _monkeyBallCollider.enabled = true;
+            _ballCollider.enabled = true;
 
             // ne remonte pas tout de suite sur la balle
-            yield return new WaitForSeconds(monkeyBallProvocDuration); 
+            yield return new WaitForSeconds(_monkeyBallProvocDuration); 
             OnRequireStateChange(States.Attack, StateTransition.Safe);  // risky if the player has gone outside of detection collider.. should I use a HFSM instead ? 
         } 
 

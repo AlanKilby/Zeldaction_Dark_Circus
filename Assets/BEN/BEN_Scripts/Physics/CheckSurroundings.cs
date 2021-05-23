@@ -1,9 +1,7 @@
 using UnityEngine;
 using MonsterLove.StateMachine;
 using UnityEngine.AI;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
+using System.Collections; 
 
 namespace BEN.AI 
 {
@@ -54,7 +52,9 @@ namespace BEN.AI
 
         private void OnTriggerEnter(Collider other)
         {
-            if (Mathf.Pow(2, other.gameObject.layer) != player) return;
+            Boomerang.s_SeenByEnemy = Mathf.Pow(2, other.gameObject.layer) == playerWeapon;
+
+            if (Mathf.Pow(2, other.gameObject.layer) != player) return; 
             
             _playerDetected = true;
             StopCoroutine(nameof(CallDefaultStateAfterDelay));
@@ -124,13 +124,13 @@ namespace BEN.AI
         private void OnTriggerExit(Collider other) 
         {
             if (IsDead || Mathf.Pow(2, other.gameObject.layer) != player || bearerType == AIType.Mascotte) return;
-            
+            Boomerang.s_SeenByEnemy = Mathf.Pow(2, other.gameObject.layer) == playerWeapon;
+
             if (Mathf.Pow(2, other.gameObject.layer) == player)
             {
-                _playerDetected = false; 
-                _notified = false;
+                _playerDetected = _notified = false;  
             }
-            
+ 
             StartCoroutine(nameof(CallDefaultStateAfterDelay));  
         } 
 

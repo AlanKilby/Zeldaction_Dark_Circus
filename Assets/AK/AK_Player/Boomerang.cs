@@ -41,7 +41,8 @@ public class Boomerang : MonoBehaviour
     float comebackTimerHolder;
 
     private BasicAIBrain enemy;
-    public LayerMask swordLayer;
+    public LayerMask swordLayer; 
+    public static bool s_SeenByEnemy; 
 
     private void Start()
     {
@@ -52,7 +53,8 @@ public class Boomerang : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         aimPos = playerPos.GetComponent<PlayerMovement_Alan>().aim.transform.position;
         goingSpeed = speed;
-        comingSpeed = speed;
+        comingSpeed = speed; 
+        s_SeenByEnemy = false; 
         //rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
         //Throw();
     }
@@ -230,11 +232,11 @@ public class Boomerang : MonoBehaviour
             Debug.Log("Collision with Enemy");
             enemy = other.GetComponent<BasicAIBrain>(); 
 
-            if (enemy.Type == AIType.Mascotte && !isComingBack) // change this so you can kill from behind, not only on the way back 
+            if (enemy.Type == AIType.Mascotte && Boomerang.s_SeenByEnemy) // change this so you can kill from behind, not only on the way back 
             {
                 isComingBack = true;  
                 return;
-            } 
+            }  
 
             other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
         }
