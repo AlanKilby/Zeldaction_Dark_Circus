@@ -1,24 +1,22 @@
-using BEN.AI;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class MonkeyCustomEffect : AICustomEffectOnZoneSlow
 {
-    private NavMeshAgent _navMeshAgent;
-
-    private void Awake()
+    private float value = 1f;
+    public override void InvokeCustomEventOnEnter()
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-    } 
-    
-    public override void InvokeCustomEvent()
-    {
-        Debug.Log($"custom effect on {gameObject.name}");
-        StunMonkey(); 
+        Debug.Log($"custom effect enter on {gameObject.name}");
+        StartCoroutine(nameof(StunMonkey)); 
     }
 
-    private void StunMonkey() 
+    public override void InvokeCustomEventOnExit()
     {
-        _navMeshAgent.speed = 0f; 
+        Debug.Log($"custom effect exit on {gameObject.name}");
+    }
+
+    private System.Collections.IEnumerator StunMonkey()
+    {
+        yield return new WaitForSeconds(0.5f);
+        AIBrain.DefaultSpeed = 0f;  
     } 
 }
