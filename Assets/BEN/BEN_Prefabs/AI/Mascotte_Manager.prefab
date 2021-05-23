@@ -62,7 +62,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3982106213023558243
 Transform:
   m_ObjectHideFlags: 0
@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 3982106213023558240}
-  destroyDelay: 0.25
+  destroyDelay: 0
 --- !u!1 &7725771847202023909
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +445,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7725771847202023909}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.88
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -475,24 +475,24 @@ MonoBehaviour:
   isMonkeyBall: 0
   isFakir: 0
   isCaster: 0
-  _monkeyBallProjectile: {fileID: 2745454191333491136, guid: 74380e312f9f8dc47a82ed86733489e5, type: 3}
   _fakirProjectile: {fileID: 554421524130511497, guid: 6b3644fcc3a2b2749b4068030141afc7, type: 3}
-  defaultSpeed: 1
-  attackRate: 2
-  monkeyBallProvocDuration: 3
-  attackStateSpeedMultiplier: 1.25
-  attackDelay: 0.5
-  attackRange: 2
-  attackDamage: 1
-  monkeyBallDodgeReactionTime: 0.5
-  monkeyBallInvulnerabilityTime: 1
+  _monkeyBallProjectile: {fileID: 2745454191333491136, guid: 74380e312f9f8dc47a82ed86733489e5, type: 3}
+  _defaultSpeed: 2
+  _attackRate: 2
+  _attackStateSpeedMultiplier: 1.25
+  _attackDelay: 1
+  _attackRange: 1
+  _attackDamage: 1
   _delayBeforeBackToDefaultState: 3
+  _allyNotifyRadius: 8
+  _monkeyBallProvocDuration: 3
+  _monkeyBallDodgeReactionTime: 0.5
+  _monkeyBallInvulnerabilityTime: 1
   _graphics: {fileID: 7725771846700993472}
   _detection: {fileID: 7725771847332921776}
   _placeholderDestination: {fileID: 1245166779}
-  debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
+  _debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
-  angle: 0
 --- !u!114 &7725771847202023908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,8 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53aee30dfa0fbb14f8197245ecdf4ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AIBrain: {fileID: 7725771847202023933}
-  _event:
+  myMultiParamsEvents:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &7725771847332921776
@@ -594,4 +593,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectableTargetsLayer:
     serializedVersion: 2
+    m_Bits: 3264
+  wall:
+    serializedVersion: 2
+    m_Bits: 2048
+  player:
+    serializedVersion: 2
     m_Bits: 1024
+  playerWeapon:
+    serializedVersion: 2
+    m_Bits: 128
