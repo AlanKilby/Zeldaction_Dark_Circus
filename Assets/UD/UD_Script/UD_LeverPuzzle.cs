@@ -8,18 +8,21 @@ public class UD_LeverPuzzle : MonoBehaviour
     public GameObject detectionZone;
     public UD_LeverPuzzleManager manager;
 
-    Animator anim;
-
     [HideInInspector] public int ownID;
 
     [HideInInspector] public bool canBeActivate;
     [HideInInspector] public bool isActivated;
 
+    Animator anim;
+    private string currentAnimation;
+    const string LeverOff = "off";
+    const string LeverOn = "on";
+
     void Start()
     {
         isActivated = false;
-        //anim.SetBool("Activated", false);
-        //anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
+        ChangeAnimationState(LeverOff);
     }
     
     void Update()
@@ -39,7 +42,7 @@ public class UD_LeverPuzzle : MonoBehaviour
 
     public void Activate()
     {
-        //anim.SetBool("Activated", true);
+        ChangeAnimationState(LeverOn);
         manager.timeBetweenLeverSpotingTimer = 0;
         manager.currentActivatedLevers++;
         canBeActivate = false;
@@ -50,5 +53,14 @@ public class UD_LeverPuzzle : MonoBehaviour
     {
         canBeActivate = false;
         detectionZone.GetComponent<UD_LeverPuzzleDetectionZone>().HideUI();
+    }
+
+    void ChangeAnimationState(string newAnimation)
+    {
+        if (currentAnimation == newAnimation) return;
+
+        anim.Play(newAnimation);
+
+        currentAnimation = newAnimation;
     }
 }
