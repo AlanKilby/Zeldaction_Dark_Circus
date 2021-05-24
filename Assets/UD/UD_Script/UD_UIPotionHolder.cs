@@ -19,6 +19,6 @@ public class UD_UIPotionHolder : MonoBehaviour
 
     void Update()
     {
-        ownImage.sprite = potionHolderImages[PPM.bigPotionQuantity];
+        ownImage.sprite = potionHolderImages[PPM.potionQuantity];
     }
 }

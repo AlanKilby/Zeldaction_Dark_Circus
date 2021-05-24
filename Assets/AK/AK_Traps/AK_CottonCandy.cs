@@ -11,7 +11,8 @@ public class AK_CottonCandy : MonoBehaviour
         if (other.gameObject.layer == hatLayer)
         {
             Boomerang otherBoomerang = other.transform.GetComponent<Boomerang>();
-            otherBoomerang.speed = 0;
+            otherBoomerang.goingSpeed = 0;
+            otherBoomerang.comingSpeed = 0;
             otherBoomerang.comebackTimer += 1;
         } 
 
