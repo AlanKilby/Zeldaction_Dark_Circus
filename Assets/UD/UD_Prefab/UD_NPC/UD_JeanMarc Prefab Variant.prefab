@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7913002243194301849
+--- !u!1001 &8167828705779110616
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,19 @@ PrefabInstance:
     - target: {fileID: 953881295132708074, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 30be5925c7b9dd744af099ef83fd89a1, type: 2}
+      objectReference: {fileID: 9100000, guid: d2af9ed5d407db34daf0d69ffb2dc5ba, type: 2}
+    - target: {fileID: 1355211333175087973, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9961947
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355211333175087973, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.08715578
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355211333175087973, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3154141402748638782, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_SizeDelta.x
       value: 883.8038
@@ -29,7 +41,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3586869868524249384, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_Name
-      value: UD_Rothilda Prefab Variant
+      value: UD_JeanMarc Prefab Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5838409349043434041, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_RootOrder
@@ -41,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5838409349043434041, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.35
+      value: 1.39
       objectReference: {fileID: 0}
     - target: {fileID: 5838409349043434041, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -83,42 +95,88 @@ PrefabInstance:
       propertyPath: m_PreserveAspect
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.name
+      value: Jean Marc
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: Oh...je suis libre. Je suis si heureux.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: Bruits de joie.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.data[2]
+      value: "Tu approches de l'ar\xE8ne finale."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.data[3]
+      value: "Loyal met en place son spectacle et il est accompagn\xE9 de sa garde
+        rapproch\xE9e."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.data[4]
+      value: "Aux derni\xE8res nouvelles, cette chochotte \xE9tait terrifi\xE9e par
+        l'obscurit\xE9."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.data[5]
+      value: "Ce serait l'opportunit\xE9 de l'attaquer lorsqu'il est vuln\xE9rable. "
+      objectReference: {fileID: 0}
     - target: {fileID: 6862337273091986002, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_Size.x
-      value: 1.71875
+      value: 2.0625
       objectReference: {fileID: 0}
     - target: {fileID: 6862337273091986002, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_Size.y
-      value: 2.96875
+      value: 3.15625
       objectReference: {fileID: 0}
     - target: {fileID: 6862337273091986002, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 8247773364713974798, guid: 76d9f2c4b000edc40bf0b207e1dc636c, type: 3}
+      objectReference: {fileID: 1326600939556701877, guid: 2857063dd7783df4bab72311a9d44771, type: 3}
+    - target: {fileID: 6862337273091986002, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6862337273091986002, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6862337273091986002, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1835920499
+      objectReference: {fileID: 0}
     - target: {fileID: 6862337273091986002, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7175660437025156206, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 758.8256
+      value: 801.3649
       objectReference: {fileID: 0}
     - target: {fileID: 7175660437025156206, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 450.9761
+      value: 449.5749
       objectReference: {fileID: 0}
     - target: {fileID: 7175660437025156206, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 81
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 7175660437025156206, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 111.9091
+      value: 111.8826
       objectReference: {fileID: 0}
     - target: {fileID: 8525191103811597424, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: c290079f756cf8743ae6a5601835445c, type: 3}
+      objectReference: {fileID: 21300000, guid: 73fd4120a5f48b3488fd6132de7f148b, type: 3}
     - target: {fileID: 8525191103811597424, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_PreserveAspect
       value: 1
