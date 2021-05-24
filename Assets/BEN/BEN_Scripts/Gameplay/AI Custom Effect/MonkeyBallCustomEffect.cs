@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class MonkeyBallCustomEffect : AICustomEffectOnZoneSlow
 {
-    public override void InvokeCustomEvent()
+    public override void InvokeCustomEventOnEnter()
     {
         Debug.Log($"custom effect on {gameObject.name}");
+    }
+    
+    public override void InvokeCustomEventOnExit()
+    {
+        Debug.Log($"custom effect exit on {gameObject.name}");
     }
 }

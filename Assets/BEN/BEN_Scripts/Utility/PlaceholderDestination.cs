@@ -5,8 +5,8 @@ using UnityEngine.Serialization;
 public class PlaceholderDestination : MonoBehaviour 
 {
     public NavMeshAgent agent;
-    [FormerlySerializedAs("myAngle")] public float angle; // to have a smooth detection rotation
-    [FormerlySerializedAs("myAngle")] [SerializeField] private float myModifiedAngle;
+    [FormerlySerializedAs("myAngle")] public float EulerAnglesY; // to have a smooth detection rotation
+    [FormerlySerializedAs("myAngle")] [SerializeField] private float myModifiedEulerAnglesY;
     [FormerlySerializedAs("myAngleIndex")] public int angleIndex;
 
     private void FixedUpdate() 
@@ -17,26 +17,26 @@ public class PlaceholderDestination : MonoBehaviour
     public void GetRotation()
     {
         transform.LookAt(agent.destination);
-        angle = transform.rotation.eulerAngles.y; 
-        myModifiedAngle = angle; 
+        EulerAnglesY = transform.rotation.eulerAngles.y; 
+        myModifiedEulerAnglesY = EulerAnglesY; 
         
-        if (myModifiedAngle > 315f || myModifiedAngle < 45f)
+        if (myModifiedEulerAnglesY > 315f || myModifiedEulerAnglesY < 45f)
         {
-            myModifiedAngle = 0f;
+            myModifiedEulerAnglesY = 0f;
         }
-        else if (myModifiedAngle > 225f && myModifiedAngle < 315f)
+        else if (myModifiedEulerAnglesY > 225f && myModifiedEulerAnglesY < 315f)
         {
-            myModifiedAngle = 270f;
+            myModifiedEulerAnglesY = 270f;
         }
-        else if (myModifiedAngle > 135f && myModifiedAngle < 225f)
+        else if (myModifiedEulerAnglesY > 135f && myModifiedEulerAnglesY < 225f)
         {
-            myModifiedAngle = 180f;
+            myModifiedEulerAnglesY = 180f;
         }
         else
         {
-            myModifiedAngle = 90f;
+            myModifiedEulerAnglesY = 90f;
         } 
 
-        angleIndex = (int) (myModifiedAngle / 90f);
+        angleIndex = (int) (myModifiedEulerAnglesY / 90f);
     }
 }

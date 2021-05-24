@@ -232,26 +232,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
-  _canPatrol: 0
+  _canPatrol: 1
   isMonkeyBall: 0
   isFakir: 1
   isCaster: 1
   _monkeyBallProjectile: {fileID: 2745454191333491136, guid: 74380e312f9f8dc47a82ed86733489e5, type: 3}
   _fakirProjectile: {fileID: 554421524130511497, guid: 6b3644fcc3a2b2749b4068030141afc7, type: 3}
-  defaultSpeed: 1.5
-  attackRate: 2
-  monkeyBallProvocDuration: 3
-  attackStateSpeedMultiplier: 1
-  attackDelay: 0.5
-  attackRange: 20
-  attackDamage: 1
-  monkeyBallDodgeReactionTime: 0.5
-  monkeyBallInvulnerabilityTime: 1
+  _defaultSpeed: 2
+  _attackRate: 2
+  _monkeyBallProvocDuration: 3
+  _attackStateSpeedMultiplier: 1.25
+  _attackDelay: 1
+  _attackRange: 1
+  _attackDamage: 1
+  _monkeyBallDodgeReactionTime: 0.5
+  _monkeyBallInvulnerabilityTime: 1
   _delayBeforeBackToDefaultState: 3
+  _allyNotifyRadius: 8
   _graphics: {fileID: 3196105207732227387}
   _detection: {fileID: 3196105207235364683}
   _placeholderDestination: {fileID: 891107891}
-  debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
+  _debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
   angle: 0
 --- !u!114 &7335009159249139243
@@ -292,10 +293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2caf98d607255b43b98d6eed478597c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AIBrain: {fileID: 3196105207163711238}
-  _event:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &3196105207235364683
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +352,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectableTargetsLayer:
     serializedVersion: 2
+    m_Bits: 3264
+  wall:
+    serializedVersion: 2
+    m_Bits: 2048
+  player:
+    serializedVersion: 2
     m_Bits: 1024
+  playerWeapon:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &3196105207732227387
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,7 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 5953828729676287935}
-  destroyDelay: 0.25
+  destroyDelay: 0
 --- !u!1 &5953828729676287935
 GameObject:
   m_ObjectHideFlags: 0

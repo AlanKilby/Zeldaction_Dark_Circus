@@ -6,11 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MonsterLove.StateMachine;
 using Debug = UnityEngine.Debug;
-using Unity.EditorCoroutines.Editor; 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
- 
+
 [Serializable]
 public class SpawnableEntity
 {
@@ -45,7 +41,7 @@ public class BossAIBrain : MonoBehaviour
     public static float sBossVulnerabilityDuration; 
 
     private StateMachine<States> _fsm;
-    private EditorCoroutine _editorCoroutine;
+
     private AIAnimation _aIAnimation;
     private byte activeSwtiches; 
 
