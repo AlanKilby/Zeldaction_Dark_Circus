@@ -32,6 +32,9 @@ public class PlayerMovement_Alan : MonoBehaviour
     public static Vector3 sPlayerPos = Vector3.zero; 
     public static GameObject sPlayer; // debug to simulate death call from AI 
 
+    [HideInInspector]
+    public bool isSlowed = false;
+
     void Start()
     {
         canThrow = true;
@@ -92,46 +95,69 @@ public class PlayerMovement_Alan : MonoBehaviour
 
 
         // Animations 
-        if(horizontalMove == 0 && verticalMove == 0 && canThrow == true)
+        if (Input.GetButton("PlayerAttack") && canThrow)
         {
-            playerAnim.ChangeAnimationState(playerAnim.PLAYER_IDLE_HAT);
+            if(horizontalMove > 0 && verticalMove == 0 && canThrow)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROWING_HAT_RIGHT);
+            }
+            else if(horizontalMove < 0 && verticalMove == 0 && canThrow)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROWING_HAT_LEFT);
+            }
+            else if(verticalMove > 0 && canThrow)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROWING_HAT_TOP);
+            }
+            else if(verticalMove < 0 && canThrow)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROWING_HAT_DOWN);
+            }
         }
-        else if(verticalMove < 0 && canThrow == true)
+        else
         {
-            playerAnim.ChangeAnimationState(playerAnim.PLAYER_DOWN_HAT);
+            if (horizontalMove == 0 && verticalMove == 0 && canThrow == true)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_IDLE_HAT);
+            }
+            else if (verticalMove < 0 && canThrow == true)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_DOWN_HAT);
+            }
+            else if (verticalMove > 0 && canThrow == true)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_TOP_HAT);
+            }
+            else if (horizontalMove > 0 && verticalMove == 0 && canThrow == true)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_RIGHT_HAT);
+            }
+            else if (horizontalMove < 0 && verticalMove == 0 && canThrow == true)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_LEFT_HAT);
+            } // NO HAT
+            else if (horizontalMove == 0 && verticalMove == 0 && canThrow == false)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_IDLE_NO_HAT);
+            }
+            else if (verticalMove > 0 && canThrow == false)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_TOP_NO_HAT);
+            }
+            else if (verticalMove < 0 && canThrow == false)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_DOWN_NO_HAT);
+            }
+            else if (horizontalMove > 0 && verticalMove == 0 && canThrow == false)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_RIGHT_NO_HAT);
+            }
+            else if (horizontalMove < 0 && verticalMove == 0 && canThrow == false)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_LEFT_NO_HAT);
+            }
         }
-        else if (verticalMove > 0 && canThrow == true)
-        {
-            playerAnim.ChangeAnimationState(playerAnim.PLAYER_TOP_HAT); 
-        }
-        else if (horizontalMove > 0 && verticalMove == 0 && canThrow == true)
-        {
-            playerAnim.ChangeAnimationState(playerAnim.PLAYER_RIGHT_HAT);
-        }
-        else if (horizontalMove < 0 && verticalMove == 0 && canThrow == true)
-        {
-            playerAnim.ChangeAnimationState(playerAnim.PLAYER_LEFT_HAT);
-        } // NO HAT
-        else if(horizontalMove == 0 && verticalMove == 0 && canThrow == false)
-        {
-            playerAnim.ChangeAnimationState(playerAnim.PLAYER_IDLE_NO_HAT);
-        }
-        else if (verticalMove > 0 && canThrow == false)
-        {
-            playerAnim.ChangeAnimationState(playerAnim.PLAYER_TOP_NO_HAT);
-        }
-        else if (verticalMove < 0 && canThrow == false)
-        {
-            playerAnim.ChangeAnimationState(playerAnim.PLAYER_DOWN_NO_HAT);
-        }
-        else if (horizontalMove > 0 && verticalMove == 0 && canThrow == false)
-        {
-            playerAnim.ChangeAnimationState(playerAnim.PLAYER_RIGHT_NO_HAT);
-        }
-        else if (horizontalMove < 0 && verticalMove == 0 && canThrow == false)
-        {
-            playerAnim.ChangeAnimationState(playerAnim.PLAYER_LEFT_NO_HAT);
-        } 
+        
     } 
 
     public void Attack(float throwTime)
@@ -139,5 +165,10 @@ public class PlayerMovement_Alan : MonoBehaviour
         boomerangInstance = Instantiate(boomerang, aim.transform.position, gameObject.transform.rotation);
         boomerangInstance.GetComponent<Boomerang>().comebackTimer = throwTime;
         canThrow = false;
-    }    
+    }
+    
+    public void AnimsThrowing()
+    {
+
+    }
 }
