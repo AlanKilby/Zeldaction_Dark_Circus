@@ -7,8 +7,11 @@ public class Boomerang : MonoBehaviour
    
     public float speed;
     [Range(1, 10)] public sbyte boomerangDamage = 1;  
-    float goingSpeed;
-    float comingSpeed;
+
+    [HideInInspector]
+    public float goingSpeed;
+    [HideInInspector]
+    public float comingSpeed;
 
     public Vector3 aimPos;
     public Transform playerPos;
@@ -239,6 +242,10 @@ public class Boomerang : MonoBehaviour
             }  
 
             other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
+
+            // Changement pour que la nervosité augmente, changement fait le 19 mai 2021
+            isComingBack = true;
+            comebackTimer = 0;
         }
 
         if (Mathf.Pow(2, other.gameObject.layer) == EnemyWeaponLayer) // fakir weapon
