@@ -128,7 +128,6 @@ namespace BEN.AI
         public float MonkeyBallDodgeDistance { get; private set; }
         
 #endregion
-
 #region Unity Callbacks
 
         private void Awake()
@@ -378,7 +377,6 @@ namespace BEN.AI
                     break;
                 case AIType.MonkeySurBall:
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection); 
-                    InvokeRepeating(nameof(MonkeyBallAttack), 0f, _attackRate); 
                     break;
                 case AIType.Mascotte:
                     _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
@@ -386,7 +384,7 @@ namespace BEN.AI
                 case AIType.Fakir:
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
                     _agent.speed = 0f;
-                    InvokeRepeating(nameof(FakirAttack), 0f, _attackRate); 
+                    // InvokeRepeating(nameof(FakirAttack), 0f, _attackRate); 
                     break; 
             } 
         } 
@@ -442,21 +440,12 @@ namespace BEN.AI
         private void FakeCAC()
         {
             _playerHP.DecreaseHp(_attackDamage); 
-        }
-
-        private void MonkeyBallAttack()
-        {
-            var reference = Instantiate(_monkeyBallProjectile, _graphics.transform.position, _detection.transform.rotation);
-            reference.transform.position = _graphics.transform.position;
-            Debug.Log("monkeyball projectile");
-        }
+        } 
 
         private void FakirAttack() // WARNING : Duplicate 
         {
-            var reference = Instantiate(_fakirProjectile, _graphics.transform.position, _detection.transform.rotation);
-            reference.transform.position = _graphics.transform.position;
-            reference.GetComponent<ParabolicFunction>().CasterTransform = _graphics.transform; 
-            Debug.Log("fakir projectile");
+            _fakirProjectile.GetComponent<ParabolicFunction>().CasterTransform = _graphics.transform; 
+            Debug.Log("fakir projectile"); 
         }
 
         // only called if monkey ball is dead 
@@ -483,7 +472,6 @@ namespace BEN.AI
             switch (type)
             {
                 case AIType.MonkeySurBall: 
-                    CancelInvoke(nameof(MonkeyBallAttack)); 
                     break;
                 case AIType.Fakir:
                     CancelInvoke(nameof(FakirAttack)); 

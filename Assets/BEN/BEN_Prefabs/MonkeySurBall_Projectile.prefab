@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2745454191333491140}
   - component: {fileID: 2745454191333491143}
   - component: {fileID: 1515028272809177194}
+  - component: {fileID: 1324236530561278231}
   m_Layer: 8
   m_Name: MonkeySurBall_Projectile
   m_TagString: Untagged
@@ -147,11 +148,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e537c1dd034477479c656e3d57213cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 5
+  speed: 5
   curvature: 10
+  useAsParabolic: 1
+  _curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3.401604
+      outSlope: 3.401604
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.101402536
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: -0.02929759
+      outSlope: -0.02929759
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -3.514545
+      outSlope: -3.514545
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.0981437
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _wallLayer:
     serializedVersion: 2
     m_Bits: 2048
   _playerLayer:
     serializedVersion: 2
     m_Bits: 1024
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+--- !u!114 &1324236530561278231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745454191333491136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048702b25dcce0740b6e53ef40316b03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _angularSpeed: 20

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimEventInstantiateObject : MonoBehaviour
@@ -10,6 +8,6 @@ public class AnimEventInstantiateObject : MonoBehaviour
 
     public void InstantiateObject(GameObject obj) 
     {
-        Instantiate(objToInstantiate, originPositionReference.position, originRotationReference.rotation);   
-    }
+        Instantiate(objToInstantiate, originPositionReference.position, originRotationReference.rotation);
+    } 
 }

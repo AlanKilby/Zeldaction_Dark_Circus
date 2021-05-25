@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 3196105207163711259}
-  angle: 1.6038579
-  myModifiedAngle: 0
+  EulerAnglesY: 0
+  myModifiedEulerAnglesY: 0
   angleIndex: 0
 --- !u!1 &692901491524727519
 GameObject:
@@ -71,11 +71,41 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692901491524727519}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 1, z: -8.52}
+  m_LocalPosition: {x: -11.9, y: 1, z: -0.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7049274541335308754}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2757909674479817790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2277243042852891183}
+  m_Layer: 0
+  m_Name: ProjectilSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2277243042852891183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2757909674479817790}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 7.642078, y: -9.620712, z: -3.343626}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3196105207235364682}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3196105207163711262
 GameObject:
@@ -236,25 +266,25 @@ MonoBehaviour:
   isMonkeyBall: 0
   isFakir: 1
   isCaster: 1
+  _fakirProjectile: {fileID: 54850630309990138, guid: 3ed5b854403f72b46aff7ea42807686f, type: 3}
   _monkeyBallProjectile: {fileID: 2745454191333491136, guid: 74380e312f9f8dc47a82ed86733489e5, type: 3}
-  _fakirProjectile: {fileID: 554421524130511497, guid: 6b3644fcc3a2b2749b4068030141afc7, type: 3}
   _defaultSpeed: 2
   _attackRate: 2
-  _monkeyBallProvocDuration: 3
   _attackStateSpeedMultiplier: 1.25
   _attackDelay: 1
   _attackRange: 1
   _attackDamage: 1
-  _monkeyBallDodgeReactionTime: 0.5
-  _monkeyBallInvulnerabilityTime: 1
   _delayBeforeBackToDefaultState: 3
   _allyNotifyRadius: 8
+  _monkeyBallProvocDuration: 3
+  _monkeyBallDodgeReactionTime: 0.5
+  _monkeyBallDodgeDistance: 5
   _graphics: {fileID: 3196105207732227387}
   _detection: {fileID: 3196105207235364683}
   _placeholderDestination: {fileID: 891107891}
+  _ballGraphics: {fileID: 0}
   _debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
-  angle: 0
 --- !u!114 &7335009159249139243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,7 +351,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2277243042852891183}
   m_Father: {fileID: 3196105207163711261}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -362,6 +393,7 @@ MonoBehaviour:
   playerWeapon:
     serializedVersion: 2
     m_Bits: 128
+  BearerType: 0
 --- !u!1 &3196105207732227387
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,6 +407,7 @@ GameObject:
   - component: {fileID: 3196105207732227367}
   - component: {fileID: 3196105207732227385}
   - component: {fileID: 1114475966}
+  - component: {fileID: 1368377169}
   m_Layer: 0
   m_Name: Fakir_Graphics
   m_TagString: Untagged
@@ -493,6 +526,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 5953828729676287935}
   destroyDelay: 0
+--- !u!114 &1368377169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3196105207732227387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda50a2dc7195c74ca467102b0170f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objToInstantiate: {fileID: 0}
+  originPositionReference: {fileID: 0}
+  originRotationReference: {fileID: 0}
 --- !u!1 &5953828729676287935
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +556,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5953828729676287934
 Transform:
   m_ObjectHideFlags: 0
