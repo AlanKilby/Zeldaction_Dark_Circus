@@ -384,7 +384,7 @@ namespace BEN.AI
                 case AIType.Fakir:
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
                     _agent.speed = 0f;
-                    // InvokeRepeating(nameof(FakirAttack), 0f, _attackRate); 
+                    InvokeRepeating(nameof(FakirAttack), 0f, _attackRate);  
                     break; 
             } 
         } 
@@ -442,9 +442,9 @@ namespace BEN.AI
             _playerHP.DecreaseHp(_attackDamage); 
         } 
 
-        private void FakirAttack() // WARNING : Duplicate 
+        private void FakirAttack() 
         {
-            _fakirProjectile.GetComponent<ParabolicFunction>().CasterTransform = _graphics.transform; 
+            _fakirProjectile.GetComponent<ParabolicFunction>().CasterTransform = _graphics.transform;
             Debug.Log("fakir projectile"); 
         }
 

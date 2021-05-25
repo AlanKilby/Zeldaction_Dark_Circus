@@ -18,6 +18,7 @@ namespace BEN.Math
         private float _curvature;
         private float timer;
         private float _speedModifMultiplier = 1f;
+        [FormerlySerializedAs("isCimeterre")] public bool destroyOnWallCollision;
 
         public LayerMask
             _wallLayer,
@@ -32,7 +33,7 @@ namespace BEN.Math
 
         private void Start()
         {
-            Destroy(gameObject, 5f);
+            Destroy(gameObject, 10f); 
             // frameDelta = frameDeltaInitialValue;
             Direction = (PlayerMovement_Alan.sPlayerPos - transform.position).normalized;
             distance = Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos);
@@ -61,8 +62,9 @@ namespace BEN.Math
                 Destroy(gameObject);
                 other.GetComponent<Health>().DecreaseHp(1); // super temporary
             }
-            else if (Mathf.Pow(2f, other.gameObject.layer) == _wallLayer)  
+            else if (Mathf.Pow(2f, other.gameObject.layer) == _wallLayer)
             {
+                if (!destroyOnWallCollision) return;   
                 Destroy(gameObject); 
             }
             else if (Mathf.Pow(2f, other.gameObject.layer) == _enemyLayer && _invert) 
