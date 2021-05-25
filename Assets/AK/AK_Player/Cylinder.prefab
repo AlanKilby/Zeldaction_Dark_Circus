@@ -111,10 +111,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f51f7e567b1367f449a0c656fe10de55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 0
   speed: 4
+  boomerangDamage: 1
+  goingSpeed: 0
+  comingSpeed: 0
   aimPos: {x: 0, y: 0, z: 0}
   playerPos: {fileID: 0}
+  goingSpeedC:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  comingSpeedC:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  mirrorLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  WallLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  EnemyWeaponLayer:
+    serializedVersion: 2
+    m_Bits: 0
   reductionCoef: 0.5
   accelerationCoef: 0.8
   comebackTimer: 2
