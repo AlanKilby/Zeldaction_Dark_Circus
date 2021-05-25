@@ -17,20 +17,32 @@ public class AK_DuckScript : MonoBehaviour
 
     private BoxCollider duckCollider;
 
+    //Ajout Ulric
+    Animator animator;
+    public string currentState;
+
+    public string DUCK_ALIVE = "idle";
+    public string DUCK_DEAD = "hit";
+    //
+
     private void Start()
     {
+        animator = GetComponent<Animator>();
         duckCollider = gameObject.GetComponent<BoxCollider>();
+        ChangeAnimationState(DUCK_ALIVE);
     }
     private void Update()
     {
         if (wasShot)
         {
-            duckSpriteRenderer.sprite = deadDuck;
+            //duckSpriteRenderer.sprite = deadDuck;
+            ChangeAnimationState(DUCK_DEAD);
             duckCollider.enabled = false;
         }
         else
         {
-            duckSpriteRenderer.sprite = symbol;
+            //duckSpriteRenderer.sprite = symbol;
+            ChangeAnimationState(DUCK_ALIVE);
             duckCollider.enabled = true;
         }
     }
@@ -60,5 +72,13 @@ public class AK_DuckScript : MonoBehaviour
                 puzzleManager.DuckBackUp();
             }
         }
+    }
+
+    public void ChangeAnimationState(string newState)
+    {
+        if (currentState == newState || animator.GetCurrentAnimatorStateInfo(0).IsName("playerFakeDeath")) return;
+
+        animator.Play(newState);
+        currentState = newState;
     }
 }
