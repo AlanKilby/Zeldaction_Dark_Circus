@@ -8,11 +8,10 @@ public class AK_CottonCandy : MonoBehaviour
         
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == hatLayer)
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerWeapon"))
         {
             Boomerang otherBoomerang = other.transform.GetComponent<Boomerang>();
-            otherBoomerang.goingSpeed = 0;
-            otherBoomerang.comingSpeed = 0;
+            otherBoomerang.isStunned = true;
             otherBoomerang.comebackTimer += 1;
         } 
 
