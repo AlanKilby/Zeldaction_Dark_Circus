@@ -1,5 +1,25 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1922613922103152462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2648203343848301015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e9b89112307eb247b4a844d25d80c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDropRate: 5
+  dropRateIncrease: 5
+  increaseOT: 1
+  time: 1
+  potion: {fileID: 9022016546524069892, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+  potionDropRate: 85
+  heart: {fileID: 0}
+  heartDropRate: 0
 --- !u!114 &4595727363683106081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,10 +32,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1726f940e5c261441966dd98d67b4a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bigPotionQuantity: 0
-  smallPotionQuantity: 0
-  smallPotionHealthValue: 1
-  bigPotionHealthValue: 3
+  potionQuantity: 0
+  potionHealthValue: 3
 --- !u!114 &7947157173063223367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +84,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -1835920499
       objectReference: {fileID: 0}
+    - target: {fileID: 5539784748974113974, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: db5323325d733ac45ac15c2769b82573, type: 2}
     - target: {fileID: 5539784748974113976, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9961947
