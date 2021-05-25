@@ -22,9 +22,9 @@ public class PlayAnimClipOnPhysicsEvent : MonoBehaviour
         foreach (var t in _behaviourToStopOnPhysicsEvent)
         {
             t.enabled = false;
-        }
+        } 
 
         if (!_setNewRotationOnPhysicsEvent) return; 
-        _target.transform.rotation = Quaternion.Euler(_newRotation.x, _newRotation.y, _newRotation.z);
+        _target.transform.rotation = Quaternion.Euler(_newRotation.x, _newRotation.y, _newRotation.z); 
     }
 }

@@ -31,7 +31,7 @@ namespace BEN.Math
         private float _duration;
         private int YDirection; 
 
-        private void Start()
+        private void Start() 
         {
             Destroy(gameObject, 10f); 
             // frameDelta = frameDeltaInitialValue;

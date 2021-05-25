@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 54850630309990137}
   - component: {fileID: 3133341282838377494}
   - component: {fileID: 8103596445750077416}
-  - component: {fileID: 7274878020115447835}
+  - component: {fileID: 523927403}
   - component: {fileID: 4335722142291467695}
   - component: {fileID: 8370293836718815370}
+  - component: {fileID: 561931164236984155}
   m_Layer: 8
   m_Name: Fakir_Projectile
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54850630309990138}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.67, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6384267256037337037}
@@ -123,8 +124,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &7274878020115447835
-CapsuleCollider:
+--- !u!65 &523927403
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -133,9 +134,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.34375
-  m_Height: 1.875
-  m_Direction: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6875, y: 1.875, z: 0.05}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4335722142291467695
 MonoBehaviour:
@@ -209,6 +209,29 @@ MonoBehaviour:
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &561931164236984155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54850630309990138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2464097e23555ba4a92af379da8ceab6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _callerLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  _clipToPlay: {fileID: 7400000, guid: 075f38c759c473540adfe7aefd7a50ba, type: 2}
+  _animator: {fileID: 3133341282838377494}
+  _behaviourToStopOnPhysicsEvent:
+  - {fileID: 8370293836718815370}
+  - {fileID: 4335722142291467695}
+  _setNewRotationOnPhysicsEvent: 1
+  _newRotation: {x: 0, y: 0, z: 60}
+  _target: {fileID: 54850630309990138}
 --- !u!1 &2335545931873026344
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +258,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2335545931873026344}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.068, y: 1.013, z: 0}
+  m_LocalPosition: {x: -0.068, y: 0.941, z: -0.069}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 54850630309990136}
@@ -252,8 +275,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.022105895
+  m_Center: {x: 0, y: 0, z: 0.0778941}
 --- !u!114 &970941583774800652
 MonoBehaviour:
   m_ObjectHideFlags: 0
