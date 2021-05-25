@@ -7,11 +7,12 @@ public class CHM_NPCDialogue : MonoBehaviour
     //Le dialogue lié à ce bouton particulier (lui-même lié à un NPC)
     public CHM_Dialogue dialogue;
 
+    //Ajout Ulric
+    public CHM_DialogueManager ownDialogueManager;
+
     public void TriggerDialogue()
     {
-        FindObjectOfType<CHM_DialogueManager>().StartDialogue(dialogue);
-
-
+        ownDialogueManager.StartDialogue(dialogue);
     }
 
 }
