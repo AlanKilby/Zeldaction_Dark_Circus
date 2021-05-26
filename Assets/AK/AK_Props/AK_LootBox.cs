@@ -5,14 +5,15 @@ using UnityEngine;
 public class AK_LootBox : MonoBehaviour
 {
     Collider chestCollider;
-    MeshRenderer cubeMesh;
 
     [HideInInspector]
     public AK_DropRateManager dropRateManager;
+
+    public Animator destructionAnim;
+    public ParticleSystem destructionParticles;
     private void Awake()
     {
         chestCollider = GetComponent<Collider>();
-        cubeMesh = GetComponent<MeshRenderer>();
         dropRateManager = GameObject.FindGameObjectWithTag("Player").GetComponent<AK_DropRateManager>();
     }
 
@@ -21,7 +22,8 @@ public class AK_LootBox : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Player") || other.gameObject.layer == LayerMask.NameToLayer("PlayerWeapon"))
         {
             chestCollider.enabled = false;
-            cubeMesh.enabled = false;
+            destructionAnim.Play("crate blowup");
+            destructionParticles.Play();
             dropRateManager.ObjectDrop();
         }
     }

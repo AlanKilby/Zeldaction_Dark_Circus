@@ -4,9 +4,12 @@ using BEN.Math;
 
 public class Boomerang : MonoBehaviour
 {
-   
+    [HideInInspector]
     public float speed;
+
     [Range(1, 10)] public sbyte boomerangDamage = 1;
+
+
 
     public Vector3 aimPos;
     public Transform playerPos;
@@ -18,6 +21,7 @@ public class Boomerang : MonoBehaviour
    
     private Rigidbody rb;
 
+    [HideInInspector]
     public bool isStunned;
 
     bool isComingBack;
@@ -25,14 +29,6 @@ public class Boomerang : MonoBehaviour
     bool holder = true;
 
     bool hasWand;
-
-    [Tooltip("Percentage of speed reduction after throw.")]
-    [Range(0f,1f)]
-    public float reductionCoef;
-
-    [Tooltip("Percentage of speed augmentation when Hat is coming back.")]
-    [Range(0f, 1f)]
-    public float accelerationCoef;
 
     public float comebackTimer;
     float comebackTimerHolder;
@@ -137,6 +133,7 @@ public class Boomerang : MonoBehaviour
             Debug.Log("Collision with Wall");
 
             isComingBack = true;
+            comebackTimer = 0;
         }
 
         if (Mathf.Pow(2, other.gameObject.layer) == EnemyLayer) 
@@ -146,7 +143,8 @@ public class Boomerang : MonoBehaviour
 
             if (enemy.Type == AIType.Mascotte && Boomerang.s_SeenByEnemy) // change this so you can kill from behind, not only on the way back 
             {
-                isComingBack = true;  
+                isComingBack = true;
+                comebackTimer = 0;
                 return;
             }  
 
