@@ -74,7 +74,7 @@ MonoBehaviour:
   m_CameraRadius: 0.1
   m_Strategy: 0
   m_MaximumEffort: 4
-  m_SmoothingTime: 0.8
+  m_SmoothingTime: 0
   m_Damping: 0.2
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Dutch: 0
   m_ZoomScale: 1
   m_FollowAttachment: 0.9
-  m_LookAtAttachment: 0.5
+  m_LookAtAttachment: 0.3
 --- !u!114 &2006618890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   targetObject: {fileID: 0}
   Wall:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
 --- !u!1001 &2394359578165887623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -178,7 +178,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090278, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_Name
-      value: UD_PlayerVCamera Variant
+      value: UD_PlayerVCamera
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_RootOrder
@@ -186,35 +186,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4.46
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.701933
+      value: 12.33
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8
+      value: -13.99
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.96502036
+      value: 0.92387956
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.26217493
+      value: 0.38268346
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000001660451
+      value: -0.000000022481217
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000004511083
+      value: 0.000000009312026
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 35
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -231,6 +231,30 @@ PrefabInstance:
     - target: {fileID: 9034283239499090297, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LookAt
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034283239718327872, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
+      propertyPath: m_DeadZoneWidth
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034283239718327872, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
+      propertyPath: m_DeadZoneHeight
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034283239718327873, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
+      propertyPath: m_XDamping
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034283239718327873, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
+      propertyPath: m_YDamping
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034283239718327873, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
+      propertyPath: m_ZDamping
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034283239718327873, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
+      propertyPath: m_BindingMode
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239718327873, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_FollowOffset.y
