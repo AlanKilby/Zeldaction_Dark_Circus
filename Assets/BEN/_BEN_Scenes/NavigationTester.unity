@@ -634,6 +634,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fakir_Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 5953828729676287935, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7467046443556585310, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -2533,7 +2537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5953828729676287935, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7467046443556585310, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
       propertyPath: serializationData.Prefab
@@ -4931,11 +4935,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000028720944
+      value: 0.000000028720944
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00000000795524
+      value: -0.00000000795524
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6351,6 +6355,139 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.SerializationNodes.Array.size
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"_soundsDictionary","add_keys":{"$id":0,"$type":"System.Object[],
+        mscorlib","$rlength":5,"$rcontent":[{"$id":1,"$type":"SoundType, Assembly-CSharp",0},{"$id":2,"$type":"SoundType,
+        Assembly-CSharp",0},{"$id":3,"$type":"SoundType, Assembly-CSharp",1},{"$id":4,"$type":"SoundType,
+        Assembly-CSharp",0},{"$id":5,"$type":"SoundType, Assembly-CSharp",1}]},"remove_keys":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"_soundsDictionary.{0es}","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[Sound,
+        Assembly-CSharp]], mscorlib","$rlength":1,"$rcontent":[{"$id":1,"$type":"Sound,
+        Assembly-CSharp","name":"Attack","clip":$eref:0}]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[2]
+      value: '"path":"_soundsDictionary.{0es}.[0]","value":{"$id":0,"$type":"Sound,
+        Assembly-CSharp","name":"Attack","clip":$eref:0}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[3]
+      value: '"path":"_soundsDictionary.{0es}.[0].clip","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[4]
+      value: '"path":"_soundsDictionary.{0es}.[0].name","value":{"$id":0,"$type":"System.String,
+        mscorlib","Attack"}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[5]
+      value: '"path":"_soundsDictionary.{1es}","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[Sound,
+        Assembly-CSharp]], mscorlib","$rlength":3,"$rcontent":[{"$id":1,"$type":"Sound,
+        Assembly-CSharp","name":"Hurt1","clip":$eref:1},{"$id":2,"$type":"Sound,
+        Assembly-CSharp","name":"Hurt2","clip":$eref:2},{"$id":3,"$type":"Sound,
+        Assembly-CSharp","name":"Hurt3","clip":$eref:3}]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[6]
+      value: '"path":"_soundsDictionary.{1es}.[0]","value":{"$id":0,"$type":"Sound,
+        Assembly-CSharp","name":"Hurt1","clip":$eref:1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[7]
+      value: '"path":"_soundsDictionary.{1es}.[0].clip","value":$eref:1'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[8]
+      value: '"path":"_soundsDictionary.{1es}.[0].name","value":{"$id":0,"$type":"System.String,
+        mscorlib","Hurt1"}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[9]
+      value: '"path":"_soundsDictionary.{1es}.[1]","value":{"$id":0,"$type":"Sound,
+        Assembly-CSharp","name":"Hurt2","clip":$eref:2}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.ReferencedUnityObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[10]
+      value: '"path":"_soundsDictionary.{1es}.[1].clip","value":$eref:2'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[11]
+      value: '"path":"_soundsDictionary.{1es}.[1].name","value":{"$id":0,"$type":"System.String,
+        mscorlib","Hurt2"}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[12]
+      value: '"path":"_soundsDictionary.{1es}.[2]","value":{"$id":0,"$type":"Sound,
+        Assembly-CSharp","name":"Hurt3","clip":$eref:3}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[13]
+      value: '"path":"_soundsDictionary.{1es}.[2].clip","value":$eref:3'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[14]
+      value: '"path":"_soundsDictionary.{1es}.[2].name","value":{"$id":0,"$type":"System.String,
+        mscorlib","Hurt3"}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.SerializationNodes.Array.data[5].Data
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.SerializationNodes.Array.data[7].Data
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.SerializationNodes.Array.data[7].Name
+      value: $k
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.SerializationNodes.Array.data[6].Entry
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.SerializationNodes.Array.data[7].Entry
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 35d225dba65a51f4c90633c358a983e6, type: 3}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: e0055548c6983bd449a471f856761db9, type: 3}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: dc69ef6ee1585cb459a96afe7de0d720, type: 3}
+    - target: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: b1bd7141812284942900dcd88dd8f7e1, type: 3}
     - target: {fileID: 7618909233720531569, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -6399,8 +6536,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 7618909233720531582, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 7618909234090356131, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: m_Size.x
+      value: 2.0625
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618909234090356131, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: m_Size.y
+      value: 2.65625
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618909234090356131, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
+      propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
