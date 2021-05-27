@@ -497,24 +497,32 @@ namespace BEN.AI
 
         IEnumerator Defend_Enter()
         {
-            yield return new WaitForSeconds(_monkeyBallDodgeReactionTime);
-            Debug.Log("defend_enter");
-
             _agent.speed = 0f;
-            _checkSurroundings.CanDodgeProjectile = _monkeyBallCollider.enabled = _ballCollider.enabled = false;
-            transform.position = _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
+
+            switch (Type)
+            {
+                case AIType.MonkeySurBall:
+                    yield return new WaitForSeconds(_monkeyBallDodgeReactionTime);
+                    Debug.Log("defend_enter");
+                    _checkSurroundings.CanDodgeProjectile = _monkeyBallCollider.enabled = _ballCollider.enabled = false;
+                    transform.position = _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
             
-            yield return new WaitForSeconds(0.1f);  
-            _monkeyBallCollider.enabled = true;
-            _ballCollider.enabled = true;
-            _aIAnimation.PlayAnimation(AnimState.Miss, AnimDirection.None); 
-            
-            // MISS anim 
-            
-            yield return new WaitForSeconds(_monkeyBallProvocDuration); 
-            OnRequireStateChange(States.Attack, StateTransition.Safe); 
-            // risky if the player has gone outside of detection collider.. should I use a HFSM instead ? 
-        } 
+                    yield return new WaitForSeconds(0.1f);  
+                    _monkeyBallCollider.enabled = true;
+                    _ballCollider.enabled = true;
+                    _aIAnimation.PlayAnimation(AnimState.Miss, AnimDirection.None); 
+                    
+                    yield return new WaitForSeconds(_monkeyBallProvocDuration); 
+                    OnRequireStateChange(States.Attack, StateTransition.Safe); 
+                    break;
+                case AIType.Mascotte:
+                    _aIAnimation.PlayAnimation(AnimState.Hit, _animDirection);
+                    
+                    yield return new WaitForSeconds(1f);  
+                    OnRequireStateChange(States.Attack, StateTransition.Safe); // would have been better to use HFSM 
+                    break;
+            }
+        }   
 
         void Defend_Exit()  
         { 

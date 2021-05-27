@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using BEN.AI;
-using BEN.Math; 
+using BEN.Math;
+using MonsterLove.StateMachine;
 
 public class Boomerang : MonoBehaviour
 {
@@ -225,7 +226,7 @@ public class Boomerang : MonoBehaviour
             Debug.Log("Collision with Wall");
 
             isComingBack = true;
-        }
+        } 
 
         if (Mathf.Pow(2, other.gameObject.layer) == EnemyLayer) 
         { 
@@ -234,7 +235,8 @@ public class Boomerang : MonoBehaviour
 
             if (enemy.Type == AIType.Mascotte && Boomerang.s_SeenByEnemy) // change this so you can kill from behind, not only on the way back 
             {
-                isComingBack = true;  
+                isComingBack = true;
+                enemy.OnRequireStateChange(States.Defend, StateTransition.Safe); 
                 return;
             }  
 
