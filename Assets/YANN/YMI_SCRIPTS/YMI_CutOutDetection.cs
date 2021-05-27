@@ -37,13 +37,13 @@ public class YMI_CutOutDetection : MonoBehaviour
         {
             Material[] materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
 
-            for (int n = 0; n < materials.Length; n++)
-            {
+            //for (int n = 0; n < materials.Length; n++)
+            //{
                 
-                materials[n].SetVector("_CutoutPos", cutoutPos);
-                materials[n].SetFloat("_CutoutSize", 0.5f);
-                materials[n].SetFloat("_CutoutSmoothness", 0.3f);
-            }
+               // materials[n].SetVector("_CutoutPos", cutoutPos);
+               // materials[n].SetFloat("_CutoutSize", 0.1f);
+               // materials[n].SetFloat("_CutoutSmoothness", 0.05f);
+            //}
         }
     }
 }

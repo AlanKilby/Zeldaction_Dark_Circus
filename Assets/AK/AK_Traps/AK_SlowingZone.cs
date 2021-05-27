@@ -17,9 +17,11 @@ public class AK_SlowingZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Mathf.Pow(2, other.gameObject.layer) == playerLayer)
+        if (Mathf.Pow(2, other.gameObject.layer) == playerLayer && !other.gameObject.GetComponent<PlayerMovement_Alan>().isSlowed)
         {
             oldSpeed = other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeed;
+
+            other.gameObject.GetComponent<PlayerMovement_Alan>().isSlowed = true;
 
             other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeed *= slowSpeedMultiplier;
         }
@@ -35,6 +37,8 @@ public class AK_SlowingZone : MonoBehaviour
         if (Mathf.Pow(2, other.gameObject.layer) == playerLayer) 
         {
             other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeed = oldSpeed;
+
+            other.gameObject.GetComponent<PlayerMovement_Alan>().isSlowed = false;
         }
         else if (Mathf.Pow(2, other.gameObject.layer) == enemyLayer)
         {

@@ -22,8 +22,12 @@ public class PlayerAnimations : MonoBehaviour
     public string PLAYER_RIGHT_NO_HAT = "WalkingrightNh";
     public string PLAYER_TOP_NO_HAT = "WalkingtopNh";
 
-    public string PLAYER_THROWING_HAT = "throwinghat";
-    public string PLAYER_DEAD = "playerFakeDeath";  
+    public string PLAYER_THROWING_HAT_TOP = "hat charge top";
+    public string PLAYER_THROWING_HAT_DOWN = "hat charge bot";
+    public string PLAYER_THROWING_HAT_RIGHT = "hat charge right";
+    public string PLAYER_THROWING_HAT_LEFT = "hat charge left";
+    public string PLAYER_DEAD = "death";
+    
 
     [Space, SerializeField] private Health _playerHp;
 

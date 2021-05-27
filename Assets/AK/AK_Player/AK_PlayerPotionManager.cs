@@ -5,14 +5,11 @@ using UnityEngine;
 public class AK_PlayerPotionManager : MonoBehaviour
 {
 
-    public int bigPotionQuantity;
-    public int smallPotionQuantity;
+    public int potionQuantity;
 
-    public int smallPotionHealthValue;
-    public int bigPotionHealthValue;
+    public int potionHealthValue;
 
-    string smallPotion = "smallPotion";
-    string bigPotion = "bigPotion";
+    string potion = "potion";
 
     Health playerHealth;
 
@@ -23,36 +20,25 @@ public class AK_PlayerPotionManager : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetButtonDown("SmallPotion") && smallPotionQuantity > 0)
+        if (Input.GetButtonDown("Potion") && potionQuantity > 0)
         {
-            UsePotion(smallPotion);
+            UsePotion(potion);
         }
-        else if (Input.GetButtonDown("BigPotion") && smallPotionQuantity > 0)
+       
+        else if (Input.GetButtonDown("Potion") && potionQuantity <= 0)
         {
-            UsePotion(smallPotion);
+            Debug.Log("You've got no potions left.");
         }
-        else if (Input.GetButtonDown("SmallPotion") && smallPotionQuantity <= 0)
-        {
-            Debug.Log("You've got no small potions left.");
-        }
-        else if (Input.GetButtonDown("BigPotion") && bigPotionQuantity <= 0)
-        {
-            Debug.Log("You've got no big potions left.");
-        }
+        
 
     }
 
     public void UsePotion(string potionType)
     {
-        if(potionType == smallPotion)
-        {
-            smallPotionQuantity--;
-            playerHealth.CurrentValue += (sbyte)smallPotionHealthValue;
-        }
-        else if(potionType == bigPotion)
-        {
-            bigPotionQuantity--;
-            playerHealth.CurrentValue += (sbyte)bigPotionHealthValue;
-        }
+        
+        potionQuantity--;
+        playerHealth.CurrentValue += (sbyte)potionHealthValue;
+        
+        
     }
 }
