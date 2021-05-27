@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 7725771847202023904}
-  angle: 1.6038579
-  myModifiedAngle: 0
+  EulerAnglesY: 0
+  myModifiedEulerAnglesY: 0
   angleIndex: 0
 --- !u!1 &3982106213023558240
 GameObject:
@@ -487,10 +487,15 @@ MonoBehaviour:
   _allyNotifyRadius: 8
   _monkeyBallProvocDuration: 3
   _monkeyBallDodgeReactionTime: 0.5
-  _monkeyBallInvulnerabilityTime: 1
+  _monkeyBallDodgeDistance: 5
   _graphics: {fileID: 7725771846700993472}
   _detection: {fileID: 7725771847332921776}
   _placeholderDestination: {fileID: 1245166779}
+  _ballGraphics: {fileID: 0}
+  _componentsToDeactivateOnDeath:
+  - {fileID: 7725771847202023933}
+  - {fileID: 7725771847202023908}
+  - {fileID: 7725771847332921778}
   _debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
 --- !u!114 &7725771847202023908
@@ -603,3 +608,4 @@ MonoBehaviour:
   playerWeapon:
     serializedVersion: 2
     m_Bits: 128
+  BearerType: 0
