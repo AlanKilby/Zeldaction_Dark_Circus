@@ -1,16 +1,23 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 using Sirenix.OdinInspector;
 
-public enum SoundType { Attack, Hurt, Death }
+public enum SoundType { Attack, Hurt, Defend, Death } 
 
+[RequireComponent(typeof(AudioSource))]
 public class AnimEventPlaySound : SerializedMonoBehaviour
 {
-    [SerializeField] AudioSource _audioSource;
+    private AudioSource _audioSource;
     public Dictionary<SoundType, List<Sound>> _soundsDictionary = new Dictionary<SoundType, List<Sound>>();
 
-     public void PlaySound(SoundType type) 
+    private void Start()
+    {
+        _audioSource = GetComponent<AudioSource>(); 
+    }
+
+    public void PlaySound(SoundType type) 
      {
          _audioSource.PlayOneShot(_soundsDictionary[type][0].clip);  
      }
