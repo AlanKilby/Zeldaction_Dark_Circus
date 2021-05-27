@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
       propertyPath: speed
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
       propertyPath: reductionCoef
@@ -66,6 +66,70 @@ PrefabInstance:
     - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
       propertyPath: accelerationCoef
       value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: goingSpeedC.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: goingSpeedC.m_Curve.Array.data[0].value
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: goingSpeedC.m_Curve.Array.data[1].value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: comingSpeedC.m_Curve.Array.data[0].value
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: comingSpeedC.m_Curve.Array.data[1].value
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: goingSpeedC.m_Curve.Array.data[0].inSlope
+      value: 6.4184356
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: goingSpeedC.m_Curve.Array.data[1].inSlope
+      value: -36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: comingSpeedC.m_Curve.Array.data[0].inSlope
+      value: 5.8333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: comingSpeedC.m_Curve.Array.data[1].inSlope
+      value: 5.8333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: goingSpeedC.m_Curve.Array.data[0].outSlope
+      value: 6.4184356
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: goingSpeedC.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: goingSpeedC.m_Curve.Array.data[1].outSlope
+      value: -36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: comingSpeedC.m_Curve.Array.data[0].outSlope
+      value: 5.8333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: comingSpeedC.m_Curve.Array.data[1].outSlope
+      value: 5.8333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: goingSpeedC.m_Curve.Array.data[0].outWeight
+      value: 0.06607929
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701310926929972263, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
+      propertyPath: goingSpeedC.m_Curve.Array.data[1].tangentMode
+      value: 34
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d6bdac00bad0484fb0758293c17fd2b, type: 3}
