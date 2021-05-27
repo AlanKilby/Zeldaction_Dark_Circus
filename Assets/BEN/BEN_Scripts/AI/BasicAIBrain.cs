@@ -9,7 +9,6 @@ using UnityEditor;
 #endif
 using BEN.Animation;
 using BEN.Math;
-using Random = System.Random;
 
 
 /* 
@@ -65,10 +64,10 @@ namespace BEN.AI
         [SerializeField, Range(0.5f, 5f), Tooltip("Wait time between each attack")] private float _attackRate = 2f;
         [SerializeField, Tooltip("DefaultSpeed increase when rushing toward the player. 1 = no increase"), Range(1f, 3f)] private float _attackStateSpeedMultiplier = 1.25f;
         [SerializeField, Tooltip("Delay from Default to Attack State when player is detected"), Range(0f, 5f)] private float _attackDelay = 1f; 
-        [SerializeField, Range(1f, 30f)] private float _attackRange = 1f;
+        [SerializeField, Range(1f, 30f)] private float _attackRange = 1f; 
         [SerializeField, Range(1, 5)] private sbyte _attackDamage = 1;
-        [SerializeField, Range(0f, 5f)] private float _delayBeforeBackToDefaultState = 3f;
-        [SerializeField, Range(1f, 20f)] private float _allyNotifyRadius = 8f; 
+        [SerializeField, Range(0f, 5f), Tooltip("Delay from Attack to Default State when player is not detected anymore")] private float _delayBeforeBackToDefaultState = 3f;
+        [SerializeField, Range(1f, 20f), Tooltip("Radius of ally notification when player is detected. Notified allies start chasing the player too")] private float _allyNotifyRadius = 8f; 
         
         [Header("Specific")]
         [Space, SerializeField, ConditionalShow("isMonkeyBall"), Tooltip("Delay before jumping back to ball again")] private float _monkeyBallProvocDuration = 3f;
@@ -80,13 +79,14 @@ namespace BEN.AI
         [SerializeField] private GameObject _detection;
         [SerializeField] private PlaceholderDestination _placeholderDestination;
         [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _ballGraphics;
+        [SerializeField] private Behaviour[] _componentsToDeactivateOnDeath; 
 
         [Header("-- DEBUG --")]
         [SerializeField] private EditorDebuggerSO _debugger;
         [SerializeField] private bool refresh;
         private bool wasMonkeyBall; 
         
-#endregion
+#endregion 
 
 #region Public Variables
         public Action<States, StateTransition> OnRequireStateChange;
@@ -129,7 +129,6 @@ namespace BEN.AI
         public float MonkeyBallDodgeDistance { get; private set; }
         
 #endregion
-
 #region Unity Callbacks
 
         private void Awake()
@@ -260,7 +259,6 @@ namespace BEN.AI
         }
         
         // MOVE ALL THIS TO AIANIMATION ===> WARNING : duplicate 
-
         private void CheckAnimDirection()
         {
             if (Type == AIType.Fakir && !_canPatrol) return; // modify is fakir needs repositionning 
@@ -292,8 +290,7 @@ namespace BEN.AI
         {
             yield return new WaitForSeconds(1.5f);
             _graphics.transform.localRotation = Quaternion.identity;
-        }
-
+        } 
         // <===
 
         #region FSM
@@ -379,7 +376,6 @@ namespace BEN.AI
                     break;
                 case AIType.MonkeySurBall:
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection); 
-                    InvokeRepeating(nameof(MonkeyBallAttack), 0f, _attackRate); 
                     break;
                 case AIType.Mascotte:
                     _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
@@ -387,7 +383,7 @@ namespace BEN.AI
                 case AIType.Fakir:
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
                     _agent.speed = 0f;
-                    InvokeRepeating(nameof(FakirAttack), 0f, _attackRate); 
+                    InvokeRepeating(nameof(FakirAttack), 0f, _attackRate);  
                     break; 
             } 
         } 
@@ -408,7 +404,7 @@ namespace BEN.AI
                 {
                     _fsm.ChangeState(States.Default, StateTransition.Safe);
                     CancelInvoke(nameof(FakeCAC));
-                }
+                } 
 
                 // to simulate player killed from CAC. Distance is done from projectile
                 if ((type != AIType.Monkey && type != AIType.Mascotte) || _hasCalledFakeCac) return;
@@ -443,21 +439,12 @@ namespace BEN.AI
         private void FakeCAC()
         {
             _playerHP.DecreaseHp(_attackDamage); 
-        }
+        } 
 
-        private void MonkeyBallAttack()
+        private void FakirAttack() 
         {
-            var reference = Instantiate(_monkeyBallProjectile, _graphics.transform.position, _detection.transform.rotation);
-            reference.transform.position = _graphics.transform.position;
-            Debug.Log("monkeyball projectile");
-        }
-
-        private void FakirAttack() // WARNING : Duplicate 
-        {
-            var reference = Instantiate(_fakirProjectile, _graphics.transform.position, _detection.transform.rotation);
-            reference.transform.position = _graphics.transform.position;
-            reference.GetComponent<ParabolicFunction>().CasterTransform = _graphics.transform; 
-            Debug.Log("fakir projectile");
+            _fakirProjectile.GetComponentInChildren<ParabolicFunction>().CasterTransform = _graphics.transform;
+            Debug.Log("fakir projectile"); 
         }
 
         // only called if monkey ball is dead 
@@ -484,7 +471,6 @@ namespace BEN.AI
             switch (type)
             {
                 case AIType.MonkeySurBall: 
-                    CancelInvoke(nameof(MonkeyBallAttack)); 
                     break;
                 case AIType.Fakir:
                     CancelInvoke(nameof(FakirAttack)); 
@@ -511,24 +497,32 @@ namespace BEN.AI
 
         IEnumerator Defend_Enter()
         {
-            yield return new WaitForSeconds(_monkeyBallDodgeReactionTime);
-            Debug.Log("defend_enter");
-
             _agent.speed = 0f;
-            _checkSurroundings.CanDodgeProjectile = _monkeyBallCollider.enabled = _ballCollider.enabled = false;
-            transform.position = _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
+
+            switch (Type)
+            {
+                case AIType.MonkeySurBall:
+                    yield return new WaitForSeconds(_monkeyBallDodgeReactionTime);
+                    Debug.Log("defend_enter");
+                    _checkSurroundings.CanDodgeProjectile = _monkeyBallCollider.enabled = _ballCollider.enabled = false;
+                    transform.position = _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
             
-            yield return new WaitForSeconds(0.1f);  
-            _monkeyBallCollider.enabled = true;
-            _ballCollider.enabled = true;
-            _aIAnimation.PlayAnimation(AnimState.Miss, AnimDirection.None); 
-            
-            // MISS anim 
-            
-            yield return new WaitForSeconds(_monkeyBallProvocDuration); 
-            OnRequireStateChange(States.Attack, StateTransition.Safe); 
-            // risky if the player has gone outside of detection collider.. should I use a HFSM instead ? 
-        } 
+                    yield return new WaitForSeconds(0.1f);  
+                    _monkeyBallCollider.enabled = true;
+                    _ballCollider.enabled = true;
+                    _aIAnimation.PlayAnimation(AnimState.Miss, AnimDirection.None); 
+                    
+                    yield return new WaitForSeconds(_monkeyBallProvocDuration); 
+                    OnRequireStateChange(States.Attack, StateTransition.Safe); 
+                    break;
+                case AIType.Mascotte:
+                    _aIAnimation.PlayAnimation(AnimState.Hit, _animDirection);
+                    
+                    yield return new WaitForSeconds(1f);  
+                    OnRequireStateChange(States.Attack, StateTransition.Safe); // would have been better to use HFSM 
+                    break;
+            }
+        }   
 
         void Defend_Exit()  
         { 
@@ -543,14 +537,19 @@ namespace BEN.AI
         IEnumerator Die_Enter() 
         {
             _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
-            Debug.Log("die_enter"); 
+            _agent.speed = 0f; 
+            Debug.Log("die_enter");
+            foreach (var item in _componentsToDeactivateOnDeath)
+            {
+                item.enabled = false; 
+            } 
             
             yield return new WaitForSeconds(0.25f);  
             CancelInvoke();
             Clip clipToPlay = null;  
  
             try
-            {
+            { 
                 clipToPlay = _aIAnimation.PlayAnimation(wasMonkeyBall ? AnimState.Die : AnimState.Hit, AnimDirection.None);
             } 
             catch (Exception) { }
