@@ -12,7 +12,6 @@ public class AK_CottonCandy : MonoBehaviour
         {
             Boomerang otherBoomerang = other.transform.GetComponent<Boomerang>();
             otherBoomerang.isStunned = true;
-            otherBoomerang.comebackTimer += 1;
         } 
 
         if (other.gameObject.layer == playerLayer) 

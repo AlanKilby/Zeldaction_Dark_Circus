@@ -11,6 +11,7 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public GameObject aim;
 
+    [HideInInspector]
     public bool canThrow;
 
     [Tooltip("If the player has the Wand he can teleport to his hat.")]
@@ -20,13 +21,16 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public PlayerAnimations playerAnim;
 
-    bool canMove = true;
+    [HideInInspector]
+    public bool canMove = true;
 
     public float throwingTime;
 
     public float minThrowTime;
 
     public float maxThrowTime;
+
+    public float chargeTimeCoeff;
 
     // add static reference to pos => BEN 
     public static Vector3 sPlayerPos = Vector3.zero; 
@@ -53,7 +57,7 @@ public class PlayerMovement_Alan : MonoBehaviour
                 canMove = false;
                 if(throwingTime <= maxThrowTime)
                 {
-                    throwingTime += Time.deltaTime;
+                    throwingTime += Time.deltaTime * chargeTimeCoeff;
                 }
             }
             if (Input.GetButtonUp("PlayerAttack"))
