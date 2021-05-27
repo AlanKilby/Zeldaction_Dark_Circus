@@ -1,14 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimEventPlaySound : MonoBehaviour
 {
-    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private Sound _soundToPlay;
 
-    public void PlaySound(AudioClip clip)
+    public void PlaySound() 
     {
-        if (_audioSource.isPlaying || !_audioSource) return;
-        _audioSource.PlayOneShot(clip);  
-    }
+        if (_soundToPlay.audioSource.isPlaying || !_soundToPlay.audioSource) return;
+        _soundToPlay.audioSource.PlayOneShot(_soundToPlay.clip);  
+    } 
+}
+
+[System.Serializable] 
+public class Sound
+{
+    public string name; 
+    public AudioClip clip;
+    public AudioSource audioSource; 
 }
