@@ -29,8 +29,8 @@ namespace BEN.Math
         public Transform CasterTransform { get; set; }
         public Vector3 Direction { get; private set; }
         private float _duration;
-        private int YDirection; 
-
+        private int YDirection;
+        
         private void Start() 
         {
             Destroy(gameObject, 10f); 
@@ -38,7 +38,7 @@ namespace BEN.Math
             Direction = (PlayerMovement_Alan.sPlayerPos - transform.position).normalized;
             distance = Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos);
             _duration = distance / speed; 
-        }
+        } 
 
         private void FixedUpdate() 
         {

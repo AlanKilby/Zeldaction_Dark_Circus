@@ -443,7 +443,7 @@ namespace BEN.AI
 
         private void FakirAttack() 
         {
-            _fakirProjectile.GetComponent<ParabolicFunction>().CasterTransform = _graphics.transform;
+            _fakirProjectile.GetComponentInChildren<ParabolicFunction>().CasterTransform = _graphics.transform;
             Debug.Log("fakir projectile"); 
         }
 
