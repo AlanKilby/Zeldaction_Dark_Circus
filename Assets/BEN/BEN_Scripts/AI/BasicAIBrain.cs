@@ -79,13 +79,14 @@ namespace BEN.AI
         [SerializeField] private GameObject _detection;
         [SerializeField] private PlaceholderDestination _placeholderDestination;
         [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _ballGraphics;
+        [SerializeField] private Behaviour[] _componentsToDeactivateOnDeath; 
 
         [Header("-- DEBUG --")]
         [SerializeField] private EditorDebuggerSO _debugger;
         [SerializeField] private bool refresh;
         private bool wasMonkeyBall; 
         
-#endregion
+#endregion 
 
 #region Public Variables
         public Action<States, StateTransition> OnRequireStateChange;
@@ -258,7 +259,6 @@ namespace BEN.AI
         }
         
         // MOVE ALL THIS TO AIANIMATION ===> WARNING : duplicate 
-
         private void CheckAnimDirection()
         {
             if (Type == AIType.Fakir && !_canPatrol) return; // modify is fakir needs repositionning 
@@ -290,8 +290,7 @@ namespace BEN.AI
         {
             yield return new WaitForSeconds(1.5f);
             _graphics.transform.localRotation = Quaternion.identity;
-        }
-
+        } 
         // <===
 
         #region FSM
@@ -530,14 +529,19 @@ namespace BEN.AI
         IEnumerator Die_Enter() 
         {
             _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
-            Debug.Log("die_enter"); 
+            _agent.speed = 0f; 
+            Debug.Log("die_enter");
+            foreach (var item in _componentsToDeactivateOnDeath)
+            {
+                item.enabled = false; 
+            } 
             
             yield return new WaitForSeconds(0.25f);  
             CancelInvoke();
             Clip clipToPlay = null;  
  
             try
-            {
+            { 
                 clipToPlay = _aIAnimation.PlayAnimation(wasMonkeyBall ? AnimState.Die : AnimState.Hit, AnimDirection.None);
             } 
             catch (Exception) { }
