@@ -42,7 +42,7 @@ namespace BEN.AI
     
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Health))]
-    [DefaultExecutionOrder(10)] 
+    [DefaultExecutionOrder(2)] 
     public class BasicAIBrain : MonoBehaviour
     {
 #region Serialized Variables
@@ -191,6 +191,7 @@ namespace BEN.AI
             } 
         }
 
+
         private void Start()
         { 
             _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>();
@@ -200,12 +201,15 @@ namespace BEN.AI
             MonkeyBallDodgeDistance = _monkeyBallDodgeDistance; 
 
             _patrol = GetComponent<FsmPatrol>();
-            _patrol.SetPoints(); 
 
             if (HasBeenInvokedByBoss || !_canPatrol)
             {
                 _patrol.enabled = false; 
                 _agentHp.CurrentValue = 1; // will be overwritten by health. Just to avoid 0 hp when invoked by boss
+            }
+            else
+            {
+                _patrol.SetPoints(); 
             }
 
             _agent = GetComponent<NavMeshAgent>();
@@ -243,6 +247,11 @@ namespace BEN.AI
                 _agent.speed = 0f;
                 _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); // use AnimDirection according to where you come from . 
             } 
+            
+            if (!PlayerMovement_Alan.sPlayer)
+            {
+                OnRequireStateChange(States.Default, StateTransition.Safe); 
+            }
         }
 
         private void OnDisable() 

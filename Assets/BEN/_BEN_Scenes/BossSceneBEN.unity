@@ -319,6 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a499e70d5e9394495ab355613cb881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _invokeOnStart: 1
   _spawnerHalfCircle: {fileID: 2095071227}
   _spawnerOuter: {fileID: 642046484}
   _spawnableEntitiesList:
@@ -328,7 +329,8 @@ MonoBehaviour:
   - _type: 3
     _prefab: {fileID: 5953828729676287935, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
     _spawnProbability: 0.2
-  invocationDelay: 30
+  _invokeOnStartDelay: 10
+  _invocationDelay: 45
   ray: 0
   bombing: 0
   _switchedList:
@@ -340,17 +342,13 @@ MonoBehaviour:
   - {fileID: 394478451}
   - {fileID: 101974641}
   - {fileID: 746533707}
-  maxActiveSwitches: 2
-  vulnerabilityDuration: 10
-  percentOfDamageBeforeSwitchReset: 25
-  invokeOnStart: 1
-  rayPlaceholderManager: {fileID: 710162582}
-  rayPlaceholderVisuals:
-  - {fileID: 1861835953}
-  - {fileID: 1939334715}
-  - {fileID: 431268870}
+  _maxActiveSwitches: 2
+  _vulnerabilityDuration: 5
+  _percentOfDamageBeforeSwitchReset: 25
+  _rayPlaceholderManager: {fileID: 0}
+  _rayPlaceholderVisuals: []
   debugRay: 1
-  doSpawns: 0
+  doSpawns: 1
   playerLayer:
     serializedVersion: 2
     m_Bits: 1024
