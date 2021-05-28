@@ -9,9 +9,15 @@ public class AK_SymbolScreen : MonoBehaviour
 
     public GameObject[] ducks;
 
+    //Ajout Ulric
+    bool puzzleFinished;
+    public UD_DuckHuntDoor DHD;
+    //
+
     private void Start()
     {
         //screen.GetComponent<SpriteRenderer>();
+        puzzleFinished = false;
     }
 
     private void Update()
@@ -70,6 +76,15 @@ public class AK_SymbolScreen : MonoBehaviour
                 {
                     ducks[i].GetComponent<AK_DuckScript>().symbol.SetActive(false);
                 }
+            }
+        }
+        else if (ducks[0].GetComponent<AK_DuckScript>().wasShot && ducks[1].GetComponent<AK_DuckScript>().wasShot && ducks[2].GetComponent<AK_DuckScript>().wasShot && ducks[3].GetComponent<AK_DuckScript>().wasShot && !puzzleFinished)
+        {
+            for (int i = 0; i < ducks.Length; i++)
+            {
+                ducks[i].GetComponent<AK_DuckScript>().symbol.SetActive(false);
+                DHD.OpenDoor();
+                puzzleFinished = true;
             }
         }
     }
