@@ -24,6 +24,9 @@ public class PlayerMovement_Alan : MonoBehaviour
     [HideInInspector]
     public bool canMove = true;
 
+    [HideInInspector]
+    public bool isInMenu = false;
+
     public float throwingTime;
 
     public float minThrowTime;
@@ -48,6 +51,17 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     void Update()
     {
+        if (isInMenu)
+        {
+            canMove = false;
+            canThrow = false;
+        }
+        else if (!isInMenu)
+        {
+            canMove = true;
+            canThrow = true;
+        }
+        
         sPlayerPos = transform.position; 
 
         if (canThrow == true)
@@ -169,10 +183,5 @@ public class PlayerMovement_Alan : MonoBehaviour
         boomerangInstance = Instantiate(boomerang, aim.transform.position, gameObject.transform.rotation);
         boomerangInstance.GetComponent<Boomerang>().comebackTimer = throwTime;
         canThrow = false;
-    }
-    
-    public void AnimsThrowing()
-    {
-
     }
 }
