@@ -439,7 +439,6 @@ namespace BEN.AI
         private void FakirAttack() 
         {
             _fakirProjectile.GetComponentInChildren<ParabolicFunction>().CasterTransform = _graphics.transform;
-            Debug.Log("fakir projectile"); 
         }
 
         // only called if monkey ball is dead 

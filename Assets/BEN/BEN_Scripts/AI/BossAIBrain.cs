@@ -97,8 +97,8 @@ public class BossAIBrain : MonoBehaviour
         _fsm.ChangeState(newState, transition);
     }
 
-    void Start()
-    {
+    void Start() 
+    { 
         Debug.Log("start");
         _aIAnimation = GetComponentInChildren<AIAnimation>();
         sBossVulnerabilityDuration = _vulnerabilityDuration; 
@@ -117,7 +117,7 @@ public class BossAIBrain : MonoBehaviour
             _rayMeshRenderers.Add(_rayPlaceholderVisuals[i].GetComponent<MeshRenderer>());
             _rayColliders.Add(_rayPlaceholderVisuals[i].GetComponent<Collider>());
             _rayColliders[i].enabled = false; 
-        }
+        } 
 
         if (_invokeOnStart) 
         {
@@ -127,13 +127,28 @@ public class BossAIBrain : MonoBehaviour
         {
             StartCoroutine(SetInvocationCooldown(_invocationDelay));
         } 
+        
+        _fsm.ChangeState(BossStates.RayAttack, StateTransition.Safe);
     }
 
     private void FixedUpdate()
-    {
+    { 
         if (!PlayerMovement_Alan.sPlayer && Time.time >= 1f) // to avoid it on first frame
         {
             OnRequireStateChange(BossStates.Default, StateTransition.Safe); 
+        }
+        
+        if (_canRayAttack) 
+        {
+            StartCoroutine(SetAttackCooldown(5f)); 
+            Debug.Log("trying ray attack from FixedUpdate");
+            OnRequireStateChange(BossStates.RayAttack, StateTransition.Safe); 
+        } 
+        else if (_canInvoke)
+        {
+            StartCoroutine(SetInvocationCooldown(_invocationDelay)); 
+            Debug.Log("trying invocation from FixedUpdate");
+            OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
         }
 
         if (!_showActivatableLigths) return;
@@ -148,22 +163,11 @@ public class BossAIBrain : MonoBehaviour
         }
         _activeSwitches = 0;
         StartCoroutine(SetSwitchesCooldown(10f + _vulnerabilityDuration));
-        
-        
-        if (_canRayAttack)
-        {
-            OnRequireStateChange(BossStates.RayAttack, StateTransition.Safe); 
-        } 
-        
-        if (_canInvoke)
-        {
-            OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
-        }
     }
 
     private IEnumerator InvokeOnStart()  
     {
-        yield return new WaitForSeconds(_invokeOnStartDelay);
+        yield return new WaitForSeconds(_invokeOnStartDelay); 
         Debug.Log("invoking entity on start");
         OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
     }
@@ -180,11 +184,9 @@ public class BossAIBrain : MonoBehaviour
 #region Init
     void Init_Enter() 
     {
-        Debug.Log("Initializing Default State");
+        Debug.Log("Initializing"); 
         currentState = BossStates.Init;
         // _aIAnimation = _graphics.GetComponent<AIAnimation>(); 
-
-        _fsm.ChangeState(BossStates.RayAttack, StateTransition.Safe);
     }
 
     void Init_Exit()
@@ -212,11 +214,10 @@ public class BossAIBrain : MonoBehaviour
         Debug.Log("trying to attack");
         currentState = BossStates.RayAttack;
         SetAttackRotation();
-    } 
+    }
 
     void RayAttack_Exit()
     {
-
     }
     
 #endregion
@@ -292,7 +293,7 @@ public class BossAIBrain : MonoBehaviour
     private void InvokeEntity(float invocationProbability)
     {
         if (!doSpawns) return;
-        StartCoroutine(SetInvocationCooldown(_invocationDelay));
+        // StartCoroutine(SetInvocationCooldown(_invocationDelay));
         currentState = BossStates.Invocation;
 
         _isInvoking = true; // to avoid overlap of invocation and ray attack (too overwhelming, at least for the first phase)
@@ -327,8 +328,8 @@ public class BossAIBrain : MonoBehaviour
 
     private void SetAttackRotation() 
     {
-        // if (_isInvoking) return;
-        StartCoroutine(SetAttackCooldown(5f)); 
+        // if (_isInvoking) return; 
+        // StartCoroutine(SetAttackCooldown(5f)); 
 
         Debug.Log(" attacking");  
 
@@ -364,22 +365,20 @@ public class BossAIBrain : MonoBehaviour
 
     IEnumerator SetInvocationCooldown(float delay)
     {
-        Debug.Log("setting can invoke to false"); 
-
-        _canInvoke = false; 
+        _canInvoke = false;
 
         yield return new WaitForSeconds(delay);
+        Debug.Log("setting can invoke to true"); 
         _canInvoke = true;
-    }
+    } 
 
     // DRY
     IEnumerator SetAttackCooldown(float delay) 
-    {
-        Debug.Log("setting can attack to false"); 
-
+    { 
         _canRayAttack = false;
 
         yield return new WaitForSeconds(delay); 
+        Debug.Log("setting can attack to true");  
         _canRayAttack = true;
     } 
     

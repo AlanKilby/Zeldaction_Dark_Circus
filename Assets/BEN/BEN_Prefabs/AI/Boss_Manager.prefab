@@ -178,6 +178,7 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 1024
+  _rayDamageAmount: 1
 --- !u!1 &8930034648443865960
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,6 +352,7 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 1024
+  _rayDamageAmount: 1
 --- !u!1 &8930034648872664289
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,6 +860,7 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 1024
+  _rayDamageAmount: 1
 --- !u!1 &8930034649997932662
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,7 +965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a499e70d5e9394495ab355613cb881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invokeOnStart: 1
+  _invokeOnStart: 0
   _spawnerHalfCircle: {fileID: 8930034648340680927}
   _spawnerOuter: {fileID: 8930034649793705264}
   _spawnableEntitiesList:
@@ -973,7 +976,7 @@ MonoBehaviour:
     _prefab: {fileID: 5953828729676287935, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
     _spawnProbability: 0.2
   _invokeOnStartDelay: 10
-  _invocationDelay: 45
+  _invocationDelay: 30
   ray: 0
   bombing: 0
   _switchedList:
@@ -989,7 +992,10 @@ MonoBehaviour:
   _vulnerabilityDuration: 5
   _percentOfDamageBeforeSwitchReset: 25
   _rayPlaceholderManager: {fileID: 8930034649593468850}
-  _rayPlaceholderVisuals: []
+  _rayPlaceholderVisuals:
+  - {fileID: 8930034648577192853}
+  - {fileID: 8930034648389585183}
+  - {fileID: 8930034649897519906}
   debugRay: 1
   doSpawns: 1
   playerLayer:
