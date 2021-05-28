@@ -79,7 +79,8 @@ namespace BEN.AI
         [SerializeField] private GameObject _detection;
         [SerializeField] private PlaceholderDestination _placeholderDestination;
         [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _ballGraphics;
-        [SerializeField] private Behaviour[] _componentsToDeactivateOnDeath; 
+        [SerializeField] private Behaviour[] _componentsToDeactivateOnDeath;
+        [SerializeField, Range(0f, 5f)] private float _graphicsDisableDelay = 0f; 
 
         [Header("-- DEBUG --")]
         [SerializeField] private EditorDebuggerSO _debugger;
@@ -545,7 +546,9 @@ namespace BEN.AI
             foreach (var item in _componentsToDeactivateOnDeath)
             {
                 item.enabled = false; 
-            } 
+            }
+
+            StartCoroutine(nameof(DisableGraphics)); // so that I don't hold the whole Die_Enter coroutine for _graphicsDisableDelay seconds
             
             yield return new WaitForSeconds(0.25f);  
             CancelInvoke();
@@ -560,7 +563,13 @@ namespace BEN.AI
             if (clipToPlay != null) yield break;
             Debug.Log("Calling Die state instead of Hit state");
             _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None); // need consistent naming across all mobs, not Die or Hit for same result.. 
-        } 
+        }
+
+        IEnumerator DisableGraphics()
+        {
+            yield return new WaitForSeconds(_graphicsDisableDelay); 
+            _graphics.GetComponent<SpriteRenderer>().enabled = false; 
+        }
         
         #endregion
 
