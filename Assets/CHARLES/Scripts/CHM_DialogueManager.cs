@@ -12,6 +12,7 @@ public class CHM_DialogueManager : MonoBehaviour
 
     public Animator animator;
 
+    public GameObject dialogueBox;
     void Start()
     {
         sentences = new Queue<string>();
@@ -38,6 +39,7 @@ public class CHM_DialogueManager : MonoBehaviour
         if (sentences.Count == 0)
         {
             EndDialogue();
+            dialogueBox.SetActive(false);
             return;
 
         }
