@@ -6,7 +6,7 @@ public class AK_DuckScript : MonoBehaviour
 {
     public bool wasShot;
 
-    public Sprite symbol;
+    public GameObject symbol;
     public Sprite deadDuck;
     public int ID;
 

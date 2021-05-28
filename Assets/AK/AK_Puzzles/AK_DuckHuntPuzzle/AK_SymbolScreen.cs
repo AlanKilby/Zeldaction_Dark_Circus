@@ -5,7 +5,7 @@ using UnityEngine;
 public class AK_SymbolScreen : MonoBehaviour
 {
 
-    public SpriteRenderer screen;
+    //public SpriteRenderer screen;
 
     public GameObject[] ducks;
 
@@ -18,19 +18,59 @@ public class AK_SymbolScreen : MonoBehaviour
     {
         if (!ducks[0].GetComponent<AK_DuckScript>().wasShot && !ducks[1].GetComponent<AK_DuckScript>().wasShot && !ducks[2].GetComponent<AK_DuckScript>().wasShot && !ducks[3].GetComponent<AK_DuckScript>().wasShot)
         {
-            screen.sprite = ducks[0].GetComponent<AK_DuckScript>().symbol;
+            for(int i = 0; i < ducks.Length; i++)
+            {
+                if (i == 0)
+                {
+                    ducks[i].GetComponent<AK_DuckScript>().symbol.SetActive(true);
+                }
+                else
+                {
+                    ducks[i].GetComponent<AK_DuckScript>().symbol.SetActive(false);
+                }
+            }
         }
         else if (ducks[0].GetComponent<AK_DuckScript>().wasShot && !ducks[1].GetComponent<AK_DuckScript>().wasShot && !ducks[2].GetComponent<AK_DuckScript>().wasShot && !ducks[3].GetComponent<AK_DuckScript>().wasShot)
         {
-            screen.sprite = ducks[1].GetComponent<AK_DuckScript>().symbol;
+            for (int i = 0; i < ducks.Length; i++)
+            {
+                if (i == 1)
+                {
+                    ducks[i].GetComponent<AK_DuckScript>().symbol.SetActive(true);
+                }
+                else
+                {
+                    ducks[i].GetComponent<AK_DuckScript>().symbol.SetActive(false);
+                }
+            }
         }
         else if (ducks[0].GetComponent<AK_DuckScript>().wasShot && ducks[1].GetComponent<AK_DuckScript>().wasShot && !ducks[2].GetComponent<AK_DuckScript>().wasShot && !ducks[3].GetComponent<AK_DuckScript>().wasShot)
         {
-            screen.sprite = ducks[2].GetComponent<AK_DuckScript>().symbol;
+            for (int i = 0; i < ducks.Length; i++)
+            {
+                if (i == 2)
+                {
+                    ducks[i].GetComponent<AK_DuckScript>().symbol.SetActive(true);
+                }
+                else
+                {
+                    ducks[i].GetComponent<AK_DuckScript>().symbol.SetActive(false);
+                }
+            }
         }
         else if (ducks[0].GetComponent<AK_DuckScript>().wasShot && ducks[1].GetComponent<AK_DuckScript>().wasShot && ducks[2].GetComponent<AK_DuckScript>().wasShot && !ducks[3].GetComponent<AK_DuckScript>().wasShot)
         {
-            screen.sprite = ducks[3].GetComponent<AK_DuckScript>().symbol;
+            for (int i = 0; i < ducks.Length; i++)
+            {
+                if (i == 3)
+                {
+                    ducks[i].GetComponent<AK_DuckScript>().symbol.SetActive(true);
+                }
+                else
+                {
+                    ducks[i].GetComponent<AK_DuckScript>().symbol.SetActive(false);
+                }
+            }
         }
     }
 }
