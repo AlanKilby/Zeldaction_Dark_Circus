@@ -9,6 +9,10 @@ public class AK_PressurePlate : MonoBehaviour
 
     public bool isPressing;
 
+    public Renderer ownPlateFeeback;
+    public Material OnMat;
+    public Material OffMat;
+
     private void Awake()
     {
         timerHolder = pressureTimer;
@@ -17,6 +21,7 @@ public class AK_PressurePlate : MonoBehaviour
     private void Start()
     {
         pressureTimer = 0;
+        ownPlateFeeback.material = OffMat;
     }
 
     private void Update()
@@ -25,11 +30,13 @@ public class AK_PressurePlate : MonoBehaviour
         {
             isPressing = true;
             pressureTimer -= Time.deltaTime;
+            ownPlateFeeback.material = OnMat;
         }
         else if (pressureTimer <= 0)
         {
             isPressing = false;
             pressureTimer = 0;
+            ownPlateFeeback.material = OffMat;
         }
     }
 
