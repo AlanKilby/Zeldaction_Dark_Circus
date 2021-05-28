@@ -7,6 +7,8 @@ public class AK_PlayerPotionManager : MonoBehaviour
 
     public int potionQuantity;
 
+    public int maxPotionQuantity;
+
     public int potionHealthValue;
 
     string potion = "potion";
@@ -19,6 +21,7 @@ public class AK_PlayerPotionManager : MonoBehaviour
     }
     private void Update()
     {
+        
 
         if (Input.GetButtonDown("Potion") && potionQuantity > 0)
         {
