@@ -237,7 +237,7 @@ namespace BEN.AI
 
             if (_agentHp.CurrentValue <= 0 && !_patrol.IsDead && Type != AIType.MonkeySurBall) 
             {
-                Debug.Log("transition to death state"); 
+                // Debug.Log("transition to death state"); 
                 OnRequireStateChange(States.Die, StateTransition.Safe); 
             }
 
@@ -313,7 +313,9 @@ namespace BEN.AI
         {
             _aIAnimation = _graphics.GetComponent<AIAnimation>();
             _fsm.ChangeState(NewState = States.Default, StateTransition.Safe);
-            Debug.Log("init_enter");
+            // Debug.Log("init_enter");
+
+            NewState = States.Init;
         }
 
         void Init_Exit()
@@ -326,6 +328,7 @@ namespace BEN.AI
         IEnumerator Default_Enter()  
         { 
             yield return new WaitForSeconds(0.03f);
+            NewState = States.Default;
             Debug.Log("default_enter");
 
             if ((_canPatrol || GoingBackToPositionBeforeIdling) && !HasBeenInvokedByBoss)
@@ -352,12 +355,13 @@ namespace BEN.AI
         
         private IEnumerator Attack_Enter() // UPGRADE : use async-await coroutines
         {
-            yield return new WaitForSeconds(_attackDelay); 
+            yield return new WaitForSeconds(_attackDelay);
+            NewState = States.Attack;
             
             _agent.destination = TargetToAttackPosition;
             _idlePositionBeforeAttacking = transform.position;
             _agent.speed = DefaultSpeed;
-            Debug.Log("attack_enter");
+            // Debug.Log("attack_enter");
 
             // UPGRADE : make the enemy predict the future player position instead of aiming at it's current one
             switch (type) 
@@ -479,8 +483,9 @@ namespace BEN.AI
             }
             else
             {
+                if (HasBeenInvokedByBoss) return;
                 _agent.destination = _canPatrol ? _patrol.Points[_patrol.DestPoint].position : _idlePositionBeforeAttacking; // TODO : use closest point of list instead (when patrolling)
-                _agent.speed = DefaultSpeed / _attackStateSpeedMultiplier;
+                _agent.speed = DefaultSpeed / _attackStateSpeedMultiplier; 
             }
         }
 
@@ -491,6 +496,7 @@ namespace BEN.AI
         IEnumerator Defend_Enter()
         {
             _agent.speed = 0f;
+            NewState = States.Defend; 
 
             switch (Type)
             {
@@ -527,11 +533,12 @@ namespace BEN.AI
         #endregion
 
         #region Die
-        IEnumerator Die_Enter() 
+        IEnumerator Die_Enter()
         {
+            NewState = States.Die;
             _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
             _agent.speed = 0f; 
-            Debug.Log("die_enter");
+            // Debug.Log("die_enter");
             foreach (var item in _componentsToDeactivateOnDeath)
             {
                 item.enabled = false; 

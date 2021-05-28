@@ -19,8 +19,7 @@ public class SpawnableEntity
     public GameObject Prefab { get => _prefab; } 
 }
 
-// temporary all in one solution
-// will upgrade to a Behaviour Tree very soon  
+public enum BossStates { Init, Default, Defend, Invocation, RayAttack, ObjectFalling, Death }
 public class BossAIBrain : MonoBehaviour
 {
     // [SerializeField] private GameObject _graphics;
@@ -45,19 +44,21 @@ public class BossAIBrain : MonoBehaviour
     [SerializeField, Range(5, 50)] private float _percentOfDamageBeforeSwitchReset = 25f;
     public static float sBossVulnerabilityDuration; 
 
-    private StateMachine<States> _fsm;
+    private StateMachine<BossStates> _fsm;
 
     private AIAnimation _aIAnimation;
     private byte _activeSwitches; 
 
-    public static Action<States, StateTransition> OnRequireStateChange;
+    public static Action<BossStates, StateTransition> OnRequireStateChange;
 
     private float _invocationSelector; 
     private float _entityToInvokeSelector;
 
     private bool _canInvoke = true; 
-    private bool _canAttack = true; 
-    private bool _lightsAreOff; 
+    private bool _canRayAttack = true; 
+    private bool _canDoAirAttack = false;
+    private bool _lightsAreOff;
+    private BossStates currentState; 
 
     [Header("DEBUG")]
     [SerializeField] private Transform _rayPlaceholderManager;
@@ -72,12 +73,12 @@ public class BossAIBrain : MonoBehaviour
     private List<Collider> _rayColliders = new List<Collider>();
     private bool _isInvoking; 
 
-    #region Unity Callbacks
+#region Unity Callbacks
 
     private void Awake()
     {
-        _fsm = StateMachine<States>.Initialize(this);
-        _fsm.ChangeState(States.Init, StateTransition.Safe);
+        _fsm = StateMachine<BossStates>.Initialize(this);
+        _fsm.ChangeState(BossStates.Init, StateTransition.Safe);
     }
 
     private void OnEnable()
@@ -89,9 +90,16 @@ public class BossAIBrain : MonoBehaviour
     {
         OnRequireStateChange -= TransitionToNewState;
     }
+    
+    private void TransitionToNewState(BossStates newState, StateTransition transition)
+    {
+        currentState = newState; 
+        _fsm.ChangeState(newState, transition);
+    }
 
     void Start()
     {
+        Debug.Log("start");
         _aIAnimation = GetComponentInChildren<AIAnimation>();
         sBossVulnerabilityDuration = _vulnerabilityDuration; 
         for (int i = 0; i < _spawnerHalfCircle.transform.childCount; i++)
@@ -111,7 +119,7 @@ public class BossAIBrain : MonoBehaviour
             _rayColliders[i].enabled = false; 
         }
 
-        if (_invokeOnStart)
+        if (_invokeOnStart) 
         {
             StartCoroutine(nameof(InvokeOnStart)); 
         }
@@ -123,21 +131,41 @@ public class BossAIBrain : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!PlayerMovement_Alan.sPlayer)
+        if (!PlayerMovement_Alan.sPlayer && Time.time >= 1f) // to avoid it on first frame
         {
-            OnRequireStateChange(States.Default, StateTransition.Safe); 
+            OnRequireStateChange(BossStates.Default, StateTransition.Safe); 
+        }
+
+        if (!_showActivatableLigths) return;
+        for (int i = 0; i < _switchedList.Count && _activeSwitches < _maxActiveSwitches; i++)
+        {
+            var selector = UnityEngine.Random.Range(0, 2);  
+            if (selector > 0)
+            {
+                _switchedList[i].ShowIsDeactivatable();
+                _activeSwitches++;  
+            }
+        }
+        _activeSwitches = 0;
+        StartCoroutine(SetSwitchesCooldown(10f + _vulnerabilityDuration));
+        
+        
+        if (_canRayAttack)
+        {
+            OnRequireStateChange(BossStates.RayAttack, StateTransition.Safe); 
+        } 
+        
+        if (_canInvoke)
+        {
+            OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
         }
     }
 
-    private IEnumerator InvokeOnStart()
+    private IEnumerator InvokeOnStart()  
     {
         yield return new WaitForSeconds(_invokeOnStartDelay);
-        InvokeEntity(1f); 
-    }
-
-    private void TransitionToNewState(States newState, StateTransition transition)
-    {
-        _fsm.ChangeState(newState, transition);
+        Debug.Log("invoking entity on start");
+        OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
     }
 
     private void SetLightOffState()
@@ -147,75 +175,95 @@ public class BossAIBrain : MonoBehaviour
 
     #endregion
 
-    #region FSM
+#region FSM
 
 #region Init
-    void Init_Enter()
+    void Init_Enter() 
     {
         Debug.Log("Initializing Default State");
+        currentState = BossStates.Init;
         // _aIAnimation = _graphics.GetComponent<AIAnimation>(); 
 
-        _fsm.ChangeState(States.Attack, StateTransition.Safe);
+        _fsm.ChangeState(BossStates.RayAttack, StateTransition.Safe);
     }
 
     void Init_Exit()
     {
-        Debug.Log("Transition to default state");
+        
+        
     }
     
 #endregion 
     
 #region Default
-    
-    void Default_Enter() { Debug.Log("default state");} 
+
+    void Default_Enter()
+    {
+        currentState = BossStates.Default;
+        Debug.Log("default state");
+    } 
     
 #endregion
 
-#region Attack 
+#region RayAttack
 
-    void Attack_FixedUpdate()
+    void RayAttack_Enter()
     {
-        // spawns and attack will sometimes overlap and the delay between one and the other will change over time (not same modulo) 
+        Debug.Log("trying to attack");
+        currentState = BossStates.RayAttack;
+        SetAttackRotation();
+    } 
 
-        if (_canInvoke)
-        {
-            InvokeEntity(1f); 
-        }
-
-        if (_canAttack)
-        {
-            Attack();  
-        }
-
-        if (_showActivatableLigths)
-        {
-            for (int i = 0; i < _switchedList.Count && _activeSwitches < _maxActiveSwitches; i++)
-            {
-                var selector = UnityEngine.Random.Range(0, 2);  
-                if (selector > 0)
-                {
-                    _switchedList[i].ShowIsDeactivatable();
-                    _activeSwitches++; 
-                }
-            }
-            _activeSwitches = 0;
-            StartCoroutine(SetSwitchesCooldown(10f + _vulnerabilityDuration)); 
-        }
-    }
-
-    void Attack_Exit()
+    void RayAttack_Exit()
     {
 
     }
     
 #endregion
 
-#region Defend
+#region Invocation
+
+    void Invocation_Enter()
+    {
+        Debug.Log("trying to invoke");
+        currentState = BossStates.Invocation;
+        InvokeEntity(1f); 
+    } 
+
+    void Invocation_Exit()
+    { 
+        
+    }
+    
+#endregion
+
+#region Object Falling
+
+    void ObjectFalling_Enter()
+    {
+        currentState = BossStates.ObjectFalling;
+    }
+
+    void ObjectFalling_FixedUpdate()
+    {
+        
+    }
+
+    void ObjectFalling_Exit()
+    {
+        
+    }
+
+#endregion 
+
+#region Defend 
     IEnumerator Defend_Enter()
     {
         // when lights are off
+        currentState = BossStates.Defend;
+
         yield return new WaitForSeconds(_vulnerabilityDuration);
-        TransitionToNewState(States.Attack, StateTransition.Safe);  
+        TransitionToNewState(BossStates.RayAttack, StateTransition.Safe);  
     }
 
     void Defend_FixedUpdate()
@@ -225,17 +273,30 @@ public class BossAIBrain : MonoBehaviour
 
     void Defend_Exit() 
     {
-        // when lights are out 
+        // when lights are on again => go back to RayAttack 
     }
     #endregion 
-
-    #endregion
     
-    #region Functionality
+#region Death
+
+     private void Death_Enter()
+     {
+         
+     }
+    
+#endregion
+
+#endregion
+    
+#region Functionality
     private void InvokeEntity(float invocationProbability)
     {
         if (!doSpawns) return;
+        StartCoroutine(SetInvocationCooldown(_invocationDelay));
+        currentState = BossStates.Invocation;
+
         _isInvoking = true; // to avoid overlap of invocation and ray attack (too overwhelming, at least for the first phase)
+        Debug.Log("invoking");
 
         GameObject spawner = Random.Range(0, 2) == 0 ? _spawnerOuter : _spawnerHalfCircle;
         List<Vector3> spawnPositions = spawner == _spawnerOuter ? _spawnPositionsOuter : _spawnPositionsHalfCircle;
@@ -262,17 +323,16 @@ public class BossAIBrain : MonoBehaviour
 
             _isInvoking = false; 
         }
-
-        // why not increase invocation probability if it failed 
-        StartCoroutine(SetInvocationCooldown(_invocationDelay));
     }
 
-    private void Attack()
+    private void SetAttackRotation() 
     {
-        StartCoroutine(SetAttackCooldown(5f));
-        if (_isInvoking) return; 
+        // if (_isInvoking) return;
+        StartCoroutine(SetAttackCooldown(5f)); 
 
-        _rayPlaceholderManager.rotation = Quaternion.Euler(0f, Random.Range(0f, 90f), 0f);
+        Debug.Log(" attacking");  
+
+        _rayPlaceholderManager.rotation = Quaternion.Euler(0f, Random.Range(0f, 90f), 0f); // UPRGADE : less random, aim at player with some accuracy value
         List<Vector3> directions = new List<Vector3>(); 
 
         for (int i = 0; i < _rayPlaceholderVisuals.Count; i++)  
@@ -286,11 +346,9 @@ public class BossAIBrain : MonoBehaviour
             directions.Add(_rayPlaceholderVisuals[i].transform.position - rayPlaceholderOrigin[i].position);   
         } 
 
-        Debug.Log("attacking"); 
         StartCoroutine(CastRayToPlayer(directions)); 
     }
 
-    // possible : have a reference ray casting to the player and the others spreading from there 
     private IEnumerator CastRayToPlayer(List<Vector3> direction)
     {
         yield return new WaitForSeconds(2f); 
@@ -301,6 +359,7 @@ public class BossAIBrain : MonoBehaviour
             _rayMeshRenderers[i].enabled = false; 
             _rayColliders[i].enabled = true; 
         }
+        
     }
 
     IEnumerator SetInvocationCooldown(float delay)
@@ -317,13 +376,25 @@ public class BossAIBrain : MonoBehaviour
     IEnumerator SetAttackCooldown(float delay) 
     {
         Debug.Log("setting can attack to false"); 
-        _canAttack = false;
+
+        _canRayAttack = false;
 
         yield return new WaitForSeconds(delay); 
-        _canAttack = true;
+        _canRayAttack = true;
     } 
-
+    
     // SUPER DRY
+    IEnumerator SetCanDoAirAttack(float delay)  
+    {
+        Debug.Log("setting can do air attack to false"); 
+
+        _canDoAirAttack = false;
+
+        yield return new WaitForSeconds(delay); 
+        _canDoAirAttack = true; 
+    }
+
+    // ...
     IEnumerator SetSwitchesCooldown(float delay)
     {
         _showActivatableLigths = false;

@@ -150,7 +150,7 @@ public class Boomerang : MonoBehaviour
 
         if (Mathf.Pow(2, other.gameObject.layer) == playerLayer) 
         {
-            Debug.Log("Collision with Player");
+            // Debug.Log("Collision with Player");
             playerPos.GetComponent<PlayerMovement_Alan>().canThrow = true;
             playerPos.GetComponent<PlayerMovement_Alan>().playerRB.velocity = Vector3.zero;
             Destroy(gameObject);
@@ -166,7 +166,7 @@ public class Boomerang : MonoBehaviour
 
         if (Mathf.Pow(2, other.gameObject.layer) == EnemyLayer) 
         { 
-            Debug.Log("Collision with Enemy");
+            // Debug.Log("Collision with Enemy");
             enemy = other.GetComponent<BasicAIBrain>(); 
 
             if (enemy.Type == AIType.Mascotte && Boomerang.s_SeenByEnemy) // change this so you can kill from behind, not only on the way back 

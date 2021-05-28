@@ -23,7 +23,6 @@ public class Health : MonoBehaviour
     public void DecreaseHp(sbyte value)
     {
         CurrentValue -= value; 
-        Debug.Log($"decreasing hp by {value}. New value is {CurrentValue}");
 
         if (CurrentValue > 0 || _notifiedDeath) return;
         

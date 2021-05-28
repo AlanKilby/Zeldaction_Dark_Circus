@@ -62,7 +62,7 @@ public class PlayerMovement_Alan : MonoBehaviour
             }
             if (Input.GetButtonUp("PlayerAttack"))
             {
-                Debug.Log("No Longer Pressing");
+                // Debug.Log("No Longer Pressing");
                 Attack(throwingTime);
                 canMove = true;
                 throwingTime = minThrowTime;

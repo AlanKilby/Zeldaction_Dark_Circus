@@ -22,7 +22,7 @@ public class Switch : MonoBehaviour
             Debug.Log("PlayerIsDetected");
             CanBeDeactivated = false;  
             _light.color = Color.black;
-            BossAIBrain.OnRequireStateChange(States.Defend, StateTransition.Overwrite);  
+            BossAIBrain.OnRequireStateChange(BossStates.Defend, StateTransition.Overwrite);  
             Invoke(nameof(ResetState), 0f);     
         } 
     } 
