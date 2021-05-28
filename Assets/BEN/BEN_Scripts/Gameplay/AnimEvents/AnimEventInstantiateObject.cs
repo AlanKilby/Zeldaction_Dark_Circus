@@ -31,8 +31,8 @@ public class AnimEventInstantiateObject : MonoBehaviour
     private void OnDestroy() 
     {
         if (!Application.isPlaying || !instantiateManuallyOnSelfDestroy) return;
-        var reference = Instantiate(objToInstantiateOnSelfDestroy, transform.position + new Vector3(0f, -0.7f, 0f), Quaternion.Euler(90f, 0f, 0f));
 
+        var reference = Instantiate(objToInstantiateOnSelfDestroy, new Vector3(transform.position.x, 0.15f, transform.position.z), Quaternion.Euler(90f, 0f, 0f));
         if (!destroyNestedPrefabAfterDelay) return; 
         Destroy(reference, 1f);
     }
