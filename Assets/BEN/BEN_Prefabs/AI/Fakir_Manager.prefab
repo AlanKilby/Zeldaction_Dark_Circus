@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 3196105207163711259}
-  angle: 1.6038579
-  myModifiedAngle: 0
+  EulerAnglesY: 0
+  myModifiedEulerAnglesY: 0
   angleIndex: 0
 --- !u!1 &692901491524727519
 GameObject:
@@ -71,11 +71,41 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692901491524727519}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 1, z: -8.52}
+  m_LocalPosition: {x: -11.9, y: 1, z: -0.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7049274541335308754}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2757909674479817790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2277243042852891183}
+  m_Layer: 0
+  m_Name: ProjectilSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2277243042852891183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2757909674479817790}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3196105207235364682}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3196105207163711262
 GameObject:
@@ -236,25 +266,29 @@ MonoBehaviour:
   isMonkeyBall: 0
   isFakir: 1
   isCaster: 1
+  _fakirProjectile: {fileID: 2189245299580547039, guid: 1eff3c9566c052846860fcbe2e093285, type: 3}
   _monkeyBallProjectile: {fileID: 2745454191333491136, guid: 74380e312f9f8dc47a82ed86733489e5, type: 3}
-  _fakirProjectile: {fileID: 554421524130511497, guid: 6b3644fcc3a2b2749b4068030141afc7, type: 3}
   _defaultSpeed: 2
   _attackRate: 2
-  _monkeyBallProvocDuration: 3
   _attackStateSpeedMultiplier: 1.25
   _attackDelay: 1
-  _attackRange: 1
+  _attackRange: 10
   _attackDamage: 1
-  _monkeyBallDodgeReactionTime: 0.5
-  _monkeyBallInvulnerabilityTime: 1
   _delayBeforeBackToDefaultState: 3
   _allyNotifyRadius: 8
+  _monkeyBallProvocDuration: 3
+  _monkeyBallDodgeReactionTime: 0.5
+  _monkeyBallDodgeDistance: 5
   _graphics: {fileID: 3196105207732227387}
   _detection: {fileID: 3196105207235364683}
   _placeholderDestination: {fileID: 891107891}
+  _ballGraphics: {fileID: 0}
+  _componentsToDeactivateOnDeath:
+  - {fileID: 3196105207163711238}
+  - {fileID: 7335009159249139243}
+  - {fileID: 3196105207235364681}
   _debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
-  angle: 0
 --- !u!114 &7335009159249139243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,7 +355,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2277243042852891183}
   m_Father: {fileID: 3196105207163711261}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -362,6 +397,7 @@ MonoBehaviour:
   playerWeapon:
     serializedVersion: 2
     m_Bits: 128
+  BearerType: 0
 --- !u!1 &3196105207732227387
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,8 +409,11 @@ GameObject:
   - component: {fileID: 3196105207732227386}
   - component: {fileID: 3196105207732227384}
   - component: {fileID: 3196105207732227367}
+  - component: {fileID: 7156988329205216337}
   - component: {fileID: 3196105207732227385}
   - component: {fileID: 1114475966}
+  - component: {fileID: 1368377169}
+  - component: {fileID: 7467046443556585310}
   m_Layer: 0
   m_Name: Fakir_Graphics
   m_TagString: Untagged
@@ -466,6 +505,102 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!82 &7156988329205216337
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3196105207732227387}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 20
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &3196105207732227385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,6 +628,208 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 5953828729676287935}
   destroyDelay: 0
+--- !u!114 &1368377169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3196105207732227387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda50a2dc7195c74ca467102b0170f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originPositionReference: {fileID: 2277243042852891183}
+  originRotationReference: {fileID: 2277243042852891183}
+--- !u!114 &7467046443556585310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3196105207732227387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8c8227e6af4654e80773a1b80eb747, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 8300000, guid: e38fda0ee4d1139489475924481da2dc, type: 3}
+    - {fileID: 8300000, guid: 989f61df89a292147bea2d3d61112366, type: 3}
+    - {fileID: 8300000, guid: 18b294a34d997bb498b0b4bf0fadbfdc, type: 3}
+    - {fileID: 8300000, guid: 83a6dc7cb50a2924b8ed4524748ed50c, type: 3}
+    - {fileID: 8300000, guid: 1563bd0afaced604f92c784af2ccef12, type: 3}
+    - {fileID: 8300000, guid: 78e9574ff200a4f41ba7a51159627be1, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _soundsDictionary
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[SoundType, Assembly-CSharp],[System.Collections.Generic.List`1[[Sound,
+        Assembly-CSharp]], mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[SoundType, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[Sound, Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 3|Sound, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Attack1
+    - Name: clip
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|Sound, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Attack2
+    - Name: clip
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Sound, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Attack3
+    - Name: clip
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Sound, Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 7|Sound, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Hurt1
+    - Name: clip
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 8|Sound, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Hurt2
+    - Name: clip
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 7
+      Data: 9|System.Collections.Generic.List`1[[Sound, Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 10|Sound, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Death
+    - Name: clip
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1 &5953828729676287935
 GameObject:
   m_ObjectHideFlags: 0
