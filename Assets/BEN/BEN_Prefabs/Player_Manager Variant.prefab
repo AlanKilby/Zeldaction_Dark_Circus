@@ -123,6 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 7618909233720531582}
   destroyDelay: 0
+  destroyFromStart: 0
 --- !u!114 &2877410177616000449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +276,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5539784748974113972, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: m_Size.x
+      value: 2.0625
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539784748974113972, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: m_Size.y
+      value: 2.65625
+      objectReference: {fileID: 0}
     - target: {fileID: 5539784748974113974, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_Controller
       value: 
@@ -401,6 +410,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5539784749741460123, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539784749741460123, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: m_CollisionDetection
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

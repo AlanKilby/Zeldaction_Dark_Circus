@@ -45,7 +45,8 @@ public class Boomerang : MonoBehaviour
         hasWand = playerPos.GetComponent<PlayerMovement_Alan>().hasWand;
         isComingBack = false;
         rb = gameObject.GetComponent<Rigidbody>();
-        aimPos = playerPos.GetComponent<PlayerMovement_Alan>().aim.transform.position;
+        aimPos = playerPos.GetComponent<PlayerMovement_Alan>().aim.transform.position;
+
         s_SeenByEnemy = false; 
     }
 
@@ -54,7 +55,8 @@ public class Boomerang : MonoBehaviour
 
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
 
-        comebackTimer -= Time.deltaTime;
+        comebackTimer -= Time.deltaTime;
+
 
         Teleport();
         Bounce();
@@ -62,31 +64,56 @@ public class Boomerang : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isStunned)
-        {
-            if (comebackTimer > 0)
-            {
-                //.MovePosition(transform.position + transform.forward * goingSpeed * Time.deltaTime); // Test for the hat movement
-
-                rb.MovePosition(transform.position + transform.forward * goingSpeedC.Evaluate(comebackTimer) * Time.deltaTime);
-            }
-            else if (comebackTimer <= 0)
-            {
-                isComingBack = true;
-
-                this.transform.LookAt(playerPos);
-
-
-                rb.velocity = Vector3.zero;
-
-                Debug.Log(comingSpeedC.Evaluate(comebackTimer));
-
-                rb.MovePosition(transform.position + transform.forward * comingSpeedC.Evaluate(comebackTimer) * Time.deltaTime);
-
-                //comingSpeed = comingSpeedC.Evaluate(comebackTimer);
-
-                holder = false;
-            }
+        if (!isStunned)
+
+        {
+
+            if (comebackTimer > 0)
+
+            {
+
+                //.MovePosition(transform.position + transform.forward * goingSpeed * Time.deltaTime); // Test for the hat movement
+
+
+
+                rb.MovePosition(transform.position + transform.forward * goingSpeedC.Evaluate(comebackTimer) * Time.deltaTime);
+
+            }
+
+            else if (comebackTimer <= 0)
+
+            {
+
+                isComingBack = true;
+
+
+
+                this.transform.LookAt(playerPos);
+
+
+
+
+
+                rb.velocity = Vector3.zero;
+
+
+
+                // Debug.Log(comingSpeedC.Evaluate(comebackTimer));
+
+
+
+                rb.MovePosition(transform.position + transform.forward * comingSpeedC.Evaluate(comebackTimer) * Time.deltaTime);
+
+
+
+                //comingSpeed = comingSpeedC.Evaluate(comebackTimer);
+
+
+
+                holder = false;
+
+            }
+
         }  
     }
 
@@ -149,9 +176,12 @@ public class Boomerang : MonoBehaviour
                 return;
             }  
 
-            other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
-
-            // Changement pour que la nervosité augmente, changement fait le 19 mai 2021
+            other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
+
+
+
+            // Changement pour que la nervosité augmente, changement fait le 19 mai 2021
+
             isComingBack = true;
             comebackTimer = 0;
         }

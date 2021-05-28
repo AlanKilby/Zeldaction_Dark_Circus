@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 6320285363555787972}
   - component: {fileID: 5569057797899511498}
   - component: {fileID: 5146443019421018949}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: FakirProjectile_Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,6 +256,8 @@ MonoBehaviour:
     m_Bits: 2048
   _clipToPlay: {fileID: 7400000, guid: 075f38c759c473540adfe7aefd7a50ba, type: 2}
   _animator: {fileID: 3470837471760635821}
+  disableCollider: 1
+  _collider: {fileID: 765689795176738057}
   _behaviourToStopOnPhysicsEvent:
   - {fileID: 5569057797899511498}
   - {fileID: 6320285363555787972}

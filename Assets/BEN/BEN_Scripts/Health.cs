@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
 
     public static System.Action OnPlayerDeath;
     private bool _notifiedDeath; // replace with global game state to avoid same bool spread accross codebase
-    private BoxCollider _playercollider;
+    private Collider _playercollider;
     private BasicAIBrain _brain;
     public System.Action OnMonkeyBallTransitionToNormalMonkey; 
 
@@ -30,7 +30,7 @@ public class Health : MonoBehaviour
             if (!IsAI)
             {
                 _notifiedDeath = true;
-                _playercollider = GetComponent<BoxCollider>();
+                _playercollider = GetComponent<Collider>();
                 _playercollider.enabled = false; 
                 OnPlayerDeath();  
             }

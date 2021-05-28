@@ -87,7 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2277243042852891183}
   m_Layer: 0
-  m_Name: ProjectilSpawnPoint
+  m_Name: instantiationReferencePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2757909674479817790}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0, y: 2.25, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3196105207235364682}
@@ -627,7 +627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 5953828729676287935}
-  destroyDelay: 0
+  destroyDelay: 2
 --- !u!114 &1368377169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -640,8 +640,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda50a2dc7195c74ca467102b0170f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showOffset: 1
   originPositionReference: {fileID: 2277243042852891183}
-  originRotationReference: {fileID: 2277243042852891183}
+  _offsetToAdd: {x: 0, y: -3.5, z: 2}
 --- !u!114 &7467046443556585310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,7 +846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5953828729676287934
 Transform:
   m_ObjectHideFlags: 0
