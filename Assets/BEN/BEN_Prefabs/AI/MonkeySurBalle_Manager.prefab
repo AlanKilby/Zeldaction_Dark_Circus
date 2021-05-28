@@ -124,7 +124,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8954398699014469952}
   m_Father: {fileID: 797199752371587998}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -225,6 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 2651920672806243565}
   destroyDelay: 0
+  destroyFromStart: 0
 --- !u!114 &5175272360131466053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,8 +239,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda50a2dc7195c74ca467102b0170f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useSecondarySpawnPoint: 1
+  instantiateManuallyOnSelfDestroy: 0
+  destroyNestedPrefabAfterDelay: 0
+  objToInstantiateOnSelfDestroy: {fileID: 0}
   originPositionReference: {fileID: 4309473793284254715}
-  originRotationReference: {fileID: 4309473793284254715}
+  secondarySpawnPoint: {fileID: 8954398699014469952}
 --- !u!1 &797199752267424712
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,7 +488,7 @@ MonoBehaviour:
   _allyNotifyRadius: 8
   _monkeyBallProvocDuration: 3
   _monkeyBallDodgeReactionTime: 0
-  _monkeyBallDodgeDistance: 5
+  _monkeyBallDodgeDistance: 8
   _graphics: {fileID: 797199751803070904}
   _detection: {fileID: 797199752267424712}
   _placeholderDestination: {fileID: 610376292}
@@ -623,6 +629,36 @@ Transform:
   m_Father: {fileID: 797199752267424713}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4340852877187421121
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8954398699014469952}
+  m_Layer: 0
+  m_Name: secondarySpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8954398699014469952
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4340852877187421121}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 797199751803070905}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6919005683356471566
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,6 +673,7 @@ GameObject:
   - component: {fileID: 7610475279030504824}
   - component: {fileID: 322265469464102069}
   - component: {fileID: 993034457065166823}
+  - component: {fileID: 1207747590057568802}
   m_Layer: 0
   m_Name: Ball_Graphics
   m_TagString: Untagged
@@ -768,6 +805,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _angularSpeed: 5
   isProjectile: 0
+--- !u!114 &1207747590057568802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6919005683356471566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda50a2dc7195c74ca467102b0170f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useSecondarySpawnPoint: 0
+  instantiateManuallyOnSelfDestroy: 1
+  destroyNestedPrefabAfterDelay: 0
+  objToInstantiateOnSelfDestroy: {fileID: 2749289271832880399, guid: cbbf63d1614e17f4581efd5b07feb551, type: 3}
+  originPositionReference: {fileID: 3683318711155199436}
+  secondarySpawnPoint: {fileID: 0}
 --- !u!1 &6982587735585248565
 GameObject:
   m_ObjectHideFlags: 0

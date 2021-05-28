@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3782155397380560570}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8072824807585136641}
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 8835960570973703075}
-  destroyDelay: 0
+  destroyDelay: 0.2
   destroyFromStart: 0
 --- !u!114 &1064879021
 MonoBehaviour:
@@ -323,7 +323,9 @@ MonoBehaviour:
   useSecondarySpawnPoint: 0
   instantiateManuallyOnSelfDestroy: 0
   destroyNestedPrefabAfterDelay: 0
-  objToInstantiateOnSelfDestroy: {fileID: 0}
+  randomSelectionFromList: 0
+  objToInstantiateOnSelfDestroy:
+  - {fileID: 9151969981844469843, guid: 6ddf36aaa609f1b4cbd151ad984c2c9c, type: 3}
   originPositionReference: {fileID: 9022539693079688065}
   secondarySpawnPoint: {fileID: 0}
 --- !u!1 &8072824808082983536

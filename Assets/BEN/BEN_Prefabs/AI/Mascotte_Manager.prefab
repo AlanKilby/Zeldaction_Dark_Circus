@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 3982106213023558240}
-  destroyDelay: 0.2
+  destroyDelay: 0.1
   destroyFromStart: 0
 --- !u!114 &1760892740547742467
 MonoBehaviour:
@@ -577,7 +577,9 @@ MonoBehaviour:
   useSecondarySpawnPoint: 0
   instantiateManuallyOnSelfDestroy: 0
   destroyNestedPrefabAfterDelay: 0
-  objToInstantiateOnSelfDestroy: {fileID: 0}
+  randomSelectionFromList: 0
+  objToInstantiateOnSelfDestroy:
+  - {fileID: 9151969981844469843, guid: 6ddf36aaa609f1b4cbd151ad984c2c9c, type: 3}
   originPositionReference: {fileID: 3367656968373875399}
   secondarySpawnPoint: {fileID: 0}
 --- !u!1 &7725771847202023909

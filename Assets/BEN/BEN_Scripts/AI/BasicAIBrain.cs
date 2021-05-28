@@ -129,6 +129,7 @@ namespace BEN.AI
         public float MonkeyBallDodgeDistance { get; private set; }
         
 #endregion
+
 #region Unity Callbacks
 
         private void Awake()
@@ -292,7 +293,7 @@ namespace BEN.AI
             _graphics.transform.localRotation = Quaternion.identity;
         } 
         // <===
-
+        
         #region FSM
 
         #region Init 
@@ -372,8 +373,8 @@ namespace BEN.AI
             switch (type) 
             {
                 case AIType.Monkey:
-                    _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
-                    break;
+                    _aIAnimation.PlayAnimation(wasMonkeyBall ? AnimState.SecondaryAtk : AnimState.Atk, _animDirection);
+                    break; 
                 case AIType.MonkeySurBall:
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection); 
                     break;
@@ -450,13 +451,15 @@ namespace BEN.AI
         // only called if monkey ball is dead 
         private void BecomeNormalMonkey()
         {
-            _ballGraphics.SetActive(false);
+            Destroy(_ballGraphics); 
             transform.position = new Vector3(transform.position.x, -0.75f, transform.position.z);
             _graphics.transform.localPosition = Vector3.zero; 
             _checkSurroundings.BearerType = type = AIType.Monkey; 
             _agentHp.CurrentValue = 1; 
             _attackRange = 1f; // would have been better to store each mob General stats into a scriptable object so that I can assign the right values 
-            wasMonkeyBall = true; 
+            wasMonkeyBall = true;
+            _agent.destination = PlayerMovement_Alan.sPlayerPos;
+            _attackDelay = 0.2f; 
             
             OnRequireStateChange(States.Attack, StateTransition.Safe); 
         }

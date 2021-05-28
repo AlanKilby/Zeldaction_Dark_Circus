@@ -23,22 +23,21 @@ public class Health : MonoBehaviour
     public void DecreaseHp(sbyte value)
     {
         CurrentValue -= value; 
-        Debug.Log($"decreasing hp by {value}. New value is {CurrentValue}"); 
+        Debug.Log($"decreasing hp by {value}. New value is {CurrentValue}");
 
-        if (CurrentValue <= 0 && !_notifiedDeath)
+        if (CurrentValue > 0 || _notifiedDeath) return;
+        
+        if (!IsAI)
         {
-            if (!IsAI)
-            {
-                _notifiedDeath = true;
-                _playercollider = GetComponent<Collider>();
-                _playercollider.enabled = false; 
-                OnPlayerDeath();  
-            }
-            else if (_brain.Type == AIType.MonkeySurBall)
-            {
-                _notifiedDeath = true;
-                OnMonkeyBallTransitionToNormalMonkey(); 
-            }
+            _notifiedDeath = true;
+            _playercollider = GetComponent<Collider>();
+            _playercollider.enabled = false; 
+            OnPlayerDeath();  
+        }
+        else if (_brain.Type == AIType.MonkeySurBall)
+        {
+            _notifiedDeath = true;
+            OnMonkeyBallTransitionToNormalMonkey(); 
         }
     } 
 }
