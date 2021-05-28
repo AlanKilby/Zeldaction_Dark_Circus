@@ -51,16 +51,16 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     void Update()
     {
-        if (isInMenu)
-        {
-            canMove = false;
-            canThrow = false;
-        }
-        else if (!isInMenu)
-        {
-            canMove = true;
-            canThrow = true;
-        }
+        //if (isInMenu)
+        //{
+        //    canMove = false;
+        //    canThrow = false;
+        //}
+        //else if (!isInMenu)
+        //{
+        //    canMove = true;
+        //    canThrow = true;
+        //}
         
         sPlayerPos = transform.position; 
 
