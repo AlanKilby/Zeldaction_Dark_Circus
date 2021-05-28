@@ -67,6 +67,10 @@ public class BossAIBrain : MonoBehaviour
 
     public LayerMask playerLayer;
     private bool _showActivatableLigths = true;  // this should not be here 
+    public List<Transform> rayPlaceholderOrigin = new List<Transform>();
+    private List<MeshRenderer> _rayMeshRenderers = new List<MeshRenderer>();
+    private List<Collider> _rayColliders = new List<Collider>();
+    private bool isInvoking; 
 
     #region Unity Callbacks
 
@@ -103,7 +107,9 @@ public class BossAIBrain : MonoBehaviour
 
         for (int i = 0; i < rayPlaceholderVisuals.Count; i++)
         {
-            rayPlaceholderVisuals[i].SetActive(false);  
+            _rayMeshRenderers.Add(rayPlaceholderVisuals[i].GetComponent<MeshRenderer>());
+            _rayColliders.Add(rayPlaceholderVisuals[i].GetComponent<Collider>());
+            _rayColliders[i].enabled = false; 
         }
 
         if (invokeOnStart)
@@ -237,7 +243,8 @@ public class BossAIBrain : MonoBehaviour
 
     private void Attack()
     {
-        StartCoroutine(SetAttackCooldown(5f)); 
+        StartCoroutine(SetAttackCooldown(5f));
+        if (isInvoking) return; 
 
         rayPlaceholderManager.rotation = Quaternion.Euler(0f, Random.Range(0f, 90f), 0f);
         List<Vector3> directions = new List<Vector3>();
@@ -246,11 +253,12 @@ public class BossAIBrain : MonoBehaviour
         {
             if (debugRay)
             {
-                rayPlaceholderVisuals[i].SetActive(true); 
+                _rayMeshRenderers[i].enabled = true;
+                _rayColliders[i].enabled = false; 
             }
 
-            directions.Add(rayPlaceholderVisuals[i].transform.position);  
-        }
+            directions.Add(rayPlaceholderVisuals[i].transform.position - rayPlaceholderOrigin[i].position);   
+        } 
 
         StartCoroutine(CastRayToPlayer(directions)); 
     }
@@ -261,22 +269,10 @@ public class BossAIBrain : MonoBehaviour
         yield return new WaitForSeconds(2f); 
         Debug.Log("debugging ray cast"); 
 
-        for (int i = 0; i < direction.Count; i++)
-        {
-            Debug.DrawLine(transform.position, (direction[i] - transform.position).normalized * 30f, Color.red, 0.25f, false);
-            for (int j = 0; j < 200; j++)
-            {
-                if (Physics.Raycast(transform.position, (direction[i] - transform.position).normalized * 30f, out RaycastHit hitInfo, 30f,
-                    10))
-                {
-                    Destroy(hitInfo.transform.root.gameObject); 
-                }  
-            }
-        }
-
-        for (int i = 0; i < rayPlaceholderVisuals.Count; i++)
-        {
-            rayPlaceholderVisuals[i].SetActive(false); 
+        for (var i = 0; i < rayPlaceholderVisuals.Count; i++)
+        { 
+            _rayMeshRenderers[i].enabled = false; 
+            _rayColliders[i].enabled = true; 
         }
     }
 
@@ -289,7 +285,7 @@ public class BossAIBrain : MonoBehaviour
     }
 
     // DRY
-    IEnumerator SetAttackCooldown(float delay)
+    IEnumerator SetAttackCooldown(float delay) 
     {
         _canAttack = false;
 
