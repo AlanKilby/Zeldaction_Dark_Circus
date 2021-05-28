@@ -1,26 +1,39 @@
+using System;
 using UnityEngine;
 
 public class AnimEventInstantiateObject : MonoBehaviour
 {
-    [SerializeField] private bool showOffset; 
+    [SerializeField] private bool useSecondarySpawnPoint;
+    [SerializeField] private bool instantiateManuallyOnSelfDestroy;
+    [SerializeField, ConditionalShow("instantiateManuallyOnSelfDestroy", true)] private bool destroyNestedPrefabAfterDelay; 
+    [SerializeField, ConditionalShow("instantiateManuallyOnSelfDestroy", true)] private GameObject objToInstantiateOnSelfDestroy; 
     [SerializeField] private Transform originPositionReference;
-    [SerializeField, ConditionalShow("showOffset", true)] private Vector3 _offsetToAdd;
+    [SerializeField, ConditionalShow("useSecondarySpawnPoint", true)] private Transform secondarySpawnPoint;
 
-    private void OnDrawGizmosSelected()
-    { 
-        if (!showOffset || !originPositionReference) return;
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(originPositionReference.position, .2f); 
-        Gizmos.DrawLine(originPositionReference.position, originPositionReference.position + _offsetToAdd);
-    }
+    private void OnValidate()
+    {
+        if (!instantiateManuallyOnSelfDestroy)
+        { 
+            destroyNestedPrefabAfterDelay = false; 
+        }
+    } 
 
     public void InstantiateObject(GameObject obj) 
     {
-        Instantiate(obj, originPositionReference.position, Quaternion.identity); 
+        Instantiate(obj, originPositionReference.position, Quaternion.identity);
     } 
     
-    public void InstantiateObjectWithOffset(GameObject obj) 
+    public void InstantiateObjectAtSecondaryPosition(GameObject obj) 
     {
-        Instantiate(obj, transform.TransformPoint(originPositionReference.localPosition + _offsetToAdd), Quaternion.identity); 
-    } 
+        Instantiate(obj, secondarySpawnPoint.position, Quaternion.identity); 
+    }
+
+    private void OnDestroy() 
+    {
+        if (!Application.isPlaying || !instantiateManuallyOnSelfDestroy) return;
+        var reference = Instantiate(objToInstantiateOnSelfDestroy, transform.position + new Vector3(0f, -0.7f, 0f), Quaternion.Euler(90f, 0f, 0f));
+
+        if (!destroyNestedPrefabAfterDelay) return; 
+        Destroy(reference, 1f);
+    }
 }
