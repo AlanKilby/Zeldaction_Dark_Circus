@@ -564,6 +564,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8930034649593468850}
+  - component: {fileID: 1272608561}
   m_Layer: 0
   m_Name: RayPlaceholdersManager
   m_TagString: Untagged
@@ -578,7 +579,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8930034649593468849}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -588,6 +589,22 @@ Transform:
   m_Father: {fileID: 8930034649707844236}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1272608561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8930034649593468849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f16242c245551004e8c3f8c8c4ac1220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rayPlaceholderVisuals:
+  - {fileID: 8930034648577192853}
+  - {fileID: 8930034648389585183}
+  - {fileID: 8930034649897519906}
 --- !u!1 &8930034649606898151
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,10 +992,9 @@ MonoBehaviour:
   - _type: 3
     _prefab: {fileID: 5953828729676287935, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
     _spawnProbability: 0.2
-  _invokeOnStartDelay: 10
-  _invocationDelay: 30
-  ray: 0
-  bombing: 0
+  _invokeOnStartDelay: 5
+  _invocationDelay: 10
+  _doFall: 0
   _switchedList:
   - {fileID: 0}
   - {fileID: 0}
@@ -991,20 +1007,10 @@ MonoBehaviour:
   _maxActiveSwitches: 2
   _vulnerabilityDuration: 5
   _percentOfDamageBeforeSwitchReset: 25
-  _rayPlaceholderManager: {fileID: 8930034649593468850}
-  _rayPlaceholderVisuals:
-  - {fileID: 8930034648577192853}
-  - {fileID: 8930034648389585183}
-  - {fileID: 8930034649897519906}
-  debugRay: 1
   doSpawns: 1
   playerLayer:
     serializedVersion: 2
     m_Bits: 1024
-  rayPlaceholderOrigin:
-  - {fileID: 8930034648872664301}
-  - {fileID: 8930034648300668753}
-  - {fileID: 8930034648552963050}
 --- !u!1 &8930034650060405814
 GameObject:
   m_ObjectHideFlags: 0

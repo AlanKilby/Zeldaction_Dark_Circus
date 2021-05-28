@@ -8,6 +8,7 @@ public class BossPlayerDetection : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (Mathf.Pow(2f, other.gameObject.layer) != _playerLayer) return; 
-        other.GetComponent<Health>().DecreaseHp(_rayDamageAmount);  
+        other.GetComponent<Health>().DecreaseHp(_rayDamageAmount); 
+        Debug.Log("ray damaging player"); 
     }
 }
