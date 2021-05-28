@@ -192,7 +192,7 @@ namespace BEN.AI
         }
 
         private void Start()
-        {
+        { 
             _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>();
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
@@ -205,6 +205,7 @@ namespace BEN.AI
             if (HasBeenInvokedByBoss || !_canPatrol)
             {
                 _patrol.enabled = false; 
+                _agentHp.CurrentValue = 1; // will be overwritten by health. Just to avoid 0 hp when invoked by boss
             }
 
             _agent = GetComponent<NavMeshAgent>();
@@ -224,7 +225,7 @@ namespace BEN.AI
         {
             // if (NewState == States.Die) Destroy(transform.parent.gameObject, 1f);  
             
-            if (_canPatrol)
+            if (_canPatrol && !HasBeenInvokedByBoss)
             {
                 _detection.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.EulerAnglesY, 0f);
             }
@@ -241,7 +242,7 @@ namespace BEN.AI
                 _exitingAttackState = false; 
                 _agent.speed = 0f;
                 _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); // use AnimDirection according to where you come from . 
-            }
+            } 
         }
 
         private void OnDisable() 
@@ -318,7 +319,7 @@ namespace BEN.AI
             yield return new WaitForSeconds(0.03f);
             Debug.Log("default_enter");
 
-            if (_canPatrol || GoingBackToPositionBeforeIdling) 
+            if ((_canPatrol || GoingBackToPositionBeforeIdling) && !HasBeenInvokedByBoss)
             {
                 if (Type == AIType.Fakir && !_canPatrol)
                 {
@@ -334,28 +335,7 @@ namespace BEN.AI
                 _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);
             }
         } 
-
-        void Default_FixedUpdate() 
-        { 
-            switch (type)
-            {
-                case AIType.Monkey: 
-                    break;
-                case AIType.MonkeySurBall:
-                    break;
-                case AIType.Mascotte:
-                    break;
-                case AIType.Fakir:
-                    break; 
-                default:
-                    break;
-            }
-        } 
         
-        void Default_Exit()
-        {
-            //Reset object to desired configuration
-        }
         
         #endregion 
 
@@ -405,8 +385,8 @@ namespace BEN.AI
                 if (LoadSceneOnPlayerDeath.playerIsDead)
                 {
                     _fsm.ChangeState(States.Default, StateTransition.Safe);
-                    CancelInvoke(nameof(FakeCAC));
-                } 
+                    CancelInvoke(nameof(FakeCAC)); 
+                }
 
                 // to simulate player killed from CAC. Distance is done from projectile
                 if ((type != AIType.Monkey && type != AIType.Mascotte) || _hasCalledFakeCac) return;
@@ -495,7 +475,7 @@ namespace BEN.AI
             }
         }
 
-        #endregion
+        #endregion 
 
         #region Defend
 

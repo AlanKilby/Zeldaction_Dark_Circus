@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using MonsterLove.StateMachine;
 using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public class SpawnableEntity
 {
     [SerializeField] private AIType _type;
     [SerializeField] private GameObject _prefab;
-    [SerializeField, Range(0f, 100f)] private float _spawnProbability = 30f;
+    [SerializeField, Range(0f, 1f)] private float _spawnProbability = 0.5f; 
     public AIType Type { get => _type; } 
     public float SpawnProbability { get => _spawnProbability; }
     public GameObject Prefab { get => _prefab; } 
@@ -24,10 +25,13 @@ public class BossAIBrain : MonoBehaviour
 {
     // [SerializeField] private GameObject _graphics;
     [Header("Spawn")]
-    [SerializeField, Space] private GameObject _spawner; // upgrade to have more creative control and use less prefabs 
+    [SerializeField, Space] private GameObject _spawnerHalfCircle; // upgrade to have more creative control and use less prefabs
+    [SerializeField, Space] private GameObject _spawnerOuter; // upgrade to have more creative control and use less prefabs 
     [SerializeField] private List<SpawnableEntity> _spawnableEntitiesList; // use a HashSet instead to avoid duplicates 
     [SerializeField, Range(5, 60)] private float invocationDelay = 20f;
-    private List<Vector3> _spawnPositions = new List<Vector3>();
+    private List<Vector3> _spawnPositionsHalfCircle = new List<Vector3>();
+    private List<Vector3> _spawnPositionsOuter = new List<Vector3>();
+
 
     [Header("Attack")]
     public bool ray;
@@ -48,7 +52,7 @@ public class BossAIBrain : MonoBehaviour
     public static Action<States, StateTransition> OnRequireStateChange;
 
     private float m_invocationSelector; 
-    private int m_entityToInvokeSelector;
+    private float m_entityToInvokeSelector;
 
     private bool m_canInvoke = true; 
     private bool _canAttack = true; 
@@ -87,9 +91,14 @@ public class BossAIBrain : MonoBehaviour
     {
         _aIAnimation = GetComponentInChildren<AIAnimation>();
         sBossVulnerabilityDuration = vulnerabilityDuration; 
-        for (int i = 0; i < _spawner.transform.childCount; i++)
+        for (int i = 0; i < _spawnerHalfCircle.transform.childCount; i++)
         {
-            _spawnPositions.Add(_spawner.transform.GetChild(i).position);
+            _spawnPositionsHalfCircle.Add(_spawnerHalfCircle.transform.GetChild(i).position);
+        }
+        
+        for (int i = 0; i < _spawnerOuter.transform.childCount; i++)
+        {
+            _spawnPositionsOuter.Add(_spawnerOuter.transform.GetChild(i).position);
         }
 
         for (int i = 0; i < rayPlaceholderVisuals.Count; i++)
@@ -196,42 +205,46 @@ public class BossAIBrain : MonoBehaviour
     #region Functionality
     private void InvokeEntity(float invocationProbability)
     {
-        if (doSpawns)
+        if (!doSpawns) return;
+
+        GameObject spawner = Random.Range(0, 2) == 0 ? _spawnerOuter : _spawnerHalfCircle;
+        List<Vector3> spawnPositions = spawner == _spawnerOuter ? _spawnPositionsOuter : _spawnPositionsHalfCircle;
+        
+        // try invoking for each spawn point
+        for (int i = 0; i < spawner.transform.childCount; i++)  
         {
-            // try invoking for each spawn point
-            for (int i = 0; i < _spawner.transform.childCount; i++)  
-            {
-                // try invoking
-                m_invocationSelector = UnityEngine.Random.Range(0f, 1f); 
+            // try invoking
+            m_invocationSelector = Random.Range(0f, 1f);  
 
-                if (m_invocationSelector <= invocationProbability)
-                { 
-                    // if invocation, select entity
-                    m_entityToInvokeSelector = UnityEngine.Random.Range(0, _spawnableEntitiesList.Count); // upgrade with individual probability if needed 
-                    GameObject instanceReference = Instantiate(_spawnableEntitiesList[m_entityToInvokeSelector].Prefab, _spawnPositions[i], Quaternion.identity);
-                    BasicAIBrain basicAIBrain = instanceReference.GetComponentInChildren<BasicAIBrain>();
-                    basicAIBrain.HasBeenInvokedByBoss = true;
-                    basicAIBrain.TargetToAttackPosition = PlayerMovement_Alan.sPlayerPos;
-                    basicAIBrain.OnRequireStateChange(States.Attack, StateTransition.Overwrite); 
-                    // basicAIBrain.Type = _spawnableEntitiesList[m_entityToInvokeSelector].Type; // warning risk of having basicAIBrain Type and type different 
-                }
+            if (m_invocationSelector <= invocationProbability) 
+            { 
+                // if invocation, select entity
+                m_entityToInvokeSelector = UnityEngine.Random.Range(0f, 1f);
+                var selector = m_entityToInvokeSelector <= _spawnableEntitiesList[1].SpawnProbability ? 1 : 0; // super crados 
+                
+                GameObject instanceReference = Instantiate(_spawnableEntitiesList[selector].Prefab, spawnPositions[i], Quaternion.identity);
+                BasicAIBrain basicAIBrain = instanceReference.GetComponentInChildren<BasicAIBrain>();
+                basicAIBrain.HasBeenInvokedByBoss = true;
+                basicAIBrain.TargetToAttackPosition = PlayerMovement_Alan.sPlayerPos;
+                basicAIBrain.OnRequireStateChange(States.Attack, StateTransition.Overwrite); 
+                // basicAIBrain.Type = _spawnableEntitiesList[m_entityToInvokeSelector].Type; // warning risk of having basicAIBrain Type and type different 
             }
-
-            // why not increase invocation probability if it failed 
-            StartCoroutine(SetInvocationCooldown(invocationDelay));
         }
+
+        // why not increase invocation probability if it failed 
+        StartCoroutine(SetInvocationCooldown(invocationDelay));
     }
 
     private void Attack()
     {
         StartCoroutine(SetAttackCooldown(5f)); 
 
-        rayPlaceholderManager.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 90f), 0f);
+        rayPlaceholderManager.rotation = Quaternion.Euler(0f, Random.Range(0f, 90f), 0f);
         List<Vector3> directions = new List<Vector3>();
 
         for (int i = 0; i < rayPlaceholderVisuals.Count; i++)  
         {
-            if (!debugRay)
+            if (debugRay)
             {
                 rayPlaceholderVisuals[i].SetActive(true); 
             }
@@ -250,12 +263,15 @@ public class BossAIBrain : MonoBehaviour
 
         for (int i = 0; i < direction.Count; i++)
         {
-            Debug.DrawLine(transform.position, (direction[i] - transform.position).normalized * 30f, Color.red, 0.25f, false);   
-            if (Physics.Raycast(transform.position, (direction[i] - transform.position).normalized * 30f, out RaycastHit hitInfo, 30f,
-                                     playerLayer, QueryTriggerInteraction.Collide))
+            Debug.DrawLine(transform.position, (direction[i] - transform.position).normalized * 30f, Color.red, 0.25f, false);
+            for (int j = 0; j < 200; j++)
             {
-                Destroy(hitInfo.transform.root.gameObject); 
-            }  
+                if (Physics.Raycast(transform.position, (direction[i] - transform.position).normalized * 30f, out RaycastHit hitInfo, 30f,
+                    10))
+                {
+                    Destroy(hitInfo.transform.root.gameObject); 
+                }  
+            }
         }
 
         for (int i = 0; i < rayPlaceholderVisuals.Count; i++)
@@ -279,7 +295,7 @@ public class BossAIBrain : MonoBehaviour
 
         yield return new WaitForSeconds(delay); 
         _canAttack = true;
-    }
+    } 
 
     // SUPER DRY
     IEnumerator SetSwitchesCooldown(float delay)
