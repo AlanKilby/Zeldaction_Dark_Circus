@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class AK_Potion : MonoBehaviour
 {
-    
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    Animator potionAnim;
+    BoxCollider potionCollider;
+    AK_PlayerPotionManager potionManager;
+    public float destroyTime = 4;
+    private void Start()
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Player")){
-
-            collision.GetComponent<AK_PlayerPotionManager>().potionQuantity++;
-            Destroy(gameObject);      
-        }
+        potionAnim = GetComponent<Animator>();
+        potionCollider = GetComponent<BoxCollider>();
+        potionManager = GameObject.FindGameObjectWithTag("Player").GetComponent<AK_PlayerPotionManager>();
     }
 
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player") && potionManager.potionQuantity < potionManager.maxPotionQuantity)
+        {
+
+            //Debug.Log("PlayerCollisionPotion");
+            potionManager.potionQuantity++;
+            potionAnim.Play("collected");
+            potionCollider.enabled = false;
+            Destroy(gameObject,destroyTime);      
+        }
+    }
 
 }

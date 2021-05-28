@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UD_LeverPuzzleManager : MonoBehaviour
 {
-    public GameObject doorToOpen;
+    public UD_LeverPuzzleDoor doorToOpen;
 
     public UD_LeverPuzzle[] leverList;
 
@@ -18,7 +18,6 @@ public class UD_LeverPuzzleManager : MonoBehaviour
 
     void Start()
     {
-        doorToOpen.SetActive(true);
         RefreshLeverListID();
         timeBetweenLeverSpotingTimer = 0;
         puzzleStopped = false;
@@ -29,7 +28,7 @@ public class UD_LeverPuzzleManager : MonoBehaviour
     {
         if (currentActivatedLevers >= leverList.Length && !puzzleStopped)
         {
-            doorToOpen.SetActive(false);
+            doorToOpen.OpenDoors();
             puzzleStopped = true;
             for (int i = 0; i < leverList.Length; i++)
             {
