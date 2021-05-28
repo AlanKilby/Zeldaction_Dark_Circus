@@ -51,16 +51,16 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     void Update()
     {
-        if (isInMenu)
-        {
-            canMove = false;
-            canThrow = false;
-        }
-        else if (!isInMenu)
-        {
-            canMove = true;
-            canThrow = true;
-        }
+        //if (isInMenu)
+        //{
+        //    canMove = false;
+        //    canThrow = false;
+        //}
+        //else if (!isInMenu)
+        //{
+        //    canMove = true;
+        //    canThrow = true;
+        //}
         
         sPlayerPos = transform.position; 
 
@@ -102,7 +102,8 @@ public class PlayerMovement_Alan : MonoBehaviour
         // Lock player movement if !canMove
         if(canMove == true)
         {
-            playerRB.MovePosition(transform.position + move * movementSpeed * Time.deltaTime);
+            //playerRB.MovePosition(transform.position + move * movementSpeed * Time.deltaTime);
+            playerRB.velocity = new Vector3(move.x * movementSpeed,0f, move.z * movementSpeed);
         }
         
         // Keep current rotation
