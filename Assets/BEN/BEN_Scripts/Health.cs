@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
 
     public static System.Action OnPlayerDeath;
     private bool _notifiedDeath; // replace with global game state to avoid same bool spread accross codebase
-    private BoxCollider _playercollider;
+    private Collider _playercollider;
     private BasicAIBrain _brain;
     public System.Action OnMonkeyBallTransitionToNormalMonkey; 
 
@@ -23,22 +23,20 @@ public class Health : MonoBehaviour
     public void DecreaseHp(sbyte value)
     {
         CurrentValue -= value; 
-        Debug.Log($"decreasing hp by {value}. New value is {CurrentValue}"); 
 
-        if (CurrentValue <= 0 && !_notifiedDeath)
+        if (CurrentValue > 0 || _notifiedDeath) return;
+        
+        if (!IsAI)
         {
-            if (!IsAI)
-            {
-                _notifiedDeath = true;
-                _playercollider = GetComponent<BoxCollider>();
-                _playercollider.enabled = false; 
-                OnPlayerDeath();  
-            }
-            else if (_brain.Type == AIType.MonkeySurBall)
-            {
-                _notifiedDeath = true;
-                OnMonkeyBallTransitionToNormalMonkey(); 
-            }
+            _notifiedDeath = true;
+            _playercollider = GetComponent<Collider>();
+            _playercollider.enabled = false; 
+            OnPlayerDeath();  
+        }
+        else if (_brain.Type == AIType.MonkeySurBall)
+        {
+            _notifiedDeath = true;
+            OnMonkeyBallTransitionToNormalMonkey(); 
         }
     } 
 }

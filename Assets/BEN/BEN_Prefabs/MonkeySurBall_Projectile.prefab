@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2745454191333491143}
   - component: {fileID: 1515028272809177194}
   - component: {fileID: 1324236530561278231}
+  - component: {fileID: 2650690758682037850}
   m_Layer: 8
   m_Name: MonkeySurBall_Projectile
   m_TagString: Untagged
@@ -184,6 +185,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _destroyRoot: 0
   destroyOnWallCollision: 1
   _wallLayer:
     serializedVersion: 2
@@ -208,3 +210,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _angularSpeed: 15
   isProjectile: 1
+--- !u!114 &2650690758682037850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745454191333491136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda50a2dc7195c74ca467102b0170f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useSecondarySpawnPoint: 0
+  instantiateManuallyOnSelfDestroy: 1
+  destroyNestedPrefabAfterDelay: 0
+  randomSelectionFromList: 0
+  objToInstantiateOnSelfDestroy:
+  - {fileID: 2749289271832880399, guid: cbbf63d1614e17f4581efd5b07feb551, type: 3}
+  originPositionReference: {fileID: 2745454191333491141}
+  secondarySpawnPoint: {fileID: 0}

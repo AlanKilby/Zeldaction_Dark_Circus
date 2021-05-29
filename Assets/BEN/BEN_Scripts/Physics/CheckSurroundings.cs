@@ -7,6 +7,8 @@ using Random = System.Random;
 namespace BEN.AI 
 {
     [RequireComponent(typeof(BoxCollider))]
+    [DefaultExecutionOrder(5)] 
+
     public class CheckSurroundings : MonoBehaviour
     {
         [SerializeField] private LayerMask detectableTargetsLayer;

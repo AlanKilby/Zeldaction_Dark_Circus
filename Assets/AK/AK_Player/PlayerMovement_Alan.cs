@@ -51,15 +51,15 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     void Update()
     {
-        //if (isInMenu)
-        //{
-        //    canMove = false;
-        //    canThrow = false;
+        //if (isInMenu)
+        //{
+        //    canMove = false;
+        //    canThrow = false;
         //}
-        //else if (!isInMenu)
-        //{
-        //    canMove = true;
-        //    canThrow = true;
+        //else if (!isInMenu)
+        //{
+        //    canMove = true;
+        //    canThrow = true;
         //}
         
         sPlayerPos = transform.position; 
@@ -77,7 +77,7 @@ public class PlayerMovement_Alan : MonoBehaviour
             }
             if (Input.GetButtonUp("PlayerAttack"))
             {
-                Debug.Log("No Longer Pressing");
+                // Debug.Log("No Longer Pressing");
                 Attack(throwingTime);
                 canMove = true;
                 throwingTime = minThrowTime;
