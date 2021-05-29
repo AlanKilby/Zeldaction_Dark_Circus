@@ -15,14 +15,14 @@ public class Switch : MonoBehaviour
         _initialColor = _light.color; 
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other) 
     {
         if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.Space) && CanBeDeactivated) 
         {
             Debug.Log("PlayerIsDetected");
             CanBeDeactivated = false;  
             _light.color = Color.black;
-            BossAIBrain.OnRequireStateChange(States.Defend, StateTransition.Overwrite);  
+            BossAIBrain.OnRequireStateChange(BossStates.Defend, StateTransition.Overwrite);  
             Invoke(nameof(ResetState), 0f);     
         } 
     } 

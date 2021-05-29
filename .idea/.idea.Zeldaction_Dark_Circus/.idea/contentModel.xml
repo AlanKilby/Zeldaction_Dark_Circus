@@ -12,14 +12,19 @@
             <e p="AK_DropRateManager.cs" t="Include" />
           </e>
           <e p="AK_Player" t="Include">
+            <e p="AK_Aim.cs" t="Include" />
             <e p="AK_KeyManager.cs" t="Include" />
             <e p="AK_PlayerPotionManager.cs" t="Include" />
-            <e p="AK_Potion.cs" t="Include" />
             <e p="AK_Wand.cs" t="Include" />
             <e p="Boomerang.cs" t="Include" />
             <e p="HatAnimator.cs" t="Include" />
             <e p="PlayerAnimations.cs" t="Include" />
             <e p="PlayerMovement_Alan.cs" t="Include" />
+          </e>
+          <e p="AK_Props" t="Include">
+            <e p="AK_Heart.cs" t="Include" />
+            <e p="AK_LootBox.cs" t="Include" />
+            <e p="AK_Potion.cs" t="Include" />
           </e>
           <e p="AK_Puzzles" t="Include">
             <e p="AK_CounterWeight" t="Include">
@@ -46,7 +51,6 @@
           </e>
           <e p="AK_Traps" t="Include">
             <e p="AK_CottonCandy.cs" t="Include" />
-            <e p="AK_LootDrop.cs" t="Include" />
             <e p="AK_SlowingZone.cs" t="Include" />
             <e p="AK_TrapChest.cs" t="Include" />
           </e>
@@ -156,6 +160,8 @@
             <e p="Attributes" t="Include">
               <e p="ConditionalShowAttribute.cs" t="Include" />
             </e>
+            <e p="BossEventProjectileFalling.cs" t="Include" />
+            <e p="BossPlayerDetection.cs" t="Include" />
             <e p="Editor" t="Include">
               <e p="BasicAIBrainEditor.cs" t="Include" />
               <e p="PropertyDrawers" t="Include">
@@ -203,12 +209,16 @@
               <e p="PlaceholderDestination.cs" t="Include" />
             </e>
           </e>
+          <e p="FallDetection.cs" t="Include" />
+          <e p="Grow.cs" t="Include" />
+          <e p="RayAttack.cs" t="Include" />
         </e>
         <e p="CHARLES" t="Include">
           <e p="Scripts" t="Include">
             <e p="CHM_ButtonScripts.cs" t="Include" />
             <e p="CHM_Dialogue.cs" t="Include" />
             <e p="CHM_DialogueManager.cs" t="Include" />
+            <e p="CHM_MainMenuButtonActivation.cs" t="Include" />
             <e p="CHM_NPCDialogue.cs" t="Include" />
             <e p="CHM_NPCTrigger.cs" t="Include" />
             <e p="CHM_Pause.cs" t="Include" />
@@ -216,12 +226,28 @@
         </e>
         <e p="UD" t="Include">
           <e p="UD_Script" t="Include">
-            <e p="UD_LeverPuzzle.cs" t="Include" />
-            <e p="UD_LeverPuzzleDetectionZone.cs" t="Include" />
-            <e p="UD_LeverPuzzleManager.cs" t="Include" />
+            <e p="LeverPuzzle" t="Include">
+              <e p="UD_LeverPuzzle.cs" t="Include" />
+              <e p="UD_LeverPuzzleDetectionZone.cs" t="Include" />
+              <e p="UD_LeverPuzzleDoor.cs" t="Include" />
+              <e p="UD_LeverPuzzleManager.cs" t="Include" />
+            </e>
+            <e p="UD_FadeAndLoadingSceneManager.cs" t="Include" />
+            <e p="UD_JailScript.cs" t="Include" />
             <e p="UD_OptionMenu.cs" t="Include" />
+            <e p="UD_TalkButtonTrigger.cs" t="Include" />
+            <e p="UD_TalkColliderTrigger.cs" t="Include" />
             <e p="UD_UIHealthPoint.cs" t="Include" />
             <e p="UD_UIPotionHolder.cs" t="Include" />
+          </e>
+        </e>
+        <e p="YANN" t="Include">
+          <e p="YMI_SCRIPTS" t="Include">
+            <e p="YMI_AnimInput.cs" t="Include" />
+            <e p="YMI_CutOutDetection.cs" t="Include" />
+            <e p="YMI_RoomHidder.cs" t="Include" />
+            <e p="YMI_RoomHidding.cs" t="Include" />
+            <e p="YMI_WallHackEnnemy.cs" t="Include" />
           </e>
         </e>
       </e>
