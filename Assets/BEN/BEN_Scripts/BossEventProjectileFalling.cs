@@ -13,6 +13,9 @@ public class BossEventProjectileFalling : MonoBehaviour
     [SerializeField, Range(2f, 60f)] private float _projectileFallDelay = 30f; 
     private bool projectileCanFall = true;
     private Vector3 projectileSpawnPosition;
+    
+    [Header("DEBUG")]
+    public bool _simulateTotalPrecision; 
 
     private void FixedUpdate() 
     {
@@ -23,6 +26,12 @@ public class BossEventProjectileFalling : MonoBehaviour
              projectileSpawnPosition = new Vector3(Random.Range(_spawnZone.bounds.min.x + _fallZoneBorder, _spawnZone.bounds.max.x - _fallZoneBorder), 
                                                     _spawnZone.bounds.center.y, 
                                                     Random.Range(_spawnZone.bounds.min.z + _fallZoneBorder, _spawnZone.bounds.max.z - _fallZoneBorder));
+
+             if (_simulateTotalPrecision) // DEBUG 
+             {
+                 projectileSpawnPosition = PlayerMovement_Alan.sPlayerPos + new Vector3(0f, 10f, 0f); 
+             }
+             
              Instantiate(_bossProjectile[Random.Range(0, _bossProjectile.Length)], projectileSpawnPosition, Quaternion.identity);
              Instantiate(_projectileShadow,
                  new Vector3(projectileSpawnPosition.x, _groundHeight, projectileSpawnPosition.z),

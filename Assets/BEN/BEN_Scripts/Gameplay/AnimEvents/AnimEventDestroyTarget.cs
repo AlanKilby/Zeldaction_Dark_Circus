@@ -6,6 +6,7 @@ public class AnimEventDestroyTarget : MonoBehaviour
     [SerializeField] private GameObject targetToDestroy; 
     [SerializeField, Range(0f, 2f)] private float destroyDelay = 0.25f;
     [SerializeField] private bool destroyFromStart;
+    [SerializeField] private bool _destroyableFromBossEvent; 
 
     private void OnEnable()
     {
@@ -31,6 +32,7 @@ public class AnimEventDestroyTarget : MonoBehaviour
 
     private void BossEventDestroy()
     {
+        if (!_destroyableFromBossEvent) return; // un peu casse-gueule.. 
         Destroy(targetToDestroy, destroyDelay);
     }
 }
