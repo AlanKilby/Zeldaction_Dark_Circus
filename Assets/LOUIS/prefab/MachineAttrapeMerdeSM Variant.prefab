@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &7557347374812546800
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740820906460296537}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5099646, y: 0.48000008, z: 0.8816633}
+  m_Center: {x: 0.25045335, y: 0.000000014730485, z: -0.39718723}
 --- !u!1001 &1506958432411748360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69,7 +82,20 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 14f742b1b7e6ce144b5ed15d3c5606fb, type: 2}
     - target: {fileID: 919132149155446097, guid: a6de86e87bc25834a80e4dbe1a9a5598, type: 3}
       propertyPath: m_Name
-      value: MachineAttrapeMerdeSM
+      value: MachineAttrapeMerdeSM Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a6de86e87bc25834a80e4dbe1a9a5598, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a6de86e87bc25834a80e4dbe1a9a5598, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6de86e87bc25834a80e4dbe1a9a5598, type: 3}
+--- !u!1 &1740820906460296537 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a6de86e87bc25834a80e4dbe1a9a5598, type: 3}
+  m_PrefabInstance: {fileID: 1506958432411748360}
+  m_PrefabAsset: {fileID: 0}
