@@ -68,6 +68,7 @@ public class PlayerMovement_Alan : MonoBehaviour
         {
             if (Input.GetButton("PlayerAttack"))
             {
+                playerRB.velocity = Vector3.zero;
                 canMove = false;
                 if(throwingTime <= maxThrowTime)
                 {
