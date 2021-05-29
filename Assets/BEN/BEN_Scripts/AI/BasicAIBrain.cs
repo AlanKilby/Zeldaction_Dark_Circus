@@ -29,7 +29,7 @@ namespace BEN.AI
         MonkeySurBall,
         Mascotte, 
         Fakir  
-    }
+    } 
     
     public enum States
     {

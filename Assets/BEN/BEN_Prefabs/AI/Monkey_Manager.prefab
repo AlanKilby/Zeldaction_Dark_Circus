@@ -309,6 +309,7 @@ MonoBehaviour:
   targetToDestroy: {fileID: 8835960570973703075}
   destroyDelay: 1
   destroyFromStart: 0
+  _destroyableFromBossEvent: 0
 --- !u!114 &1064879021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -711,7 +712,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 2
-  m_Acceleration: 8
+  m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 0
