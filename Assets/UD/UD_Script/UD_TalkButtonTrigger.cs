@@ -9,9 +9,10 @@ public class UD_TalkButtonTrigger : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("PlayerAttack"))
         {
             DialogueTrigger.Invoke();
+            gameObject.SetActive(false);
         }
     }
 }
