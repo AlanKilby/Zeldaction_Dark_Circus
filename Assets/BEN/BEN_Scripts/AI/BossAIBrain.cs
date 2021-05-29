@@ -33,9 +33,6 @@ public class BossAIBrain : MonoBehaviour
     private List<Vector3> _spawnPositionsHalfCircle = new List<Vector3>(); 
     private List<Vector3> _spawnPositionsOuter = new List<Vector3>();
 
-    [Header("Object Falling")] 
-    [SerializeField] private bool _doFall; // placeholder
-    
     [Header("Switches")]
     [SerializeField] private List<Switch> _switchedList = new List<Switch>();
     [SerializeField] private byte _maxActiveSwitches = 2;
@@ -52,7 +49,7 @@ public class BossAIBrain : MonoBehaviour
 
     private float _invocationSelector; 
     private float _entityToInvokeSelector;
-
+ 
     private bool _canInvoke = true; 
     private bool _canDoAirAttack = false;
     private bool _lightsAreOff;
