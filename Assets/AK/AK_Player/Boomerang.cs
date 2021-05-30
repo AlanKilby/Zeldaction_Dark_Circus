@@ -18,7 +18,7 @@ public class Boomerang : MonoBehaviour
     public AnimationCurve goingSpeedC;
     public AnimationCurve comingSpeedC;
 
-    public LayerMask mirrorLayer, playerLayer, WallLayer, EnemyLayer, EnemyWeaponLayer; 
+    public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, enemyWeaponLayer, bossLayer; 
    
     private Rigidbody rb;
 
@@ -156,7 +156,7 @@ public class Boomerang : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (Mathf.Pow(2, other.gameObject.layer) == WallLayer)
+        if (Mathf.Pow(2, other.gameObject.layer) == wallLayer)
         {
             Debug.Log("Collision with Wall");
 
@@ -164,7 +164,7 @@ public class Boomerang : MonoBehaviour
             comebackTimer = 0;
         }
 
-        if (Mathf.Pow(2, other.gameObject.layer) == EnemyLayer) 
+        if (Mathf.Pow(2, other.gameObject.layer) == enemyLayer) 
         { 
             // Debug.Log("Collision with Enemy");
             enemy = other.GetComponent<BasicAIBrain>(); 
@@ -186,9 +186,14 @@ public class Boomerang : MonoBehaviour
             comebackTimer = 0;
         }
 
-        if (Mathf.Pow(2, other.gameObject.layer) == EnemyWeaponLayer) // fakir weapon
+        if (Mathf.Pow(2, other.gameObject.layer) == enemyWeaponLayer) // fakir weapon
         {
             other.GetComponent<ParabolicFunction>().InvertDirection(); 
+        } 
+        
+        if (Mathf.Pow(2, other.gameObject.layer) == bossLayer) // fakir weapon
+        {
+            BossAIBrain.sHitCounter++; 
         } 
     }
 }

@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
     [SerializeField] private AgentGameplayData _agentStartingHP; 
     public sbyte CurrentValue { get; set; } // only for mobs. Player current value should be stored in a scriptable object that inherits from AgentGameplayData
     public bool IsAI { get; set; }
+    public AgentGameplayData AgentStartinHP { get => _agentStartingHP; }
 
     public static System.Action OnPlayerDeath;
     private bool _notifiedDeath; // replace with global game state to avoid same bool spread accross codebase

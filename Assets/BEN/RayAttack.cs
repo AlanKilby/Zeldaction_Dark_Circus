@@ -8,10 +8,11 @@ public class RayAttack : MonoBehaviour
     public List<GameObject> _rayPlaceholderVisuals = new List<GameObject>(); 
     private List<Collider> _rayColliders = new List<Collider>();
     private List<MeshRenderer> _rayMeshRenderers = new List<MeshRenderer>();
-    private bool canRayAttack = true; 
+    public static bool sCanRayAttack; 
 
     private void Start()
     {
+        sCanRayAttack = true; 
         for (int i = 0; i < _rayPlaceholderVisuals.Count; i++)
         {
             _rayMeshRenderers.Add(_rayPlaceholderVisuals[i].GetComponent<MeshRenderer>()); 
@@ -21,7 +22,7 @@ public class RayAttack : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!canRayAttack) return; 
+        if (!sCanRayAttack) return; 
         Debug.Log(" attacking");
         StartCoroutine(nameof(CastRayToPlayer));
         StartCoroutine(nameof(SetCanRotate));
@@ -49,8 +50,8 @@ public class RayAttack : MonoBehaviour
 
     private IEnumerator SetCanRotate()
     {
-        canRayAttack = false; 
+        sCanRayAttack = false; 
         yield return new WaitForSeconds(5f);
-        canRayAttack = true; 
+        sCanRayAttack = true; 
     }
 }

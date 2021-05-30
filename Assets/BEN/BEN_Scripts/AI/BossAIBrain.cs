@@ -17,14 +17,16 @@ public class SpawnableEntity
     public AIType Type { get => _type; } 
     public float SpawnProbability { get => _spawnProbability; }
     public GameObject Prefab { get => _prefab; } 
-}
+} 
 
-public enum BossStates { Init, Default, Defend, Invocation, ObjectFalling, Death } 
+public enum BossStates { Init, Default, Vulnerable, Invocation, ObjectFalling, Death } 
+public enum SwitchesPattern { LineOne, LineTwo, LineThree, DiagonalOne, DiagonalTwo, FullRight, FullLeft } 
 public class BossAIBrain : MonoBehaviour
 {
     // [SerializeField] private GameObject _graphics;
+    [SerializeField] private Collider _bossCollider;
+
     [Header("Spawn")]
-    [SerializeField] private bool _invokeOnStart; // NOT WORKGING
     [SerializeField, Space] private GameObject _spawnerHalfCircle; // upgrade to have more creative control and use less prefabs
     [SerializeField, Space] private GameObject _spawnerOuter; // upgrade to have more creative control and use less prefabs 
     [SerializeField] private List<SpawnableEntity> _spawnableEntitiesList; // use a HashSet instead to avoid duplicates 
@@ -35,10 +37,16 @@ public class BossAIBrain : MonoBehaviour
 
     [Header("Switches")]
     [SerializeField] private List<Switch> _switchedList = new List<Switch>();
-    [SerializeField] private byte _maxActiveSwitches = 2;
+    [SerializeField, Range(1, 4)] private byte _maxActiveSwitches = 2;
     [SerializeField, Range(1, 15)] private float _vulnerabilityDuration = 5f;
-    [SerializeField, Range(5, 50)] private float _percentOfDamageBeforeSwitchReset = 25f;
-    public static float sBossVulnerabilityDuration; 
+    [SerializeField, Range(5, 50)] private byte _maxPercentOfDamageBeforeSwitchReset = 25;
+    [SerializeField, Range(5f, 60f)] private float _switchesActivationDelay = 20f;
+    [SerializeField, Range(10f, 30)] private float _switchesOnDuration = 15f;
+    public static float sLightsOnDuration; 
+    public static float sBossVulnerabilityDuration;
+    public static byte sSwitchUsedCount;
+    public static byte sHitCounter; 
+    private SwitchesPattern _switchesPattern;
 
     private StateMachine<BossStates> _fsm;
 
@@ -52,15 +60,17 @@ public class BossAIBrain : MonoBehaviour
  
     private bool _canInvoke = true; 
     private bool _canDoAirAttack = false;
-    private bool _lightsAreOff;
-    private BossStates currentState; 
+    public static bool sLightsAreOff;
+    private BossStates currentState;
+    private bool allLightsWereOff; 
 
     [Header("DEBUG")]
     public bool doSpawns = true;
 
     public LayerMask playerLayer;
-    private bool _showActivatableLigths = true;  // this should not be here 
+    private bool _showActivatableSwitches = true;  // this should not be here 
     private bool _isInvoking; 
+    
 
 #region Unity Callbacks
 
@@ -84,11 +94,17 @@ public class BossAIBrain : MonoBehaviour
     {
         currentState = newState; 
         _fsm.ChangeState(newState, transition);
-    }
+    } 
 
     void Start() 
     { 
         Debug.Log("start");
+        sLightsAreOff = false;
+        sLightsOnDuration = _switchesOnDuration;
+        sSwitchUsedCount = 0;
+        _bossCollider.enabled = false;
+        sHitCounter = 0; 
+
         _aIAnimation = GetComponentInChildren<AIAnimation>();
         sBossVulnerabilityDuration = _vulnerabilityDuration; 
         for (int i = 0; i < _spawnerHalfCircle.transform.childCount; i++)
@@ -101,10 +117,10 @@ public class BossAIBrain : MonoBehaviour
             _spawnPositionsOuter.Add(_spawnerOuter.transform.GetChild(i).position);
         }
 
-        StartCoroutine(_invokeOnStart ? nameof(InvokeOnStart) : nameof(SetInvocationCooldown));
+        StartCoroutine(nameof(SetInvocationCooldown));
     }
 
-    private void FixedUpdate()
+    private void FixedUpdate() 
     { 
         if (!PlayerMovement_Alan.sPlayer && Time.time >= 1f) // to avoid it on first frame
         {
@@ -117,30 +133,45 @@ public class BossAIBrain : MonoBehaviour
             OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
         }
 
-        if (!_showActivatableLigths) return;
-        for (int i = 0; i < _switchedList.Count && _activeSwitches < _maxActiveSwitches; i++)
+        if (!_showActivatableSwitches) return;
+        SelectSwitchesPattern();
+    }
+
+    private void SelectSwitchesPattern()
+    {
+        var selector = (SwitchesPattern) Random.Range(0, (int) SwitchesPattern.FullLeft + 1);
+        switch (selector)
         {
-            var selector = UnityEngine.Random.Range(0, 2);  
-            if (selector > 0) 
-            {
-                _switchedList[i].ShowIsDeactivatable();
-                _activeSwitches++;  
-            }
+            case SwitchesPattern.LineOne:
+                _switchedList[0].ShowSwitchIsOn();
+                _switchedList[1].ShowSwitchIsOn();
+                break;
+            case SwitchesPattern.LineTwo:
+                _switchedList[2].ShowSwitchIsOn();
+                _switchedList[3].ShowSwitchIsOn();
+                break;
+            case SwitchesPattern.LineThree:
+                _switchedList[4].ShowSwitchIsOn();
+                _switchedList[5].ShowSwitchIsOn();
+                break;
+            case SwitchesPattern.FullLeft:
+                _switchedList[0].ShowSwitchIsOn();
+                _switchedList[4].ShowSwitchIsOn();
+                break;
+            case SwitchesPattern.FullRight:
+                _switchedList[1].ShowSwitchIsOn();
+                _switchedList[3].ShowSwitchIsOn();
+                break;
+            case SwitchesPattern.DiagonalOne:
+                _switchedList[0].ShowSwitchIsOn();
+                _switchedList[5].ShowSwitchIsOn();
+                break;
+            case SwitchesPattern.DiagonalTwo:
+                _switchedList[1].ShowSwitchIsOn();
+                _switchedList[4].ShowSwitchIsOn();
+                break;
         }
-        _activeSwitches = 0;
-        StartCoroutine(nameof(SetSwitchesCooldown)); 
-    }
-
-    private IEnumerator InvokeOnStart()  
-    {
-        yield return new WaitForSeconds(_invokeOnStartDelay); 
-        Debug.Log("invoking entity on start") ;
-        OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
-    }
-
-    private void SetLightOffState()
-    {
-        _lightsAreOff = true; 
+        StartCoroutine(nameof(SetSwitchesCooldown));
     }
 
     #endregion
@@ -172,7 +203,6 @@ public class BossAIBrain : MonoBehaviour
     } 
     
 #endregion
-
 
 #region Invocation
 
@@ -208,23 +238,32 @@ public class BossAIBrain : MonoBehaviour
 
 #endregion 
 
-#region Defend 
-    IEnumerator Defend_Enter()
-    {
-        // when lights are off
-        currentState = BossStates.Defend;
+#region Vulnerable 
+    IEnumerator Vulnerable_Enter()
+    { 
+        currentState = BossStates.Vulnerable;
+        sSwitchUsedCount = 0; 
+        _bossCollider.enabled = allLightsWereOff = true;
+        BossEventProjectileFalling.sProjectileCanFall = RayAttack.sCanRayAttack = false;
 
         yield return new WaitForSeconds(_vulnerabilityDuration);
-    }
+        OnRequireStateChange(BossStates.Invocation, StateTransition.Safe);
+    } 
 
-    void Defend_FixedUpdate()
+    void Vulnerable_FixedUpdate()
     {
-        Debug.Log("Ligth are off and boss is vulnerable"); 
-    }
+        Debug.Log("Ligth are off and boss is vulnerable");
+        if (sHitCounter >= 100 / _maxPercentOfDamageBeforeSwitchReset)
+        {
+            OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
+        }
+    } 
 
-    void Defend_Exit() 
+    void Vulnerable_Exit() 
     {
-        // when lights are on again => go back to RayAttack 
+        _bossCollider.enabled = allLightsWereOff = false; 
+        BossEventProjectileFalling.sProjectileCanFall = RayAttack.sCanRayAttack = true;
+        sHitCounter = 0;
     }
     #endregion 
     
@@ -298,12 +337,12 @@ public class BossAIBrain : MonoBehaviour
     }
 
     // ...
-    IEnumerator SetSwitchesCooldown()
+    IEnumerator SetSwitchesCooldown() 
     {
-        _showActivatableLigths = false;
+        _showActivatableSwitches = false;
 
-        yield return new WaitForSeconds(10f + _vulnerabilityDuration);
-        _showActivatableLigths = true;
+        yield return new WaitForSeconds(allLightsWereOff ? _vulnerabilityDuration + _switchesActivationDelay : _switchesActivationDelay);
+        _showActivatableSwitches = true;
     }
     
     #endregion

@@ -28,7 +28,7 @@ namespace BEN.AI
 
             if (!_agent.pathPending && _agent.remainingDistance < 0.5f)
                 GotoNextPoint();
-        }
+        } 
 
         public void SetPoints()
         {
