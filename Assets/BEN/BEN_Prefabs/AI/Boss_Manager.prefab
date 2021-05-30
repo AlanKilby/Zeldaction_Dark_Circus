@@ -103,10 +103,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101974639}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &101974641
 MonoBehaviour:
@@ -228,10 +228,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 746533705}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &746533710
 Rigidbody:
@@ -368,10 +368,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1137245519}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1137245521
 MonoBehaviour:
@@ -492,10 +492,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1194694183}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1194694187
 MonoBehaviour:
@@ -616,10 +616,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241085663}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1241085665
 MonoBehaviour:
@@ -740,10 +740,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847129732}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1847129734
 MonoBehaviour:
@@ -1820,7 +1820,7 @@ GameObject:
   - component: {fileID: 8930034650034842195}
   - component: {fileID: 8930034650034842194}
   - component: {fileID: 6228324215467040097}
-  m_Layer: 9
+  m_Layer: 16
   m_Name: Boss_Entity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1882,7 +1882,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a499e70d5e9394495ab355613cb881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invokeOnStart: 0
+  _bossCollider: {fileID: 8930034650034842204}
+  _bossHP: {fileID: 6228324215467040097}
   _spawnerHalfCircle: {fileID: 8930034648340680927}
   _spawnerOuter: {fileID: 8930034649793705264}
   _spawnableEntitiesList:
@@ -1902,10 +1903,11 @@ MonoBehaviour:
   - {fileID: 1137245521}
   - {fileID: 1847129734}
   _maxActiveSwitches: 2
-  _vulnerabilityDuration: 5
+  _vulnerabilityDuration: 20
   _maxPercentOfDamageBeforeSwitchReset: 25
-  _switchesActivationDelay: 10
-  _switchesOnDuration: 15
+  _switchesActivationDelay: 20
+  _switchesOnDuration: 40
+  rewardPlayerOnQuickLightsOff: 1
   doSpawns: 0
   playerLayer:
     serializedVersion: 2

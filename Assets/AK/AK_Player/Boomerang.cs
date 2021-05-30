@@ -18,7 +18,7 @@ public class Boomerang : MonoBehaviour
     public AnimationCurve goingSpeedC;
     public AnimationCurve comingSpeedC;
 
-    public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, enemyWeaponLayer, bossLayer; 
+    public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, fakirWeaponLayer, bossLayer; 
    
     private Rigidbody rb;
 
@@ -35,7 +35,6 @@ public class Boomerang : MonoBehaviour
     float comebackTimerHolder;
 
     private BasicAIBrain enemy;
-    public LayerMask swordLayer; 
     public static bool s_SeenByEnemy; 
 
     private void Start()
@@ -146,8 +145,6 @@ public class Boomerang : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
-
         if (Mathf.Pow(2, other.gameObject.layer) == playerLayer) 
         {
             // Debug.Log("Collision with Player");
@@ -160,7 +157,7 @@ public class Boomerang : MonoBehaviour
         {
             Debug.Log("Collision with Wall");
 
-            isComingBack = true;
+            isComingBack = true; 
             comebackTimer = 0;
         }
 
@@ -178,15 +175,13 @@ public class Boomerang : MonoBehaviour
 
             other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
 
-
-
             // Changement pour que la nervosité augmente, changement fait le 19 mai 2021
 
             isComingBack = true;
             comebackTimer = 0;
         }
 
-        if (Mathf.Pow(2, other.gameObject.layer) == enemyWeaponLayer) // fakir weapon
+        if (Mathf.Pow(2, other.gameObject.layer) == fakirWeaponLayer) // fakir weapon
         {
             other.GetComponent<ParabolicFunction>().InvertDirection(); 
         } 
@@ -194,6 +189,8 @@ public class Boomerang : MonoBehaviour
         if (Mathf.Pow(2, other.gameObject.layer) == bossLayer) // fakir weapon
         {
             BossAIBrain.sHitCounter++; 
+            Debug.Log("hitting boss"); 
+            other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
         } 
     }
-}
+} 

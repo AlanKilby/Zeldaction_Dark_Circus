@@ -123,22 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: d0a75497a556a0440b7ec9f4c649542c, type: 2}
---- !u!65 &609400284 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 8930034650034842204, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-  m_PrefabInstance: {fileID: 8930034650293137188}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &609400285 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6228324215467040097, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-  m_PrefabInstance: {fileID: 8930034650293137188}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28e7f1a20bc890444ad3faf57daaf855, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &661021425
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -160,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7618909233720531569, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.2
+      value: -0.12
       objectReference: {fileID: 0}
     - target: {fileID: 7618909233720531569, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
       propertyPath: m_LocalPosition.y
@@ -168,7 +152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7618909233720531569, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.01
+      value: -0.32
       objectReference: {fileID: 0}
     - target: {fileID: 7618909233720531569, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
       propertyPath: m_LocalRotation.w
@@ -519,6 +503,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8930034649593468849, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8930034649707844227, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: m_Name
       value: Boss_Manager
@@ -567,13 +555,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8930034650034842194, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: _bossHP
-      value: 
-      objectReference: {fileID: 609400285}
-    - target: {fileID: 8930034650034842194, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: _bossCollider
-      value: 
-      objectReference: {fileID: 609400284}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}

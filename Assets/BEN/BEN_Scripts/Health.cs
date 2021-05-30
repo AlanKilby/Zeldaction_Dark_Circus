@@ -6,7 +6,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private AgentGameplayData _agentStartingHP; 
     public sbyte CurrentValue { get; set; } // only for mobs. Player current value should be stored in a scriptable object that inherits from AgentGameplayData
-    public bool IsAI { get; set; }
+    public bool IsMonkeyBall { get; set; }
     public AgentGameplayData AgentStartinHP { get => _agentStartingHP; }
 
     public static System.Action OnPlayerDeath;
@@ -18,7 +18,7 @@ public class Health : MonoBehaviour
     private void Start()
     {
         CurrentValue = _agentStartingHP.Value;
-        _brain = IsAI ? GetComponent<BasicAIBrain>() : null; 
+        _brain = IsMonkeyBall ? GetComponent<BasicAIBrain>() : null; 
     }
 
     public void DecreaseHp(sbyte value)
@@ -27,7 +27,7 @@ public class Health : MonoBehaviour
 
         if (CurrentValue > 0 || _notifiedDeath) return;
         
-        if (!IsAI)
+        if (!IsMonkeyBall)
         {
             _notifiedDeath = true;
             _playercollider = GetComponent<Collider>();

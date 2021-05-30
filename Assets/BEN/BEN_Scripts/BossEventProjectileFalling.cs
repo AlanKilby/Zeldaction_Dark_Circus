@@ -27,7 +27,7 @@ public class BossEventProjectileFalling : MonoBehaviour
 
     private void FixedUpdate() 
     {
-        if (sProjectileCanFall)
+        if (sProjectileCanFall) 
         {
             StartCoroutine(nameof(SetProjectileCanFall)); 
             
@@ -52,6 +52,6 @@ public class BossEventProjectileFalling : MonoBehaviour
     {
         sProjectileCanFall = false;
         yield return new WaitForSeconds(_projectileFallDelay); 
-        sProjectileCanFall = true; 
+        sProjectileCanFall = !BossAIBrain.sAllLightsWereOff;  
     }
 }

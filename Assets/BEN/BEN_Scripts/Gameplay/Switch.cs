@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using MonsterLove.StateMachine; 
 
@@ -21,8 +20,7 @@ public class Switch : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            BossAIBrain.sSwitchUsedCount = 2; 
-            CanBeDeactivated = false; 
+            CanBeDeactivated = false;  
         }
     }
 
@@ -38,7 +36,7 @@ public class Switch : MonoBehaviour
 
             if (BossAIBrain.sSwitchUsedCount == 2)
             { 
-                BossAIBrain.OnRequireStateChange(BossStates.Vulnerable, StateTransition.Overwrite);
+                BossAIBrain.OnRequireStateChange(BossStates.Vulnerable, StateTransition.Safe); 
             }
         } 
     } 

@@ -139,7 +139,7 @@ namespace BEN.AI
             _fsm.ChangeState(States.Init, StateTransition.Safe); 
             
             _agentHp = GetComponent<Health>();
-            _agentHp.IsAI = true; 
+            _agentHp.IsMonkeyBall = true; 
         }
 
         private void OnEnable() 

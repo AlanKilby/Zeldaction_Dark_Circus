@@ -35,7 +35,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         playerMovement = player.GetComponent<PlayerMovement_Alan>();
-        _playerHp.IsAI = false; 
+        _playerHp.IsMonkeyBall = false; 
     }
 
     private void FixedUpdate()

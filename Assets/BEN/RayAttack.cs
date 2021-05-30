@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,17 @@ public class RayAttack : MonoBehaviour
     public List<GameObject> _rayPlaceholderVisuals = new List<GameObject>(); 
     private List<Collider> _rayColliders = new List<Collider>();
     private List<MeshRenderer> _rayMeshRenderers = new List<MeshRenderer>();
-    public static bool sCanRayAttack; 
+    public static bool sCanRayAttack;
+
+    private void OnEnable()
+    {
+        BossAIBrain.OnBossVulnerable += DisableRayOnBossVulnerable;
+    }
+
+    private void OnDisable()
+    {
+        BossAIBrain.OnBossVulnerable -= DisableRayOnBossVulnerable;
+    }
 
     private void Start()
     {
@@ -34,7 +45,7 @@ public class RayAttack : MonoBehaviour
             _rayMeshRenderers[i].enabled = true;
             _rayColliders[i].enabled = false;
         } 
-    }
+    } 
     
     private IEnumerator CastRayToPlayer()
     {
@@ -48,10 +59,19 @@ public class RayAttack : MonoBehaviour
         }
     }
 
+    private void DisableRayOnBossVulnerable()
+    {
+        for (var i = 0; i < _rayMeshRenderers.Count; i++)
+        {
+            _rayMeshRenderers[i].enabled = false; 
+            _rayColliders[i].enabled = false; 
+        }
+    } 
+
     private IEnumerator SetCanRotate()
     {
         sCanRayAttack = false; 
         yield return new WaitForSeconds(5f);
-        sCanRayAttack = true; 
+        sCanRayAttack = !BossAIBrain.sAllLightsWereOff; 
     }
 }
