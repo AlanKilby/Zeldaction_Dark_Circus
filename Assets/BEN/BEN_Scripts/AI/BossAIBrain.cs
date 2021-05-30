@@ -32,18 +32,18 @@ public class BossAIBrain : MonoBehaviour
     [SerializeField, Space] private GameObject _spawnerHalfCircle; // upgrade to have more creative control and use less prefabs
     [SerializeField, Space] private GameObject _spawnerOuter; // upgrade to have more creative control and use less prefabs 
     [SerializeField] private List<SpawnableEntity> _spawnableEntitiesList; // use a HashSet instead to avoid duplicates 
-    [SerializeField, ConditionalShow("_invokeOnStart")] private float _invokeOnStartDelay = 10f; 
     [SerializeField, Range(5, 60)] private float _invocationDelay = 20f;
+    [SerializeField] private bool _killAllSpawnsOnLightsOff;
     private List<Vector3> _spawnPositionsHalfCircle = new List<Vector3>(); 
     private List<Vector3> _spawnPositionsOuter = new List<Vector3>();
 
-    [Header("Switches")]
+    [Header("Switches")] 
     [SerializeField] private List<Switch> _switchedList = new List<Switch>();
     [SerializeField, Range(1, 4)] private byte _maxActiveSwitches = 2;
     [SerializeField, Range(1, 40)] private float _vulnerabilityDuration = 20f;
     [SerializeField, Range(5, 50)] private byte _maxPercentOfDamageBeforeSwitchReset = 25;
     [SerializeField, Range(5f, 60f)] private float _switchesActivationDelay = 20f;
-    [SerializeField, Range(5, 60)] private float _switchesOnDuration = 20;
+    [SerializeField, Range(5, 60)] private float _switchesOnDuration = 30f;
     [SerializeField, 
      Tooltip("if player turns all switches on quickly, " +
              "next switches activation delay is shorter after boss goes back to attack state, " +
@@ -52,7 +52,8 @@ public class BossAIBrain : MonoBehaviour
     public static float sLightsOnDuration; 
     public static float sBossVulnerabilityDuration;
     public static byte sSwitchUsedCount;
-    public static byte sHitCounter; 
+    public static byte sHitCounter;
+    public static byte sMaxActiveSwitches; 
     private SwitchesPattern _switchesPattern;
     private float _lightsActivationTimer;
     private bool switchesAreOn; 
@@ -76,10 +77,11 @@ public class BossAIBrain : MonoBehaviour
 
     [Header("DEBUG")]
     public bool doSpawns = true;
-
+    public bool doSwitchMechanic = true; 
     public LayerMask playerLayer;
     private bool _canRevealSwitches = true;  // this should not be here 
-    private bool _isInvoking; 
+    private bool _isInvoking;
+    private List<GameObject> _invokedEntities = new List<GameObject>(); 
     
 
 #region Unity Callbacks
@@ -113,7 +115,9 @@ public class BossAIBrain : MonoBehaviour
         sLightsOnDuration = _switchesOnDuration;
         sSwitchUsedCount = 0;
         _bossCollider.enabled = false;
-        sHitCounter = 0; 
+        sHitCounter = 0;
+        sMaxActiveSwitches = _maxActiveSwitches;
+        _canRevealSwitches = doSwitchMechanic; 
 
         _aIAnimation = GetComponentInChildren<AIAnimation>();
         sBossVulnerabilityDuration = _vulnerabilityDuration; 
@@ -261,16 +265,27 @@ public class BossAIBrain : MonoBehaviour
     void Vulnerable_Enter()
     { 
         Debug.Log("vulnerable enter");
-        OnBossVulnerable(); 
+        try // DEBUG because will throw error when RayAttacks_Manager is disabled 
+        {
+            OnBossVulnerable(); 
+
+        }
+        catch (NullReferenceException) { } 
+
         sSwitchUsedCount = 0;
-        rayHasBeenResetAfterVulnerableState = false; 
+        rayHasBeenResetAfterVulnerableState = false;
+
+        if (_killAllSpawnsOnLightsOff)
+        {
+            foreach (var item in _invokedEntities)
+            {
+                item.GetComponentInChildren<Health>().DecreaseHp(100); 
+            } 
+        }
         
-        _bossCollider.enabled = true; 
-        sAllLightsWereOff = true; 
-        BossEventProjectileFalling.sProjectileCanFall = false;
-        RayAttack.sCanRayAttack = false; 
-        _canRevealSwitches = false; 
-        _canInvoke = false; 
+        _bossCollider.enabled = sAllLightsWereOff = true;
+        BossEventProjectileFalling.sProjectileCanFall = RayAttack.sCanRayAttack = false;
+        _canRevealSwitches = _canInvoke = false; 
         
         StartCoroutine(nameof(ResetToAttackState)); 
     }
@@ -278,13 +293,15 @@ public class BossAIBrain : MonoBehaviour
     IEnumerator ResetToAttackState()
     {
         yield return new WaitForSeconds(_vulnerabilityDuration);
-        OnRequireStateChange(BossStates.Invocation, StateTransition.Safe);
+        StartCoroutine(nameof(SetInvocationCooldown)); 
+        OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
     } 
     
     void Vulnerable_FixedUpdate()
     {
         if (sHitCounter >= (_bossHP.AgentStartinHP.Value / (100 / _maxPercentOfDamageBeforeSwitchReset)))
         {
+            StartCoroutine(nameof(SetInvocationCooldown)); 
             OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
             Debug.Log("back to invocation from max hit count"); 
         } 
@@ -344,6 +361,8 @@ public class BossAIBrain : MonoBehaviour
                 basicAIBrain.HasBeenInvokedByBoss = true;
                 basicAIBrain.TargetToAttackPosition = PlayerMovement_Alan.sPlayerPos;
                 basicAIBrain.OnRequireStateChange(States.Attack, StateTransition.Safe); 
+                
+                _invokedEntities.Add(instanceReference); 
             }
 
             _isInvoking = false; 
@@ -371,7 +390,7 @@ public class BossAIBrain : MonoBehaviour
         {
             yield return null;
             rayHasBeenResetAfterVulnerableState = true; 
-            RayAttack.sCanRayAttack = true; 
+            RayAttack.sCanRayAttack = BossEventProjectileFalling.sProjectileCanFall = true; 
         }
 
         yield return new WaitForSeconds(sAllLightsWereOff && rewardPlayerOnQuickLightsOff

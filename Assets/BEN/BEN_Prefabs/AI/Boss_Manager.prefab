@@ -814,7 +814,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3723191657555923606
 Transform:
   m_ObjectHideFlags: 0
@@ -857,15 +857,15 @@ MonoBehaviour:
   _bossProjectile:
   - {fileID: 4466254198927990559, guid: 161258b6c6f36b44f9f65dc3fb1672c1, type: 3}
   - {fileID: 4662504170413326555, guid: 1730ce6c0ae7e3445ab96e300d1a3bc1, type: 3}
-  _projectileShadow: {fileID: 7871703175447673013, guid: 115044863bf9be24fa496424be94cdd5, type: 3}
+  _projectileShadow: {fileID: 7893039722381959365, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
   _groundHeight: 0.27
   _OnSpotlightFalling:
     m_PersistentCalls:
       m_Calls: []
   _spawnZone: {fileID: 8930034650293137190}
   _fallZoneBorder: 1
-  _projectileFallDelay: 5
-  _simulateTotalPrecision: 1
+  _projectileFallDelay: 10
+  _simulateTotalPrecision: 0
 --- !u!1 &8380143754974839393
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,7 +881,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6726443975018406438
 Transform:
   m_ObjectHideFlags: 0
@@ -1469,7 +1469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8930034649593468850
 Transform:
   m_ObjectHideFlags: 0
@@ -1572,6 +1572,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8930034649707844236}
+  - component: {fileID: 2151465436903490449}
   m_Layer: 0
   m_Name: Boss_Manager
   m_TagString: Untagged
@@ -1599,6 +1600,102 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &2151465436903490449
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8930034649707844227}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 3ca6a9c29d8cda842a97ebd8ddcf48cb, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8930034649711910557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1892,9 +1989,9 @@ MonoBehaviour:
     _spawnProbability: 1
   - _type: 3
     _prefab: {fileID: 5953828729676287935, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
-    _spawnProbability: 0.2
-  _invokeOnStartDelay: 5
-  _invocationDelay: 10
+    _spawnProbability: 0.1
+  _invocationDelay: 20
+  _killAllSpawnsOnLightsOff: 1
   _switchedList:
   - {fileID: 1194694187}
   - {fileID: 1241085665}
@@ -1906,9 +2003,10 @@ MonoBehaviour:
   _vulnerabilityDuration: 20
   _maxPercentOfDamageBeforeSwitchReset: 25
   _switchesActivationDelay: 20
-  _switchesOnDuration: 40
+  _switchesOnDuration: 30
   rewardPlayerOnQuickLightsOff: 1
-  doSpawns: 0
+  doSpawns: 1
+  doSwitchMechanic: 1
   playerLayer:
     serializedVersion: 2
     m_Bits: 1024

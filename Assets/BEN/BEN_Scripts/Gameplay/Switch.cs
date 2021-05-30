@@ -33,7 +33,7 @@ public class Switch : MonoBehaviour
             _light.color = Color.black;
             Invoke(nameof(ResetState), 0f);
 
-            if (BossAIBrain.sSwitchUsedCount == 2)
+            if (BossAIBrain.sSwitchUsedCount == BossAIBrain.sMaxActiveSwitches)
             { 
                 BossAIBrain.OnRequireStateChange(BossStates.Vulnerable, StateTransition.Safe); 
             }

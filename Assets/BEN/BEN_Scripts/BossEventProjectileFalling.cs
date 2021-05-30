@@ -21,9 +21,8 @@ public class BossEventProjectileFalling : MonoBehaviour
 
     private void Start()
     {
-        sProjectileCanFall = true; 
-    }
-    
+        StartCoroutine(nameof(SetProjectileCanFall));  
+    } 
 
     private void FixedUpdate() 
     {
@@ -41,12 +40,13 @@ public class BossEventProjectileFalling : MonoBehaviour
              }
              
              Instantiate(_bossProjectile[Random.Range(0, _bossProjectile.Length)], projectileSpawnPosition, Quaternion.identity);
-             Instantiate(_projectileShadow,
+             var shadowReference = Instantiate(_projectileShadow,
                  new Vector3(projectileSpawnPosition.x, _groundHeight, projectileSpawnPosition.z),
                  Quaternion.Euler(90f, 0f, 0f));
+             
              _OnSpotlightFalling.Invoke();
         }
-    }
+    } 
 
     private IEnumerator SetProjectileCanFall()
     {
