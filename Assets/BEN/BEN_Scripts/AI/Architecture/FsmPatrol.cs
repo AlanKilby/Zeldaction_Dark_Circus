@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,7 +19,7 @@ namespace BEN.AI
             _agent = GetComponent<NavMeshAgent>();
 
             DestPoint = 0; 
-            _agent.autoBraking = false;
+            _agent.autoBraking = true; 
         }
 
         private void FixedUpdate() 
@@ -27,7 +28,7 @@ namespace BEN.AI
 
             if (!_agent.pathPending && _agent.remainingDistance < 0.5f)
                 GotoNextPoint();
-        }
+        } 
 
         public void SetPoints()
         {
@@ -48,5 +49,13 @@ namespace BEN.AI
             _agent.destination = Points[DestPoint].position;
             DestPoint = (DestPoint + 1) % Points.Length;
         } 
+
+        /* private void OnTriggerEnter(Collider other)
+        {
+            if (gameObject.layer == 9 && other.gameObject.layer == 7)
+            {
+                Debug.Log($"value is {Vector3.Dot(transform.TransformDirection(dete))}");
+            }
+        } */
     }
 }

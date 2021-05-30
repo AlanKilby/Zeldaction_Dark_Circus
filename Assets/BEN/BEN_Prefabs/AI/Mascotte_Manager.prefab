@@ -447,6 +447,7 @@ MonoBehaviour:
   targetToDestroy: {fileID: 3982106213023558240}
   destroyDelay: 1
   destroyFromStart: 0
+  _destroyableFromBossEvent: 0
 --- !u!114 &1760892740547742467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,7 +610,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7725771847202023909}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -5.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7725771847332921777}
@@ -707,7 +708,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.88
   m_Speed: 2
-  m_Acceleration: 8
+  m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 0
