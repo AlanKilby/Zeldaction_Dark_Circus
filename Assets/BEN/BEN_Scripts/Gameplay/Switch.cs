@@ -28,7 +28,6 @@ public class Switch : MonoBehaviour
     {
         if (Mathf.Pow(2f, other.gameObject.layer) == _playerLayer && Input.GetKeyDown(KeyCode.Space) && CanBeDeactivated) 
         {
-            Debug.Log("PlayerIsDetected");
             BossAIBrain.sSwitchUsedCount++; 
             CanBeDeactivated = false;  
             _light.color = Color.black;

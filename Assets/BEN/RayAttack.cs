@@ -32,9 +32,9 @@ public class RayAttack : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
+    { 
         if (!sCanRayAttack) return; 
-        Debug.Log(" attacking");
+        Debug.Log(" rotating for ray attack");
         StartCoroutine(nameof(CastRayToPlayer));
         StartCoroutine(nameof(SetCanRotate));
 
@@ -50,11 +50,11 @@ public class RayAttack : MonoBehaviour
     private IEnumerator CastRayToPlayer()
     {
         yield return new WaitForSeconds(2f);  
-        Debug.Log("debugging ray");  
+        Debug.Log("ray attacking");  
 
         for (var i = 0; i < _rayPlaceholderVisuals.Count; i++)
         { 
-            _rayMeshRenderers[i].enabled = false; 
+            _rayMeshRenderers[i].enabled = false;  
             _rayColliders[i].enabled = true; 
         }
     }

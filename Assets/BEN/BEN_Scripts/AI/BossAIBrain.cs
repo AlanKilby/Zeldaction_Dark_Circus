@@ -69,15 +69,16 @@ public class BossAIBrain : MonoBehaviour
  
     private bool _canInvoke = true; 
     private bool _canDoAirAttack = false;
-    private BossStates currentState;
+    private BossStates currentState, previousState;
     public static bool sAllLightsWereOff;
     public static Action OnBossVulnerable; // deactivate ray colliders; 
+    private bool rayHasBeenResetAfterVulnerableState; 
 
     [Header("DEBUG")]
     public bool doSpawns = true;
 
     public LayerMask playerLayer;
-    private bool _showActivatableSwitches = true;  // this should not be here 
+    private bool _canRevealSwitches = true;  // this should not be here 
     private bool _isInvoking; 
     
 
@@ -101,9 +102,10 @@ public class BossAIBrain : MonoBehaviour
     
     private void TransitionToNewState(BossStates newState, StateTransition transition)
     {
+        previousState = currentState; 
         currentState = newState; 
         _fsm.ChangeState(newState, transition);
-    } 
+    }
 
     void Start() 
     { 
@@ -133,12 +135,6 @@ public class BossAIBrain : MonoBehaviour
         if (!PlayerMovement_Alan.sPlayer && Time.time >= 1f) // to avoid it on first frame
         {
             OnRequireStateChange(BossStates.Default, StateTransition.Safe); 
-        } 
-
-        if (Input.GetKeyDown(KeyCode.A)) //DEBUG
-        {
-            sSwitchUsedCount = 2; 
-            OnRequireStateChange(BossStates.Vulnerable, StateTransition.Safe);
         }
 
         if (switchesAreOn)
@@ -157,15 +153,15 @@ public class BossAIBrain : MonoBehaviour
             OnRequireStateChange(BossStates.Death, StateTransition.Safe); 
         }
 
-        if (!_showActivatableSwitches) return;
+        if (!_canRevealSwitches) return;
         SelectSwitchesPattern();
     }
 
-    private void SelectSwitchesPattern()
+    private void SelectSwitchesPattern() // remove from here.. It is not part of the state machine 
     {
         switchesAreOn = true; 
         var selector = (SwitchesPattern) Random.Range(0, (int) SwitchesPattern.FullLeft + 1);
-        switch (selector)
+        switch (selector) 
         {
             case SwitchesPattern.LineOne:
                 _switchedList[0].ShowSwitchIsOn();
@@ -207,7 +203,6 @@ public class BossAIBrain : MonoBehaviour
     void Init_Enter() 
     {
         Debug.Log("Initializing"); 
-        currentState = BossStates.Init;
         // _aIAnimation = _graphics.GetComponent<AIAnimation>(); 
     }
 
@@ -223,7 +218,6 @@ public class BossAIBrain : MonoBehaviour
 
     void Default_Enter()
     {
-        currentState = BossStates.Default;
         Debug.Log("default state");
     } 
     
@@ -234,7 +228,6 @@ public class BossAIBrain : MonoBehaviour
     void Invocation_Enter()
     {
         Debug.Log("invocation enter");
-        currentState = BossStates.Invocation;
         InvokeEntity(1f); 
     } 
 
@@ -250,7 +243,6 @@ public class BossAIBrain : MonoBehaviour
     void ObjectFalling_Enter()
     {
         Debug.Log("object falling enter");
-        currentState = BossStates.ObjectFalling;
     }
 
     void ObjectFalling_FixedUpdate()
@@ -270,14 +262,14 @@ public class BossAIBrain : MonoBehaviour
     { 
         Debug.Log("vulnerable enter");
         OnBossVulnerable(); 
-        currentState = BossStates.Vulnerable;
-        sSwitchUsedCount = 0;  
+        sSwitchUsedCount = 0;
+        rayHasBeenResetAfterVulnerableState = false; 
         
         _bossCollider.enabled = true; 
         sAllLightsWereOff = true; 
         BossEventProjectileFalling.sProjectileCanFall = false;
         RayAttack.sCanRayAttack = false; 
-        _showActivatableSwitches = false; 
+        _canRevealSwitches = false; 
         _canInvoke = false; 
         
         StartCoroutine(nameof(ResetToAttackState)); 
@@ -303,8 +295,6 @@ public class BossAIBrain : MonoBehaviour
         sHitCounter = 0;
         
         _bossCollider.enabled = false;
-        _showActivatableSwitches = true; 
-        _canInvoke = true;
         StartCoroutine(nameof(SetSwitchesCooldown));
     }
     #endregion 
@@ -314,7 +304,6 @@ public class BossAIBrain : MonoBehaviour
      private void Death_Enter()
      {
          Debug.Log("death enter");
-         currentState = BossStates.Death;
 
          _bossCollider.enabled = false;
          BossEventProjectileFalling.sProjectileCanFall = false;
@@ -366,23 +355,31 @@ public class BossAIBrain : MonoBehaviour
         _canInvoke = false;
 
         yield return new WaitForSeconds(_invocationDelay);
-        Debug.Log("setting can invoke to true"); 
-        _canInvoke = true;
+        Debug.Log($"setting can invoke to {currentState != BossStates.Vulnerable}"); 
+        _canInvoke = currentState != BossStates.Vulnerable;
     } 
     
-    // DRY
+    // DRY 
     IEnumerator SetSwitchesCooldown()
     {
-        _showActivatableSwitches = false;
+        _canRevealSwitches = false;
         sAllLightsWereOff = false;
         switchesAreOn = false; 
         _lightsActivationTimer = 0f;
-        
+
+        if (!rayHasBeenResetAfterVulnerableState)
+        {
+            yield return null;
+            rayHasBeenResetAfterVulnerableState = true; 
+            RayAttack.sCanRayAttack = true; 
+        }
+
         yield return new WaitForSeconds(sAllLightsWereOff && rewardPlayerOnQuickLightsOff
             ? _switchesActivationDelay + _switchesOnDuration - _lightsActivationTimer
             : _switchesActivationDelay + _switchesOnDuration);
         
-        _showActivatableSwitches = currentState != BossStates.Vulnerable; 
+        Debug.Log($"setting can reveal switches to {currentState != BossStates.Vulnerable}");
+        _canRevealSwitches = currentState != BossStates.Vulnerable; 
     }
 
     #endregion
