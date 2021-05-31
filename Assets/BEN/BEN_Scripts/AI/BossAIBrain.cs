@@ -9,7 +9,7 @@ using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 [Serializable]
-public class SpawnableEntity
+public class SpawnableEntity 
 {
     [SerializeField] private AIType _type;
     [SerializeField] private GameObject _prefab;
@@ -20,34 +20,43 @@ public class SpawnableEntity
 } 
 
 public enum BossStates { Init, Default, Vulnerable, Invocation, ObjectFalling, Death } 
-public enum SwitchesPattern { LineOne, LineTwo, LineThree, DiagonalOne, DiagonalTwo, FullRight, FullLeft } 
+public enum SwitchesPattern { LineOne, LineTwo, LineThree, FullRight, FullLeft, DiagonalOne, DiagonalTwo } 
 public class BossAIBrain : MonoBehaviour
 {
     // [SerializeField] private GameObject _graphics;
+    [Header("Core")]
     [SerializeField] private Collider _bossCollider;
     [SerializeField] private Health _bossHP;
 
-
     [Header("Spawn")]
-    [SerializeField, Space] private GameObject _spawnerHalfCircle; // upgrade to have more creative control and use less prefabs
-    [SerializeField, Space] private GameObject _spawnerOuter; // upgrade to have more creative control and use less prefabs 
-    [SerializeField] private List<SpawnableEntity> _spawnableEntitiesList; // use a HashSet instead to avoid duplicates 
-    [SerializeField, Range(5, 60)] private float _invocationDelay = 20f;
-    [SerializeField] private bool _killAllSpawnsOnLightsOff;
+    [SerializeField, Space] private GameObject _spawnerHalfCircle; 
+    [SerializeField, Space] private GameObject _spawnerOuter;  
+    [SerializeField] private List<SpawnableEntity> _spawnableEntitiesList;  
+    [SerializeField, Range(5, 60), Tooltip("delay between each invocation. Applied from start")] private float _invocationDelay = 20f;
+    [SerializeField, Tooltip("avoid cognitive overload and allows player " +
+                             "to focus on attacking boss")] private bool _killAllSpawnsOnLightsOff;
     private List<Vector3> _spawnPositionsHalfCircle = new List<Vector3>(); 
     private List<Vector3> _spawnPositionsOuter = new List<Vector3>();
 
     [Header("Switches")] 
     [SerializeField] private List<Switch> _switchedList = new List<Switch>();
     [SerializeField, Range(1, 4)] private byte _maxActiveSwitches = 2;
-    [SerializeField, Range(1, 40)] private float _vulnerabilityDuration = 20f;
-    [SerializeField, Range(5, 50)] private byte _maxPercentOfDamageBeforeSwitchReset = 25;
-    [SerializeField, Range(5f, 60f)] private float _switchesActivationDelay = 20f;
-    [SerializeField, Range(5, 60)] private float _switchesOnDuration = 30f;
+    [SerializeField, Range(1, 40), Tooltip("Boss vulnerability when all swithces" +
+                                           "where turned off")] private float _vulnerabilityDuration = 20f;
+    [SerializeField, Range(5, 50), Tooltip("max damage applicable to Boss " +
+                                           "before back to invulnerable")] private byte _maxPercentOfDamageBeforeSwitchReset = 25;
+    [SerializeField, Range(5f, 60f), Tooltip("delay between each switches activation. " +
+                                             "Applied from start")] private float _switchesActivationDelay = 20f;
+    [SerializeField, Range(5, 60), Tooltip("time during which an active switch " +
+                                           "can be interacted with")] private float _switchesOnDuration = 30f;
     [SerializeField, 
      Tooltip("if player turns all switches on quickly, " +
              "next switches activation delay is shorter after boss goes back to attack state, " +
              "by taking into account the time it took the player to turn all the switches on ")] private bool rewardPlayerOnQuickLightsOff; 
+    [SerializeField, Tooltip("When false, switches will always " +
+                             "get activated in the same order")] private bool _selectRandomPatttern;
+
+    private SwitchesPattern _scriptedPatternIndex; 
     
     public static float sLightsOnDuration; 
     public static float sBossVulnerabilityDuration;
@@ -159,44 +168,6 @@ public class BossAIBrain : MonoBehaviour
 
         if (!_canRevealSwitches) return;
         SelectSwitchesPattern();
-    }
-
-    private void SelectSwitchesPattern() // remove from here.. It is not part of the state machine 
-    {
-        switchesAreOn = true; 
-        var selector = (SwitchesPattern) Random.Range(0, (int) SwitchesPattern.FullLeft + 1);
-        switch (selector) 
-        {
-            case SwitchesPattern.LineOne:
-                _switchedList[0].ShowSwitchIsOn();
-                _switchedList[1].ShowSwitchIsOn();
-                break;
-            case SwitchesPattern.LineTwo:
-                _switchedList[2].ShowSwitchIsOn();
-                _switchedList[3].ShowSwitchIsOn();
-                break;
-            case SwitchesPattern.LineThree:
-                _switchedList[4].ShowSwitchIsOn();
-                _switchedList[5].ShowSwitchIsOn();
-                break;
-            case SwitchesPattern.FullLeft:
-                _switchedList[0].ShowSwitchIsOn();
-                _switchedList[4].ShowSwitchIsOn();
-                break;
-            case SwitchesPattern.FullRight:
-                _switchedList[1].ShowSwitchIsOn();
-                _switchedList[3].ShowSwitchIsOn();
-                break;
-            case SwitchesPattern.DiagonalOne:
-                _switchedList[0].ShowSwitchIsOn();
-                _switchedList[5].ShowSwitchIsOn();
-                break;
-            case SwitchesPattern.DiagonalTwo:
-                _switchedList[1].ShowSwitchIsOn();
-                _switchedList[4].ShowSwitchIsOn();
-                break;
-        }
-        StartCoroutine(nameof(SetSwitchesCooldown));
     }
 
     #endregion
@@ -367,6 +338,49 @@ public class BossAIBrain : MonoBehaviour
 
             _isInvoking = false; 
         }
+    }
+    
+    private void SelectSwitchesPattern() // remove from here.. It is not part of the state machine 
+    {
+        switchesAreOn = true;
+
+            var selector = (SwitchesPattern) Random.Range(0, (int) SwitchesPattern.DiagonalTwo + 1);
+            switch (_selectRandomPatttern ? selector : _scriptedPatternIndex) 
+            {
+                case SwitchesPattern.LineOne:
+                    _switchedList[0].ShowSwitchIsOn();
+                    _switchedList[1].ShowSwitchIsOn();
+                    break;
+                case SwitchesPattern.LineTwo:
+                    _switchedList[2].ShowSwitchIsOn();
+                    _switchedList[3].ShowSwitchIsOn();
+                    break;
+                case SwitchesPattern.LineThree:
+                    _switchedList[4].ShowSwitchIsOn();
+                    _switchedList[5].ShowSwitchIsOn();
+                    break;
+                case SwitchesPattern.FullLeft:
+                    _switchedList[0].ShowSwitchIsOn();
+                    _switchedList[2].ShowSwitchIsOn();
+                    break;
+                case SwitchesPattern.FullRight:
+                    _switchedList[1].ShowSwitchIsOn();
+                    _switchedList[3].ShowSwitchIsOn();
+                    break;
+                case SwitchesPattern.DiagonalOne:
+                    _switchedList[0].ShowSwitchIsOn();
+                    _switchedList[5].ShowSwitchIsOn();
+                    break;
+                case SwitchesPattern.DiagonalTwo:
+                    _switchedList[1].ShowSwitchIsOn();
+                    _switchedList[4].ShowSwitchIsOn();
+                    break;
+            }
+            
+            _scriptedPatternIndex++;
+            _scriptedPatternIndex = (SwitchesPattern)Mathf.Repeat((int)_scriptedPatternIndex, (int) SwitchesPattern.DiagonalTwo + 1); 
+        
+        StartCoroutine(nameof(SetSwitchesCooldown));
     }
 
     IEnumerator SetInvocationCooldown()
