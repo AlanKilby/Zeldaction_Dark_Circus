@@ -18,7 +18,7 @@ public class Boomerang : MonoBehaviour
     public AnimationCurve goingSpeedC;
     public AnimationCurve comingSpeedC;
 
-    public LayerMask mirrorLayer, playerLayer, WallLayer, EnemyLayer, EnemyWeaponLayer; 
+    public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, fakirWeaponLayer, bossLayer; 
    
     private Rigidbody rb;
 
@@ -35,7 +35,6 @@ public class Boomerang : MonoBehaviour
     float comebackTimerHolder;
 
     private BasicAIBrain enemy;
-    public LayerMask swordLayer; 
     public static bool s_SeenByEnemy; 
 
     private void Start()
@@ -45,7 +44,8 @@ public class Boomerang : MonoBehaviour
         hasWand = playerPos.GetComponent<PlayerMovement_Alan>().hasWand;
         isComingBack = false;
         rb = gameObject.GetComponent<Rigidbody>();
-        aimPos = playerPos.GetComponent<PlayerMovement_Alan>().aim.transform.position;
+        aimPos = playerPos.GetComponent<PlayerMovement_Alan>().aim.transform.position;
+
         s_SeenByEnemy = false; 
     }
 
@@ -54,7 +54,8 @@ public class Boomerang : MonoBehaviour
 
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
 
-        comebackTimer -= Time.deltaTime;
+        comebackTimer -= Time.deltaTime;
+
 
         Teleport();
         Bounce();
@@ -62,31 +63,56 @@ public class Boomerang : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isStunned)
-        {
-            if (comebackTimer > 0)
-            {
-                //.MovePosition(transform.position + transform.forward * goingSpeed * Time.deltaTime); // Test for the hat movement
-
-                rb.MovePosition(transform.position + transform.forward * goingSpeedC.Evaluate(comebackTimer) * Time.deltaTime);
-            }
-            else if (comebackTimer <= 0)
-            {
-                isComingBack = true;
-
-                this.transform.LookAt(playerPos);
-
-
-                rb.velocity = Vector3.zero;
-
-                Debug.Log(comingSpeedC.Evaluate(comebackTimer));
-
-                rb.MovePosition(transform.position + transform.forward * comingSpeedC.Evaluate(comebackTimer) * Time.deltaTime);
-
-                //comingSpeed = comingSpeedC.Evaluate(comebackTimer);
-
-                holder = false;
-            }
+        if (!isStunned)
+
+        {
+
+            if (comebackTimer > 0)
+
+            {
+
+                //.MovePosition(transform.position + transform.forward * goingSpeed * Time.deltaTime); // Test for the hat movement
+
+
+
+                rb.MovePosition(transform.position + transform.forward * goingSpeedC.Evaluate(comebackTimer) * Time.deltaTime);
+
+            }
+
+            else if (comebackTimer <= 0)
+
+            {
+
+                isComingBack = true;
+
+
+
+                this.transform.LookAt(playerPos);
+
+
+
+
+
+                rb.velocity = Vector3.zero;
+
+
+
+                // Debug.Log(comingSpeedC.Evaluate(comebackTimer));
+
+
+
+                rb.MovePosition(transform.position + transform.forward * comingSpeedC.Evaluate(comebackTimer) * Time.deltaTime);
+
+
+
+                //comingSpeed = comingSpeedC.Evaluate(comebackTimer);
+
+
+
+                holder = false;
+
+            }
+
         }  
     }
 
@@ -112,34 +138,32 @@ public class Boomerang : MonoBehaviour
             Vector3 reflectDir = Vector3.Reflect(ray.direction, hit.normal);
             float rot = 90 - Mathf.Atan2(reflectDir.z, reflectDir.x) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, rot, 0);
-            comebackTimer++;
+            //comebackTimer++;
         }
     }
  
 
     private void OnTriggerEnter(Collider other)
     {
-        
-
         if (Mathf.Pow(2, other.gameObject.layer) == playerLayer) 
         {
-            Debug.Log("Collision with Player");
+            // Debug.Log("Collision with Player");
             playerPos.GetComponent<PlayerMovement_Alan>().canThrow = true;
             playerPos.GetComponent<PlayerMovement_Alan>().playerRB.velocity = Vector3.zero;
             Destroy(gameObject);
         }
 
-        if (Mathf.Pow(2, other.gameObject.layer) == WallLayer)
+        if (Mathf.Pow(2, other.gameObject.layer) == wallLayer)
         {
             Debug.Log("Collision with Wall");
 
-            isComingBack = true;
+            isComingBack = true; 
             comebackTimer = 0;
         }
 
-        if (Mathf.Pow(2, other.gameObject.layer) == EnemyLayer) 
+        if (Mathf.Pow(2, other.gameObject.layer) == enemyLayer) 
         { 
-            Debug.Log("Collision with Enemy");
+            // Debug.Log("Collision with Enemy");
             enemy = other.GetComponent<BasicAIBrain>(); 
 
             if (enemy.Type == AIType.Mascotte && Boomerang.s_SeenByEnemy) // change this so you can kill from behind, not only on the way back 
@@ -149,16 +173,24 @@ public class Boomerang : MonoBehaviour
                 return;
             }  
 
-            other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
-
-            // Changement pour que la nervosité augmente, changement fait le 19 mai 2021
+            other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
+
+            // Changement pour que la nervosité augmente, changement fait le 19 mai 2021
+
             isComingBack = true;
             comebackTimer = 0;
         }
 
-        if (Mathf.Pow(2, other.gameObject.layer) == EnemyWeaponLayer) // fakir weapon
+        if (Mathf.Pow(2, other.gameObject.layer) == fakirWeaponLayer) // fakir weapon
         {
             other.GetComponent<ParabolicFunction>().InvertDirection(); 
         } 
+        
+        if (Mathf.Pow(2, other.gameObject.layer) == bossLayer) // fakir weapon
+        {
+            BossAIBrain.sHitCounter++; 
+            Debug.Log("hitting boss"); 
+            other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
+        } 
     }
-}
+} 

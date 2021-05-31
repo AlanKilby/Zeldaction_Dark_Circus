@@ -6,7 +6,7 @@ public class AK_Heart : MonoBehaviour
 {
     public float heartValue = 1;
     Health playerHealth;
-    AgentGameplayData playerData;
+    public AgentGameplayData playerData;
     private void Start()
     {
 

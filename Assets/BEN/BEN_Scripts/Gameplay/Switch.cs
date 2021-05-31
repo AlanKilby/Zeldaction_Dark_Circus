@@ -1,10 +1,11 @@
 using UnityEngine;
-using BEN.AI;
 using MonsterLove.StateMachine; 
 
 public class Switch : MonoBehaviour
 {
     [SerializeField] private Color activeSwitchColor;
+    [SerializeField] private LayerMask _playerLayer;
+
     private Light _light;
     private Color _initialColor;
     public bool CanBeDeactivated { get; set; }
@@ -15,23 +16,35 @@ public class Switch : MonoBehaviour
         _initialColor = _light.color; 
     }
 
-    private void OnTriggerStay(Collider other)
+    private void FixedUpdate() // DEBUG 
     {
-        if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.Space) && CanBeDeactivated) 
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log("PlayerIsDetected");
+            CanBeDeactivated = false;  
+        }
+    }
+
+    private void OnTriggerStay(Collider other) 
+    {
+        if (Mathf.Pow(2f, other.gameObject.layer) == _playerLayer && Input.GetKeyDown(KeyCode.Space) && CanBeDeactivated) 
+        {
+            BossAIBrain.sSwitchUsedCount++; 
             CanBeDeactivated = false;  
             _light.color = Color.black;
-            BossAIBrain.OnRequireStateChange(States.Defend, StateTransition.Overwrite);  
-            Invoke(nameof(ResetState), 0f);     
+            Invoke(nameof(ResetState), 0f);
+
+            if (BossAIBrain.sSwitchUsedCount == BossAIBrain.sMaxActiveSwitches)
+            { 
+                BossAIBrain.OnRequireStateChange(BossStates.Vulnerable, StateTransition.Safe); 
+            }
         } 
     } 
 
-    public void ShowIsDeactivatable() 
+    public void ShowSwitchIsOn() 
     { 
         _light.color = activeSwitchColor;
         CanBeDeactivated = true;
-        Invoke(nameof(ResetState), 5f);  
+        Invoke(nameof(ResetState), BossAIBrain.sLightsOnDuration);  
     }
 
     private void ResetState() 

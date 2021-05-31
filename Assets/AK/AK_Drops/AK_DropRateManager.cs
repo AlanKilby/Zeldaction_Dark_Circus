@@ -59,21 +59,19 @@ public class AK_DropRateManager : MonoBehaviour
         }
 
         if(currentDropRate >= maxDropRate)
-        {
-            Drop();
-            currentDropRate = minDropRate;
-        }
+            currentDropRate = maxDropRate;
+        
 
         if (currentDropRate < minDropRate)
             currentDropRate = minDropRate;
     }
 
-    public void Drop()
+    public void Drop(GameObject thisGameObject)
     {
         if(Random.Range(0,101) <= currentDropRate)
         {
             currentDropRate = minDropRate;
-            ObjectDrop();
+            ObjectDrop(thisGameObject);
         }
         else
         {
@@ -81,17 +79,17 @@ public class AK_DropRateManager : MonoBehaviour
         }
     }
 
-    public void ObjectDrop()
+    public void ObjectDrop(GameObject thisGameObject)
     {
         float randomPicker = Random.Range(0, 101);
 
         if(randomPicker <= potionDropRate)
         {
-            Instantiate(potion);
+            Instantiate(potion, thisGameObject.transform.position, Quaternion.identity);
         }
         else if(randomPicker > potionDropRate)
         {
-            Instantiate(heart);
+            Instantiate(heart,thisGameObject.transform.position,Quaternion.identity);
         }
     }
     public void IncrementDropRate()

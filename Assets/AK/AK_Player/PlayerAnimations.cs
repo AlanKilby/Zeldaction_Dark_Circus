@@ -10,7 +10,7 @@ public class PlayerAnimations : MonoBehaviour
     PlayerMovement_Alan playerMovement;
     public string currentState;
 
-    public string PLAYER_IDLE_HAT = "idleh";
+    public string PLAYER_IDLE_HAT = "idleh"; 
     public string PLAYER_DOWN_HAT = "Walkingdownh";
     public string PLAYER_LEFT_HAT = "WalkingLefth";
     public string PLAYER_RIGHT_HAT = "Walkingrighth";
@@ -35,14 +35,14 @@ public class PlayerAnimations : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         playerMovement = player.GetComponent<PlayerMovement_Alan>();
-        _playerHp.IsAI = false; 
+        _playerHp.IsMonkeyBall = false; 
     }
 
     private void FixedUpdate()
     {
         transform.position = player.transform.position;
 
-        if (_playerHp.CurrentValue <= 0 && !animator.GetCurrentAnimatorStateInfo(0).IsName("playerFakeDeath"))
+        if (_playerHp.CurrentValue <= 0 && !animator.GetCurrentAnimatorStateInfo(0).IsName("death")) 
         {
             ChangeAnimationState(PLAYER_DEAD); 
             Debug.Log("player death animation"); 
@@ -51,7 +51,7 @@ public class PlayerAnimations : MonoBehaviour
 
     public void ChangeAnimationState(string newState)
     {
-        if (currentState == newState || animator.GetCurrentAnimatorStateInfo(0).IsName("playerFakeDeath")) return;
+        if (currentState == newState || animator.GetCurrentAnimatorStateInfo(0).IsName("death")) return;
 
         animator.Play(newState);
         currentState = newState;

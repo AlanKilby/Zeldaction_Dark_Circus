@@ -11,14 +11,16 @@ namespace BEN.Math
         private sbyte orientation = -1;
         private float time = 0f;
         [SerializeField] private bool useAsParabolic; 
-        [ConditionalShow("useAsParabolic", true)] public AnimationCurve _curve; 
+        [ConditionalShow("useAsParabolic", true)] public AnimationCurve _curve;
 
+        [SerializeField] private bool _destroyRoot; 
         private float frameDelta;
         private const float frameDeltaInitialValue = 0.02f;
         private float _curvature;
         private float timer;
         private float _speedModifMultiplier = 1f;
         [FormerlySerializedAs("isCimeterre")] public bool destroyOnWallCollision;
+        
 
         public LayerMask
             _wallLayer,
@@ -33,7 +35,7 @@ namespace BEN.Math
         
         private void Start() 
         {
-            Destroy(gameObject, 10f); 
+            Destroy(_destroyRoot ? transform.root.gameObject : gameObject, 10f); 
             // frameDelta = frameDeltaInitialValue;
             Direction = (PlayerMovement_Alan.sPlayerPos - transform.position).normalized;
             distance = Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos);
@@ -65,7 +67,7 @@ namespace BEN.Math
             else if (Mathf.Pow(2f, other.gameObject.layer) == _wallLayer)
             {
                 if (!destroyOnWallCollision) return;   
-                Destroy(gameObject); 
+                Destroy(gameObject, 0.2f); 
             }
             else if (Mathf.Pow(2f, other.gameObject.layer) == _enemyLayer && _invert) 
             {
