@@ -776,7 +776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1933247091
 Transform:
   m_ObjectHideFlags: 0
@@ -814,7 +814,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3723191657555923606
 Transform:
   m_ObjectHideFlags: 0
@@ -1716,7 +1716,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8930034649593468850
 Transform:
   m_ObjectHideFlags: 0
@@ -2185,8 +2185,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8930034650034842192}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.85, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 2.91, z: 0}
+  m_LocalScale: {x: 4.937844, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8930034649707844236}
   m_RootOrder: 0
@@ -2251,8 +2251,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 4.892584, z: 1}
+  m_Center: {x: 0, y: -1.446292, z: 0}
 --- !u!208 &8930034650034842195
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -2305,15 +2305,16 @@ MonoBehaviour:
   _maxActiveSwitches: 2
   _vulnerabilityDuration: 20
   _maxPercentOfDamageBeforeSwitchReset: 25
-  _switchesActivationDelay: 20
+  _switchesActivationDelay: 5
   _switchesOnDuration: 30
   rewardPlayerOnQuickLightsOff: 1
   _selectRandomPatttern: 1
   doSpawns: 0
-  doSwitchMechanic: 0
+  doSwitchMechanic: 1
   playerLayer:
     serializedVersion: 2
     m_Bits: 1024
+  ignoreMaxHitCount: 1
 --- !u!114 &6228324215467040097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2327,6 +2328,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agentStartingHP: {fileID: 11400000, guid: 2f6aa057b96a009428ee55a198fbc96d, type: 2}
+  _OnBossHPLoss:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6209885193723149072}
+        m_TargetAssemblyTypeName: BEN.Animation.AIAnimation, Assembly-CSharp
+        m_MethodName: PlayAnimationFromUnityEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  isBossHP: 1
+  _playerUnkillable: 0
 --- !u!1 &8930034650060405814
 GameObject:
   m_ObjectHideFlags: 0

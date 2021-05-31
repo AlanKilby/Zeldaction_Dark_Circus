@@ -82,7 +82,8 @@ public class BossAIBrain : MonoBehaviour
     private BossStates currentState, previousState;
     public static bool sAllLightsWereOff;
     public static Action OnBossVulnerable; // deactivate ray colliders; 
-    private bool rayHasBeenResetAfterVulnerableState; 
+    private bool rayHasBeenResetAfterVulnerableState;
+    private bool _deathNotified; 
 
     [Header("DEBUG")]
     public bool doSpawns = true;
@@ -90,7 +91,9 @@ public class BossAIBrain : MonoBehaviour
     public LayerMask playerLayer;
     private bool _canRevealSwitches = true;  // this should not be here 
     private bool _isInvoking;
-    private List<GameObject> _invokedEntities = new List<GameObject>(); 
+    private List<GameObject> _invokedEntities = new List<GameObject>();
+    [Tooltip("Boss wont go out from vulnerability even after getting hit " + 
+             "more than (100 / _maxPercentOfDamageBeforeSwitchReset) times")] public bool ignoreMaxHitCount; 
     
 
 #region Unity Callbacks
@@ -143,8 +146,10 @@ public class BossAIBrain : MonoBehaviour
         StartCoroutine(nameof(SetInvocationCooldown));
     }
 
-    private void FixedUpdate() 
-    { 
+    private void FixedUpdate()
+    {
+        if (_deathNotified) return; 
+        
         if (!PlayerMovement_Alan.sPlayer && Time.time >= 1f) // to avoid it on first frame
         {
             OnRequireStateChange(BossStates.Default, StateTransition.Safe); 
@@ -155,15 +160,15 @@ public class BossAIBrain : MonoBehaviour
             _lightsActivationTimer += 0.02f; 
         }
 
-        if (_canInvoke)
-        {
+        if (_bossHP.CurrentValue <= 0 && !_deathNotified)
+        { 
+            _deathNotified = true; 
+            OnRequireStateChange(BossStates.Death, StateTransition.Safe); 
+        } 
+        else if (_canInvoke)
+        { 
             StartCoroutine(nameof(SetInvocationCooldown)); 
             OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
-        }
-        
-        if (_bossHP.CurrentValue <= 0)
-        {
-            OnRequireStateChange(BossStates.Death, StateTransition.Safe); 
         }
 
         if (!_canRevealSwitches) return;
@@ -258,32 +263,38 @@ public class BossAIBrain : MonoBehaviour
         BossEventProjectileFalling.sProjectileCanFall = RayAttack.sCanRayAttack = false;
         _canRevealSwitches = _canInvoke = false; 
         
-        StartCoroutine(nameof(ResetToAttackState)); 
+        StartCoroutine(nameof(ResetToAttackState));
+        _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None); 
     }
 
     IEnumerator ResetToAttackState()
     {
         yield return new WaitForSeconds(_vulnerabilityDuration);
         StartCoroutine(nameof(SetInvocationCooldown)); 
-        OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
     } 
     
     void Vulnerable_FixedUpdate()
     {
+        if (ignoreMaxHitCount) return; 
         if (sHitCounter >= (_bossHP.AgentStartinHP.Value / (100 / _maxPercentOfDamageBeforeSwitchReset)))
         {
             StartCoroutine(nameof(SetInvocationCooldown)); 
-            OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
             Debug.Log("back to invocation from max hit count"); 
         } 
     } 
 
-    void Vulnerable_Exit()  
-    {
-        sHitCounter = 0;
-        
+    IEnumerator Vulnerable_Exit()  
+    { 
+        sHitCounter = 0; 
         _bossCollider.enabled = false;
-        StartCoroutine(nameof(SetSwitchesCooldown));
+        if (_bossHP.CurrentValue > 0)
+        {
+            var clip = _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.Top);
+            yield return new WaitForSeconds(clip.clipContainer.length * 1.15f);
+        } 
+
+        yield return new WaitForFixedUpdate(); 
+        StartCoroutine(nameof(SetSwitchesCooldown)); 
     }
     #endregion 
     
@@ -388,8 +399,7 @@ public class BossAIBrain : MonoBehaviour
         _canInvoke = false;
 
         yield return new WaitForSeconds(_invocationDelay);
-        Debug.Log($"setting can invoke to {currentState != BossStates.Vulnerable}"); 
-        _canInvoke = currentState != BossStates.Vulnerable;
+        _canInvoke = currentState != BossStates.Vulnerable && _bossHP.CurrentValue > 0; 
     } 
     
     // DRY 
@@ -412,7 +422,7 @@ public class BossAIBrain : MonoBehaviour
             : _switchesActivationDelay + _switchesOnDuration);
         
         Debug.Log($"setting can reveal switches to {currentState != BossStates.Vulnerable}");
-        _canRevealSwitches = currentState != BossStates.Vulnerable; 
+        _canRevealSwitches = currentState != BossStates.Vulnerable && _bossHP.CurrentValue > 0; 
     }
 
     #endregion
