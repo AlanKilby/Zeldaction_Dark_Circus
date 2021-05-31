@@ -4838,6 +4838,8 @@ GameObject:
   - component: {fileID: 2749289271832880394}
   - component: {fileID: 2749289271832880393}
   - component: {fileID: 2749289271832880392}
+  - component: {fileID: 310299196808650302}
+  - component: {fileID: 2131971368107988759}
   m_Layer: 0
   m_Name: smoke burst v1
   m_TagString: Untagged
@@ -9649,6 +9651,44 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &310299196808650302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2749289271832880399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc706559421f664ea51e170583aa4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetToDestroy: {fileID: 2749289271832880399}
+  destroyDelay: 0.4
+  destroyFromStart: 1
+--- !u!114 &2131971368107988759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2749289271832880399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda50a2dc7195c74ca467102b0170f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useSecondarySpawnPoint: 0
+  instantiateManuallyOnSelfDestroy: 0
+  destroyNestedPrefabAfterDelay: 0
+  randomSelectionFromList: 1
+  objToInstantiateOnSelfDestroy:
+  - {fileID: 2720620099317947514, guid: 9a03bca440f466048bff506b4b637d2d, type: 3}
+  - {fileID: 5456050728352941028, guid: 86dcf60ab7513844fa8d9cae9289dbb4, type: 3}
+  - {fileID: 6794182153445959058, guid: 07d2f31620a17df4f9e922a32bd30a98, type: 3}
+  - {fileID: 1977218371801215902, guid: c5ee6a55324fec24aa256f6eef1f6ec4, type: 3}
+  originPositionReference: {fileID: 2749289271832880394}
+  secondarySpawnPoint: {fileID: 0}
 --- !u!1 &2749289272326255144
 GameObject:
   m_ObjectHideFlags: 0
