@@ -17,6 +17,8 @@ public class RayAttack : MonoBehaviour
     private List<Collider> _rayColliders = new List<Collider>();
     private List<MeshRenderer> _rayMeshRenderers = new List<MeshRenderer>();
     public static bool sCanRayAttack;
+    [SerializeField] private Health _bossHP;
+
 
     private void OnEnable()
     {
@@ -78,7 +80,8 @@ public class RayAttack : MonoBehaviour
     {
         sCanRayAttack = false; 
         yield return new WaitForSeconds(_delayBetwenenRayAttacks); 
-        sCanRayAttack = !BossAIBrain.sAllLightsWereOff; 
+        sCanRayAttack = !BossAIBrain.sAllLightsWereOff && _bossHP.CurrentValue > 0; 
+        Debug.Log($"setting can ray attack to {sCanRayAttack}"); 
     }
     
     private void DisableRayOnBossVulnerable()

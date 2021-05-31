@@ -63,7 +63,7 @@ public class BossAIBrain : MonoBehaviour
     public static float sBossVulnerabilityDuration;
     public static byte sSwitchUsedCount;
     public static byte sHitCounter; 
-    public static byte sMaxActiveSwitches; 
+    public static byte sMaxActiveSwitches;
     private SwitchesPattern _switchesPattern;
     private float _lightsActivationTimer;
     private bool switchesAreOn; 
@@ -303,13 +303,12 @@ public class BossAIBrain : MonoBehaviour
      private void Death_Enter()
      {
          Debug.Log("death enter");
-
          _bossCollider.enabled = false;
          BossEventProjectileFalling.sProjectileCanFall = false;
-         RayAttack.sCanRayAttack = false;
+         RayAttack.sCanRayAttack = false; 
      } 
     
-#endregion
+#endregion 
 
 #endregion 
     
@@ -399,14 +398,16 @@ public class BossAIBrain : MonoBehaviour
         _canInvoke = false;
 
         yield return new WaitForSeconds(_invocationDelay);
-        _canInvoke = currentState != BossStates.Vulnerable && _bossHP.CurrentValue > 0; 
+        _canInvoke = currentState != BossStates.Vulnerable && _bossHP.CurrentValue > 0;
+        Debug.Log($"setting can invoke to {_canInvoke}"); 
+
     } 
     
     // DRY 
-    IEnumerator SetSwitchesCooldown()
+    IEnumerator SetSwitchesCooldown() 
     {
         _canRevealSwitches = false;
-        sAllLightsWereOff = false;
+        sAllLightsWereOff = false; 
         switchesAreOn = false; 
         _lightsActivationTimer = 0f;
 
@@ -421,8 +422,8 @@ public class BossAIBrain : MonoBehaviour
             ? _switchesActivationDelay + _switchesOnDuration - _lightsActivationTimer
             : _switchesActivationDelay + _switchesOnDuration);
         
-        Debug.Log($"setting can reveal switches to {currentState != BossStates.Vulnerable}");
         _canRevealSwitches = currentState != BossStates.Vulnerable && _bossHP.CurrentValue > 0; 
+        Debug.Log($"setting can reveal switches to {_canRevealSwitches}");
     }
 
     #endregion

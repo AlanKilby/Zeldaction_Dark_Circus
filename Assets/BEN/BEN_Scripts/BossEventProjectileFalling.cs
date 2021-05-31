@@ -3,6 +3,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using BEN.Animation;
 
+[DefaultExecutionOrder(5)]
 public class BossEventProjectileFalling : MonoBehaviour
 {
     [SerializeField] private GameObject[] _bossProjectile = new GameObject[2];
@@ -14,6 +15,8 @@ public class BossEventProjectileFalling : MonoBehaviour
     [SerializeField, Range(2f, 60f)] private float _projectileFallDelay = 30f; 
     public static bool sProjectileCanFall;
     private Vector3 projectileSpawnPosition;
+    [SerializeField] private Health _bossHP;
+
     
     [Header("DEBUG")]
     public bool _simulateTotalPrecision;
@@ -23,9 +26,9 @@ public class BossEventProjectileFalling : MonoBehaviour
         StartCoroutine(nameof(SetProjectileCanFall));  
     } 
 
-    private void FixedUpdate()  
-    {
-        if (sProjectileCanFall) 
+    private void FixedUpdate()
+    { 
+        if (sProjectileCanFall && _bossHP.CurrentValue > 0) 
         {
             StartCoroutine(nameof(SetProjectileCanFall));
             _bossAnimation.PlayAnimation(AnimState.SecondaryAtk, Random.Range(0, 2) == 0 ? AnimDirection.Right : AnimDirection.Left);
@@ -57,7 +60,8 @@ public class BossEventProjectileFalling : MonoBehaviour
     private IEnumerator SetProjectileCanFall()
     {
         sProjectileCanFall = false;
-        yield return new WaitForSeconds(_projectileFallDelay); 
-        sProjectileCanFall = !BossAIBrain.sAllLightsWereOff;  
+        yield return new WaitForSeconds(_projectileFallDelay);
+        sProjectileCanFall = !BossAIBrain.sAllLightsWereOff;
+        Debug.Log($"setting projectile can fall to {sProjectileCanFall}"); 
     }
-}
+} 
