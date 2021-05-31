@@ -27,7 +27,8 @@ public class BossAIBrain : MonoBehaviour
     [Header("Core")]
     [SerializeField] private Collider _bossCollider;
     [SerializeField] private Health _bossHP;
-    [SerializeField] private AIAnimation _bossAnimation; 
+    [SerializeField] private AIAnimation _bossAnimation;
+    [SerializeField] private AnimEventPlaySound _OnMobInvocation; 
 
     [Header("Spawn")]
     [SerializeField, Space] private GameObject _spawnerHalfCircle; 
@@ -318,6 +319,7 @@ public class BossAIBrain : MonoBehaviour
         if (!doSpawns) return;
         // StartCoroutine(SetInvocationCooldown(_invocationDelay));
         currentState = BossStates.Invocation;
+        _OnMobInvocation.PlaySoundSafe(SoundType.Attack);
 
         _isInvoking = true; // to avoid overlap of invocation and ray attack (too overwhelming, at least for the first phase)
         Debug.Log("invoking");
