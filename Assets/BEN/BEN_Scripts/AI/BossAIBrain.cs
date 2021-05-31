@@ -27,6 +27,7 @@ public class BossAIBrain : MonoBehaviour
     [Header("Core")]
     [SerializeField] private Collider _bossCollider;
     [SerializeField] private Health _bossHP;
+    [SerializeField] private AIAnimation _bossAnimation; 
 
     [Header("Spawn")]
     [SerializeField, Space] private GameObject _spawnerHalfCircle; 
@@ -61,7 +62,7 @@ public class BossAIBrain : MonoBehaviour
     public static float sLightsOnDuration; 
     public static float sBossVulnerabilityDuration;
     public static byte sSwitchUsedCount;
-    public static byte sHitCounter;
+    public static byte sHitCounter; 
     public static byte sMaxActiveSwitches; 
     private SwitchesPattern _switchesPattern;
     private float _lightsActivationTimer;
@@ -69,7 +70,6 @@ public class BossAIBrain : MonoBehaviour
 
     private StateMachine<BossStates> _fsm;
 
-    private AIAnimation _aIAnimation;
     private byte _activeSwitches; 
 
     public static Action<BossStates, StateTransition> OnRequireStateChange;
@@ -126,9 +126,9 @@ public class BossAIBrain : MonoBehaviour
         _bossCollider.enabled = false;
         sHitCounter = 0;
         sMaxActiveSwitches = _maxActiveSwitches;
-        _canRevealSwitches = doSwitchMechanic; 
+        _canRevealSwitches = doSwitchMechanic;
+        _bossAnimation.PlayAnimation(AnimState.Idle, AnimDirection.None); 
 
-        _aIAnimation = GetComponentInChildren<AIAnimation>();
         sBossVulnerabilityDuration = _vulnerabilityDuration; 
         for (int i = 0; i < _spawnerHalfCircle.transform.childCount; i++)
         {
@@ -160,7 +160,7 @@ public class BossAIBrain : MonoBehaviour
             StartCoroutine(nameof(SetInvocationCooldown)); 
             OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
         }
-
+        
         if (_bossHP.CurrentValue <= 0)
         {
             OnRequireStateChange(BossStates.Death, StateTransition.Safe); 
