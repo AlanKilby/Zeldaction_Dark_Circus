@@ -41,7 +41,7 @@ public class YMI_CutOutDetection : MonoBehaviour
         //Debug.Log(offset.magnitude);
         //Creating all the rays going from the transform of the targeted object to the wall ? And extracting the magnitude value
         // to check when where to apply the sahder 
-        hitObjects = Physics.RaycastAll(transform.position, offset, offset.magnitude, Wall);
+        hitObjects = Physics.RaycastAll(transform.position, offset, offset.magnitude, Wall); //Integre les murs detectés et les retire en temps réel
 
         for (int i = 0; i < hitObjects.Length; i++)
         {
@@ -54,14 +54,14 @@ public class YMI_CutOutDetection : MonoBehaviour
                 materials[n].SetFloat("_CutoutSize", cutoutSize);
                 materials[n].SetFloat("_CutoutSmoothness", cutoutSmoothness);
             }
-            if (CheckName(hitObjects[i]))
+            if (CheckName(hitObjects[i])) //Check si le nom de l'objet est déjà dans la liste
             {
-                hitObjectsMemory.Add(hitObjects[i]);
+                hitObjectsMemory.Add(hitObjects[i]); //Liste sur laquelle j'ai un controle pour reset 
             }
         }
-        Invoke("CheckWallInSight", 0.2f); 
+        Invoke("CheckWallInSight", 0.2f); //Vérifie que si un mur entre le joueur et la caméra
         
-        if (playerInSight)
+        if (playerInSight) //Si la caméra ne voit plus le joueur, plus besoin de la liste des murs concernés, on peut la clear et reset les mat des murs
         {
             ClearList();
         }
@@ -71,7 +71,7 @@ public class YMI_CutOutDetection : MonoBehaviour
     {
         if (Physics.Linecast(transform.position, playerPos.position, Wall))
         {
-            playerInSight = false;
+            playerInSight = false; //Booléen qui détermine si la caméra voit le joueur ou non
         }
         else { playerInSight = true; }
 
