@@ -65,8 +65,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   boomerangDamage: 1
-  goingSpeed: 0
-  comingSpeed: 0
   aimPos: {x: 0, y: 0, z: 0}
   playerPos: {fileID: 0}
   goingSpeedC:
@@ -123,21 +121,20 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 1024
-  WallLayer:
+  wallLayer:
     serializedVersion: 2
     m_Bits: 2048
-  EnemyLayer:
+  enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  EnemyWeaponLayer:
+  fakirWeaponLayer:
     serializedVersion: 2
-    m_Bits: 256
-  reductionCoef: 0.05
-  accelerationCoef: 0.8
+    m_Bits: 8192
+  bossLayer:
+    serializedVersion: 2
+    m_Bits: 65536
+  isStunned: 0
   comebackTimer: 2
-  swordLayer:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!54 &6562525557809070716
 Rigidbody:
   m_ObjectHideFlags: 0

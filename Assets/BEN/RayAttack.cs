@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,21 @@ public class RayAttack : MonoBehaviour
     public List<GameObject> _rayPlaceholderVisuals = new List<GameObject>(); 
     private List<Collider> _rayColliders = new List<Collider>();
     private List<MeshRenderer> _rayMeshRenderers = new List<MeshRenderer>();
-    private bool canRayAttack = true; 
+    public static bool sCanRayAttack;
+
+    private void OnEnable()
+    {
+        BossAIBrain.OnBossVulnerable += DisableRayOnBossVulnerable;
+    }
+
+    private void OnDisable()
+    {
+        BossAIBrain.OnBossVulnerable -= DisableRayOnBossVulnerable;
+    }
 
     private void Start()
     {
+        sCanRayAttack = true; 
         for (int i = 0; i < _rayPlaceholderVisuals.Count; i++)
         {
             _rayMeshRenderers.Add(_rayPlaceholderVisuals[i].GetComponent<MeshRenderer>()); 
@@ -20,9 +32,9 @@ public class RayAttack : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        if (!canRayAttack) return; 
-        Debug.Log(" attacking");
+    { 
+        if (!sCanRayAttack) return; 
+        Debug.Log(" rotating for ray attack");
         StartCoroutine(nameof(CastRayToPlayer));
         StartCoroutine(nameof(SetCanRotate));
 
@@ -33,24 +45,33 @@ public class RayAttack : MonoBehaviour
             _rayMeshRenderers[i].enabled = true;
             _rayColliders[i].enabled = false;
         } 
-    }
+    } 
     
     private IEnumerator CastRayToPlayer()
     {
         yield return new WaitForSeconds(2f);  
-        Debug.Log("debugging ray");  
+        Debug.Log("ray attacking");  
 
         for (var i = 0; i < _rayPlaceholderVisuals.Count; i++)
         { 
-            _rayMeshRenderers[i].enabled = false; 
+            _rayMeshRenderers[i].enabled = false;  
             _rayColliders[i].enabled = true; 
         }
     }
 
+    private void DisableRayOnBossVulnerable()
+    {
+        for (var i = 0; i < _rayMeshRenderers.Count; i++)
+        {
+            _rayMeshRenderers[i].enabled = false; 
+            _rayColliders[i].enabled = false; 
+        }
+    } 
+
     private IEnumerator SetCanRotate()
     {
-        canRayAttack = false; 
+        sCanRayAttack = false; 
         yield return new WaitForSeconds(5f);
-        canRayAttack = true; 
+        sCanRayAttack = !BossAIBrain.sAllLightsWereOff; 
     }
 }

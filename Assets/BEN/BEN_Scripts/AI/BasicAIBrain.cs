@@ -29,7 +29,7 @@ namespace BEN.AI
         MonkeySurBall,
         Mascotte, 
         Fakir  
-    }
+    } 
     
     public enum States
     {
@@ -139,7 +139,7 @@ namespace BEN.AI
             _fsm.ChangeState(States.Init, StateTransition.Safe); 
             
             _agentHp = GetComponent<Health>();
-            _agentHp.IsAI = true; 
+            _agentHp.IsMonkeyBall = true; 
         }
 
         private void OnEnable() 

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class BossEventProjectileFalling : MonoBehaviour
 {
@@ -11,15 +13,20 @@ public class BossEventProjectileFalling : MonoBehaviour
     [SerializeField] private BoxCollider _spawnZone;
     [SerializeField, Range(0f, 5f)] private float _fallZoneBorder = 1f;
     [SerializeField, Range(2f, 60f)] private float _projectileFallDelay = 30f; 
-    private bool projectileCanFall = true;
+    public static bool sProjectileCanFall;
     private Vector3 projectileSpawnPosition;
     
     [Header("DEBUG")]
-    public bool _simulateTotalPrecision; 
+    public bool _simulateTotalPrecision;
+
+    private void Start()
+    {
+        StartCoroutine(nameof(SetProjectileCanFall));  
+    } 
 
     private void FixedUpdate() 
     {
-        if (projectileCanFall)
+        if (sProjectileCanFall) 
         {
             StartCoroutine(nameof(SetProjectileCanFall)); 
             
@@ -33,17 +40,18 @@ public class BossEventProjectileFalling : MonoBehaviour
              }
              
              Instantiate(_bossProjectile[Random.Range(0, _bossProjectile.Length)], projectileSpawnPosition, Quaternion.identity);
-             Instantiate(_projectileShadow,
+             var shadowReference = Instantiate(_projectileShadow,
                  new Vector3(projectileSpawnPosition.x, _groundHeight, projectileSpawnPosition.z),
                  Quaternion.Euler(90f, 0f, 0f));
+             
              _OnSpotlightFalling.Invoke();
         }
-    }
+    } 
 
     private IEnumerator SetProjectileCanFall()
     {
-        projectileCanFall = false;
+        sProjectileCanFall = false;
         yield return new WaitForSeconds(_projectileFallDelay); 
-        projectileCanFall = true; 
+        sProjectileCanFall = !BossAIBrain.sAllLightsWereOff;  
     }
 }

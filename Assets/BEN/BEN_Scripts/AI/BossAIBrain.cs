@@ -17,31 +17,46 @@ public class SpawnableEntity
     public AIType Type { get => _type; } 
     public float SpawnProbability { get => _spawnProbability; }
     public GameObject Prefab { get => _prefab; } 
-}
+} 
 
-public enum BossStates { Init, Default, Defend, Invocation, ObjectFalling, Death } 
+public enum BossStates { Init, Default, Vulnerable, Invocation, ObjectFalling, Death } 
+public enum SwitchesPattern { LineOne, LineTwo, LineThree, DiagonalOne, DiagonalTwo, FullRight, FullLeft } 
 public class BossAIBrain : MonoBehaviour
 {
     // [SerializeField] private GameObject _graphics;
+    [SerializeField] private Collider _bossCollider;
+    [SerializeField] private Health _bossHP;
+
+
     [Header("Spawn")]
-    [SerializeField] private bool _invokeOnStart; // NOT WORKGING
     [SerializeField, Space] private GameObject _spawnerHalfCircle; // upgrade to have more creative control and use less prefabs
     [SerializeField, Space] private GameObject _spawnerOuter; // upgrade to have more creative control and use less prefabs 
     [SerializeField] private List<SpawnableEntity> _spawnableEntitiesList; // use a HashSet instead to avoid duplicates 
-    [SerializeField, ConditionalShow("_invokeOnStart")] private float _invokeOnStartDelay = 10f; 
     [SerializeField, Range(5, 60)] private float _invocationDelay = 20f;
+    [SerializeField] private bool _killAllSpawnsOnLightsOff;
     private List<Vector3> _spawnPositionsHalfCircle = new List<Vector3>(); 
     private List<Vector3> _spawnPositionsOuter = new List<Vector3>();
 
-    [Header("Object Falling")] 
-    [SerializeField] private bool _doFall; // placeholder
-    
-    [Header("Switches")]
+    [Header("Switches")] 
     [SerializeField] private List<Switch> _switchedList = new List<Switch>();
-    [SerializeField] private byte _maxActiveSwitches = 2;
-    [SerializeField, Range(1, 15)] private float _vulnerabilityDuration = 5f;
-    [SerializeField, Range(5, 50)] private float _percentOfDamageBeforeSwitchReset = 25f;
-    public static float sBossVulnerabilityDuration; 
+    [SerializeField, Range(1, 4)] private byte _maxActiveSwitches = 2;
+    [SerializeField, Range(1, 40)] private float _vulnerabilityDuration = 20f;
+    [SerializeField, Range(5, 50)] private byte _maxPercentOfDamageBeforeSwitchReset = 25;
+    [SerializeField, Range(5f, 60f)] private float _switchesActivationDelay = 20f;
+    [SerializeField, Range(5, 60)] private float _switchesOnDuration = 30f;
+    [SerializeField, 
+     Tooltip("if player turns all switches on quickly, " +
+             "next switches activation delay is shorter after boss goes back to attack state, " +
+             "by taking into account the time it took the player to turn all the switches on ")] private bool rewardPlayerOnQuickLightsOff; 
+    
+    public static float sLightsOnDuration; 
+    public static float sBossVulnerabilityDuration;
+    public static byte sSwitchUsedCount;
+    public static byte sHitCounter;
+    public static byte sMaxActiveSwitches; 
+    private SwitchesPattern _switchesPattern;
+    private float _lightsActivationTimer;
+    private bool switchesAreOn; 
 
     private StateMachine<BossStates> _fsm;
 
@@ -52,18 +67,22 @@ public class BossAIBrain : MonoBehaviour
 
     private float _invocationSelector; 
     private float _entityToInvokeSelector;
-
+ 
     private bool _canInvoke = true; 
     private bool _canDoAirAttack = false;
-    private bool _lightsAreOff;
-    private BossStates currentState; 
+    private BossStates currentState, previousState;
+    public static bool sAllLightsWereOff;
+    public static Action OnBossVulnerable; // deactivate ray colliders; 
+    private bool rayHasBeenResetAfterVulnerableState; 
 
     [Header("DEBUG")]
     public bool doSpawns = true;
-
+    public bool doSwitchMechanic = true; 
     public LayerMask playerLayer;
-    private bool _showActivatableLigths = true;  // this should not be here 
-    private bool _isInvoking; 
+    private bool _canRevealSwitches = true;  // this should not be here 
+    private bool _isInvoking;
+    private List<GameObject> _invokedEntities = new List<GameObject>(); 
+    
 
 #region Unity Callbacks
 
@@ -85,6 +104,7 @@ public class BossAIBrain : MonoBehaviour
     
     private void TransitionToNewState(BossStates newState, StateTransition transition)
     {
+        previousState = currentState; 
         currentState = newState; 
         _fsm.ChangeState(newState, transition);
     }
@@ -92,6 +112,13 @@ public class BossAIBrain : MonoBehaviour
     void Start() 
     { 
         Debug.Log("start");
+        sLightsOnDuration = _switchesOnDuration;
+        sSwitchUsedCount = 0;
+        _bossCollider.enabled = false;
+        sHitCounter = 0;
+        sMaxActiveSwitches = _maxActiveSwitches;
+        _canRevealSwitches = doSwitchMechanic; 
+
         _aIAnimation = GetComponentInChildren<AIAnimation>();
         sBossVulnerabilityDuration = _vulnerabilityDuration; 
         for (int i = 0; i < _spawnerHalfCircle.transform.childCount; i++)
@@ -104,46 +131,72 @@ public class BossAIBrain : MonoBehaviour
             _spawnPositionsOuter.Add(_spawnerOuter.transform.GetChild(i).position);
         }
 
-        StartCoroutine(_invokeOnStart ? nameof(InvokeOnStart) : nameof(SetInvocationCooldown));
+        StartCoroutine(nameof(SetInvocationCooldown));
     }
 
-    private void FixedUpdate()
+    private void FixedUpdate() 
     { 
         if (!PlayerMovement_Alan.sPlayer && Time.time >= 1f) // to avoid it on first frame
         {
             OnRequireStateChange(BossStates.Default, StateTransition.Safe); 
         }
-        
+
+        if (switchesAreOn)
+        {
+            _lightsActivationTimer += 0.02f; 
+        }
+
         if (_canInvoke)
         {
             StartCoroutine(nameof(SetInvocationCooldown)); 
             OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
         }
 
-        if (!_showActivatableLigths) return;
-        for (int i = 0; i < _switchedList.Count && _activeSwitches < _maxActiveSwitches; i++)
+        if (_bossHP.CurrentValue <= 0)
         {
-            var selector = UnityEngine.Random.Range(0, 2);  
-            if (selector > 0) 
-            {
-                _switchedList[i].ShowIsDeactivatable();
-                _activeSwitches++;  
-            }
+            OnRequireStateChange(BossStates.Death, StateTransition.Safe); 
         }
-        _activeSwitches = 0;
-        StartCoroutine(nameof(SetSwitchesCooldown)); 
+
+        if (!_canRevealSwitches) return;
+        SelectSwitchesPattern();
     }
 
-    private IEnumerator InvokeOnStart()  
+    private void SelectSwitchesPattern() // remove from here.. It is not part of the state machine 
     {
-        yield return new WaitForSeconds(_invokeOnStartDelay); 
-        Debug.Log("invoking entity on start") ;
-        OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
-    }
-
-    private void SetLightOffState()
-    {
-        _lightsAreOff = true; 
+        switchesAreOn = true; 
+        var selector = (SwitchesPattern) Random.Range(0, (int) SwitchesPattern.FullLeft + 1);
+        switch (selector) 
+        {
+            case SwitchesPattern.LineOne:
+                _switchedList[0].ShowSwitchIsOn();
+                _switchedList[1].ShowSwitchIsOn();
+                break;
+            case SwitchesPattern.LineTwo:
+                _switchedList[2].ShowSwitchIsOn();
+                _switchedList[3].ShowSwitchIsOn();
+                break;
+            case SwitchesPattern.LineThree:
+                _switchedList[4].ShowSwitchIsOn();
+                _switchedList[5].ShowSwitchIsOn();
+                break;
+            case SwitchesPattern.FullLeft:
+                _switchedList[0].ShowSwitchIsOn();
+                _switchedList[4].ShowSwitchIsOn();
+                break;
+            case SwitchesPattern.FullRight:
+                _switchedList[1].ShowSwitchIsOn();
+                _switchedList[3].ShowSwitchIsOn();
+                break;
+            case SwitchesPattern.DiagonalOne:
+                _switchedList[0].ShowSwitchIsOn();
+                _switchedList[5].ShowSwitchIsOn();
+                break;
+            case SwitchesPattern.DiagonalTwo:
+                _switchedList[1].ShowSwitchIsOn();
+                _switchedList[4].ShowSwitchIsOn();
+                break;
+        }
+        StartCoroutine(nameof(SetSwitchesCooldown));
     }
 
     #endregion
@@ -154,7 +207,6 @@ public class BossAIBrain : MonoBehaviour
     void Init_Enter() 
     {
         Debug.Log("Initializing"); 
-        currentState = BossStates.Init;
         // _aIAnimation = _graphics.GetComponent<AIAnimation>(); 
     }
 
@@ -170,18 +222,16 @@ public class BossAIBrain : MonoBehaviour
 
     void Default_Enter()
     {
-        currentState = BossStates.Default;
         Debug.Log("default state");
     } 
     
 #endregion
 
-
 #region Invocation
 
     void Invocation_Enter()
     {
-        currentState = BossStates.Invocation;
+        Debug.Log("invocation enter");
         InvokeEntity(1f); 
     } 
 
@@ -196,7 +246,7 @@ public class BossAIBrain : MonoBehaviour
 
     void ObjectFalling_Enter()
     {
-        currentState = BossStates.ObjectFalling;
+        Debug.Log("object falling enter");
     }
 
     void ObjectFalling_FixedUpdate()
@@ -211,23 +261,58 @@ public class BossAIBrain : MonoBehaviour
 
 #endregion 
 
-#region Defend 
-    IEnumerator Defend_Enter()
-    {
-        // when lights are off
-        currentState = BossStates.Defend;
+#region Vulnerable 
+    void Vulnerable_Enter()
+    { 
+        Debug.Log("vulnerable enter");
+        try // DEBUG because will throw error when RayAttacks_Manager is disabled 
+        {
+            OnBossVulnerable(); 
 
+        }
+        catch (NullReferenceException) { } 
+
+        sSwitchUsedCount = 0;
+        rayHasBeenResetAfterVulnerableState = false;
+
+        if (_killAllSpawnsOnLightsOff)
+        {
+            foreach (var item in _invokedEntities)
+            {
+                item.GetComponentInChildren<Health>().DecreaseHp(100); 
+            } 
+        }
+        
+        _bossCollider.enabled = sAllLightsWereOff = true;
+        BossEventProjectileFalling.sProjectileCanFall = RayAttack.sCanRayAttack = false;
+        _canRevealSwitches = _canInvoke = false; 
+        
+        StartCoroutine(nameof(ResetToAttackState)); 
+    }
+
+    IEnumerator ResetToAttackState()
+    {
         yield return new WaitForSeconds(_vulnerabilityDuration);
-    }
-
-    void Defend_FixedUpdate()
+        StartCoroutine(nameof(SetInvocationCooldown)); 
+        OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
+    } 
+    
+    void Vulnerable_FixedUpdate()
     {
-        Debug.Log("Ligth are off and boss is vulnerable"); 
-    }
+        if (sHitCounter >= (_bossHP.AgentStartinHP.Value / (100 / _maxPercentOfDamageBeforeSwitchReset)))
+        {
+            StartCoroutine(nameof(SetInvocationCooldown)); 
+            OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
+            Debug.Log("back to invocation from max hit count"); 
+        } 
+    } 
 
-    void Defend_Exit() 
+    void Vulnerable_Exit()  
     {
-        // when lights are on again => go back to RayAttack 
+        sHitCounter = 0;
+        
+        _bossCollider.enabled = false;
+        StartCoroutine(nameof(SetSwitchesCooldown));
     }
     #endregion 
     
@@ -235,12 +320,16 @@ public class BossAIBrain : MonoBehaviour
 
      private void Death_Enter()
      {
-         
-     }
+         Debug.Log("death enter");
+
+         _bossCollider.enabled = false;
+         BossEventProjectileFalling.sProjectileCanFall = false;
+         RayAttack.sCanRayAttack = false;
+     } 
     
 #endregion
 
-#endregion
+#endregion 
     
 #region Functionality
     private void InvokeEntity(float invocationProbability)
@@ -271,8 +360,9 @@ public class BossAIBrain : MonoBehaviour
                 BasicAIBrain basicAIBrain = instanceReference.GetComponentInChildren<BasicAIBrain>();
                 basicAIBrain.HasBeenInvokedByBoss = true;
                 basicAIBrain.TargetToAttackPosition = PlayerMovement_Alan.sPlayerPos;
-                basicAIBrain.OnRequireStateChange(States.Attack, StateTransition.Overwrite); 
-                // basicAIBrain.Type = _spawnableEntitiesList[m_entityToInvokeSelector].Type; // warning risk of having basicAIBrain Type and type different 
+                basicAIBrain.OnRequireStateChange(States.Attack, StateTransition.Safe); 
+                
+                _invokedEntities.Add(instanceReference); 
             }
 
             _isInvoking = false; 
@@ -284,30 +374,32 @@ public class BossAIBrain : MonoBehaviour
         _canInvoke = false;
 
         yield return new WaitForSeconds(_invocationDelay);
-        Debug.Log("setting can invoke to true"); 
-        _canInvoke = true;
+        Debug.Log($"setting can invoke to {currentState != BossStates.Vulnerable}"); 
+        _canInvoke = currentState != BossStates.Vulnerable;
     } 
     
-    
-    // SUPER DRY
-    IEnumerator SetCanDoAirAttack()  
-    {
-        Debug.Log("setting can do air attack to false"); 
-
-        _canDoAirAttack = false;
-
-        yield return new WaitForSeconds(1f); 
-        _canDoAirAttack = true; 
-    }
-
-    // ...
+    // DRY 
     IEnumerator SetSwitchesCooldown()
     {
-        _showActivatableLigths = false;
+        _canRevealSwitches = false;
+        sAllLightsWereOff = false;
+        switchesAreOn = false; 
+        _lightsActivationTimer = 0f;
 
-        yield return new WaitForSeconds(10f + _vulnerabilityDuration);
-        _showActivatableLigths = true;
+        if (!rayHasBeenResetAfterVulnerableState)
+        {
+            yield return null;
+            rayHasBeenResetAfterVulnerableState = true; 
+            RayAttack.sCanRayAttack = BossEventProjectileFalling.sProjectileCanFall = true; 
+        }
+
+        yield return new WaitForSeconds(sAllLightsWereOff && rewardPlayerOnQuickLightsOff
+            ? _switchesActivationDelay + _switchesOnDuration - _lightsActivationTimer
+            : _switchesActivationDelay + _switchesOnDuration);
+        
+        Debug.Log($"setting can reveal switches to {currentState != BossStates.Vulnerable}");
+        _canRevealSwitches = currentState != BossStates.Vulnerable; 
     }
-    
+
     #endregion
 }
