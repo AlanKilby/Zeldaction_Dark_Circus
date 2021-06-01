@@ -59,7 +59,7 @@ public class Health : MonoBehaviour
             _playercollider.enabled = false; 
             OnPlayerDeath();  
         }
-        else if (_brain.Type == AIType.MonkeySurBall)
+        else if (_brain && _brain.Type == AIType.MonkeySurBall)
         {
             OnMonkeyBallTransitionToNormalMonkey(); 
         }

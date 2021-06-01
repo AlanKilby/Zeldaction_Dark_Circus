@@ -47,7 +47,7 @@ public class AnimEventPlaySound : SerializedMonoBehaviour
      
 }
 
-[System.Serializable] 
+[Serializable] 
 public class Sound
 {
     public AudioClip clip;
