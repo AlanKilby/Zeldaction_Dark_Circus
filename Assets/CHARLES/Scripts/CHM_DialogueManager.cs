@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CHM_DialogueManager : MonoBehaviour
@@ -13,6 +14,9 @@ public class CHM_DialogueManager : MonoBehaviour
     public Animator animator;
 
     public GameObject dialogueBox;
+
+    public UnityEvent rewardOnDialogueEnd;
+
     void Start()
     {
         sentences = new Queue<string>();
@@ -61,7 +65,7 @@ public class CHM_DialogueManager : MonoBehaviour
 
     void EndDialogue()
     {
-
+        rewardOnDialogueEnd.Invoke();
         animator.SetBool("IsOpen", false);
     }
 

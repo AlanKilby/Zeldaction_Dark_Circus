@@ -63,4 +63,12 @@ public class UD_LeverPuzzle : MonoBehaviour
 
         currentAnimation = newAnimation;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("PlayerWeapon") && canBeActivate)
+        {
+            Activate();
+        }
+    }
 }
