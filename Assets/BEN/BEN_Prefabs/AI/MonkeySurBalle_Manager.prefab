@@ -123,14 +123,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 797199751803070904}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalPosition: {x: 0, y: 1, z: 0.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8954398699014469952}
   m_Father: {fileID: 797199752371587998}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!212 &797199751803070907
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationSo: {fileID: 11400000, guid: 024abb3fefd08d44bac72958ab37226a, type: 2}
+  animator: {fileID: 0}
 --- !u!114 &1490967338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -699,6 +700,7 @@ MonoBehaviour:
   _monkeyBallProvocDuration: 3
   _monkeyBallDodgeReactionTime: 0
   _monkeyBallDodgeDistance: 8
+  _delayBetweenEachAttack: 1
   _graphics: {fileID: 797199751803070904}
   _detection: {fileID: 797199752267424712}
   _placeholderDestination: {fileID: 610376292}
@@ -736,6 +738,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agentStartingHP: {fileID: 11400000, guid: f6d5c1265a2e9f449b58d67bc91acb6b, type: 2}
+  _OnBossHPLoss:
+    m_PersistentCalls:
+      m_Calls: []
+  isBossHP: 0
+  _playerUnkillable: 0
 --- !u!114 &357748609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,13 +906,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6919005683356471566}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
   m_LocalPosition: {x: -0.00000047683716, y: -0.832173, z: -0.032063425}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 797199752371587998}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!95 &2802055482203161770
 Animator:
   serializedVersion: 3
@@ -1002,6 +1009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationSo: {fileID: 11400000, guid: d623a60036f4a4342874566cae1c8bae, type: 2}
+  animator: {fileID: 0}
 --- !u!114 &993034457065166823
 MonoBehaviour:
   m_ObjectHideFlags: 0

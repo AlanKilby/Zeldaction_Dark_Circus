@@ -279,6 +279,7 @@ MonoBehaviour:
   _monkeyBallProvocDuration: 3
   _monkeyBallDodgeReactionTime: 0.5
   _monkeyBallDodgeDistance: 5
+  _delayBetweenEachAttack: 1
   _graphics: {fileID: 3196105207732227387}
   _detection: {fileID: 3196105207235364683}
   _placeholderDestination: {fileID: 891107891}
@@ -316,6 +317,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agentStartingHP: {fileID: 11400000, guid: 21d805e30c4c1384db0e835d8f18e708, type: 2}
+  _OnBossHPLoss:
+    m_PersistentCalls:
+      m_Calls: []
+  isBossHP: 0
+  _playerUnkillable: 0
 --- !u!114 &99377281
 MonoBehaviour:
   m_ObjectHideFlags: 0
