@@ -517,7 +517,7 @@ namespace BEN.AI
                     yield return new WaitForSeconds(_monkeyBallDodgeReactionTime);
                     Debug.Log("defend_enter");
                     _checkSurroundings.CanDodgeProjectile = _monkeyBallCollider.enabled = _ballCollider.enabled = false;
-                    transform.position = _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
+                    transform.position += _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
             
                     yield return new WaitForSeconds(0.1f);  
                     _monkeyBallCollider.enabled = true;
