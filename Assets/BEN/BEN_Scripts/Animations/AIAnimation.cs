@@ -62,6 +62,29 @@ namespace BEN.Animation
 
             return clipToPlay;
         }
+        
+        public void PlayAnimationFromUnityEvent(AnimState key, AnimDirection direction)
+        {
+            var clipToPlay = _animationSo.GetAnimClipFromDictionary(key, direction); 
+            
+            if (!_animator) _animator = GetComponent<Animator>(); 
+            if (!_animator.runtimeAnimatorController)
+            {
+                _animator.runtimeAnimatorController = _animationSo.controller;
+            }
+
+            if (!_animator.enabled)
+                _animator.enabled = true;
+
+            try
+            {
+                _animator.speed = clipToPlay.speedMultiplier; 
+
+                if (_animator.GetCurrentAnimatorStateInfo(0).IsName(clipToPlay.clipContainer.name)) return; 
+                _animator.Play(clipToPlay.clipContainer.name);
+            }
+            catch (Exception) { } 
+        }
 
         public void StopAnimating()
         {

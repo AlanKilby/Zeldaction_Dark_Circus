@@ -40,7 +40,7 @@ public class AnimEventInstantiateObject : MonoBehaviour
 
     private void OnDestroy() 
     {
-        if (!Application.isPlaying || !instantiateManuallyOnSelfDestroy) return;
+        if (!Application.isPlaying && !instantiateManuallyOnSelfDestroy) return; 
         randomSelectionFromList = objToInstantiateOnSelfDestroy.Count >= 2; 
         
         if (randomSelectionFromList)

@@ -1,15 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BEN.Animation;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class RayAttack : MonoBehaviour
 {
+    [SerializeField] private AIAnimation _bossAnimation;
+    [SerializeField, Range(0f, 3f), Tooltip("delay between animation " +
+                                            "and ray effectively dealing damages")] private float _rayPrewarningDuration = 1f;  
+    [SerializeField, Range(0.5f, 5f)] private float _rayDamageDuration = 1.5f;  
+    [SerializeField, Range(2f, 10f)] private float _delayBetwenenRayAttacks = 5f;  
+
     public List<GameObject> _rayPlaceholderVisuals = new List<GameObject>(); 
     private List<Collider> _rayColliders = new List<Collider>();
     private List<MeshRenderer> _rayMeshRenderers = new List<MeshRenderer>();
     public static bool sCanRayAttack;
+    [SerializeField] private Health _bossHP;
+
 
     private void OnEnable()
     {
@@ -49,7 +58,9 @@ public class RayAttack : MonoBehaviour
     
     private IEnumerator CastRayToPlayer()
     {
-        yield return new WaitForSeconds(2f);  
+        
+        _bossAnimation.PlayAnimation(AnimState.Atk, AnimDirection.None);
+        yield return new WaitForSeconds(_rayPrewarningDuration);   
         Debug.Log("ray attacking");  
 
         for (var i = 0; i < _rayPlaceholderVisuals.Count; i++)
@@ -57,13 +68,10 @@ public class RayAttack : MonoBehaviour
             _rayMeshRenderers[i].enabled = false;  
             _rayColliders[i].enabled = true; 
         }
-    }
 
-    private void DisableRayOnBossVulnerable()
-    {
-        for (var i = 0; i < _rayMeshRenderers.Count; i++)
-        {
-            _rayMeshRenderers[i].enabled = false; 
+        yield return new WaitForSeconds(_rayDamageDuration);  
+        for (var i = 0; i < _rayPlaceholderVisuals.Count; i++)
+        { 
             _rayColliders[i].enabled = false; 
         }
     } 
@@ -71,7 +79,17 @@ public class RayAttack : MonoBehaviour
     private IEnumerator SetCanRotate()
     {
         sCanRayAttack = false; 
-        yield return new WaitForSeconds(5f);
-        sCanRayAttack = !BossAIBrain.sAllLightsWereOff; 
+        yield return new WaitForSeconds(_delayBetwenenRayAttacks); 
+        sCanRayAttack = !BossAIBrain.sAllLightsWereOff && _bossHP.CurrentValue > 0; 
+        Debug.Log($"setting can ray attack to {sCanRayAttack}"); 
+    }
+    
+    private void DisableRayOnBossVulnerable()
+    {
+        for (var i = 0; i < _rayMeshRenderers.Count; i++)
+        {
+            _rayMeshRenderers[i].enabled = false; 
+            _rayColliders[i].enabled = false; 
+        }
     }
 }
