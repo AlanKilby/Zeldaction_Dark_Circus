@@ -98,8 +98,8 @@ namespace BEN.AI
                      
                     Debug.Log("after return dodge");
                     var directionRandomSelector = UnityEngine.Random.Range(0, 2) == 0 ? _localLeftDirection : _localRightDirection;
-                    _dodgeDirection = LeftWallDetected && RightWallDetected ? directionRandomSelector : (LeftWallDetected ? _localLeftDirection : _localRightDirection);
-                    DodgeDirection = transform.TransformDirection(_dodgeDirection); 
+                    DodgeDirection = LeftWallDetected && RightWallDetected ? directionRandomSelector : (LeftWallDetected ? _localLeftDirection : _localRightDirection);
+                    transform.position += DodgeDirection;  
                     
                     _brain.OnRequireStateChange(States.Defend, StateTransition.Safe); 
                 }
