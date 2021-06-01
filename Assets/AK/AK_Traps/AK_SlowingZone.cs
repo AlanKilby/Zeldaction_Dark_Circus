@@ -13,7 +13,10 @@ public class AK_SlowingZone : MonoBehaviour
     [Tooltip("The speed the player will be slowed to.")]
     [Range(0f, 1f)] public float slowSpeedMultiplier = 0.5f;
     private float oldSpeed;
-    private AICustomEffectOnZoneSlow _customAIEffect; 
+    private AICustomEffectOnZoneSlow _customAIEffect;
+
+    
+    public ParticleSystem handsParticles;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -24,11 +27,15 @@ public class AK_SlowingZone : MonoBehaviour
             other.gameObject.GetComponent<PlayerMovement_Alan>().isSlowed = true;
 
             other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeed *= slowSpeedMultiplier;
+
+            handsParticles.Play();
         }
         else if (Mathf.Pow(2, other.gameObject.layer) == enemyLayer) 
         {
             _customAIEffect = other.GetComponent<AICustomEffectOnZoneSlow>(); 
             _customAIEffect.InvokeCustomEventOnEnter();
+
+            handsParticles.Play();
         }
     }
 
@@ -39,10 +46,14 @@ public class AK_SlowingZone : MonoBehaviour
             other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeed = oldSpeed;
 
             other.gameObject.GetComponent<PlayerMovement_Alan>().isSlowed = false;
+
+            handsParticles.Stop();
         }
         else if (Mathf.Pow(2, other.gameObject.layer) == enemyLayer)
         {
-            _customAIEffect.InvokeCustomEventOnExit();  
+            _customAIEffect.InvokeCustomEventOnExit();
+
+            handsParticles.Stop();
         }
     }
 }
