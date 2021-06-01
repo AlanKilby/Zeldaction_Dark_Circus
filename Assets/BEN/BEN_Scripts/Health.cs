@@ -1,5 +1,12 @@
+using System;
 using BEN.AI;
+using BEN.Animation;
 using UnityEngine;
+using UnityEngine.Events;
+using Random = UnityEngine.Random;
+
+[Serializable]
+public class BossHpLossEvent : UnityEvent<AnimState, AnimDirection> { }
 
 [DefaultExecutionOrder(12)]  
 public class Health : MonoBehaviour
@@ -9,11 +16,17 @@ public class Health : MonoBehaviour
     public bool IsMonkeyBall { get; set; }
     public AgentGameplayData AgentStartinHP { get => _agentStartingHP; }
 
-    public static System.Action OnPlayerDeath;
+    public static Action OnPlayerDeath;
     private bool _notifiedDeath; // replace with global game state to avoid same bool spread accross codebase
     private Collider _playercollider;
     private BasicAIBrain _brain;
-    public System.Action OnMonkeyBallTransitionToNormalMonkey; 
+    public Action OnMonkeyBallTransitionToNormalMonkey;
+    [Space, SerializeField] private BossHpLossEvent _OnBossHPLoss;
+    [SerializeField] private bool isBossHP;
+    
+    [Header("Debug")]
+    [SerializeField] private bool _playerUnkillable; 
+
 
     private void Start()
     {
@@ -23,21 +36,33 @@ public class Health : MonoBehaviour
 
     public void DecreaseHp(sbyte value)
     {
-        CurrentValue -= value; 
+        CurrentValue -= value;
 
-        if (CurrentValue > 0 || _notifiedDeath) return;
-        
-        if (!IsMonkeyBall)
+        if (CurrentValue > 0)
         {
-            _notifiedDeath = true;
+            if (isBossHP) 
+            {
+                _OnBossHPLoss.Invoke(AnimState.Hit, Random.Range(0, 2) == 0 ? AnimDirection.Left : AnimDirection.Right);  
+            }
+            return;
+        }
+
+        if (_notifiedDeath) return; // avoid call if HP == -1; 
+        
+        if (isBossHP) 
+        {
+            _OnBossHPLoss.Invoke(AnimState.Die, AnimDirection.None); 
+        }
+        else if (!IsMonkeyBall && !_playerUnkillable)
+        {
             _playercollider = GetComponent<Collider>();
             _playercollider.enabled = false; 
             OnPlayerDeath();  
         }
-        else if (_brain.Type == AIType.MonkeySurBall)
+        else if (_brain && _brain.Type == AIType.MonkeySurBall)
         {
-            _notifiedDeath = true;
             OnMonkeyBallTransitionToNormalMonkey(); 
         }
+        _notifiedDeath = true;
     } 
 }

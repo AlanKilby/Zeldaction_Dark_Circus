@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Random = UnityEngine.Random;
 using Sirenix.OdinInspector;
 
-public enum SoundType { Walk, Attack, Hurt, Defend, Death } 
+public enum SoundType { Walk, Attack, Hurt, Defend, Death, Laugh, Vulnerable, PreJump, Reset } 
 
 [RequireComponent(typeof(AudioSource))]
 public class AnimEventPlaySound : SerializedMonoBehaviour
@@ -21,28 +21,23 @@ public class AnimEventPlaySound : SerializedMonoBehaviour
 
     public void PlaySoundSafe(SoundType type)
     {
-        if (_audioSource.isPlaying) return; 
-        _audioSource.PlayOneShot(_soundsDictionary[type][0].clip);  
-     }
+        if (_audioSource.isPlaying) return;
+        _audioSource.PlayOneShot(_soundsDictionary[type].Count == 1 ? _soundsDictionary[type][0].clip : 
+                                                                      _soundsDictionary[type][Random.Range(0, _soundsDictionary[type].Count)].clip);  
+     } 
 
      public void PlayRandomSoundSafe(SoundType type) 
      {
-         if (_audioSource.isPlaying) return;
-         var selector = Random.Range(0, _soundsDictionary[type].Count); 
-         
-         /* if (!_settingFirstAudioClip)
-         {
-             _settingFirstAudioClip = true;
-             _currentClip = _newClip = _soundsDictionary[type][selector].clip; 
-         } => WIP to interrupt previous sound if new is different type (monkey_attack => monkey_death)*/
-         
+         if (_audioSource.isPlaying) return; 
+         var selector = Random.Range(0, _soundsDictionary[type].Count);
          _audioSource.PlayOneShot(_soundsDictionary[type][selector].clip); 
      }
 
      public void PlaySoundOverwrite(SoundType type) 
      {
-         _audioSource.PlayOneShot(_soundsDictionary[type][0].clip);  
-     }
+         _audioSource.PlayOneShot(_soundsDictionary[type].Count == 1 ? _soundsDictionary[type][0].clip : 
+                                                                       _soundsDictionary[type][Random.Range(0, _soundsDictionary[type].Count)].clip);  
+     } 
      
      public void PlayRandomSoundOverwrite(SoundType type) 
      {
@@ -52,7 +47,7 @@ public class AnimEventPlaySound : SerializedMonoBehaviour
      
 }
 
-[System.Serializable] 
+[Serializable] 
 public class Sound
 {
     public AudioClip clip;
