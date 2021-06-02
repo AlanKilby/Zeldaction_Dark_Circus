@@ -33,6 +33,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   potionQuantity: 0
+  maxPotionQuantity: 3
   potionHealthValue: 3
 --- !u!114 &7947157173063223367
 MonoBehaviour:
@@ -47,6 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agentStartingHP: {fileID: 11400000, guid: 85a53167c0644404ca50fc031f94b3b6, type: 2}
+  _OnBossHPLoss:
+    m_PersistentCalls:
+      m_Calls: []
+  isBossHP: 0
+  _playerUnkillable: 0
 --- !u!114 &1766796098039392376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +67,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 2648203343996164132}
   destroyDelay: 0.05
+  destroyFromStart: 0
+  _destroyableFromBossEvent: 0
 --- !u!1001 &7503289491963194189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74,7 +82,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5539784748974113972, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5539784748974113972, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_SortingOrder
