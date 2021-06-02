@@ -2,7 +2,10 @@
 
 public class PlayerMovement_Alan : MonoBehaviour
 {
-    public float movementSpeed = 5f; 
+    public float movementSpeed = 5f;
+
+    [HideInInspector]
+    public float movementSpeedHolder;
 
     public Rigidbody playerRB;
 
@@ -46,7 +49,8 @@ public class PlayerMovement_Alan : MonoBehaviour
     {
         canThrow = true;
         throwingTime = minThrowTime;
-        sPlayer = transform.root.gameObject; 
+        sPlayer = transform.root.gameObject;
+        movementSpeedHolder = movementSpeed;
     }
 
     void Update()
@@ -82,6 +86,11 @@ public class PlayerMovement_Alan : MonoBehaviour
                 canMove = true;
                 throwingTime = minThrowTime;
             }
+        }
+
+        if (!isSlowed)
+        {
+            movementSpeed = movementSpeedHolder;
         }
     }
 

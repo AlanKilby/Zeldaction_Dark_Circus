@@ -22,11 +22,11 @@ public class AK_SlowingZone : MonoBehaviour
     {
         if (Mathf.Pow(2, other.gameObject.layer) == playerLayer && !other.gameObject.GetComponent<PlayerMovement_Alan>().isSlowed)
         {
-            oldSpeed = other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeed;
+            //oldSpeed = other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeed;
 
             other.gameObject.GetComponent<PlayerMovement_Alan>().isSlowed = true;
 
-            other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeed *= slowSpeedMultiplier;
+            other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeed = other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeedHolder * slowSpeedMultiplier;
 
             handsParticles.Play();
         }
@@ -43,7 +43,7 @@ public class AK_SlowingZone : MonoBehaviour
     {
         if (Mathf.Pow(2, other.gameObject.layer) == playerLayer) 
         {
-            other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeed = oldSpeed;
+            other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeed = other.gameObject.GetComponent<PlayerMovement_Alan>().movementSpeedHolder;
 
             other.gameObject.GetComponent<PlayerMovement_Alan>().isSlowed = false;
 
