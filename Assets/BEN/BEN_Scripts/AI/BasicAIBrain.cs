@@ -70,6 +70,7 @@ namespace BEN.AI
         [SerializeField, Range(1f, 20f), Tooltip("Radius of ally notification when player is detected. Notified allies start chasing the player too")] private float _allyNotifyRadius = 8f; 
         
         [Header("Specific")]
+        [SerializeField, Range(0f, 5f)] private float _delayBetweenEachAttack = 1f; 
         [Space, SerializeField, ConditionalShow("isMonkeyBall"), Tooltip("Delay before jumping back to ball again")] private float _monkeyBallProvocDuration = 3f;
         [SerializeField, ConditionalShow("isMonkeyBall")] private float _monkeyBallDodgeReactionTime = 0.5f;
         [SerializeField, ConditionalShow("isMonkeyBall"), Tooltip("how far monkey ball goes when dodging")] private float _monkeyBallDodgeDistance = 5f;
@@ -115,9 +116,11 @@ namespace BEN.AI
 
     private Collider _monkeyBallCollider;
     private Collider _ballCollider; 
-    private bool _hasCalledFakeCac;
+    private bool _hasAppliedCACDamage;
+    private Timer _timer;
+    private static readonly int LookingRight = Animator.StringToHash("lookingRight");
 
-#endregion
+    #endregion
 
 #region Properties
 
@@ -191,9 +194,8 @@ namespace BEN.AI
             } 
         }
 
-
         private void Start()
-        { 
+        {
             _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>();
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
@@ -209,7 +211,7 @@ namespace BEN.AI
             }
             else
             {
-                _patrol.SetPoints(); 
+                _patrol.SetPoints();  
             }
 
             _agent = GetComponent<NavMeshAgent>();
@@ -361,26 +363,29 @@ namespace BEN.AI
             _agent.destination = TargetToAttackPosition;
             _idlePositionBeforeAttacking = transform.position;
             _agent.speed = DefaultSpeed;
-            // Debug.Log("attack_enter");
+            Debug.Log("attack_enter");
 
             // UPGRADE : make the enemy predict the future player position instead of aiming at it's current one
+            var clip = new Clip();
             switch (type) 
             {
                 case AIType.Monkey:
-                    _aIAnimation.PlayAnimation(wasMonkeyBall ? AnimState.SecondaryAtk : AnimState.Atk, _animDirection);
+                    clip = _aIAnimation.PlayAnimation(wasMonkeyBall ? AnimState.SecondaryAtk : AnimState.Atk, _animDirection);
                     break; 
                 case AIType.MonkeySurBall:
-                    _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection); 
+                    clip = _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection); 
                     break;
                 case AIType.Mascotte:
-                    _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+                    clip = _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
                     break;
                 case AIType.Fakir:
-                    _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
                     _agent.speed = 0f;
+                    clip = _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
                     InvokeRepeating(nameof(FakirAttack), 0f, _attackRate);  
                     break; 
             } 
+            
+            _timer.SetTargetValue(_delayBetweenEachAttack + clip.clipContainer.length); 
         } 
 
         private void Attack_FixedUpdate()  
@@ -389,49 +394,58 @@ namespace BEN.AI
             {
                 _agent.speed = 0f;
 
-                if (Type == AIType.Fakir && !_canPatrol && NewState == States.Attack)
+                if (Type == AIType.Fakir || type == AIType.MonkeySurBall) // why checking if new state is attack ??? 
                 {
-                    CheckAnimDirection(AnimState.Atk);
+                    var (targetIsReached, isFirstFrame) = _timer.Update(); 
+                    CheckAnimDirection(AnimState.Atk); 
+                    
+                    if (isFirstFrame)  
+                    {
+                        _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);
+                    }
+                    else if (targetIsReached) 
+                    {
+                        _timer.Reset();  
+                    } 
+
+                    if (type == AIType.MonkeySurBall)
+                    {
+                        _aIAnimation.animator.SetBool(LookingRight, _animDirection == AnimDirection.Right);
+                    }
                 } 
 
                 // back to default when player has been killed
                 if (LoadSceneOnPlayerDeath.playerIsDead)
                 {
                     _fsm.ChangeState(States.Default, StateTransition.Safe);
-                    CancelInvoke(nameof(FakeCAC)); 
+                    CancelInvoke(nameof(ApplyCACDamage)); 
                 }
 
                 // to simulate player killed from CAC. Distance is done from projectile
-                if ((type != AIType.Monkey && type != AIType.Mascotte) || _hasCalledFakeCac) return;
-                _hasCalledFakeCac = true;
+                if ((type != AIType.Monkey && type != AIType.Mascotte) || _hasAppliedCACDamage) return;
+                _hasAppliedCACDamage = true;
 
                 if (type == AIType.Mascotte)
                 {
                     _aIAnimation.PlayAnimation(AnimState.Atk, _animDirection);  
                 }
                  
-                InvokeRepeating(nameof(FakeCAC), 0.5f, _attackRate);
-            } 
-            else 
+                InvokeRepeating(nameof(ApplyCACDamage), 0.5f, _attackRate);
+            }
+            else
             {
-                _agent.speed = DefaultSpeed * _attackStateSpeedMultiplier; 
+                _agent.speed = DefaultSpeed * _attackStateSpeedMultiplier;
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
 
-                CancelInvoke(nameof(FakeCAC));
-                _hasCalledFakeCac = false;
-                if (type == AIType.Mascotte)
-                {
-                    _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
-                }
-                else
-                {
-                    CheckAnimDirection(AnimState.Atk);  
-                }
-                
-            } 
+                CancelInvoke(nameof(ApplyCACDamage));
+                _hasAppliedCACDamage = false;
+
+                _aIAnimation.PlayAnimation(type == AIType.Monkey ? AnimState.Atk : AnimState.Walk, _animDirection); 
+                CheckAnimDirection(type == AIType.Monkey ? AnimState.Atk : AnimState.Walk);
+            }
         } 
 
-        private void FakeCAC()
+        private void ApplyCACDamage()
         {
             _playerHP.DecreaseHp(_attackDamage); 
         } 
@@ -473,7 +487,7 @@ namespace BEN.AI
                     break; 
             }
 
-            _hasCalledFakeCac = false;
+            _hasAppliedCACDamage = false;
             _exitingAttackState = true; // problematic to not have this on that kind of state machine (tradeoff for simplicity) 
 
             if (Type == AIType.Fakir && !_canPatrol) 
@@ -503,7 +517,7 @@ namespace BEN.AI
                     yield return new WaitForSeconds(_monkeyBallDodgeReactionTime);
                     Debug.Log("defend_enter");
                     _checkSurroundings.CanDodgeProjectile = _monkeyBallCollider.enabled = _ballCollider.enabled = false;
-                    transform.position = _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
+                    transform.position += _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
             
                     yield return new WaitForSeconds(0.1f);  
                     _monkeyBallCollider.enabled = true;
@@ -537,7 +551,7 @@ namespace BEN.AI
             NewState = States.Die;
             _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
             _agent.speed = 0f; 
-            // Debug.Log("die_enter");
+            Debug.Log("die_enter");
             foreach (var item in _componentsToDeactivateOnDeath)
             {
                 item.enabled = false; 

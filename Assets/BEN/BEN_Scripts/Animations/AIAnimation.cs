@@ -28,35 +28,34 @@ namespace BEN.Animation
     public class AIAnimation : MonoBehaviour
     {
         [SerializeField] private AIAnimationSO _animationSo;
-
-        private Animator _animator;
+        [HideInInspector] public Animator animator;
         private AIType _type;
 
         private void Start()
         {
-            _animator = GetComponent<Animator>();
-            _animator.runtimeAnimatorController = _animationSo.controller;
+            animator = GetComponent<Animator>();
+            animator.runtimeAnimatorController = _animationSo.controller;
         }
 
         public Clip PlayAnimation(AnimState key, AnimDirection direction)
         {
             var clipToPlay = _animationSo.GetAnimClipFromDictionary(key, direction); 
             
-            if (!_animator) _animator = GetComponent<Animator>(); 
-            if (!_animator.runtimeAnimatorController)
+            if (!animator) animator = GetComponent<Animator>(); 
+            if (!animator.runtimeAnimatorController)
             {
-                _animator.runtimeAnimatorController = _animationSo.controller;
+                animator.runtimeAnimatorController = _animationSo.controller;
             }
 
-            if (!_animator.enabled)
-                _animator.enabled = true;
+            if (!animator.enabled)
+                animator.enabled = true;
 
             try
             {
-                _animator.speed = clipToPlay.speedMultiplier; 
+                animator.speed = clipToPlay.speedMultiplier; 
 
-                if (_animator.GetCurrentAnimatorStateInfo(0).IsName(clipToPlay.clipContainer.name)) return null; 
-                _animator.Play(clipToPlay.clipContainer.name);
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName(clipToPlay.clipContainer.name)) return null; 
+                animator.Play(clipToPlay.clipContainer.name);
             }
             catch (Exception) { }
 
@@ -67,28 +66,28 @@ namespace BEN.Animation
         {
             var clipToPlay = _animationSo.GetAnimClipFromDictionary(key, direction); 
             
-            if (!_animator) _animator = GetComponent<Animator>(); 
-            if (!_animator.runtimeAnimatorController)
+            if (!animator) animator = GetComponent<Animator>(); 
+            if (!animator.runtimeAnimatorController)
             {
-                _animator.runtimeAnimatorController = _animationSo.controller;
+                animator.runtimeAnimatorController = _animationSo.controller;
             }
 
-            if (!_animator.enabled)
-                _animator.enabled = true;
+            if (!animator.enabled)
+                animator.enabled = true;
 
             try
             {
-                _animator.speed = clipToPlay.speedMultiplier; 
+                animator.speed = clipToPlay.speedMultiplier; 
 
-                if (_animator.GetCurrentAnimatorStateInfo(0).IsName(clipToPlay.clipContainer.name)) return; 
-                _animator.Play(clipToPlay.clipContainer.name);
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName(clipToPlay.clipContainer.name)) return; 
+                animator.Play(clipToPlay.clipContainer.name);
             }
             catch (Exception) { } 
-        }
+        } 
 
         public void StopAnimating()
         {
-            _animator.enabled = false; 
+            animator.enabled = false; 
         } 
     }
 } 
