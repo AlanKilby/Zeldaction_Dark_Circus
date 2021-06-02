@@ -12,6 +12,7 @@ public class AK_SymbolScreen : MonoBehaviour
     //Ajout Ulric
     bool puzzleFinished;
     public UD_DuckHuntDoor DHD;
+    public UD_MagicalWandBoxScript MWB;
     //
 
     private void Start()
@@ -83,6 +84,7 @@ public class AK_SymbolScreen : MonoBehaviour
             for (int i = 0; i < ducks.Length; i++)
             {
                 ducks[i].GetComponent<AK_DuckScript>().symbol.SetActive(false);
+                MWB.WandBoxOpen();
                 DHD.OpenDoor();
                 puzzleFinished = true;
             }

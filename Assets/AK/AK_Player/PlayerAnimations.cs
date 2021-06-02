@@ -31,6 +31,11 @@ public class PlayerAnimations : MonoBehaviour
 
     [Space, SerializeField] private Health _playerHp;
 
+    //Ajout Ulric
+    public UD_FadeAndLoadingSceneManager Fade;
+    public int deathScreenIndex;
+    //
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -56,4 +61,11 @@ public class PlayerAnimations : MonoBehaviour
         animator.Play(newState);
         currentState = newState;
     } 
+
+
+    public void LoadDeathScreen()
+    {
+        Fade.nextSceneIndex = deathScreenIndex;
+        Fade.ChangeAnimationState(Fade.Loyal_Fade_In);
+    }
 }
