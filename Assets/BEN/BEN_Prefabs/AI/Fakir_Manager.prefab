@@ -443,6 +443,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 366257296850436054}
+  - {fileID: 2525902971908637299}
   m_Father: {fileID: 3196105207163711261}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -679,10 +680,13 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 8300000, guid: 78e9574ff200a4f41ba7a51159627be1, type: 3}
+    - {fileID: 3471387862798137781, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: e38fda0ee4d1139489475924481da2dc, type: 3}
+    - {fileID: -2116520012320663841, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 989f61df89a292147bea2d3d61112366, type: 3}
     - {fileID: 8300000, guid: 18b294a34d997bb498b0b4bf0fadbfdc, type: 3}
     - {fileID: 8300000, guid: 83a6dc7cb50a2924b8ed4524748ed50c, type: 3}
+    - {fileID: 3310085858221205721, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 1563bd0afaced604f92c784af2ccef12, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -727,6 +731,9 @@ MonoBehaviour:
     - Name: clip
       Entry: 10
       Data: 0
+    - Name: _group
+      Entry: 10
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -756,7 +763,10 @@ MonoBehaviour:
       Data: 5|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 1
+      Data: 2
+    - Name: _group
+      Entry: 10
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -765,7 +775,10 @@ MonoBehaviour:
       Data: 6|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 2
+      Data: 4
+    - Name: _group
+      Entry: 10
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -773,6 +786,9 @@ MonoBehaviour:
       Entry: 7
       Data: 7|Sound, Assembly-CSharp
     - Name: clip
+      Entry: 10
+      Data: 5
+    - Name: _group
       Entry: 10
       Data: 3
     - Name: 
@@ -804,7 +820,10 @@ MonoBehaviour:
       Data: 9|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 4
+      Data: 6
+    - Name: _group
+      Entry: 10
+      Data: 7
     - Name: 
       Entry: 8
       Data: 
@@ -813,7 +832,10 @@ MonoBehaviour:
       Data: 10|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 5
+      Data: 8
+    - Name: _group
+      Entry: 10
+      Data: 7
     - Name: 
       Entry: 8
       Data: 
@@ -847,7 +869,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5953828729676287934
 Transform:
   m_ObjectHideFlags: 0
@@ -970,3 +992,73 @@ Transform:
   m_Father: {fileID: 3196105207732227386}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5657781791636333236
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3196105207732227386}
+    m_Modifications:
+    - target: {fileID: 7893039722381959365, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_Name
+      value: Shadow
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9238795
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.38268346
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+--- !u!4 &2525902971908637299 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+  m_PrefabInstance: {fileID: 5657781791636333236}
+  m_PrefabAsset: {fileID: 0}
