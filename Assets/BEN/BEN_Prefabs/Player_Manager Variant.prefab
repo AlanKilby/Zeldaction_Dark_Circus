@@ -1,274 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2691614859402653972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7618909233720531582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fa604814c56784f9e76cbc9bead776, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delayBeforeLoad: 5
-  _playerHP: {fileID: 11400000, guid: 85a53167c0644404ca50fc031f94b3b6, type: 2}
-  sceneToLoad: 2
---- !u!114 &3642643065435347103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7618909233843266445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28e7f1a20bc890444ad3faf57daaf855, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _agentStartingHP: {fileID: 11400000, guid: 85a53167c0644404ca50fc031f94b3b6, type: 2}
---- !u!82 &5950362255278009962
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7618909234090356140}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &1477849736271555270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7618909234090356140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcc706559421f664ea51e170583aa4cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetToDestroy: {fileID: 7618909233720531582}
-  destroyDelay: 0
-  destroyFromStart: 0
-  _destroyableFromBossEvent: 0
---- !u!114 &2877410177616000449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7618909234090356140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab8c8227e6af4654e80773a1b80eb747, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 8300000, guid: 35d225dba65a51f4c90633c358a983e6, type: 3}
-    - {fileID: 8300000, guid: e0055548c6983bd449a471f856761db9, type: 3}
-    - {fileID: 8300000, guid: dc69ef6ee1585cb459a96afe7de0d720, type: 3}
-    - {fileID: 8300000, guid: b1bd7141812284942900dcd88dd8f7e1, type: 3}
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: _soundsDictionary
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[SoundType, Assembly-CSharp],[System.Collections.Generic.List`1[[Sound,
-        Assembly-CSharp]], mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[SoundType, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 0
-    - Name: $v
-      Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[Sound, Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 3|Sound, Assembly-CSharp
-    - Name: clip
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 7
-      Data: 4|System.Collections.Generic.List`1[[Sound, Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 7
-      Data: 5|Sound, Assembly-CSharp
-    - Name: clip
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 6|Sound, Assembly-CSharp
-    - Name: clip
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 7|Sound, Assembly-CSharp
-    - Name: clip
-      Entry: 10
-      Data: 3
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
 --- !u!1001 &2691614859276888343
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -276,6 +7,85 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"_soundsDictionary","add_keys":{"$id":0,"$type":"System.Object[],
+        mscorlib","$rlength":2,"$rcontent":[{"$id":1,"$type":"SoundType, Assembly-CSharp",2},{"$id":2,"$type":"SoundType,
+        Assembly-CSharp",1}]},"remove_keys":{"$id":3,"$type":"System.Object[], mscorlib","$rlength":1,"$rcontent":[{"$id":4,"$type":"SoundType,
+        Assembly-CSharp",0}]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"_soundsDictionary.{1es}","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[Sound,
+        Assembly-CSharp]], mscorlib","$rlength":1,"$rcontent":[{"$id":1,"$type":"Sound,
+        Assembly-CSharp","clip":$eref:0}]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[2]
+      value: '"path":"_soundsDictionary.{1es}.[0].clip","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[3]
+      value: '"path":"_soundsDictionary.{2es}","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[Sound,
+        Assembly-CSharp]], mscorlib","$rlength":3,"$rcontent":[{"$id":1,"$type":"Sound,
+        Assembly-CSharp","clip":$eref:1},{"$id":2,"$type":"Sound, Assembly-CSharp","clip":$eref:2},{"$id":3,"$type":"Sound,
+        Assembly-CSharp","clip":$eref:3}]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[4]
+      value: '"path":"_soundsDictionary.{2es}.[0]","value":{"$id":0,"$type":"Sound,
+        Assembly-CSharp","clip":$eref:1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[5]
+      value: '"path":"_soundsDictionary.{2es}.[0].clip","value":$eref:1'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[6]
+      value: '"path":"_soundsDictionary.{2es}.[1]","value":{"$id":0,"$type":"Sound,
+        Assembly-CSharp","clip":$eref:2}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[7]
+      value: '"path":"_soundsDictionary.{2es}.[1].clip","value":$eref:2'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[8]
+      value: '"path":"_soundsDictionary.{2es}.[2]","value":{"$id":0,"$type":"Sound,
+        Assembly-CSharp","clip":$eref:3}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[9]
+      value: '"path":"_soundsDictionary.{2es}.[2].clip","value":$eref:3'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 35d225dba65a51f4c90633c358a983e6, type: 3}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: e0055548c6983bd449a471f856761db9, type: 3}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: dc69ef6ee1585cb459a96afe7de0d720, type: 3}
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: b1bd7141812284942900dcd88dd8f7e1, type: 3}
     - target: {fileID: 5539784748225169880, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1.5
@@ -319,7 +129,7 @@ PrefabInstance:
     - target: {fileID: 5539784748974113977, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: _playerHp
       value: 
-      objectReference: {fileID: 3642643065435347103}
+      objectReference: {fileID: 3094000364683129611}
     - target: {fileID: 5539784748974113977, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: PLAYER_DEAD
       value: death
@@ -370,14 +180,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5539784749608317801, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_Name
-      value: Player_Manager
+      value: Player_Manager Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5539784749608317801, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5539784749741460116, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
-      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5539784749741460117, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
@@ -420,21 +226,16 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5539784749741460119, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
---- !u!1 &7618909233720531582 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5539784749608317801, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+--- !u!114 &3094000364683129611 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1128874654753184284, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
   m_PrefabInstance: {fileID: 2691614859276888343}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7618909233843266445 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5539784749741460122, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
-  m_PrefabInstance: {fileID: 2691614859276888343}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7618909234090356140 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5539784748974113979, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
-  m_PrefabInstance: {fileID: 2691614859276888343}
-  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e7f1a20bc890444ad3faf57daaf855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
