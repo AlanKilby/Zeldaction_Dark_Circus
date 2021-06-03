@@ -13,9 +13,8 @@ public class RayAttack : MonoBehaviour
     [SerializeField, Range(0.5f, 5f)] private float _rayDamageDuration = 1.5f;  
     [SerializeField, Range(2f, 10f)] private float _delayBetwenenRayAttacks = 5f;  
 
-    public List<GameObject> _rayPlaceholderVisuals = new List<GameObject>(); 
+    public List<GameObject> _rayVisuals = new List<GameObject>(); 
     private List<Collider> _rayColliders = new List<Collider>();
-    private List<MeshRenderer> _rayMeshRenderers = new List<MeshRenderer>();
     public static bool sCanRayAttack;
     [SerializeField] private Health _bossHP;
 
@@ -33,10 +32,9 @@ public class RayAttack : MonoBehaviour
     private void Start()
     {
         sCanRayAttack = true; 
-        for (int i = 0; i < _rayPlaceholderVisuals.Count; i++)
+        for (int i = 0; i < _rayVisuals.Count; i++)
         {
-            _rayMeshRenderers.Add(_rayPlaceholderVisuals[i].GetComponent<MeshRenderer>()); 
-            _rayColliders.Add(_rayPlaceholderVisuals[i].GetComponent<Collider>());  
+            _rayColliders.Add(_rayVisuals[i].GetComponent<Collider>());  
         }
     }
 
@@ -49,10 +47,10 @@ public class RayAttack : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0f, Random.Range(-11, 11), 0f); // UPRGADE : less random, aim at player with some accuracy value
 
-        for (var i = 0; i < _rayPlaceholderVisuals.Count; i++)
+        for (var i = 0; i < _rayVisuals.Count; i++)
         {
-            _rayMeshRenderers[i].enabled = true;
-            _rayColliders[i].enabled = false;
+            // add previsualise without applying damage
+            _rayVisuals[i].SetActive(false); 
         } 
     } 
     
@@ -63,16 +61,15 @@ public class RayAttack : MonoBehaviour
         yield return new WaitForSeconds(_rayPrewarningDuration);   
         Debug.Log("ray attacking");  
 
-        for (var i = 0; i < _rayPlaceholderVisuals.Count; i++)
-        { 
-            _rayMeshRenderers[i].enabled = false;  
-            _rayColliders[i].enabled = true; 
+        for (var i = 0; i < _rayVisuals.Count; i++)
+        {
+            _rayVisuals[i].SetActive(true); 
         }
 
         yield return new WaitForSeconds(_rayDamageDuration);  
-        for (var i = 0; i < _rayPlaceholderVisuals.Count; i++)
+        for (var i = 0; i < _rayVisuals.Count; i++)
         { 
-            _rayColliders[i].enabled = false; 
+            _rayVisuals[i].SetActive(false); 
         }
     } 
 
@@ -86,10 +83,9 @@ public class RayAttack : MonoBehaviour
     
     private void DisableRayOnBossVulnerable()
     {
-        for (var i = 0; i < _rayMeshRenderers.Count; i++)
+        for (var i = 0; i < _rayVisuals.Count; i++)
         {
-            _rayMeshRenderers[i].enabled = false; 
-            _rayColliders[i].enabled = false; 
+            _rayVisuals[i].SetActive(false); 
         }
     }
 }
