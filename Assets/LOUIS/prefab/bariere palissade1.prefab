@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6736195243802307435}
   - component: {fileID: 5667938681284460815}
   - component: {fileID: 2647387825679654369}
+  - component: {fileID: 4295862846798354216}
   m_Layer: 11
   m_Name: bariere palissade1
   m_TagString: Untagged
@@ -96,3 +97,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.15, y: 2.8072639, z: 0.2}
   m_Center: {x: 0, y: -0.09113162, z: 0.000000009109266}
+--- !u!208 &4295862846798354216
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4049376524778316901}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.016, y: 1.312, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
