@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 3196105207163711238}
   - component: {fileID: 7335009159249139243}
   - component: {fileID: 2080959550}
-  - component: {fileID: 99377281}
+  - component: {fileID: 807852816}
   m_Layer: 9
   m_Name: Fakir_Entity
   m_TagString: Enemy
@@ -276,10 +276,10 @@ MonoBehaviour:
   _attackDamage: 1
   _delayBeforeBackToDefaultState: 3
   _allyNotifyRadius: 8
+  _delayBetweenEachAttack: 1
   _monkeyBallProvocDuration: 3
   _monkeyBallDodgeReactionTime: 0.5
   _monkeyBallDodgeDistance: 5
-  _delayBetweenEachAttack: 1
   _graphics: {fileID: 3196105207732227387}
   _detection: {fileID: 3196105207235364683}
   _placeholderDestination: {fileID: 891107891}
@@ -322,7 +322,7 @@ MonoBehaviour:
       m_Calls: []
   isBossHP: 0
   _playerUnkillable: 0
---- !u!114 &99377281
+--- !u!114 &807852816
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -331,9 +331,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3196105207163711262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2caf98d607255b43b98d6eed478597c, type: 3}
+  m_Script: {fileID: 11500000, guid: 57dd43f092113dd4f90e5e98d70b2d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _AIBrain: {fileID: 3196105207163711238}
+  _slowForceMultiplier: 0.75
+  _delayBeforeSlow: 0.5
 --- !u!1 &3196105207235364683
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,7 +407,7 @@ MonoBehaviour:
   playerWeapon:
     serializedVersion: 2
     m_Bits: 128
-  BearerType: 0
+  BearerType: 3
 --- !u!1 &3196105207732227387
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,8 +483,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -729098779
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8a5f63fec448db9408d4707831d2e5da, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -622,6 +625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationSo: {fileID: 11400000, guid: 7cbd453107f9bd643a8240e1150b7c1f, type: 2}
+  animator: {fileID: 0}
 --- !u!114 &1114475966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -843,7 +847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5953828729676287934
 Transform:
   m_ObjectHideFlags: 0

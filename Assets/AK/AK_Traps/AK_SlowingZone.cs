@@ -8,6 +8,7 @@ public class AK_SlowingZone : MonoBehaviour
 {
     public LayerMask playerLayer;
     public LayerMask enemyLayer;
+    public LayerMask ballLayer;
 
     [FormerlySerializedAs("slowSpeed")]
     [Tooltip("The speed the player will be slowed to.")]
@@ -30,13 +31,13 @@ public class AK_SlowingZone : MonoBehaviour
 
             handsParticles.Play();
         }
-        else if (Mathf.Pow(2, other.gameObject.layer) == enemyLayer) 
+        else if (Mathf.Pow(2, other.gameObject.layer) == enemyLayer || Mathf.Pow(2, other.gameObject.layer) ==ballLayer) 
         {
             _customAIEffect = other.GetComponent<AICustomEffectOnZoneSlow>(); 
-            _customAIEffect.InvokeCustomEventOnEnter();
+            _customAIEffect.InvokeOnEnter(); 
 
             handsParticles.Play();
-        }
+        } 
     }
 
     private void OnTriggerExit(Collider other)
@@ -49,9 +50,9 @@ public class AK_SlowingZone : MonoBehaviour
 
             handsParticles.Stop();
         }
-        else if (Mathf.Pow(2, other.gameObject.layer) == enemyLayer)
+        else if (Mathf.Pow(2, other.gameObject.layer) == enemyLayer || Mathf.Pow(2, other.gameObject.layer) ==ballLayer)
         {
-            _customAIEffect.InvokeCustomEventOnExit();
+            _customAIEffect.InvokeOnExit();
 
             handsParticles.Stop();
         }
