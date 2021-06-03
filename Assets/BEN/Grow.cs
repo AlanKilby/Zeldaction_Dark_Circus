@@ -18,13 +18,17 @@ public class Grow : MonoBehaviour
  
     void Start() 
     {
-        if (!isSpotlightShadow) enabled = false; 
+        if (!isSpotlightShadow)
+        {
+            enabled = false;
+            return; 
+        } 
         
         _growthSpeed *= 0.02f;
         transform.localScale = new Vector3(0.2f, 0.2f, 0.2f); 
     }
 
-    void FixedUpdate() 
+    void FixedUpdate()
     {
         transform.localScale = new Vector3(transform.localScale.x + _growthSpeed, transform.localScale.y + _growthSpeed, transform.localScale.z); 
     }
