@@ -10,12 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2410965956815103944}
   - component: {fileID: 5816625860494474037}
-  m_Layer: 0
+  - component: {fileID: 2326718476363508508}
+  m_Layer: 11
   m_Name: bariere palissade2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &2410965956815103944
 Transform:
@@ -82,3 +83,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &2326718476363508508
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2377816515463149218}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.34, y: 2.9766455, z: 0.2}
+  m_Center: {x: 0, y: -0.17582273, z: 0}
