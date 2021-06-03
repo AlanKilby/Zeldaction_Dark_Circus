@@ -24,7 +24,7 @@ public class AK_LootBox : MonoBehaviour
             chestCollider.enabled = false;
             destructionAnim.Play("crate blowup");
             destructionParticles.Play();
-            dropRateManager.ObjectDrop(this.gameObject);
+            dropRateManager.Drop(this.gameObject);
         }
     }
 
