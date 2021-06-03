@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: d0a75497a556a0440b7ec9f4c649542c, type: 2}
---- !u!1 &396621017 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2868071733743442197, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-  m_PrefabInstance: {fileID: 8930034650293137188}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &661021425
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -414,16 +409,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1 &1407169156 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2660539946516128947, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-  m_PrefabInstance: {fileID: 8930034650293137188}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2094414681 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5779686587824129409, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-  m_PrefabInstance: {fileID: 8930034650293137188}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2102575630
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,22 +515,6 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 262711649, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-    - target: {fileID: 1272608561, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: _rayVisuals.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272608561, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: _rayVisuals.Array.data[0]
-      value: 
-      objectReference: {fileID: 1407169156}
-    - target: {fileID: 1272608561, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: _rayVisuals.Array.data[1]
-      value: 
-      objectReference: {fileID: 2094414681}
-    - target: {fileID: 1272608561, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: _rayVisuals.Array.data[2]
-      value: 
-      objectReference: {fileID: 396621017}
     - target: {fileID: 2660539946516128947, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -604,14 +573,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8930034649707844236, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8930034650034842194, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: doSpawns
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8930034650034842194, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: doSwitchMechanic
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -20,6 +20,7 @@ namespace BEN.Math
         private float timer;
         private float _speedModifMultiplier = 1f;
         [FormerlySerializedAs("isCimeterre")] public bool destroyOnWallCollision;
+        [SerializeField] private bool _freezeYPosition; 
         
 
         public LayerMask
@@ -37,7 +38,9 @@ namespace BEN.Math
         {
             Destroy(_destroyRoot ? transform.root.gameObject : gameObject, 10f); 
             // frameDelta = frameDeltaInitialValue;
-            Direction = (PlayerMovement_Alan.sPlayerPos - transform.position).normalized;
+            Direction = _freezeYPosition ?  (new Vector3(PlayerMovement_Alan.sPlayerPos.x, 0f, PlayerMovement_Alan.sPlayerPos.z)
+                                             - new Vector3(transform.position.x, 0f, transform.position.z)).normalized: 
+                                            (PlayerMovement_Alan.sPlayerPos - transform.position).normalized;
             distance = Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos);
             _duration = distance / speed; 
         } 
