@@ -24,27 +24,13 @@ public class AnimEventPlaySound : SerializedMonoBehaviour
         if (_audioSource.isPlaying) return;
         _audioSource.PlayOneShot(_soundsDictionary[type].Count == 1 ? _soundsDictionary[type][0].clip : 
                                                                       _soundsDictionary[type][Random.Range(0, _soundsDictionary[type].Count)].clip);  
-     } 
-
-     public void PlayRandomSoundSafe(SoundType type) 
-     {
-         if (_audioSource.isPlaying) return; 
-         var selector = Random.Range(0, _soundsDictionary[type].Count);
-         _audioSource.PlayOneShot(_soundsDictionary[type][selector].clip); 
-     }
+    } 
 
      public void PlaySoundOverwrite(SoundType type) 
      {
          _audioSource.PlayOneShot(_soundsDictionary[type].Count == 1 ? _soundsDictionary[type][0].clip : 
                                                                        _soundsDictionary[type][Random.Range(0, _soundsDictionary[type].Count)].clip);  
      } 
-     
-     public void PlayRandomSoundOverwrite(SoundType type) 
-     {
-         var selector = Random.Range(0, _soundsDictionary[type].Count);
-         _audioSource.PlayOneShot(_soundsDictionary[type][selector].clip); 
-     }
-     
 }
 
 [Serializable] 
