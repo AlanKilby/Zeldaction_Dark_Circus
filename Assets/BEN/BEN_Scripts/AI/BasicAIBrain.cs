@@ -86,7 +86,9 @@ namespace BEN.AI
         [Header("-- DEBUG --")]
         [SerializeField] private EditorDebuggerSO _debugger;
         [SerializeField] private bool refresh;
-        private bool wasMonkeyBall; 
+        private bool wasMonkeyBall;
+        [SerializeField] private bool showClipToPlayOnNullReturn; 
+        [SerializeField, ConditionalShow("showClipToPlayOnNullReturn", true)] private AnimationClip _animClipToPlayOnNullReturn;
         
 #endregion 
 
@@ -109,7 +111,7 @@ namespace BEN.AI
     private CheckSurroundings _checkSurroundings; 
         
     private AnimDirection _animDirection; // MOVE TO AIANIMATION
-    private int _previousParentRotation; // MOVE TO AIANIMATION
+    private int _currentParentRotation; // MOVE TO AIANIMATION
         
     private Health _playerHP;
     private bool _exitingAttackState;
@@ -225,17 +227,15 @@ namespace BEN.AI
             }
 
             _agent.speed = DefaultSpeed;
-            _previousParentRotation = _placeholderDestination.angleIndex; 
+            _currentParentRotation = -1; // modif 04.06 
         } 
 
         private void FixedUpdate()
         {
-            // if (NewState == States.Die) Destroy(transform.parent.gameObject, 1f);  
-            
             if (_canPatrol && !HasBeenInvokedByBoss)
             {
                 _detection.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.EulerAnglesY, 0f);
-            }
+            } 
             CheckAnimDirection(); // remove from state machine 
 
             if (_agentHp.CurrentValue <= 0 && !_patrol.IsDead && Type != AIType.MonkeySurBall) 
@@ -245,7 +245,7 @@ namespace BEN.AI
             }
 
             if (!_canPatrol && Vector3.Distance(transform.position, _idlePositionBeforeAttacking) <= 0.25f && _exitingAttackState) 
-            {
+            { 
                 _exitingAttackState = false; 
                 _agent.speed = 0f;
                 _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); // use AnimDirection according to where you come from . 
@@ -274,17 +274,17 @@ namespace BEN.AI
         }
         
         // MOVE ALL THIS TO AIANIMATION ===> WARNING : duplicate 
-        private void CheckAnimDirection()
+        private void CheckAnimDirection() 
         {
             if (Type == AIType.Fakir && !_canPatrol) return; // modify is fakir needs repositionning 
 
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex); 
 
-            if (_placeholderDestination.angleIndex == _previousParentRotation) return;
+            if (_placeholderDestination.angleIndex == _currentParentRotation) return;
             
-            _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
-            _previousParentRotation = _placeholderDestination.angleIndex;
-            StartCoroutine(nameof(ChangeGraphicsRotation));
+            
+            _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection); 
+            _currentParentRotation = _placeholderDestination.angleIndex;
         } 
         
         private void CheckAnimDirection(AnimState state)
@@ -293,19 +293,13 @@ namespace BEN.AI
 
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex);
 
-            if (_placeholderDestination.angleIndex == _previousParentRotation) return; 
+            if (_placeholderDestination.angleIndex == _currentParentRotation) return; 
             
             _aIAnimation.PlayAnimation(state, _animDirection);
             
-            _previousParentRotation = _placeholderDestination.angleIndex;
-            StartCoroutine(nameof(ChangeGraphicsRotation));
+            _currentParentRotation = _placeholderDestination.angleIndex;
         } 
-
-        private IEnumerator ChangeGraphicsRotation()
-        {
-            yield return new WaitForSeconds(1.5f);
-            _graphics.transform.localRotation = Quaternion.identity;
-        } 
+        
         // <===
         
         #region FSM
@@ -332,7 +326,7 @@ namespace BEN.AI
         { 
             yield return new WaitForSeconds(0.03f);
             NewState = States.Default;
-            Debug.Log("default_enter");
+            Debug.Log("default_enter"); 
 
             if ((_canPatrol || GoingBackToPositionBeforeIdling) && !HasBeenInvokedByBoss)
             {
@@ -341,17 +335,21 @@ namespace BEN.AI
                     _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); 
                 }
                 else
-                {
-                    _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+                { 
+                    Debug.Log($"walking in the {_animDirection} direction");
+                    var clip = _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+                    Debug.Log($"clip is {clip.clipContainer.name}"); 
+                    CheckAnimDirection(AnimState.Walk);
                 }
             } 
             else 
-            {
+            { 
                 _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);
-            }
+            } 
         } 
-        
-        
+
+        private void Default_Exit() { }
+
         #endregion 
 
         #region Attack
