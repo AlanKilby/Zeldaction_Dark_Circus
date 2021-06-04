@@ -57,6 +57,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &642205676866783033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5886457245608544135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af9d90056e6e634a9a270c9541bd0d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6531253076332705823
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,6 +80,8 @@ GameObject:
   - component: {fileID: 8808335706879904834}
   - component: {fileID: 7022149385023168408}
   - component: {fileID: 3986087881752490555}
+  - component: {fileID: 5946181344974922193}
+  - component: {fileID: 7127930093602080420}
   m_Layer: 0
   m_Name: Y Button
   m_TagString: Untagged
@@ -132,6 +146,50 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5946181344974922193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531253076332705823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69be3a22a39dba448ba9f2dc39781407, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DialogueTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7127930093602080420}
+        m_TargetAssemblyTypeName: CHM_NPCDialogue, Assembly-CSharp
+        m_MethodName: TriggerDialogue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7127930093602080420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531253076332705823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9237fddfcb84d7a4d8174fa59bb7640c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    name: PNJ
+    sentences:
+    - "1\xE8re phrase"
+  ownDialogueManager: {fileID: 516016495849758972}
 --- !u!1001 &6155632114691214864
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -187,6 +245,14 @@ PrefabInstance:
       propertyPath: ownDialogueManager
       value: 
       objectReference: {fileID: 516016495849758972}
+    - target: {fileID: 2233876528224609766, guid: 7c0f243c1433ff44fa2ad93f61c652ff, type: 3}
+      propertyPath: m_Name
+      value: DialogueBackground
+      objectReference: {fileID: 0}
+    - target: {fileID: 2308328265439377898, guid: 7c0f243c1433ff44fa2ad93f61c652ff, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3133008331066998952, guid: 7c0f243c1433ff44fa2ad93f61c652ff, type: 3}
       propertyPath: m_FontData.m_Font
       value: 
@@ -211,6 +277,14 @@ PrefabInstance:
       propertyPath: dialogueBox
       value: 
       objectReference: {fileID: 2870864869882337350}
+    - target: {fileID: 5958819058861774622, guid: 7c0f243c1433ff44fa2ad93f61c652ff, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 3baf7ad6ee1f79a45bf6b242c9c5a43b, type: 3}
+    - target: {fileID: 5958819058861774622, guid: 7c0f243c1433ff44fa2ad93f61c652ff, type: 3}
+      propertyPath: m_FontData.m_FontStyle
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6395262617146794573, guid: 7c0f243c1433ff44fa2ad93f61c652ff, type: 3}
       propertyPath: dialogueButton
       value: 
@@ -223,7 +297,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: UD_NPC Prefab Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8267041734418241110, guid: 7c0f243c1433ff44fa2ad93f61c652ff, type: 3}
+      propertyPath: m_Name
+      value: DialogueBox
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6173102592565041079, guid: 7c0f243c1433ff44fa2ad93f61c652ff, type: 3}
+    - {fileID: 1066095704056120416, guid: 7c0f243c1433ff44fa2ad93f61c652ff, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7c0f243c1433ff44fa2ad93f61c652ff, type: 3}
 --- !u!1 &6888384538593861592 stripped
 GameObject:
@@ -243,6 +323,11 @@ GameObject:
 --- !u!1 &5612010220003391854 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1769051832929351550, guid: 7c0f243c1433ff44fa2ad93f61c652ff, type: 3}
+  m_PrefabInstance: {fileID: 6155632114691214864}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5886457245608544135 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 350673179262159255, guid: 7c0f243c1433ff44fa2ad93f61c652ff, type: 3}
   m_PrefabInstance: {fileID: 6155632114691214864}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &516016495849758972 stripped
