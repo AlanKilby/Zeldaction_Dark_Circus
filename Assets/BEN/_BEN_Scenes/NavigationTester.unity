@@ -571,12 +571,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2651920672806243565, guid: 1abdc3637e86093428a12f981301db3e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2972662390125788755, guid: 1abdc3637e86093428a12f981301db3e, type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 2972662390125788755, guid: 1abdc3637e86093428a12f981301db3e, type: 3}
+    - target: {fileID: 3683318711155199436, guid: 1abdc3637e86093428a12f981301db3e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683318711155199436, guid: 1abdc3637e86093428a12f981301db3e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683318711155199436, guid: 1abdc3637e86093428a12f981301db3e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1abdc3637e86093428a12f981301db3e, type: 3}
 --- !u!1 &361224480
@@ -2159,15 +2171,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.26693356
+      value: 0.2669336
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000000912242
+      value: 0.000000022940164
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000025267641
+      value: -0.0000000063540573
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4204,7 +4216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &3982106213379618582
 GameObject:
   m_ObjectHideFlags: 0

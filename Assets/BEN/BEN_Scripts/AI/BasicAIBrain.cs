@@ -203,7 +203,12 @@ namespace BEN.AI
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
             DefaultSpeed = InitialSpeed = _defaultSpeed; 
-            MonkeyBallDodgeDistance = _monkeyBallDodgeDistance; 
+            MonkeyBallDodgeDistance = _monkeyBallDodgeDistance;
+
+            if (type == AIType.MonkeySurBall)
+            {
+                _ballAnimation = GetComponentInChildren<AIAnimation>(); 
+            }
 
             _patrol = GetComponent<FsmPatrol>();
 
@@ -212,7 +217,7 @@ namespace BEN.AI
                 _patrol.enabled = false; 
                 _agentHp.CurrentValue = 1; // will be overwritten by health. Just to avoid 0 hp when invoked by boss
             }
-            else
+            else 
             {
                 _patrol.SetPoints();  
             }
@@ -283,7 +288,13 @@ namespace BEN.AI
             if (_placeholderDestination.angleIndex == _currentParentRotation) return;
             
             
-            _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection); 
+            _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+
+            if (type == AIType.MonkeySurBall)
+            {
+                _ballAnimation.PlayAnimation(AnimState.Walk, _animDirection); 
+            }
+            
             _currentParentRotation = _placeholderDestination.angleIndex;
         } 
         
@@ -336,15 +347,25 @@ namespace BEN.AI
                 }
                 else
                 { 
-                    Debug.Log($"walking in the {_animDirection} direction");
-                    var clip = _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
-                    Debug.Log($"clip is {clip.clipContainer.name}"); 
+                    _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+
+                    if (type == AIType.MonkeySurBall)
+                    {
+                        _ballAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+                    } 
+                    
                     CheckAnimDirection(AnimState.Walk);
                 }
             } 
             else 
             { 
                 _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);
+                
+                if (type == AIType.MonkeySurBall)
+                {
+                    var clip = _ballAnimation.PlayAnimation(AnimState.Idle, AnimDirection.None); 
+                    Debug.Log($"playing {clip.clipContainer.name}");
+                } 
             } 
         } 
 
