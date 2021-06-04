@@ -92,11 +92,8 @@ namespace BEN.AI
                     Debug.DrawRay(transform.position, _localLeftDirection, Color.yellow, 5f); 
                     Debug.DrawRay(transform.position, _localRightDirection, Color.red, 5f);   
                     
-                    Debug.Log("before return dodge");
-
                     if (LeftWallDetected && RightWallDetected) return;
                      
-                    Debug.Log("after return dodge");
                     var directionRandomSelector = UnityEngine.Random.Range(0, 2) == 0 ? _localLeftDirection : _localRightDirection;
                     DodgeDirection = LeftWallDetected && RightWallDetected ? directionRandomSelector : (LeftWallDetected ? _localLeftDirection : _localRightDirection);
                     transform.position += DodgeDirection;  

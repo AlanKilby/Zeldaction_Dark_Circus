@@ -367,6 +367,8 @@ namespace BEN.AI
 
             // UPGRADE : make the enemy predict the future player position instead of aiming at it's current one
             var clip = new Clip();
+            Debug.Log("type is " + Type);
+
             switch (type) 
             {
                 case AIType.Monkey:
@@ -384,6 +386,11 @@ namespace BEN.AI
                     InvokeRepeating(nameof(FakirAttack), 0f, _attackRate);  
                     break; 
             } 
+
+            if (type == AIType.Monkey)
+            {
+                Debug.Log("clip name is " + clip.clipContainer.name);
+            }
             
             _timer.SetTargetValue(_delayBetweenEachAttack + clip.clipContainer.length); 
         } 
@@ -441,7 +448,11 @@ namespace BEN.AI
                 CancelInvoke(nameof(ApplyCACDamage));
                 _hasAppliedCACDamage = false;
 
-                _aIAnimation.PlayAnimation(type == AIType.Monkey ? AnimState.Atk : AnimState.Walk, _animDirection); 
+                _aIAnimation.PlayAnimation(wasMonkeyBall ? AnimState.SecondaryAtk : // if wasMonkeyBall THEN type == AIType.Monkey 
+                                            type == AIType.Monkey ? 
+                                                AnimState.Atk : 
+                                                AnimState.Walk, _animDirection); 
+                
                 CheckAnimDirection(type == AIType.Monkey ? AnimState.Atk : AnimState.Walk);
             }
         } 
@@ -464,7 +475,7 @@ namespace BEN.AI
             _graphics.transform.localPosition = Vector3.zero; 
             _checkSurroundings.BearerType = type = AIType.Monkey; 
             _agentHp.CurrentValue = 1; 
-            _attackRange = 1f; // would have been better to store each mob General stats into a scriptable object so that I can assign the right values 
+            _attackRange = 2f; // would have been better to store each mob General stats into a scriptable object so that I can assign the right values 
             wasMonkeyBall = true;
             _agent.destination = PlayerMovement_Alan.sPlayerPos;
             _attackDelay = 0.2f; 
@@ -476,7 +487,7 @@ namespace BEN.AI
         {
             if (HasBeenInvokedByBoss)
             {
-                TransitionToNewState(States.Attack, StateTransition.Safe); // debug crados             
+                TransitionToNewState(States.Attack, StateTransition.Safe);  
             }
 
             switch (type)
@@ -498,7 +509,7 @@ namespace BEN.AI
             else
             {
                 if (HasBeenInvokedByBoss) return;
-                _agent.destination = _canPatrol ? _patrol.Points[_patrol.DestPoint].position : _idlePositionBeforeAttacking; // TODO : use closest point of list instead (when patrolling)
+                _agent.destination = _canPatrol ? _patrol.Points[_patrol.DestPoint].position : _idlePositionBeforeAttacking; // A FAIRE : use closest point of list instead (when patrolling)
                 _agent.speed = DefaultSpeed / _attackStateSpeedMultiplier; 
             }
         }
@@ -521,12 +532,11 @@ namespace BEN.AI
                     transform.position += _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
             
                     yield return new WaitForSeconds(0.1f);  
-                    _monkeyBallCollider.enabled = true;
-                    _ballCollider.enabled = true;
+                    _monkeyBallCollider.enabled = _ballCollider.enabled = true;
                     _aIAnimation.PlayAnimation(AnimState.Miss, AnimDirection.None); 
                     
                     yield return new WaitForSeconds(_monkeyBallProvocDuration); 
-                    OnRequireStateChange(States.Attack, StateTransition.Safe); 
+                    OnRequireStateChange(States.Attack, StateTransition.Safe);  
                     break;
                 case AIType.Mascotte:
                     _aIAnimation.PlayAnimation(AnimState.Hit, _animDirection);

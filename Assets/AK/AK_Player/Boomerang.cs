@@ -166,9 +166,10 @@ public class Boomerang : MonoBehaviour
             // Debug.Log("Collision with Enemy");
             enemy = other.GetComponent<BasicAIBrain>(); 
 
-            if (enemy.Type == AIType.Mascotte && Boomerang.s_SeenByEnemy) // change this so you can kill from behind, not only on the way back 
+            if (enemy.Type == AIType.Mascotte && s_SeenByEnemy) // change this so you can kill from behind, not only on the way back 
             {
-                isComingBack = true;
+                isComingBack = true; 
+                comebackTimer = 0;
                 enemy.OnRequireStateChange(States.Defend, StateTransition.Safe); 
                 return;
             }  
@@ -183,6 +184,8 @@ public class Boomerang : MonoBehaviour
 
         if (Mathf.Pow(2, other.gameObject.layer) == fakirWeaponLayer) // fakir weapon
         {
+            isComingBack = true; 
+            comebackTimer = 0;
             other.GetComponent<ParabolicFunction>().InvertDirection(); 
         } 
         

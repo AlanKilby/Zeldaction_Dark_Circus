@@ -51,7 +51,7 @@ namespace BEN.Math
 
         private void FixedUpdate() 
         {
-            _speedModifMultiplier = _invert ? 4f : 1f;
+            _speedModifMultiplier = _invert ? 2f : 1f;
             transform.Translate(Direction * Time.fixedDeltaTime * speed * _speedModifMultiplier, Space.World);
 
             if (_invert || !useAsParabolic) return;  

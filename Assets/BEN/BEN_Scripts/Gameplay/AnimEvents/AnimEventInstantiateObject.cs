@@ -42,8 +42,6 @@ public class AnimEventInstantiateObject : MonoBehaviour
     {
         if (!Application.isPlaying) return; 
         randomSelectionFromList = objToInstantiateOnSelfDestroy.Count >= 2;
-
-        Debug.Log("random selection from list"); 
         
         if (randomSelectionFromList && instantiateManuallyOnSelfDestroy)
         {
