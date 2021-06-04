@@ -55,6 +55,8 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public bool isHit = false;
 
+    public SpriteRenderer aimSpriteRend;
+
     void Start()
     {
         canThrow = true;
@@ -79,6 +81,7 @@ public class PlayerMovement_Alan : MonoBehaviour
             {
                 playerRB.velocity = Vector3.zero;
                 canMove = false;
+                aimSpriteRend.enabled = true;
                 if(throwingTime <= maxThrowTime)
                 {
                     throwingTime += Time.deltaTime * chargeTimeCoeff;
@@ -90,6 +93,7 @@ public class PlayerMovement_Alan : MonoBehaviour
                 Attack(throwingTime);
                 canMove = true;
                 throwingTime = minThrowTime;
+                aimSpriteRend.enabled = false;
             }
         }
 
