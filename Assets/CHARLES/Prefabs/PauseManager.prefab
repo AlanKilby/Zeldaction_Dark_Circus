@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a477aeb027b116a449a1e145707c03c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseObject: {fileID: 0}
+  pauseObject: {fileID: 7449217644681088729, guid: a3b84c0ed94d919468a9c38af3cbd523, type: 3}
 --- !u!114 &7520170881284049736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +166,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6139583287778258960}
     m_Modifications:
+    - target: {fileID: 3508283061265847937, guid: a3b84c0ed94d919468a9c38af3cbd523, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7520170881284049742}
     - target: {fileID: 3771307969356008865, guid: a3b84c0ed94d919468a9c38af3cbd523, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
