@@ -11,6 +11,7 @@ public class UD_TalkButtonTrigger : MonoBehaviour
     {
         if (Input.GetButtonDown("PlayerAttack"))
         {
+            
             DialogueTrigger.Invoke();
             gameObject.SetActive(false);
         }

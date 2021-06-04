@@ -24,8 +24,9 @@ public class CHM_DialogueManager : MonoBehaviour
 
     public void StartDialogue(CHM_Dialogue dialogue)
     {
+        //Debug.Log("Le dialogue manager est lancé");
         animator.SetBool("IsOpen", true);
-
+        //Debug.Log("L'animateur est lancé"); Jusque là tout va bien.
         nameText.text = dialogue.name;
 
         sentences.Clear();
@@ -42,8 +43,9 @@ public class CHM_DialogueManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
+            Debug.Log("Il n'y a plus de phrase et la dialoguebox sera supprimée");
             EndDialogue();
-            dialogueBox.SetActive(false);
+            //dialogueBox.SetActive(false);
             return;
 
         }
