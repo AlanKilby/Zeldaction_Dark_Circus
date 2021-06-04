@@ -189,7 +189,7 @@ public class Boomerang : MonoBehaviour
         if (Mathf.Pow(2, other.gameObject.layer) == bossLayer) // fakir weapon
         {
             BossAIBrain.sHitCounter++; 
-            Debug.Log("hitting boss"); 
+            // Debug.Log("hitting boss"); 
             other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
         } 
     }
