@@ -4795,7 +4795,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1404542117
-  m_SortingLayer: 1
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -4831,7 +4831,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8067659016652804670}
-  m_Layer: 0
+  - component: {fileID: 1707010665849461265}
+  - component: {fileID: 8611485084957217834}
+  m_Layer: 14
   m_Name: lazerbeam 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4856,6 +4858,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1707010665849461265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8067659016652804671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b015893ef3b0a4b4b8bb5660cc997e6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _rayDamageAmount: 1
+--- !u!65 &8611485084957217834
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8067659016652804671}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 16.886923}
+  m_Center: {x: -4.680711e-15, y: 0.31, z: -8.906129}
 --- !u!1 &8067659017139487114
 GameObject:
   m_ObjectHideFlags: 0
@@ -9642,7 +9673,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1404542117
-  m_SortingLayer: 1
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
