@@ -40,16 +40,18 @@ public class AnimEventInstantiateObject : MonoBehaviour
 
     private void OnDestroy() 
     {
-        if (!Application.isPlaying && !instantiateManuallyOnSelfDestroy) return; 
-        randomSelectionFromList = objToInstantiateOnSelfDestroy.Count >= 2; 
+        if (!Application.isPlaying) return; 
+        randomSelectionFromList = objToInstantiateOnSelfDestroy.Count >= 2;
+
+        Debug.Log("random selection from list"); 
         
-        if (randomSelectionFromList)
+        if (randomSelectionFromList && instantiateManuallyOnSelfDestroy)
         {
             var selector = Random.Range(0, objToInstantiateOnSelfDestroy.Count); 
             _reference = Instantiate(objToInstantiateOnSelfDestroy[selector], 
                 new Vector3(transform.position.x, 0.15f, transform.position.z), Quaternion.Euler(90f, 0f, 0f));
         }
-        else
+        else if (instantiateManuallyOnSelfDestroy)
         {
             _reference = Instantiate(objToInstantiateOnSelfDestroy[0], 
                 new Vector3(transform.position.x, 0.15f, transform.position.z), Quaternion.Euler(90f, 0f, 0f));
