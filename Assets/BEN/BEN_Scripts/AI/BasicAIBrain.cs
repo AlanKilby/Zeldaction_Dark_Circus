@@ -126,6 +126,7 @@ namespace BEN.AI
 
         public float DelayBeforeBackToDefaultState { get ; private set ; } 
         public float DefaultSpeed { get; set; }
+        public float InitialSpeed { get; private set; }
         public States NewState { get; private set; }
         public Vector3 TargetToAttackPosition { get; set; }
         public bool GoingBackToPositionBeforeIdling { get; set; }
@@ -199,7 +200,7 @@ namespace BEN.AI
             _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>();
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
-            DefaultSpeed = _defaultSpeed; 
+            DefaultSpeed = InitialSpeed = _defaultSpeed; 
             MonkeyBallDodgeDistance = _monkeyBallDodgeDistance; 
 
             _patrol = GetComponent<FsmPatrol>();
@@ -362,7 +363,6 @@ namespace BEN.AI
             
             _agent.destination = TargetToAttackPosition;
             _idlePositionBeforeAttacking = transform.position;
-            _agent.speed = DefaultSpeed;
             Debug.Log("attack_enter");
 
             // UPGRADE : make the enemy predict the future player position instead of aiming at it's current one
@@ -432,10 +432,11 @@ namespace BEN.AI
                  
                 InvokeRepeating(nameof(ApplyCACDamage), 0.5f, _attackRate);
             }
-            else
+            else 
             {
-                _agent.speed = DefaultSpeed * _attackStateSpeedMultiplier;
+                _agent.speed = DefaultSpeed * _attackStateSpeedMultiplier; 
                 _agent.destination = PlayerMovement_Alan.sPlayerPos;
+                _timer.Reset();  
 
                 CancelInvoke(nameof(ApplyCACDamage));
                 _hasAppliedCACDamage = false;
