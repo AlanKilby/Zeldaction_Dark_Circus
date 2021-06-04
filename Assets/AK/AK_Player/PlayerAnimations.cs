@@ -26,8 +26,18 @@ public class PlayerAnimations : MonoBehaviour
     public string PLAYER_THROWING_HAT_DOWN = "hat charge bot";
     public string PLAYER_THROWING_HAT_RIGHT = "hat charge right";
     public string PLAYER_THROWING_HAT_LEFT = "hat charge left";
+    public string PLAYER_THROW_ANIM = "throwinghat";
     public string PLAYER_DEAD = "death";
-    
+
+    public string PLAYER_HIT_HAT_TOP = "hittop";
+    public string PLAYER_HIT_HAT_DOWN = "hitbot";
+    public string PLAYER_HIT_HAT_RIGHT = "hitright";
+    public string PLAYER_HIT_HAT_LEFT = "hitleft";
+
+    public string PLAYER_HIT_NO_HAT_TOP = "hittopnh";
+    public string PLAYER_HIT_NO_HAT_DOWN = "hitbotnh";
+    public string PLAYER_HIT_NO_HAT_RIGHT = "hitrightnh";
+    public string PLAYER_HIT_NO_HAT_LEFT = "hitleftnh";
 
     [Space, SerializeField] private Health _playerHp;
 
@@ -49,14 +59,16 @@ public class PlayerAnimations : MonoBehaviour
 
         if (_playerHp.CurrentValue <= 0 && !animator.GetCurrentAnimatorStateInfo(0).IsName("death")) 
         {
-            ChangeAnimationState(PLAYER_DEAD); 
+            ChangeAnimationState(PLAYER_DEAD);
+            playerMovement.canMove = false;
+            playerMovement.canThrow = false;
             Debug.Log("player death animation"); 
         }
     }
 
     public void ChangeAnimationState(string newState)
     {
-        if (currentState == newState || animator.GetCurrentAnimatorStateInfo(0).IsName("death")) return;
+        if (currentState == newState || animator.GetCurrentAnimatorStateInfo(0).IsName("death") /*|| currentState == "throwinghat"*/) return;
 
         animator.Play(newState);
         currentState = newState;
