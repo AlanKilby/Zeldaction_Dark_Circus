@@ -96,11 +96,13 @@ public class BossAIBrain : MonoBehaviour
     public bool doSpawns = true;
     public bool doSwitchMechanic = true; 
     public LayerMask playerLayer;
-    private bool _canRevealSwitches = true;  // this should not be here 
+    private bool _canRevealSwitches;  // this should not be here 
     private bool _isInvoking;
     private List<GameObject> _invokedEntities = new List<GameObject>();
     [Tooltip("Boss wont go out from vulnerability even after getting hit " + 
-             "more than (100 / _maxPercentOfDamageBeforeSwitchReset) times")] public bool ignoreMaxHitCount; 
+             "more than (100 / _maxPercentOfDamageBeforeSwitchReset) times")] public bool ignoreMaxHitCount;
+
+    private bool isFirstCall = true; 
     
 
 #region Unity Callbacks
@@ -136,7 +138,6 @@ public class BossAIBrain : MonoBehaviour
         _bossCollider.enabled = false;
         sHitCounter = 0;
         sMaxActiveSwitches = _maxActiveSwitches;
-        _canRevealSwitches = doSwitchMechanic;
         _bossAnimation.PlayAnimation(AnimState.Idle, AnimDirection.None);
         _initialPosition = transform.position; 
 
@@ -152,6 +153,7 @@ public class BossAIBrain : MonoBehaviour
         }
 
         StartCoroutine(nameof(SetInvocationCooldown));
+        StartCoroutine(nameof(SetSwitchesCooldown)); 
     }
 
     private void FixedUpdate()
@@ -430,9 +432,7 @@ public class BossAIBrain : MonoBehaviour
     // DRY 
     IEnumerator SetSwitchesCooldown() 
     {
-        _canRevealSwitches = false;
-        sAllLightsWereOff = false; 
-        switchesAreOn = false; 
+        _canRevealSwitches = sAllLightsWereOff = switchesAreOn = false;
         _lightsActivationTimer = 0f;
 
         if (!rayHasBeenResetAfterVulnerableState)
@@ -440,12 +440,20 @@ public class BossAIBrain : MonoBehaviour
             yield return null;
             rayHasBeenResetAfterVulnerableState = true; 
             RayAttack.sCanRayAttack = BossEventProjectileFalling.sProjectileCanFall = true; 
+        } 
+
+        if (isFirstCall)
+        {
+            isFirstCall = false; 
+            yield return new WaitForSeconds(_switchesActivationDelay); 
+        }
+        else
+        {
+            yield return new WaitForSeconds(sAllLightsWereOff && rewardPlayerOnQuickLightsOff
+                ? _switchesActivationDelay + _switchesOnDuration - _lightsActivationTimer
+                : _switchesActivationDelay + _switchesOnDuration);
         }
 
-        yield return new WaitForSeconds(sAllLightsWereOff && rewardPlayerOnQuickLightsOff
-            ? _switchesActivationDelay + _switchesOnDuration - _lightsActivationTimer
-            : _switchesActivationDelay + _switchesOnDuration);
-        
         _canRevealSwitches = currentState != BossStates.Vulnerable && _bossHP.CurrentValue > 0; 
         Debug.Log($"setting can reveal switches to {_canRevealSwitches}");
     }

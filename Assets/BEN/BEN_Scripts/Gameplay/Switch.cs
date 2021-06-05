@@ -1,23 +1,20 @@
+using BEN.Animation;
 using UnityEngine;
 using MonsterLove.StateMachine; 
 
 public class Switch : MonoBehaviour
 {
     [SerializeField] private LayerMask _playerLayer, _playerWeaponLayer;
+    [SerializeField] private AIAnimation _leverAnimation;
+    [SerializeField] private AnimEventPlaySound _playSoundOnEvent; 
     public bool CanBeDeactivated { get; set; }
     private GameObject _visualCue; 
+    
 
     private void Start()
     {
-        _visualCue = transform.GetChild(0).gameObject; 
-    } 
-
-    private void FixedUpdate() // DEBUG 
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            CanBeDeactivated = false;  
-        }
+        _visualCue = transform.GetChild(0).gameObject;
+        _leverAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); 
     }
 
     private void OnTriggerStay(Collider other) 
@@ -29,17 +26,22 @@ public class Switch : MonoBehaviour
             CanBeDeactivated = false;  
             _visualCue.SetActive(CanBeDeactivated);
             Invoke(nameof(ResetState), 0f);
+            _leverAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); 
+            _playSoundOnEvent.PlaySoundSafe(SoundType.Reset);
 
             if (BossAIBrain.sSwitchUsedCount == BossAIBrain.sMaxActiveSwitches)
             { 
                 BossAIBrain.OnRequireStateChange(BossStates.Vulnerable, StateTransition.Safe); 
-            }
+            } 
         } 
     } 
 
     public void ShowSwitchIsOn() 
     { 
-        CanBeDeactivated = true; 
+        CanBeDeactivated = true;
+        _leverAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Left); 
+        _playSoundOnEvent.PlaySoundSafe(SoundType.Reset); 
+        
         _visualCue.SetActive(CanBeDeactivated);
         Invoke(nameof(ResetState), BossAIBrain.sLightsOnDuration);  
     }
