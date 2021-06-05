@@ -3,18 +3,14 @@ using MonsterLove.StateMachine;
 
 public class Switch : MonoBehaviour
 {
-    [SerializeField] private Color activeSwitchColor;
-    [SerializeField] private LayerMask _playerLayer;
-
-    private Light _light;
-    private Color _initialColor;
+    [SerializeField] private LayerMask _playerLayer, _playerWeaponLayer;
     public bool CanBeDeactivated { get; set; }
+    private GameObject _visualCue; 
 
     private void Start()
     {
-        _light = GetComponent<Light>();
-        _initialColor = _light.color; 
-    }
+        _visualCue = transform.GetChild(0).gameObject; 
+    } 
 
     private void FixedUpdate() // DEBUG 
     {
@@ -26,11 +22,12 @@ public class Switch : MonoBehaviour
 
     private void OnTriggerStay(Collider other) 
     {
-        if (Mathf.Pow(2f, other.gameObject.layer) == _playerLayer && Input.GetButtonDown("CAC") && CanBeDeactivated) 
+        if ((Mathf.Pow(2f, other.gameObject.layer) == _playerLayer && Input.GetButtonDown("CAC") 
+            || Mathf.Pow(2f, other.gameObject.layer) ==  _playerWeaponLayer) && CanBeDeactivated) 
         {
             BossAIBrain.sSwitchUsedCount++; 
             CanBeDeactivated = false;  
-            _light.color = Color.black;
+            _visualCue.SetActive(CanBeDeactivated);
             Invoke(nameof(ResetState), 0f);
 
             if (BossAIBrain.sSwitchUsedCount == BossAIBrain.sMaxActiveSwitches)
@@ -42,14 +39,14 @@ public class Switch : MonoBehaviour
 
     public void ShowSwitchIsOn() 
     { 
-        _light.color = activeSwitchColor;
-        CanBeDeactivated = true;
+        CanBeDeactivated = true; 
+        _visualCue.SetActive(CanBeDeactivated);
         Invoke(nameof(ResetState), BossAIBrain.sLightsOnDuration);  
     }
 
     private void ResetState() 
     { 
         CanBeDeactivated = false;
-        _light.color = _initialColor;  
+        _visualCue.SetActive(CanBeDeactivated);
     }
 }
