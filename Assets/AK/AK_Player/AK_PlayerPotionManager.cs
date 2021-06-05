@@ -23,12 +23,12 @@ public class AK_PlayerPotionManager : MonoBehaviour
     {
         
 
-        if (Input.GetButtonDown("Potion") && potionQuantity > 0)
+        if (Input.GetButtonDown("Potion") && AK_PlayerManager.potionNumber > 0)
         {
             UsePotion(potion);
         }
        
-        else if (Input.GetButtonDown("Potion") && potionQuantity <= 0)
+        else if (Input.GetButtonDown("Potion") && AK_PlayerManager.potionNumber <= 0)
         {
             Debug.Log("You've got no potions left.");
         }
@@ -38,8 +38,8 @@ public class AK_PlayerPotionManager : MonoBehaviour
 
     public void UsePotion(string potionType)
     {
-        
-        potionQuantity--;
+        AK_PlayerManager.potionNumber--;
+        //potionQuantity--;
         playerHealth.CurrentValue += (sbyte)potionHealthValue;
         
         

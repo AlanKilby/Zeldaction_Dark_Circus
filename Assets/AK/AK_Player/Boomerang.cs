@@ -118,7 +118,7 @@ public class Boomerang : MonoBehaviour
 
     public void Teleport()
     {
-        if (Input.GetButtonUp("PlayerAttack") && hasWand)
+        if (Input.GetButtonUp("PlayerTeleport") && hasWand)
         {
             playerPos.position = new Vector3(transform.position.x, playerPos.position.y, transform.position.z);
             isComingBack = true;
