@@ -795,7 +795,7 @@ Transform:
   - {fileID: 1137245520}
   - {fileID: 1847129733}
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2384186876152302358
 GameObject:
@@ -827,7 +827,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8930034650293137190
 BoxCollider:
@@ -895,7 +895,7 @@ Transform:
   - {fileID: 8930034648340680920}
   - {fileID: 8930034649793705265}
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8743626459602676910
 GameObject:
@@ -955,7 +955,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8930034648340680927
 GameObject:
@@ -1053,12 +1053,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8930034648999031261}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.06000018, z: 0}
-  m_LocalScale: {x: 0.20251755, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 2.85, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8683765545267849503}
-  m_Father: {fileID: 8930034650034842193}
-  m_RootOrder: 0
+  m_Father: {fileID: 8930034649707844236}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &262711650
 AudioSource:
@@ -1253,7 +1253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 8930034649707844227}
-  destroyDelay: 0.2
+  destroyDelay: 0.15
   destroyFromStart: 0
   _destroyableFromBossEvent: 0
 --- !u!114 &262711649
@@ -1726,13 +1726,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useSecondarySpawnPoint: 0
-  instantiateManuallyOnSelfDestroy: 0
+  instantiateManuallyOnSelfDestroy: 1
   destroyNestedPrefabAfterDelay: 0
   randomSelectionFromList: 0
   objToInstantiateOnSelfDestroy:
   - {fileID: 9151969981844469843, guid: 6ddf36aaa609f1b4cbd151ad984c2c9c, type: 3}
   originPositionReference: {fileID: 8683765545267849503}
   secondarySpawnPoint: {fileID: 0}
+  _eulerRotation: {x: -90, y: 0, z: 0}
+  _groundHeight: 0.27
 --- !u!1 &8930034649035599034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1855,7 +1857,7 @@ Transform:
   - {fileID: 5779686587824129408}
   - {fileID: 2868071733743442196}
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1272608561
 MonoBehaviour:
@@ -1966,6 +1968,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8930034650034842193}
+  - {fileID: 8930034648999031262}
   - {fileID: 6726443975018406438}
   - {fileID: 8930034649593468850}
   - {fileID: 3723191657555923606}
@@ -2102,8 +2105,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.91, z: 0}
   m_LocalScale: {x: 4.937844, y: 1, z: 1}
-  m_Children:
-  - {fileID: 8930034648999031262}
+  m_Children: []
   m_Father: {fileID: 8930034649707844236}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2298,6 +2300,8 @@ MonoBehaviour:
   _bossAnimation: {fileID: 6209885193723149072}
   _OnMobInvocation: {fileID: 262711649}
   _BossVulnerablePoint: {fileID: 1346287422943803756}
+  _bossGraphics: {fileID: 8930034648999031261}
+  _delayBeforePositioningAtVulnerablePoint: 0.5
   _spawnerHalfCircle: {fileID: 8930034648340680927}
   _spawnerOuter: {fileID: 8930034649793705264}
   _spawnableEntitiesList:
@@ -2317,12 +2321,16 @@ MonoBehaviour:
   - {fileID: 1137245521}
   - {fileID: 1847129734}
   _maxActiveSwitches: 2
-  _vulnerabilityDuration: 10
+  _vulnerabilityDuration: 20
   _maxPercentOfDamageBeforeSwitchReset: 25
   _switchesActivationDelay: 5
   _switchesOnDuration: 30
   rewardPlayerOnQuickLightsOff: 1
   _selectRandomPatttern: 1
+  _behavioursToDisableOnBossDeath:
+  - {fileID: 8930034650034842194}
+  - {fileID: 1272608561}
+  - {fileID: 239534653543741571}
   doSpawns: 0
   doSwitchMechanic: 1
   playerLayer:

@@ -48,12 +48,9 @@ public class Health : MonoBehaviour
         }
 
         if (_notifiedDeath) return; // avoid call if HP == -1; 
-        
-        if (isBossHP) 
-        {
-            _OnBossHPLoss.Invoke(AnimState.Die, AnimDirection.None); 
-        }
-        else if (!IsMonkeyBall && !_playerUnkillable)
+        _notifiedDeath = true;
+
+        if (!IsMonkeyBall && !_playerUnkillable && !isBossHP)
         {
             _playercollider = GetComponent<Collider>();
             _playercollider.enabled = false; 
@@ -63,6 +60,5 @@ public class Health : MonoBehaviour
         {
             OnMonkeyBallTransitionToNormalMonkey(); 
         }
-        _notifiedDeath = true;
     } 
 }

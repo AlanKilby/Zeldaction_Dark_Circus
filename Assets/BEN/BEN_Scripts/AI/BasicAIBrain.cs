@@ -190,7 +190,7 @@ namespace BEN.AI
             }
             catch (Exception e) 
             {
-                Debug.Log($"{ e.Message} thrown by {gameObject.name}"); 
+                // Debug.Log($"{ e.Message} thrown by {gameObject.name}"); 
                 _patrol = GetComponent<FsmPatrol>();
                 _patrol.SetPoints();
             } 
@@ -428,7 +428,7 @@ namespace BEN.AI
                 } 
 
                 // back to default when player has been killed
-                if (LoadSceneOnPlayerDeath.playerIsDead)
+                if (LoadSceneOnPlayerDeath.sPlayerIsDead)
                 {
                     _fsm.ChangeState(States.Default, StateTransition.Safe);
                     CancelInvoke(nameof(ApplyCACDamage)); 

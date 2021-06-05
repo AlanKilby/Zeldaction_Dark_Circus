@@ -30,8 +30,8 @@ public class BossAIBrain : MonoBehaviour
     [SerializeField] private AIAnimation _bossAnimation;
     [SerializeField] private AnimEventPlaySound _OnMobInvocation; 
     [SerializeField, Tooltip("Point where the Loyal appears while vulnerable")] private Transform _BossVulnerablePoint;
-    [SerializeField, Range(0f, 1f)] private float _delayBeforePositioningAtVulnerablePoint = 0.5f; 
-
+    [SerializeField] private GameObject _bossGraphics; 
+    [SerializeField, Range(0f, 1f)] private float _delayBeforePositioningAtVulnerablePoint = 0.5f;
 
     [Header("Spawn")]
     [SerializeField, Space] private GameObject _spawnerHalfCircle; 
@@ -88,7 +88,9 @@ public class BossAIBrain : MonoBehaviour
     public static Action OnBossVulnerable; // deactivate ray colliders; 
     private bool rayHasBeenResetAfterVulnerableState;
     private bool _deathNotified; 
-    private Vector3 _initialPosition; 
+    private Vector3 _initialPosition;
+
+    [SerializeField] private List<MonoBehaviour> _behavioursToDisableOnBossDeath = new List<MonoBehaviour>();  
 
     [Header("DEBUG")]
     public bool doSpawns = true;
@@ -154,20 +156,15 @@ public class BossAIBrain : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_deathNotified) return; 
+        if (_deathNotified || (!PlayerMovement_Alan.sPlayer && Time.time >= 1f)) return; 
         
-        if (!PlayerMovement_Alan.sPlayer && Time.time >= 1f) // to avoid it on first frame
-        {
-            OnRequireStateChange(BossStates.Default, StateTransition.Safe); 
-        }
-
         if (switchesAreOn)
         {
             _lightsActivationTimer += 0.02f; 
         }
 
         if (_bossHP.CurrentValue <= 0 && !_deathNotified)
-        { 
+        {
             _deathNotified = true; 
             OnRequireStateChange(BossStates.Death, StateTransition.Safe); 
         } 
@@ -181,7 +178,7 @@ public class BossAIBrain : MonoBehaviour
         SelectSwitchesPattern();
     }
 
-    #endregion
+    #endregion 
 
 #region FSM
 
@@ -274,14 +271,16 @@ public class BossAIBrain : MonoBehaviour
         yield return new WaitForSeconds(_delayBeforePositioningAtVulnerablePoint); 
         Debug.Log("setting new position");
         _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None); 
-        transform.position = _BossVulnerablePoint.position; 
+        
+        // had to unparent graphics from entity because of weird distortions during animations..
+        transform.position = _bossGraphics.transform.position = _BossVulnerablePoint.position;  
     }
 
     IEnumerator ResetToAttackState()
-    {
+    { 
         yield return new WaitForSeconds(_vulnerabilityDuration);
-        Debug.Log("reseting to attack state form vulnerability duration");
-        StartCoroutine(nameof(SetInvocationCooldown)); 
+        Debug.Log("reseting to invocation state");
+        StartCoroutine(nameof(SetInvocationCooldown));  
         OnRequireStateChange(BossStates.Invocation, StateTransition.Safe);
     } 
     
@@ -306,8 +305,8 @@ public class BossAIBrain : MonoBehaviour
         _bossCollider.enabled = false;
         if (_bossHP.CurrentValue > 0)
         { 
-            Debug.Log("playing reset anim");
-            transform.position = _initialPosition; // lerp 
+            Debug.Log("playing reset anim"); 
+            transform.position =  _bossGraphics.transform.position = _initialPosition; // lerp 
             var clip = _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.Top);
             yield return new WaitForSeconds(clip.clipContainer.length * 1.15f);
         } 
@@ -321,10 +320,15 @@ public class BossAIBrain : MonoBehaviour
 
      private void Death_Enter()
      {
-         Debug.Log("death enter");
+         Debug.Log("death enter"); 
+         foreach (var item in _behavioursToDisableOnBossDeath)
+         {
+             item.enabled = false; 
+         }
+         
+         _bossAnimation.PlayAnimation(AnimState.Die, AnimDirection.None); 
          _bossCollider.enabled = false;
-         BossEventProjectileFalling.sProjectileCanFall = false;
-         RayAttack.sCanRayAttack = false; 
+         BossEventProjectileFalling.sProjectileCanFall = RayAttack.sCanRayAttack = false;
      } 
     
 #endregion 

@@ -83,6 +83,7 @@ public class RayAttack : MonoBehaviour
     
     private void DisableRayOnBossVulnerable()
     {
+        Debug.Log("disabling rays from boss vulnerable");
         for (var i = 0; i < _rayVisuals.Count; i++)
         {
             _rayVisuals[i].SetActive(false); 
