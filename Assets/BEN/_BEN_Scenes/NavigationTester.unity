@@ -803,75 +803,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &382643874
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 687854850172192589, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: _attackRange
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136464, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_Name
-      value: UD_Mascotte_Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136464, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136467, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_RootOrder
-      value: 19
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136467, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136467, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136467, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.17
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136467, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136467, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136467, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136467, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136467, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136467, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196949070471136467, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8850494960354600371, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-      propertyPath: serializationData.Prefab
-      value: 
-      objectReference: {fileID: 8850494960354600371, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
 --- !u!4 &618387699 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7618909234090356143, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
@@ -1596,6 +1527,10 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 7792050627292937659, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
+    - target: {fileID: 8072824808094687805, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
+      propertyPath: _shadow
+      value: 
+      objectReference: {fileID: 1064879018}
     - target: {fileID: 8835960570973703075, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
       propertyPath: m_Name
       value: Monkey_Manager (2)
@@ -1650,6 +1585,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
+--- !u!1 &1064879018 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3047842207291884684, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
+  m_PrefabInstance: {fileID: 1064879017}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1099678823
 GameObject:
   m_ObjectHideFlags: 0
@@ -2232,15 +2172,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.2669336
+      value: 0.26693356
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 3.4238033e-15
+      value: -0.000000028720944
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.836517e-15
+      value: 0.00000000795524
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239499090296, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4367,6 +4307,7 @@ MonoBehaviour:
   _monkeyBallDodgeDistance: 5
   _graphics: {fileID: 3176948842096649933}
   _detection: {fileID: 3176948842712001725}
+  _shadow: {fileID: 0}
   _placeholderDestination: {fileID: 21412865545638341}
   _ballGraphics: {fileID: 0}
   _componentsToDeactivateOnDeath:
@@ -6017,6 +5958,7 @@ MonoBehaviour:
   _monkeyBallDodgeDistance: 5
   _graphics: {fileID: 7725771847103010291}
   _detection: {fileID: 7725771846660153219}
+  _shadow: {fileID: 0}
   _placeholderDestination: {fileID: 1647174280}
   _ballGraphics: {fileID: 0}
   _componentsToDeactivateOnDeath:
@@ -6624,6 +6566,7 @@ MonoBehaviour:
   _monkeyBallDodgeDistance: 5
   _graphics: {fileID: 7882843962794384645}
   _detection: {fileID: 7882843962214225781}
+  _shadow: {fileID: 0}
   _placeholderDestination: {fileID: 455435712915122814}
   _ballGraphics: {fileID: 0}
   _componentsToDeactivateOnDeath:
@@ -7161,6 +7104,7 @@ MonoBehaviour:
   _monkeyBallDodgeDistance: 5
   _graphics: {fileID: 8847815625512254463}
   _detection: {fileID: 8847815625991745935}
+  _shadow: {fileID: 0}
   _placeholderDestination: {fileID: 775091973623023975}
   _ballGraphics: {fileID: 0}
   _componentsToDeactivateOnDeath:

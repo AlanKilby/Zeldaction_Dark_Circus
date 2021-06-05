@@ -78,6 +78,7 @@ namespace BEN.AI
         [Header("Other")] 
         [Space, SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
         [SerializeField] private GameObject _detection;
+        [SerializeField] private GameObject _shadow;
         [SerializeField] private PlaceholderDestination _placeholderDestination;
         [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _ballGraphics;
         [SerializeField] private Behaviour[] _componentsToDeactivateOnDeath;
@@ -598,6 +599,7 @@ namespace BEN.AI
         {
             yield return new WaitForSeconds(_graphicsDisableDelay); 
             _graphics.GetComponent<SpriteRenderer>().enabled = false; 
+            _shadow.SetActive(false);
         }
         
         #endregion
