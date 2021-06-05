@@ -9,6 +9,7 @@ using UnityEditor;
 #endif
 using BEN.Animation;
 using BEN.Math;
+using UnityEngine.Events;
 
 
 /* 
@@ -86,7 +87,10 @@ namespace BEN.AI
         [Header("-- DEBUG --")]
         [SerializeField] private EditorDebuggerSO _debugger;
         [SerializeField] private bool refresh;
-        private bool wasMonkeyBall; 
+        private bool wasMonkeyBall;
+
+        // ALAN Variables
+        public UnityEvent playerHitEvent;
         
 #endregion 
 
@@ -448,7 +452,10 @@ namespace BEN.AI
 
         private void ApplyCACDamage()
         {
-            _playerHP.DecreaseHp(_attackDamage); 
+            _playerHP.DecreaseHp(_attackDamage);
+
+            // Added by Alan 03/06/2021
+            playerHitEvent.Invoke();
         } 
 
         private void FakirAttack() 
