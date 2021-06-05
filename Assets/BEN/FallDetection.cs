@@ -15,13 +15,13 @@ public class FallDetection : MonoBehaviour
         // refactor to avoid duplicate code !
         if (Mathf.Pow(2f, other.gameObject.layer) == _groundLayer)
         { 
-            Debug.Log("ground");
+            // Debug.Log("ground");
             _OnGroundDetection.Invoke(); // play sound and destroy self
             OnGroundDetection(); 
         } 
         else if (Mathf.Pow(2f, other.gameObject.layer) == _playerLayer)
         {
-            Debug.Log("player"); 
+            // Debug.Log("player"); 
             other.GetComponent<Health>().DecreaseHp(_damage); 
             _OnGroundDetection.Invoke(); // play sound and destroy self
             OnGroundDetection(); 

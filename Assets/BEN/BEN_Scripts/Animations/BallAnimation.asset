@@ -12,17 +12,196 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aa0cc02403dcaf48ad4059aa211c1bf, type: 3}
   m_Name: BallAnimation
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 7400000, guid: 8f2972b7d2ec9404da38122335ef9d9b, type: 2}
+    - {fileID: 7400000, guid: 8e825ae24f749c847946e487ab48e5cf, type: 2}
+    - {fileID: 7400000, guid: 0ed1aaade6efc6841ae77b0b2dd165bb, type: 2}
+    - {fileID: 7400000, guid: 536c3c10533fed8418ea3baf2224ef11, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: clipListDictionary
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[BEN.Animation.AnimState, Assembly-CSharp],[Clip[],
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[BEN.Animation.AnimState,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: 2|Clip[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 3|Clip, Assembly-CSharp
+    - Name: clipDirection
+      Entry: 3
+      Data: 0
+    - Name: clipContainer
+      Entry: 10
+      Data: 0
+    - Name: speedMultiplier
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|Clip, Assembly-CSharp
+    - Name: clipDirection
+      Entry: 3
+      Data: 1
+    - Name: clipContainer
+      Entry: 10
+      Data: 0
+    - Name: speedMultiplier
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Clip, Assembly-CSharp
+    - Name: clipDirection
+      Entry: 3
+      Data: 2
+    - Name: clipContainer
+      Entry: 10
+      Data: 1
+    - Name: speedMultiplier
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|Clip, Assembly-CSharp
+    - Name: clipDirection
+      Entry: 3
+      Data: 3
+    - Name: clipContainer
+      Entry: 10
+      Data: 1
+    - Name: speedMultiplier
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 7
+      Data: 7|Clip[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 8|Clip, Assembly-CSharp
+    - Name: clipDirection
+      Entry: 3
+      Data: 18446744073709551615
+    - Name: clipContainer
+      Entry: 10
+      Data: 2
+    - Name: speedMultiplier
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: 9|Clip[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 10|Clip, Assembly-CSharp
+    - Name: clipDirection
+      Entry: 3
+      Data: 18446744073709551615
+    - Name: clipContainer
+      Entry: 10
+      Data: 3
+    - Name: speedMultiplier
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   controller: {fileID: 9100000, guid: 1b0e2c6e4b9b3f640b6c2fc992167e24, type: 2}
-  clipList:
-  - clipName: idle
-    clipContainer: {fileID: 7400000, guid: 0ed1aaade6efc6841ae77b0b2dd165bb, type: 2}
-    speedMultiplier: 1
-  - clipName: moveRight
-    clipContainer: {fileID: 7400000, guid: 8f2972b7d2ec9404da38122335ef9d9b, type: 2}
-    speedMultiplier: 1
-  - clipName: moveLeft
-    clipContainer: {fileID: 7400000, guid: 8e825ae24f749c847946e487ab48e5cf, type: 2}
-    speedMultiplier: 1
-  - clipName: HIT
-    clipContainer: {fileID: 7400000, guid: 536c3c10533fed8418ea3baf2224ef11, type: 2}
-    speedMultiplier: 1
