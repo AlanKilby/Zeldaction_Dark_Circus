@@ -18,7 +18,7 @@ public class Boomerang : MonoBehaviour
     public AnimationCurve goingSpeedC;
     public AnimationCurve comingSpeedC;
 
-    public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, fakirWeaponLayer, bossLayer; 
+    public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, fakirWeaponLayer, bossLayer, jailLayer; 
    
     private Rigidbody rb;
 
@@ -194,6 +194,13 @@ public class Boomerang : MonoBehaviour
             BossAIBrain.sHitCounter++; 
             // Debug.Log("hitting boss"); 
             other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
+        } 
+        
+        if (Mathf.Pow(2, other.gameObject.layer) == jailLayer)
+        {
+            isComingBack = true;
+            comebackTimer = 0; 
+            other.GetComponent<UD_JailScript>().DestroyJail(); 
         } 
     }
 } 
