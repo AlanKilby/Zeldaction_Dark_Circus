@@ -90,14 +90,10 @@ namespace BEN.AI
         [SerializeField] private bool refresh;
         private bool wasMonkeyBall;
 
-<<<<<<< HEAD
         // ALAN Variables
         public UnityEvent playerHitEvent;
         
 #endregion 
-=======
-        #endregion 
->>>>>>> main
 
 #region Public Variables
         public Action<States, StateTransition> OnRequireStateChange;
