@@ -78,6 +78,7 @@ namespace BEN.AI
         [Header("Other")] 
         [Space, SerializeField] private GameObject _graphics; // MOVE TO AIANIMATION
         [SerializeField] private GameObject _detection;
+        [SerializeField] private GameObject _shadow;
         [SerializeField] private PlaceholderDestination _placeholderDestination;
         [SerializeField, ConditionalShow("isMonkeyBall", true)] private GameObject _ballGraphics;
         [SerializeField] private Behaviour[] _componentsToDeactivateOnDeath;
@@ -86,9 +87,9 @@ namespace BEN.AI
         [Header("-- DEBUG --")]
         [SerializeField] private EditorDebuggerSO _debugger;
         [SerializeField] private bool refresh;
-        private bool wasMonkeyBall; 
-        
-#endregion 
+        private bool wasMonkeyBall;
+
+        #endregion 
 
 #region Public Variables
         public Action<States, StateTransition> OnRequireStateChange;
@@ -109,7 +110,7 @@ namespace BEN.AI
     private CheckSurroundings _checkSurroundings; 
         
     private AnimDirection _animDirection; // MOVE TO AIANIMATION
-    private int _previousParentRotation; // MOVE TO AIANIMATION
+    private int _currentParentRotation; // MOVE TO AIANIMATION
         
     private Health _playerHP;
     private bool _exitingAttackState;
@@ -201,7 +202,12 @@ namespace BEN.AI
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
             DefaultSpeed = InitialSpeed = _defaultSpeed; 
-            MonkeyBallDodgeDistance = _monkeyBallDodgeDistance; 
+            MonkeyBallDodgeDistance = _monkeyBallDodgeDistance;
+
+            if (type == AIType.MonkeySurBall)
+            {
+                _ballAnimation = _ballGraphics.GetComponent<AIAnimation>(); 
+            }
 
             _patrol = GetComponent<FsmPatrol>();
 
@@ -210,7 +216,7 @@ namespace BEN.AI
                 _patrol.enabled = false; 
                 _agentHp.CurrentValue = 1; // will be overwritten by health. Just to avoid 0 hp when invoked by boss
             }
-            else
+            else 
             {
                 _patrol.SetPoints();  
             }
@@ -225,17 +231,15 @@ namespace BEN.AI
             }
 
             _agent.speed = DefaultSpeed;
-            _previousParentRotation = _placeholderDestination.angleIndex; 
+            _currentParentRotation = -1; // modif 04.06 
         } 
 
         private void FixedUpdate()
         {
-            // if (NewState == States.Die) Destroy(transform.parent.gameObject, 1f);  
-            
             if (_canPatrol && !HasBeenInvokedByBoss)
             {
                 _detection.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.EulerAnglesY, 0f);
-            }
+            } 
             CheckAnimDirection(); // remove from state machine 
 
             if (_agentHp.CurrentValue <= 0 && !_patrol.IsDead && Type != AIType.MonkeySurBall) 
@@ -245,7 +249,7 @@ namespace BEN.AI
             }
 
             if (!_canPatrol && Vector3.Distance(transform.position, _idlePositionBeforeAttacking) <= 0.25f && _exitingAttackState) 
-            {
+            { 
                 _exitingAttackState = false; 
                 _agent.speed = 0f;
                 _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); // use AnimDirection according to where you come from . 
@@ -262,8 +266,7 @@ namespace BEN.AI
             OnRequireStateChange -= TransitionToNewState;
             _agentHp.OnMonkeyBallTransitionToNormalMonkey -= BecomeNormalMonkey;
         } 
-        
-        
+             
 #endregion 
 
         // called by event OnRequireStateChange
@@ -274,17 +277,22 @@ namespace BEN.AI
         }
         
         // MOVE ALL THIS TO AIANIMATION ===> WARNING : duplicate 
-        private void CheckAnimDirection()
+        private void CheckAnimDirection() 
         {
             if (Type == AIType.Fakir && !_canPatrol) return; // modify is fakir needs repositionning 
 
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex); 
 
-            if (_placeholderDestination.angleIndex == _previousParentRotation) return;
+            if (_placeholderDestination.angleIndex == _currentParentRotation) return;
             
             _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
-            _previousParentRotation = _placeholderDestination.angleIndex;
-            StartCoroutine(nameof(ChangeGraphicsRotation));
+
+            if (type == AIType.MonkeySurBall)
+            {
+                _ballAnimation.PlayAnimation(AnimState.Walk, _animDirection); 
+            }
+            
+            _currentParentRotation = _placeholderDestination.angleIndex;
         } 
         
         private void CheckAnimDirection(AnimState state)
@@ -293,19 +301,13 @@ namespace BEN.AI
 
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex);
 
-            if (_placeholderDestination.angleIndex == _previousParentRotation) return; 
+            if (_placeholderDestination.angleIndex == _currentParentRotation) return; 
             
             _aIAnimation.PlayAnimation(state, _animDirection);
             
-            _previousParentRotation = _placeholderDestination.angleIndex;
-            StartCoroutine(nameof(ChangeGraphicsRotation));
+            _currentParentRotation = _placeholderDestination.angleIndex;
         } 
-
-        private IEnumerator ChangeGraphicsRotation()
-        {
-            yield return new WaitForSeconds(1.5f);
-            _graphics.transform.localRotation = Quaternion.identity;
-        } 
+        
         // <===
         
         #region FSM
@@ -332,7 +334,7 @@ namespace BEN.AI
         { 
             yield return new WaitForSeconds(0.03f);
             NewState = States.Default;
-            Debug.Log("default_enter");
+            Debug.Log("default_enter"); 
 
             if ((_canPatrol || GoingBackToPositionBeforeIdling) && !HasBeenInvokedByBoss)
             {
@@ -341,17 +343,31 @@ namespace BEN.AI
                     _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); 
                 }
                 else
-                {
+                { 
                     _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+
+                    if (type == AIType.MonkeySurBall)
+                    {
+                        _ballAnimation.PlayAnimation(AnimState.Walk, _animDirection);
+                    } 
+                    
+                    CheckAnimDirection(AnimState.Walk);
                 }
             } 
             else 
-            {
+            { 
                 _aIAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);
-            }
+                
+                if (type == AIType.MonkeySurBall)
+                {
+                    var clip = _ballAnimation.PlayAnimation(AnimState.Idle, AnimDirection.None); 
+                    Debug.Log($"playing {clip.clipContainer.name}");
+                } 
+            } 
         } 
-        
-        
+
+        private void Default_Exit() { }
+
         #endregion 
 
         #region Attack
@@ -365,8 +381,8 @@ namespace BEN.AI
             _idlePositionBeforeAttacking = transform.position;
             Debug.Log("attack_enter");
 
-            // UPGRADE : make the enemy predict the future player position instead of aiming at it's current one
             var clip = new Clip();
+            
             switch (type) 
             {
                 case AIType.Monkey:
@@ -441,7 +457,11 @@ namespace BEN.AI
                 CancelInvoke(nameof(ApplyCACDamage));
                 _hasAppliedCACDamage = false;
 
-                _aIAnimation.PlayAnimation(type == AIType.Monkey ? AnimState.Atk : AnimState.Walk, _animDirection); 
+                _aIAnimation.PlayAnimation(wasMonkeyBall ? AnimState.SecondaryAtk : // if wasMonkeyBall THEN type == AIType.Monkey 
+                                            type == AIType.Monkey ? 
+                                                AnimState.Atk : 
+                                                AnimState.Walk, _animDirection); 
+                
                 CheckAnimDirection(type == AIType.Monkey ? AnimState.Atk : AnimState.Walk);
             }
         } 
@@ -464,7 +484,7 @@ namespace BEN.AI
             _graphics.transform.localPosition = Vector3.zero; 
             _checkSurroundings.BearerType = type = AIType.Monkey; 
             _agentHp.CurrentValue = 1; 
-            _attackRange = 1f; // would have been better to store each mob General stats into a scriptable object so that I can assign the right values 
+            _attackRange = 2f; // would have been better to store each mob General stats into a scriptable object so that I can assign the right values 
             wasMonkeyBall = true;
             _agent.destination = PlayerMovement_Alan.sPlayerPos;
             _attackDelay = 0.2f; 
@@ -476,7 +496,7 @@ namespace BEN.AI
         {
             if (HasBeenInvokedByBoss)
             {
-                TransitionToNewState(States.Attack, StateTransition.Safe); // debug crados             
+                TransitionToNewState(States.Attack, StateTransition.Safe);  
             }
 
             switch (type)
@@ -498,7 +518,7 @@ namespace BEN.AI
             else
             {
                 if (HasBeenInvokedByBoss) return;
-                _agent.destination = _canPatrol ? _patrol.Points[_patrol.DestPoint].position : _idlePositionBeforeAttacking; // TODO : use closest point of list instead (when patrolling)
+                _agent.destination = _canPatrol ? _patrol.Points[_patrol.DestPoint].position : _idlePositionBeforeAttacking; // A FAIRE : use closest point of list instead (when patrolling)
                 _agent.speed = DefaultSpeed / _attackStateSpeedMultiplier; 
             }
         }
@@ -521,14 +541,14 @@ namespace BEN.AI
                     transform.position += _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
             
                     yield return new WaitForSeconds(0.1f);  
-                    _monkeyBallCollider.enabled = true;
-                    _ballCollider.enabled = true;
+                    _monkeyBallCollider.enabled = _ballCollider.enabled = true;
                     _aIAnimation.PlayAnimation(AnimState.Miss, AnimDirection.None); 
                     
                     yield return new WaitForSeconds(_monkeyBallProvocDuration); 
-                    OnRequireStateChange(States.Attack, StateTransition.Safe); 
+                    OnRequireStateChange(States.Attack, StateTransition.Safe);  
                     break;
                 case AIType.Mascotte:
+                    Debug.Log($"HIT with direction : {_animDirection}"); 
                     _aIAnimation.PlayAnimation(AnimState.Hit, _animDirection);
                     
                     yield return new WaitForSeconds(1f);  
@@ -579,6 +599,7 @@ namespace BEN.AI
         {
             yield return new WaitForSeconds(_graphicsDisableDelay); 
             _graphics.GetComponent<SpriteRenderer>().enabled = false; 
+            _shadow.SetActive(false);
         }
         
         #endregion

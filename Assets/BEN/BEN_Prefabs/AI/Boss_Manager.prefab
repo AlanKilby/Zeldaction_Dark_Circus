@@ -795,7 +795,7 @@ Transform:
   - {fileID: 1137245520}
   - {fileID: 1847129733}
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2384186876152302358
 GameObject:
@@ -827,7 +827,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8930034650293137190
 BoxCollider:
@@ -895,7 +895,7 @@ Transform:
   - {fileID: 8930034648340680920}
   - {fileID: 8930034649793705265}
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8743626459602676910
 GameObject:
@@ -926,6 +926,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8930034648999031262}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8825647379143061615
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1346287422943803756}
+  m_Layer: 0
+  m_Name: BossVulnerablePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1346287422943803756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8825647379143061615}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.8660641, y: -0.62, z: -8.61}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8930034649707844236}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8930034648340680927
 GameObject:
@@ -1023,12 +1053,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8930034648999031261}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.85, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.06000018, z: 0}
+  m_LocalScale: {x: 0.20251755, y: 1, z: 1}
   m_Children:
   - {fileID: 8683765545267849503}
-  m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 1
+  m_Father: {fileID: 8930034650034842193}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &262711650
 AudioSource:
@@ -1825,7 +1855,7 @@ Transform:
   - {fileID: 5779686587824129408}
   - {fileID: 2868071733743442196}
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1272608561
 MonoBehaviour:
@@ -1936,11 +1966,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8930034650034842193}
-  - {fileID: 8930034648999031262}
   - {fileID: 6726443975018406438}
   - {fileID: 8930034649593468850}
   - {fileID: 3723191657555923606}
   - {fileID: 1933247091}
+  - {fileID: 1346287422943803756}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2072,7 +2102,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.91, z: 0}
   m_LocalScale: {x: 4.937844, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8930034648999031262}
   m_Father: {fileID: 8930034649707844236}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2266,6 +2297,7 @@ MonoBehaviour:
   _bossHP: {fileID: 6228324215467040097}
   _bossAnimation: {fileID: 6209885193723149072}
   _OnMobInvocation: {fileID: 262711649}
+  _BossVulnerablePoint: {fileID: 1346287422943803756}
   _spawnerHalfCircle: {fileID: 8930034648340680927}
   _spawnerOuter: {fileID: 8930034649793705264}
   _spawnableEntitiesList:
@@ -2285,14 +2317,14 @@ MonoBehaviour:
   - {fileID: 1137245521}
   - {fileID: 1847129734}
   _maxActiveSwitches: 2
-  _vulnerabilityDuration: 20
+  _vulnerabilityDuration: 10
   _maxPercentOfDamageBeforeSwitchReset: 25
-  _switchesActivationDelay: 20
+  _switchesActivationDelay: 5
   _switchesOnDuration: 30
   rewardPlayerOnQuickLightsOff: 1
   _selectRandomPatttern: 1
   doSpawns: 0
-  doSwitchMechanic: 0
+  doSwitchMechanic: 1
   playerLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -2464,14 +2496,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
---- !u!1 &5779686587824129409 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8067659016652804671, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
-  m_PrefabInstance: {fileID: 4594664985670031294}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5779686587824129408 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8067659016652804670, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
+  m_PrefabInstance: {fileID: 4594664985670031294}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5779686587824129409 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8067659016652804671, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
   m_PrefabInstance: {fileID: 4594664985670031294}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5204865027308030762
@@ -2539,14 +2571,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
---- !u!4 &2868071733743442196 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8067659016652804670, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
-  m_PrefabInstance: {fileID: 5204865027308030762}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2868071733743442197 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8067659016652804671, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
+  m_PrefabInstance: {fileID: 5204865027308030762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2868071733743442196 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8067659016652804670, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
   m_PrefabInstance: {fileID: 5204865027308030762}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5411699327087539852
