@@ -87,10 +87,8 @@ namespace BEN.AI
         [SerializeField] private EditorDebuggerSO _debugger;
         [SerializeField] private bool refresh;
         private bool wasMonkeyBall;
-        [SerializeField] private bool showClipToPlayOnNullReturn; 
-        [SerializeField, ConditionalShow("showClipToPlayOnNullReturn", true)] private AnimationClip _animClipToPlayOnNullReturn;
-        
-#endregion 
+
+        #endregion 
 
 #region Public Variables
         public Action<States, StateTransition> OnRequireStateChange;
@@ -382,10 +380,8 @@ namespace BEN.AI
             _idlePositionBeforeAttacking = transform.position;
             Debug.Log("attack_enter");
 
-            // UPGRADE : make the enemy predict the future player position instead of aiming at it's current one
             var clip = new Clip();
-            Debug.Log("type is " + Type);
-
+            
             switch (type) 
             {
                 case AIType.Monkey:
@@ -403,11 +399,6 @@ namespace BEN.AI
                     InvokeRepeating(nameof(FakirAttack), 0f, _attackRate);  
                     break; 
             } 
-
-            if (type == AIType.Monkey)
-            {
-                Debug.Log("clip name is " + clip.clipContainer.name);
-            }
             
             _timer.SetTargetValue(_delayBetweenEachAttack + clip.clipContainer.length); 
         } 
