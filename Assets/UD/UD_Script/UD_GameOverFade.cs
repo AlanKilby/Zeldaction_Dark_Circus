@@ -5,10 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class UD_GameOverFade : MonoBehaviour
 {
-    public int menuIndex;
+    Animator anim;
 
-    public void LoadMenu()
+    int sceneToLoad;
+
+    private void Start()
     {
-        SceneManager.LoadScene(menuIndex);
+        anim = GetComponent<Animator>();
+    }
+
+    public void SetActiveFalse()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void LoadNextScene(int nextScene)
+    {
+        anim.Play("GameOverScreen_FadeOut");
+        sceneToLoad = nextScene;
+    }
+
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene(sceneToLoad);
     }
 }
