@@ -11,14 +11,23 @@ public class AK_TargetMovement : MonoBehaviour
 
     public bool movingRight;
 
+    AK_DuckScript DS;
+    SpriteRenderer SR;
+
+    private void Start()
+    {
+        DS = GetComponent<AK_DuckScript>();
+        SR = GetComponent<SpriteRenderer>();
+    }
+
     private void FixedUpdate()
     {
-        if(transform.position != targetLeft.transform.position && !movingRight)
+        if(transform.position != targetLeft.transform.position && !movingRight && !DS.wasShot)
         {
             //transform.Translate(targetLeft.transform.position - transform.position);
             transform.Translate(-transform.right * movementSpeed * Time.deltaTime);
         }
-        else if(transform.position != targetRight.transform.position && movingRight)
+        else if(transform.position != targetRight.transform.position && movingRight && !DS.wasShot)
         {
             //transform.Translate(targetRight.transform.position - transform.position);
             transform.Translate(transform.right * movementSpeed * Time.deltaTime);
@@ -30,8 +39,14 @@ public class AK_TargetMovement : MonoBehaviour
         }
         else if(transform.position.x >= targetRight.transform.position.x)
         {
-            movingRight = false;
+            movingRight = false;            
         }
+
+        if (movingRight)
+        {
+            SR.flipX = false;
+        }
+        else { SR.flipX = true; }
 
 
     }

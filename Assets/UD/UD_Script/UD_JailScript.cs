@@ -14,13 +14,19 @@ public class UD_JailScript : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         isBroken = false;
-        NPC_DialogueTrigger.enabled = false;
+        if(NPC_DialogueTrigger != null)
+        {
+            NPC_DialogueTrigger.enabled = false;
+        }
     }
 
     public void DestroyJail()
     {
         isBroken = true;
         anim.SetBool("Broken", isBroken);
-        NPC_DialogueTrigger.enabled = true;
+        if (NPC_DialogueTrigger != null)
+        {
+            NPC_DialogueTrigger.enabled = true;
+        }
     }
 }
