@@ -29,6 +29,9 @@ public class BossAIBrain : MonoBehaviour
     [SerializeField] private Health _bossHP;
     [SerializeField] private AIAnimation _bossAnimation;
     [SerializeField] private AnimEventPlaySound _OnMobInvocation; 
+    [SerializeField, Tooltip("Point where the Loyal appears while vulnerable")] private Transform _BossVulnerablePoint;
+    [SerializeField, Range(0f, 1f)] private float _delayBeforePositioningAtVulnerablePoint = 0.5f; 
+
 
     [Header("Spawn")]
     [SerializeField, Space] private GameObject _spawnerHalfCircle; 
@@ -85,6 +88,7 @@ public class BossAIBrain : MonoBehaviour
     public static Action OnBossVulnerable; // deactivate ray colliders; 
     private bool rayHasBeenResetAfterVulnerableState;
     private bool _deathNotified; 
+    private Vector3 _initialPosition; 
 
     [Header("DEBUG")]
     public bool doSpawns = true;
@@ -124,14 +128,15 @@ public class BossAIBrain : MonoBehaviour
 
     void Start() 
     { 
-        Debug.Log("start");
+        // Debug.Log("start");
         sLightsOnDuration = _switchesOnDuration;
         sSwitchUsedCount = 0;
         _bossCollider.enabled = false;
         sHitCounter = 0;
         sMaxActiveSwitches = _maxActiveSwitches;
         _canRevealSwitches = doSwitchMechanic;
-        _bossAnimation.PlayAnimation(AnimState.Idle, AnimDirection.None); 
+        _bossAnimation.PlayAnimation(AnimState.Idle, AnimDirection.None);
+        _initialPosition = transform.position; 
 
         sBossVulnerabilityDuration = _vulnerabilityDuration; 
         for (int i = 0; i < _spawnerHalfCircle.transform.childCount; i++)
@@ -239,7 +244,7 @@ public class BossAIBrain : MonoBehaviour
 #endregion 
 
 #region Vulnerable 
-    void Vulnerable_Enter()
+    IEnumerator Vulnerable_Enter()
     { 
         Debug.Log("vulnerable enter");
         try // DEBUG because will throw error when RayAttacks_Manager is disabled 
@@ -258,28 +263,39 @@ public class BossAIBrain : MonoBehaviour
             {
                 item.GetComponentInChildren<Health>().DecreaseHp(100); 
             } 
-        }
+        } 
         
         _bossCollider.enabled = sAllLightsWereOff = true;
         BossEventProjectileFalling.sProjectileCanFall = RayAttack.sCanRayAttack = false;
         _canRevealSwitches = _canInvoke = false; 
         
         StartCoroutine(nameof(ResetToAttackState));
+
+        yield return new WaitForSeconds(_delayBeforePositioningAtVulnerablePoint); 
+        Debug.Log("setting new position");
         _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None); 
+        transform.position = _BossVulnerablePoint.position; 
     }
 
     IEnumerator ResetToAttackState()
     {
         yield return new WaitForSeconds(_vulnerabilityDuration);
+        Debug.Log("reseting to attack state form vulnerability duration");
         StartCoroutine(nameof(SetInvocationCooldown)); 
+        OnRequireStateChange(BossStates.Invocation, StateTransition.Safe);
     } 
     
     void Vulnerable_FixedUpdate()
     {
         if (ignoreMaxHitCount) return; 
-        if (sHitCounter >= (_bossHP.AgentStartinHP.Value / (100 / _maxPercentOfDamageBeforeSwitchReset)))
+        if (sHitCounter >= _bossHP.AgentStartinHP.Value / (100 / _maxPercentOfDamageBeforeSwitchReset))
         {
+            sHitCounter = 0; 
+            _bossCollider.enabled = false;
+
             StartCoroutine(nameof(SetInvocationCooldown)); 
+            OnRequireStateChange(BossStates.Invocation, StateTransition.Safe); 
+
             Debug.Log("back to invocation from max hit count"); 
         } 
     } 
@@ -289,14 +305,16 @@ public class BossAIBrain : MonoBehaviour
         sHitCounter = 0; 
         _bossCollider.enabled = false;
         if (_bossHP.CurrentValue > 0)
-        {
+        { 
+            Debug.Log("playing reset anim");
+            transform.position = _initialPosition; // lerp 
             var clip = _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.Top);
             yield return new WaitForSeconds(clip.clipContainer.length * 1.15f);
         } 
 
         yield return new WaitForFixedUpdate(); 
         StartCoroutine(nameof(SetSwitchesCooldown)); 
-    }
+    } 
     #endregion 
     
 #region Death

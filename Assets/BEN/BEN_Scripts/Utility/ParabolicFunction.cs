@@ -3,6 +3,7 @@ using UnityEngine.Serialization;
 
 namespace BEN.Math
 {
+    [DefaultExecutionOrder(7)] 
     public class ParabolicFunction : MonoBehaviour
     {
         [FormerlySerializedAs("speedMultiplier")] [SerializeField, Range(1, 10)] private float speed = 5f; 
@@ -20,8 +21,9 @@ namespace BEN.Math
         private float timer;
         private float _speedModifMultiplier = 1f;
         [FormerlySerializedAs("isCimeterre")] public bool destroyOnWallCollision;
-        [SerializeField] private bool _freezeYPosition; 
-        
+        [SerializeField] private bool _freezeYPosition;
+        [SerializeField] private Vector3 _casterBias;
+        [SerializeField, Range(1, 10)] private sbyte _dmgToFakirOnReturn = 10; 
 
         public LayerMask
             _wallLayer,
@@ -33,6 +35,7 @@ namespace BEN.Math
         public Vector3 Direction { get; private set; }
         private float _duration;
         private int YDirection;
+        private Vector3 _initialPosition; 
         
         private void Start() 
         {
@@ -42,12 +45,13 @@ namespace BEN.Math
                                              - new Vector3(transform.position.x, 0f, transform.position.z)).normalized: 
                                             (PlayerMovement_Alan.sPlayerPos - transform.position).normalized;
             distance = Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos);
-            _duration = distance / speed; 
+            _duration = distance / speed;
+            _initialPosition = transform.position; // because somehow nulled from FakirAttack call.. 
         } 
 
         private void FixedUpdate() 
         {
-            _speedModifMultiplier = _invert ? 4f : 1f;
+            _speedModifMultiplier = _invert ? 2f : 1f;
             transform.Translate(Direction * Time.fixedDeltaTime * speed * _speedModifMultiplier, Space.World);
 
             if (_invert || !useAsParabolic) return;  
@@ -72,9 +76,9 @@ namespace BEN.Math
                 if (!destroyOnWallCollision) return;   
                 Destroy(gameObject, 0.2f); 
             }
-            else if (Mathf.Pow(2f, other.gameObject.layer) == _enemyLayer && _invert) 
+            else if (Mathf.Pow(2f, other.gameObject.layer) == _enemyLayer && _invert)
             {
-                Destroy(other.gameObject);  // DEBUG => call anim instead
+                other.GetComponent<Health>().DecreaseHp(_dmgToFakirOnReturn);  
                 Destroy(gameObject); 
             }
 
@@ -82,10 +86,10 @@ namespace BEN.Math
 
         float DoParabolicFunction() => (orientation * ((time * time))) + (distance * time);  
 
-        public void InvertDirection()
+        public void InvertDirection() 
         {
             _invert = true;
-            Direction = (CasterTransform.position - transform.position).normalized;
+            Direction = (_initialPosition - transform.position).normalized;
         }
     }
 }

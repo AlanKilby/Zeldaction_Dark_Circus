@@ -62,6 +62,6 @@ public class BossEventProjectileFalling : MonoBehaviour
         sProjectileCanFall = false;
         yield return new WaitForSeconds(_projectileFallDelay);
         sProjectileCanFall = !BossAIBrain.sAllLightsWereOff;
-        Debug.Log($"setting projectile can fall to {sProjectileCanFall}"); 
+        // Debug.Log($"setting projectile can fall to {sProjectileCanFall}"); 
     }
 } 
