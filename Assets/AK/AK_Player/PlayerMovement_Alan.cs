@@ -150,7 +150,7 @@ public class PlayerMovement_Alan : MonoBehaviour
     {
         isHit = true;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
 
         isHit = false;
     }
