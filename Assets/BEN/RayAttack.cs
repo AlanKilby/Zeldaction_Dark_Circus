@@ -42,6 +42,7 @@ public class RayAttack : MonoBehaviour
     { 
         if (!sCanRayAttack) return; 
         // Debug.Log(" rotating for ray attack");
+        BossAIBrain.sCurrentState = BossStates.RayAttacking; 
         StartCoroutine(nameof(CastRayToPlayer));
         StartCoroutine(nameof(SetCanRotate));
 
@@ -56,7 +57,6 @@ public class RayAttack : MonoBehaviour
     
     private IEnumerator CastRayToPlayer()
     {
-        
         _bossAnimation.PlayAnimation(AnimState.Atk, AnimDirection.None);
         yield return new WaitForSeconds(_rayPrewarningDuration);   
         // Debug.Log("ray attacking");  
@@ -64,7 +64,7 @@ public class RayAttack : MonoBehaviour
         for (var i = 0; i < _rayVisuals.Count; i++)
         {
             _rayVisuals[i].SetActive(true); 
-        }
+        } 
 
         yield return new WaitForSeconds(_rayDamageDuration);  
         for (var i = 0; i < _rayVisuals.Count; i++)
@@ -77,7 +77,12 @@ public class RayAttack : MonoBehaviour
     {
         sCanRayAttack = false; 
         yield return new WaitForSeconds(_delayBetwenenRayAttacks); 
-        sCanRayAttack = !BossAIBrain.sAllLightsWereOff && _bossHP.CurrentValue > 0; 
+        sCanRayAttack = !BossAIBrain.sAllLightsWereOff && 
+                        BossAIBrain.sCurrentState != BossStates.Vulnerable &&
+                        BossAIBrain.sCurrentState != BossStates.ObjectFalling &&
+                        BossAIBrain.sCurrentState != BossStates.Invocation && 
+                        _bossHP.CurrentValue > 0;
+
         // Debug.Log($"setting can ray attack to {sCanRayAttack}"); 
     }
     

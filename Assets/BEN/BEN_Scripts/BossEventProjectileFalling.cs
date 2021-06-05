@@ -31,6 +31,8 @@ public class BossEventProjectileFalling : MonoBehaviour
         if (sProjectileCanFall && _bossHP.CurrentValue > 0) 
         {
             StartCoroutine(nameof(SetProjectileCanFall));
+            BossAIBrain.sCurrentState = BossStates.ObjectFalling;
+            
             _bossAnimation.PlayAnimation(AnimState.SecondaryAtk, Random.Range(0, 2) == 0 ? AnimDirection.Right : AnimDirection.Left);
 
             SetProjectileSpawnPosition(); 
@@ -61,7 +63,11 @@ public class BossEventProjectileFalling : MonoBehaviour
     {
         sProjectileCanFall = false;
         yield return new WaitForSeconds(_projectileFallDelay);
-        sProjectileCanFall = !BossAIBrain.sAllLightsWereOff;
+        sProjectileCanFall = !BossAIBrain.sAllLightsWereOff &&
+                             BossAIBrain.sCurrentState != BossStates.Vulnerable && 
+                             BossAIBrain.sCurrentState != BossStates.RayAttacking && 
+                             BossAIBrain.sCurrentState != BossStates.Invocation && 
+                             _bossHP.CurrentValue > 0;
         // Debug.Log($"setting projectile can fall to {sProjectileCanFall}"); 
     }
 } 

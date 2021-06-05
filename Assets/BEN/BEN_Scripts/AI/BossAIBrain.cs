@@ -19,7 +19,7 @@ public class SpawnableEntity
     public GameObject Prefab { get => _prefab; } 
 } 
 
-public enum BossStates { Init, Default, Vulnerable, Invocation, ObjectFalling, Death } 
+public enum BossStates { Init, Default, Vulnerable, Invocation, ObjectFalling, RayAttacking, Death } 
 public enum SwitchesPattern { LineOne, LineTwo, LineThree, FullRight, FullLeft, DiagonalOne, DiagonalTwo } 
 public class BossAIBrain : MonoBehaviour
 {
@@ -83,14 +83,14 @@ public class BossAIBrain : MonoBehaviour
  
     private bool _canInvoke = true; 
     private bool _canDoAirAttack = false;
-    private BossStates currentState, previousState;
+    public static BossStates sCurrentState, previousState;
     public static bool sAllLightsWereOff;
     public static Action OnBossVulnerable; // deactivate ray colliders; 
     private bool rayHasBeenResetAfterVulnerableState;
     private bool _deathNotified; 
     private Vector3 _initialPosition;
 
-    [SerializeField] private List<MonoBehaviour> _behavioursToDisableOnBossDeath = new List<MonoBehaviour>();  
+    [SerializeField] private List<MonoBehaviour> _behavioursToDisableOnBossDeath = new List<MonoBehaviour>();
 
     [Header("DEBUG")]
     public bool doSpawns = true;
@@ -103,9 +103,10 @@ public class BossAIBrain : MonoBehaviour
              "more than (100 / _maxPercentOfDamageBeforeSwitchReset) times")] public bool ignoreMaxHitCount;
 
     private bool isFirstCall = true; 
-    
+    ulong seed = 61829450;
 
-#region Unity Callbacks
+
+    #region Unity Callbacks
 
     private void Awake()
     {
@@ -125,8 +126,8 @@ public class BossAIBrain : MonoBehaviour
     
     private void TransitionToNewState(BossStates newState, StateTransition transition)
     {
-        previousState = currentState; 
-        currentState = newState; 
+        previousState = sCurrentState; 
+        sCurrentState = newState; 
         _fsm.ChangeState(newState, transition);
     }
 
@@ -139,7 +140,7 @@ public class BossAIBrain : MonoBehaviour
         sHitCounter = 0;
         sMaxActiveSwitches = _maxActiveSwitches;
         _bossAnimation.PlayAnimation(AnimState.Idle, AnimDirection.None);
-        _initialPosition = transform.position; 
+        _initialPosition = transform.position;
 
         sBossVulnerabilityDuration = _vulnerabilityDuration; 
         for (int i = 0; i < _spawnerHalfCircle.transform.childCount; i++)
@@ -187,7 +188,8 @@ public class BossAIBrain : MonoBehaviour
 #region Init
     void Init_Enter() 
     {
-        Debug.Log("Initializing"); 
+        Debug.Log("Initializing");
+        sCurrentState = BossStates.Init;
         // _aIAnimation = _graphics.GetComponent<AIAnimation>(); 
     }
 
@@ -203,6 +205,7 @@ public class BossAIBrain : MonoBehaviour
 
     void Default_Enter()
     {
+        sCurrentState = BossStates.Default;
         Debug.Log("default state");
     } 
     
@@ -212,6 +215,7 @@ public class BossAIBrain : MonoBehaviour
 
     void Invocation_Enter()
     {
+        sCurrentState = BossStates.Invocation;
         Debug.Log("invocation enter");
         InvokeEntity(1f); 
     } 
@@ -227,6 +231,7 @@ public class BossAIBrain : MonoBehaviour
 
     void ObjectFalling_Enter()
     {
+        sCurrentState = BossStates.ObjectFalling;
         Debug.Log("object falling enter");
     }
 
@@ -244,7 +249,8 @@ public class BossAIBrain : MonoBehaviour
 
 #region Vulnerable 
     IEnumerator Vulnerable_Enter()
-    { 
+    {
+        sCurrentState = BossStates.Vulnerable;
         Debug.Log("vulnerable enter");
         try // DEBUG because will throw error when RayAttacks_Manager is disabled 
         {
@@ -322,6 +328,7 @@ public class BossAIBrain : MonoBehaviour
 
      private void Death_Enter()
      {
+         sCurrentState = BossStates.Death;
          Debug.Log("death enter"); 
          foreach (var item in _behavioursToDisableOnBossDeath)
          {
@@ -338,11 +345,28 @@ public class BossAIBrain : MonoBehaviour
 #endregion 
     
 #region Functionality
+
+    private float GaussianRandSelection() 
+    { 
+        double sum = 0;
+        for (int i = 0; i < 3; i++) 
+        { 
+            var holdseed = seed;
+            seed ^= seed << 13;
+            seed ^= seed >> 17;
+            seed ^= seed << 5; 
+            var r = (long) (holdseed + seed);
+            sum += (double) r * (1f / 0x7FFFFFFFFFFFFFFF);
+        } 
+
+        return Mathf.RoundToInt((float)sum); 
+    }
+    
+    
     private void InvokeEntity(float invocationProbability)
     {
         if (!doSpawns) return;
         // StartCoroutine(SetInvocationCooldown(_invocationDelay));
-        currentState = BossStates.Invocation;
         _OnMobInvocation.PlaySoundSafe(SoundType.Attack);
 
         _isInvoking = true; // to avoid overlap of invocation and ray attack (too overwhelming, at least for the first phase)
@@ -419,14 +443,17 @@ public class BossAIBrain : MonoBehaviour
         StartCoroutine(nameof(SetSwitchesCooldown));
     }
 
-    IEnumerator SetInvocationCooldown()
+    IEnumerator SetInvocationCooldown() 
     {
         _canInvoke = false;
 
         yield return new WaitForSeconds(_invocationDelay);
-        _canInvoke = currentState != BossStates.Vulnerable && _bossHP.CurrentValue > 0;
-        Debug.Log($"setting can invoke to {_canInvoke}"); 
-
+        _canInvoke = sCurrentState != BossStates.Vulnerable && 
+                     sCurrentState != BossStates.ObjectFalling && 
+                     sCurrentState != BossStates.RayAttacking && 
+                     _bossHP.CurrentValue > 0;
+                     
+        Debug.Log($"setting can invoke to {_canInvoke}");
     } 
     
     // DRY 
@@ -454,7 +481,7 @@ public class BossAIBrain : MonoBehaviour
                 : _switchesActivationDelay + _switchesOnDuration);
         }
 
-        _canRevealSwitches = currentState != BossStates.Vulnerable && _bossHP.CurrentValue > 0; 
+        _canRevealSwitches = sCurrentState != BossStates.Vulnerable && _bossHP.CurrentValue > 0; 
         Debug.Log($"setting can reveal switches to {_canRevealSwitches}");
     }
 
