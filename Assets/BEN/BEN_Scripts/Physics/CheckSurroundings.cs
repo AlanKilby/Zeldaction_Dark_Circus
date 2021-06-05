@@ -64,7 +64,7 @@ namespace BEN.AI
 
         private void OnTriggerEnter(Collider other)
         {
-            Boomerang.s_SeenByEnemy = Mathf.Pow(2, other.gameObject.layer) == playerWeapon;
+            Boomerang.s_SeenByEnemy = true;
 
             if (Mathf.Pow(2, other.gameObject.layer) != player) return; 
             
@@ -76,7 +76,8 @@ namespace BEN.AI
         {
             if (!_playerDetected || IsDead) return; 
             playerPosition = other.gameObject.transform.position; 
-            
+            Boomerang.s_SeenByEnemy = true;
+
             if (Mathf.Pow(2, other.gameObject.layer) == playerWeapon && BearerType == AIType.MonkeySurBall && CanDodgeProjectile)
             {
                 if (Vector3.Distance(other.transform.position, transform.parent.position) > 5f) return; 
@@ -114,45 +115,13 @@ namespace BEN.AI
 
             _brain.TargetToAttackPosition = playerPosition; 
             _brain.OnRequireStateChange(States.Attack, StateTransition.Safe);
-            _notified = true; 
-            // _patrol.SetDestination(other.transform.position, 0.5f, _playerDetected); if have FSMpatrol 
-
-            // check if player is not behind a wall
-            /* for (var i = 0; i < _detectedColliders.Length; i++)
-            {
-                if( i == 0)
-                    _smallestValue = _detectedColliders[i].distance;  
-                else if (_smallestValue > _detectedColliders[i].distance)
-                {
-                    _smallestValue = _detectedColliders[i].distance; 
-                }
-
-                _distances[i] = _detectedColliders[i].distance;
-
-                // if (Mathf.Pow(2, _detectedColliders[i].transform.gameObject.layer) != player) return; 
-                // works even if player is behind his projectile
-                _playerIsClosest = Mathf.Approximately(_smallestValue, _detectedColliders[i].distance); 
-
-                if (!_playerDetected || _notified) continue;
-                 
-                // go to attackState  
-                if (!_notified && other) 
-                { 
-                    _brain.TargetToAttackPosition = other.transform.position;
-                    _brain.OnRequireStateChange(States.Attack, StateTransition.Safe); 
-                } 
-                _notified = true; 
-                // _patrol.SetDestination(other.transform.position, 0.5f, _playerDetected); if have FSMpatrol 
-            } */
-            
-            // attack 
-            // blockedByWall = Physics.Raycast(transform.position, other.transform.position - transform.position, out RaycastHit hit, 15f, props); 
+            _notified = true;
         } 
 
         private void OnTriggerExit(Collider other) 
         {
             if (IsDead || Mathf.Pow(2, other.gameObject.layer) != player || BearerType == AIType.Mascotte) return;
-            Boomerang.s_SeenByEnemy = Mathf.Pow(2, other.gameObject.layer) == playerWeapon;
+            Boomerang.s_SeenByEnemy = false; 
 
             if (Mathf.Pow(2, other.gameObject.layer) == player)
             {

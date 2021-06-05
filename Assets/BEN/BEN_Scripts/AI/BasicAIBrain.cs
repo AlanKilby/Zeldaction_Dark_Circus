@@ -207,7 +207,7 @@ namespace BEN.AI
 
             if (type == AIType.MonkeySurBall)
             {
-                _ballAnimation = GetComponentInChildren<AIAnimation>(); 
+                _ballAnimation = _ballGraphics.GetComponent<AIAnimation>(); 
             }
 
             _patrol = GetComponent<FsmPatrol>();
@@ -267,8 +267,7 @@ namespace BEN.AI
             OnRequireStateChange -= TransitionToNewState;
             _agentHp.OnMonkeyBallTransitionToNormalMonkey -= BecomeNormalMonkey;
         } 
-        
-        
+             
 #endregion 
 
         // called by event OnRequireStateChange
@@ -286,7 +285,6 @@ namespace BEN.AI
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex); 
 
             if (_placeholderDestination.angleIndex == _currentParentRotation) return;
-            
             
             _aIAnimation.PlayAnimation(AnimState.Walk, _animDirection);
 
@@ -558,6 +556,7 @@ namespace BEN.AI
                     OnRequireStateChange(States.Attack, StateTransition.Safe);  
                     break;
                 case AIType.Mascotte:
+                    Debug.Log($"HIT with direction : {_animDirection}"); 
                     _aIAnimation.PlayAnimation(AnimState.Hit, _animDirection);
                     
                     yield return new WaitForSeconds(1f);  

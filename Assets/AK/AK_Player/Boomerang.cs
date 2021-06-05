@@ -166,7 +166,7 @@ public class Boomerang : MonoBehaviour
             // Debug.Log("Collision with Enemy");
             enemy = other.GetComponent<BasicAIBrain>(); 
 
-            if (enemy.Type == AIType.Mascotte && s_SeenByEnemy) // change this so you can kill from behind, not only on the way back 
+            if (enemy.Type == AIType.Mascotte && s_SeenByEnemy)  
             {
                 isComingBack = true; 
                 comebackTimer = 0;
