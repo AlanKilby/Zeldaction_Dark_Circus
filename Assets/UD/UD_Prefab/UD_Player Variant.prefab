@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDropRate: 5
-  dropRateIncrease: 5
+  dropRateIncrease: 2
   increaseOT: 1
-  time: 1
+  time: 5
   potion: {fileID: 9022016546524069892, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
-  potionDropRate: 85
+  potionDropRate: 25
   heart: {fileID: 1324029780496701695, guid: 40da512ef0ffe5147b147b1fdfe68887, type: 3}
-  heartDropRate: 0
+  heartDropRate: 45
 --- !u!114 &4595727363683106081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +76,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3638140234948256988, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
     - target: {fileID: 5539784748225169880, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1.31

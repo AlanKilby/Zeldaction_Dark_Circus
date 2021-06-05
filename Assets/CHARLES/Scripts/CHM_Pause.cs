@@ -15,7 +15,7 @@ public class CHM_Pause : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Start"))
         {
             gameIsPaused = !gameIsPaused;
             PauseGame();

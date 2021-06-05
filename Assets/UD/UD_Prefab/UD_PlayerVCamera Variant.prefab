@@ -145,6 +145,9 @@ MonoBehaviour:
   Wall:
     serializedVersion: 2
     m_Bits: 2048
+  cutoutSize: 0
+  cutoutSmoothness: 0
+  playerPos: {fileID: 0}
 --- !u!1001 &2394359578165887623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -157,8 +160,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239108799066, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034283239108799066, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: field of view
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034283239108799066, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034283239108799066, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034283239108799066, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239108799069, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.w
@@ -170,7 +189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239108799069, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -1.7763564e-15
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239108799069, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.z
