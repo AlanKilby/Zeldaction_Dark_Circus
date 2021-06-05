@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CHM_DialogueManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class CHM_DialogueManager : MonoBehaviour
     public Animator animator;
 
     public GameObject dialogueBox;
+
+    public GameObject dialogueButton;
 
     public UnityEvent rewardOnDialogueEnd;
 
@@ -30,7 +33,8 @@ public class CHM_DialogueManager : MonoBehaviour
         nameText.text = dialogue.name;
 
         sentences.Clear();
-        
+        EventSystem.current.SetSelectedGameObject(dialogueButton);
+
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
@@ -69,6 +73,7 @@ public class CHM_DialogueManager : MonoBehaviour
     {
         rewardOnDialogueEnd.Invoke();
         animator.SetBool("IsOpen", false);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
 }
