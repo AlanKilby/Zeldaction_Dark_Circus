@@ -795,7 +795,7 @@ Transform:
   - {fileID: 1137245520}
   - {fileID: 1847129733}
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2384186876152302358
 GameObject:
@@ -827,7 +827,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8930034650293137190
 BoxCollider:
@@ -895,7 +895,7 @@ Transform:
   - {fileID: 8930034648340680920}
   - {fileID: 8930034649793705265}
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8743626459602676910
 GameObject:
@@ -926,6 +926,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8930034648999031262}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8825647379143061615
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1346287422943803756}
+  m_Layer: 0
+  m_Name: BossVulnerablePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1346287422943803756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8825647379143061615}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.8660641, y: -0.62, z: -8.61}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8930034649707844236}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8930034648340680927
 GameObject:
@@ -1023,12 +1053,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8930034648999031261}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.85, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.06000018, z: 0}
+  m_LocalScale: {x: 0.20251755, y: 1, z: 1}
   m_Children:
   - {fileID: 8683765545267849503}
-  m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 1
+  m_Father: {fileID: 8930034650034842193}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &262711650
 AudioSource:
@@ -1243,20 +1273,28 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 8300000, guid: 581ecf1e3f4ba56429c94390a371aab2, type: 3}
+    - {fileID: -4900851164437484378, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 821bde467bfc5a949a574bf64a515888, type: 3}
     - {fileID: 8300000, guid: 60b5702cee774e0498d892a464e2c9df, type: 3}
+    - {fileID: -3188564768568558768, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 8963126d5bde849468fbd7ecdc881a06, type: 3}
     - {fileID: 8300000, guid: 8a838105f8ab1c64ea6b980bcd94c40b, type: 3}
     - {fileID: 8300000, guid: caa60460ad7288040a6c56002c614b3e, type: 3}
+    - {fileID: 1464544687893045399, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 2ac94ba71f1aafe4fa9dd1fc032c7aa0, type: 3}
+    - {fileID: -1142359419602683733, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 536330bab6b36524c8452a7b76101617, type: 3}
+    - {fileID: 479770823352792988, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 553fc064ed5d0084cb5f245baa9da166, type: 3}
     - {fileID: 8300000, guid: 4d5e741e052949840af8fbafbb58fe09, type: 3}
     - {fileID: 8300000, guid: 4d243626958a81645ae1b5aad803c6b6, type: 3}
+    - {fileID: 7542298920014674229, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 7122eb20dcea9594aaf52a4112dccca9, type: 3}
     - {fileID: 8300000, guid: 0c1628d38fd06914990f3071fc9c5755, type: 3}
+    - {fileID: 4713683547932112878, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 203393f042952e64a8d501fe4d2e62f5, type: 3}
     - {fileID: 8300000, guid: 1a147a6b952619142897359e5ae4daf0, type: 3}
+    - {fileID: 7955091075077174059, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: d9b24817092ce324ba030799396ebd3c, type: 3}
     - {fileID: 8300000, guid: 006bff379975b474190b67a31f3d7d6a, type: 3}
     - {fileID: 8300000, guid: 3a4c71f105b884e4fb2d8409b872187a, type: 3}
@@ -1303,6 +1341,9 @@ MonoBehaviour:
     - Name: clip
       Entry: 10
       Data: 0
+    - Name: _group
+      Entry: 10
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -1310,6 +1351,9 @@ MonoBehaviour:
       Entry: 7
       Data: 4|Sound, Assembly-CSharp
     - Name: clip
+      Entry: 10
+      Data: 2
+    - Name: _group
       Entry: 10
       Data: 1
     - Name: 
@@ -1341,7 +1385,10 @@ MonoBehaviour:
       Data: 6|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 2
+      Data: 3
+    - Name: _group
+      Entry: 10
+      Data: 4
     - Name: 
       Entry: 8
       Data: 
@@ -1350,7 +1397,10 @@ MonoBehaviour:
       Data: 7|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 3
+      Data: 5
+    - Name: _group
+      Entry: 10
+      Data: 4
     - Name: 
       Entry: 8
       Data: 
@@ -1358,6 +1408,9 @@ MonoBehaviour:
       Entry: 7
       Data: 8|Sound, Assembly-CSharp
     - Name: clip
+      Entry: 10
+      Data: 6
+    - Name: _group
       Entry: 10
       Data: 4
     - Name: 
@@ -1389,7 +1442,10 @@ MonoBehaviour:
       Data: 10|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 5
+      Data: 7
+    - Name: _group
+      Entry: 10
+      Data: 8
     - Name: 
       Entry: 8
       Data: 
@@ -1419,7 +1475,10 @@ MonoBehaviour:
       Data: 12|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 6
+      Data: 9
+    - Name: _group
+      Entry: 10
+      Data: 10
     - Name: 
       Entry: 8
       Data: 
@@ -1449,7 +1508,10 @@ MonoBehaviour:
       Data: 14|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 7
+      Data: 11
+    - Name: _group
+      Entry: 10
+      Data: 12
     - Name: 
       Entry: 8
       Data: 
@@ -1458,7 +1520,10 @@ MonoBehaviour:
       Data: 15|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 8
+      Data: 13
+    - Name: _group
+      Entry: 10
+      Data: 12
     - Name: 
       Entry: 8
       Data: 
@@ -1467,7 +1532,10 @@ MonoBehaviour:
       Data: 16|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 9
+      Data: 14
+    - Name: _group
+      Entry: 10
+      Data: 12
     - Name: 
       Entry: 8
       Data: 
@@ -1497,7 +1565,10 @@ MonoBehaviour:
       Data: 18|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 10
+      Data: 15
+    - Name: _group
+      Entry: 10
+      Data: 16
     - Name: 
       Entry: 8
       Data: 
@@ -1506,7 +1577,10 @@ MonoBehaviour:
       Data: 19|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 11
+      Data: 17
+    - Name: _group
+      Entry: 10
+      Data: 16
     - Name: 
       Entry: 8
       Data: 
@@ -1536,7 +1610,10 @@ MonoBehaviour:
       Data: 21|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 12
+      Data: 18
+    - Name: _group
+      Entry: 10
+      Data: 19
     - Name: 
       Entry: 8
       Data: 
@@ -1545,7 +1622,10 @@ MonoBehaviour:
       Data: 22|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 13
+      Data: 20
+    - Name: _group
+      Entry: 10
+      Data: 19
     - Name: 
       Entry: 8
       Data: 
@@ -1575,7 +1655,10 @@ MonoBehaviour:
       Data: 24|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 14
+      Data: 21
+    - Name: _group
+      Entry: 10
+      Data: 22
     - Name: 
       Entry: 8
       Data: 
@@ -1584,7 +1667,10 @@ MonoBehaviour:
       Data: 25|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 15
+      Data: 23
+    - Name: _group
+      Entry: 10
+      Data: 22
     - Name: 
       Entry: 8
       Data: 
@@ -1593,7 +1679,10 @@ MonoBehaviour:
       Data: 26|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 16
+      Data: 24
+    - Name: _group
+      Entry: 10
+      Data: 22
     - Name: 
       Entry: 8
       Data: 
@@ -1602,7 +1691,10 @@ MonoBehaviour:
       Data: 27|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 17
+      Data: 25
+    - Name: _group
+      Entry: 10
+      Data: 22
     - Name: 
       Entry: 8
       Data: 
@@ -1763,7 +1855,7 @@ Transform:
   - {fileID: 5779686587824129408}
   - {fileID: 2868071733743442196}
   m_Father: {fileID: 8930034649707844236}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1272608561
 MonoBehaviour:
@@ -1781,7 +1873,10 @@ MonoBehaviour:
   _rayPrewarningDuration: 1
   _rayDamageDuration: 1.5
   _delayBetwenenRayAttacks: 5
-  _rayVisuals: []
+  _rayVisuals:
+  - {fileID: 2660539946516128947}
+  - {fileID: 5779686587824129409}
+  - {fileID: 2868071733743442197}
   _bossHP: {fileID: 6228324215467040097}
 --- !u!1 &8930034649606898151
 GameObject:
@@ -1871,11 +1966,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8930034650034842193}
-  - {fileID: 8930034648999031262}
   - {fileID: 6726443975018406438}
   - {fileID: 8930034649593468850}
   - {fileID: 3723191657555923606}
   - {fileID: 1933247091}
+  - {fileID: 1346287422943803756}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2007,7 +2102,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.91, z: 0}
   m_LocalScale: {x: 4.937844, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8930034648999031262}
   m_Father: {fileID: 8930034649707844236}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2201,6 +2297,7 @@ MonoBehaviour:
   _bossHP: {fileID: 6228324215467040097}
   _bossAnimation: {fileID: 6209885193723149072}
   _OnMobInvocation: {fileID: 262711649}
+  _BossVulnerablePoint: {fileID: 1346287422943803756}
   _spawnerHalfCircle: {fileID: 8930034648340680927}
   _spawnerOuter: {fileID: 8930034649793705264}
   _spawnableEntitiesList:
@@ -2220,13 +2317,13 @@ MonoBehaviour:
   - {fileID: 1137245521}
   - {fileID: 1847129734}
   _maxActiveSwitches: 2
-  _vulnerabilityDuration: 20
+  _vulnerabilityDuration: 10
   _maxPercentOfDamageBeforeSwitchReset: 25
-  _switchesActivationDelay: 20
+  _switchesActivationDelay: 5
   _switchesOnDuration: 30
   rewardPlayerOnQuickLightsOff: 1
   _selectRandomPatttern: 1
-  doSpawns: 1
+  doSpawns: 0
   doSwitchMechanic: 1
   playerLayer:
     serializedVersion: 2
@@ -2404,6 +2501,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8067659016652804670, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
   m_PrefabInstance: {fileID: 4594664985670031294}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5779686587824129409 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8067659016652804671, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
+  m_PrefabInstance: {fileID: 4594664985670031294}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5204865027308030762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2469,6 +2571,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
+--- !u!1 &2868071733743442197 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8067659016652804671, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
+  m_PrefabInstance: {fileID: 5204865027308030762}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2868071733743442196 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8067659016652804670, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
@@ -2550,5 +2657,10 @@ PrefabInstance:
 --- !u!4 &2660539946516128946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8067659016652804670, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
+  m_PrefabInstance: {fileID: 5411699327087539852}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2660539946516128947 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8067659016652804671, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
   m_PrefabInstance: {fileID: 5411699327087539852}
   m_PrefabAsset: {fileID: 0}

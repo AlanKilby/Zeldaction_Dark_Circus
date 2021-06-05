@@ -140,7 +140,8 @@ GameObject:
   - component: {fileID: 7885891151665882046}
   - component: {fileID: 4956371254032993045}
   - component: {fileID: 3208360423796247027}
-  m_Layer: 0
+  - component: {fileID: 8101079526671946912}
+  m_Layer: 11
   m_Name: Trampo (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +177,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017738121010457435}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -223,6 +224,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &8101079526671946912
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017738121010457435}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2612787228777267140
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,6 +620,7 @@ Transform:
   - {fileID: 4746535929783810109}
   - {fileID: 4746535929639444393}
   - {fileID: 761009773287530928}
+  - {fileID: 2399733963624975184}
   m_Father: {fileID: 6223429187312718557}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -847,7 +865,8 @@ GameObject:
   - component: {fileID: 6877095602093441516}
   - component: {fileID: 6877095602093441515}
   - component: {fileID: 6877095602093441514}
-  m_Layer: 0
+  - component: {fileID: 7891899009165746334}
+  m_Layer: 11
   m_Name: Trampo (38)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -883,7 +902,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602093441512}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -930,6 +949,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &7891899009165746334
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602093441512}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602172772978
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,7 +1037,8 @@ GameObject:
   - component: {fileID: 6877095602232514660}
   - component: {fileID: 6877095602232514659}
   - component: {fileID: 6877095602232514658}
-  m_Layer: 0
+  - component: {fileID: 7361062621828410290}
+  m_Layer: 11
   m_Name: Trampo (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1038,7 +1074,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602232514656}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1085,6 +1121,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &7361062621828410290
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602232514656}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602246776410
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,7 +1149,8 @@ GameObject:
   - component: {fileID: 6877095602246776414}
   - component: {fileID: 6877095602246776413}
   - component: {fileID: 6877095602246776412}
-  m_Layer: 0
+  - component: {fileID: 4560715548681999656}
+  m_Layer: 11
   m_Name: Trampo (64)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1133,7 +1186,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602246776410}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1180,6 +1233,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4560715548681999656
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602246776410}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602271795682
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,7 +1291,8 @@ GameObject:
   - component: {fileID: 6877095602341831596}
   - component: {fileID: 6877095602341831595}
   - component: {fileID: 6877095602341831594}
-  m_Layer: 0
+  - component: {fileID: 5248244276511065696}
+  m_Layer: 11
   m_Name: Trampo (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1258,7 +1328,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602341831592}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1305,6 +1375,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &5248244276511065696
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602341831592}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602415825564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,7 +1403,8 @@ GameObject:
   - component: {fileID: 6877095602415825536}
   - component: {fileID: 6877095602415825567}
   - component: {fileID: 6877095602415825566}
-  m_Layer: 0
+  - component: {fileID: 4462741148467872017}
+  m_Layer: 11
   m_Name: Trampo (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1353,7 +1440,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602415825564}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1400,6 +1487,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4462741148467872017
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602415825564}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602431992368
 GameObject:
   m_ObjectHideFlags: 0
@@ -1412,7 +1515,8 @@ GameObject:
   - component: {fileID: 6877095602431992372}
   - component: {fileID: 6877095602431992371}
   - component: {fileID: 6877095602431992370}
-  m_Layer: 0
+  - component: {fileID: 4236874082029032601}
+  m_Layer: 11
   m_Name: Trampo (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1448,7 +1552,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602431992368}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1495,6 +1599,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4236874082029032601
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602431992368}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602493009677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1507,7 +1627,8 @@ GameObject:
   - component: {fileID: 6877095602493009777}
   - component: {fileID: 6877095602493009776}
   - component: {fileID: 6877095602493009679}
-  m_Layer: 0
+  - component: {fileID: 1322698596741202609}
+  m_Layer: 11
   m_Name: Trampo (35)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1543,7 +1664,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602493009677}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1590,6 +1711,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &1322698596741202609
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602493009677}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602514811506
 GameObject:
   m_ObjectHideFlags: 0
@@ -1602,7 +1739,8 @@ GameObject:
   - component: {fileID: 6877095602514811510}
   - component: {fileID: 6877095602514811509}
   - component: {fileID: 6877095602514811508}
-  m_Layer: 0
+  - component: {fileID: 6644648781472554186}
+  m_Layer: 11
   m_Name: Trampo (54)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1638,7 +1776,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602514811506}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1685,6 +1823,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &6644648781472554186
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602514811506}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602521448936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,7 +1851,8 @@ GameObject:
   - component: {fileID: 6877095602521448940}
   - component: {fileID: 6877095602521448939}
   - component: {fileID: 6877095602521448938}
-  m_Layer: 0
+  - component: {fileID: 8586368459231199395}
+  m_Layer: 11
   m_Name: Trampo (63)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1733,7 +1888,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602521448936}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1780,6 +1935,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &8586368459231199395
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602521448936}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602578525863
 GameObject:
   m_ObjectHideFlags: 0
@@ -1792,7 +1963,8 @@ GameObject:
   - component: {fileID: 6877095602578525867}
   - component: {fileID: 6877095602578525866}
   - component: {fileID: 6877095602578525865}
-  m_Layer: 0
+  - component: {fileID: 8130325491657364166}
+  m_Layer: 11
   m_Name: Trampo (39)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1828,7 +2000,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602578525863}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1875,6 +2047,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &8130325491657364166
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602578525863}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602581065467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,7 +2075,8 @@ GameObject:
   - component: {fileID: 6877095602581065471}
   - component: {fileID: 6877095602581065470}
   - component: {fileID: 6877095602581065469}
-  m_Layer: 0
+  - component: {fileID: 7679436528379749689}
+  m_Layer: 11
   m_Name: Trampo (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1923,7 +2112,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602581065467}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1970,6 +2159,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &7679436528379749689
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602581065467}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602623222603
 GameObject:
   m_ObjectHideFlags: 0
@@ -1982,7 +2187,8 @@ GameObject:
   - component: {fileID: 6877095602623222607}
   - component: {fileID: 6877095602623222606}
   - component: {fileID: 6877095602623222605}
-  m_Layer: 0
+  - component: {fileID: 7991047877800896912}
+  m_Layer: 11
   m_Name: Trampo (42)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2018,7 +2224,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602623222603}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2065,6 +2271,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &7991047877800896912
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602623222603}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602639641504
 GameObject:
   m_ObjectHideFlags: 0
@@ -2077,7 +2299,8 @@ GameObject:
   - component: {fileID: 6877095602639641508}
   - component: {fileID: 6877095602639641507}
   - component: {fileID: 6877095602639641506}
-  m_Layer: 0
+  - component: {fileID: 7099526858720730683}
+  m_Layer: 11
   m_Name: Trampo (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2113,7 +2336,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602639641504}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2160,6 +2383,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &7099526858720730683
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602639641504}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602642678206
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,7 +2411,8 @@ GameObject:
   - component: {fileID: 6877095602642678178}
   - component: {fileID: 6877095602642678177}
   - component: {fileID: 6877095602642678176}
-  m_Layer: 0
+  - component: {fileID: 136778226407391863}
+  m_Layer: 11
   m_Name: Trampo (45)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2208,7 +2448,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602642678206}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2255,6 +2495,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &136778226407391863
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602642678206}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602649267620
 GameObject:
   m_ObjectHideFlags: 0
@@ -2267,7 +2523,8 @@ GameObject:
   - component: {fileID: 6877095602649267624}
   - component: {fileID: 6877095602649267623}
   - component: {fileID: 6877095602649267622}
-  m_Layer: 0
+  - component: {fileID: 5181445231831050978}
+  m_Layer: 11
   m_Name: Trampo (57)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2303,7 +2560,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602649267620}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2350,6 +2607,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &5181445231831050978
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602649267620}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602656163542
 GameObject:
   m_ObjectHideFlags: 0
@@ -2362,7 +2635,8 @@ GameObject:
   - component: {fileID: 6877095602656163546}
   - component: {fileID: 6877095602656163545}
   - component: {fileID: 6877095602656163544}
-  m_Layer: 0
+  - component: {fileID: 6725552103626206866}
+  m_Layer: 11
   m_Name: Trampo (44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2398,7 +2672,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602656163542}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2445,6 +2719,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &6725552103626206866
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602656163542}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602691355191
 GameObject:
   m_ObjectHideFlags: 0
@@ -2547,7 +2837,8 @@ GameObject:
   - component: {fileID: 6877095602790228361}
   - component: {fileID: 6877095602790228360}
   - component: {fileID: 6877095602790228359}
-  m_Layer: 0
+  - component: {fileID: 3107760741694274171}
+  m_Layer: 11
   m_Name: Trampo (61)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2583,7 +2874,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602790228357}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2630,6 +2921,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &3107760741694274171
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602790228357}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602791558545
 GameObject:
   m_ObjectHideFlags: 0
@@ -2642,7 +2949,8 @@ GameObject:
   - component: {fileID: 6877095602791558549}
   - component: {fileID: 6877095602791558548}
   - component: {fileID: 6877095602791558547}
-  m_Layer: 0
+  - component: {fileID: 6043628819199220798}
+  m_Layer: 11
   m_Name: Trampo (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2678,7 +2986,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602791558545}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2725,6 +3033,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &6043628819199220798
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602791558545}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602805138060
 GameObject:
   m_ObjectHideFlags: 0
@@ -2737,7 +3061,8 @@ GameObject:
   - component: {fileID: 6877095602805138160}
   - component: {fileID: 6877095602805138063}
   - component: {fileID: 6877095602805138062}
-  m_Layer: 0
+  - component: {fileID: 6425420559749829418}
+  m_Layer: 11
   m_Name: Trampo (37)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2773,7 +3098,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602805138060}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2820,6 +3145,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &6425420559749829418
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602805138060}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602818926376
 GameObject:
   m_ObjectHideFlags: 0
@@ -2892,7 +3233,8 @@ GameObject:
   - component: {fileID: 6877095602855612949}
   - component: {fileID: 6877095602855612948}
   - component: {fileID: 6877095602855612947}
-  m_Layer: 0
+  - component: {fileID: 5732086814038214947}
+  m_Layer: 11
   m_Name: Trampo (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2928,7 +3270,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602855612945}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2975,6 +3317,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &5732086814038214947
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602855612945}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602863356499
 GameObject:
   m_ObjectHideFlags: 0
@@ -2987,7 +3345,8 @@ GameObject:
   - component: {fileID: 6877095602863356503}
   - component: {fileID: 6877095602863356502}
   - component: {fileID: 6877095602863356501}
-  m_Layer: 0
+  - component: {fileID: 188554344242820446}
+  m_Layer: 11
   m_Name: Trampo (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3023,7 +3382,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602863356499}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3070,6 +3429,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &188554344242820446
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602863356499}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602910766807
 GameObject:
   m_ObjectHideFlags: 0
@@ -3082,7 +3457,8 @@ GameObject:
   - component: {fileID: 6877095602910766811}
   - component: {fileID: 6877095602910766810}
   - component: {fileID: 6877095602910766809}
-  m_Layer: 0
+  - component: {fileID: 3367728842579233942}
+  m_Layer: 11
   m_Name: Trampo (50)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3118,7 +3494,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602910766807}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3165,6 +3541,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &3367728842579233942
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602910766807}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602924003371
 GameObject:
   m_ObjectHideFlags: 0
@@ -3177,7 +3569,8 @@ GameObject:
   - component: {fileID: 6877095602924003375}
   - component: {fileID: 6877095602924003374}
   - component: {fileID: 6877095602924003373}
-  m_Layer: 0
+  - component: {fileID: 1184553760843107828}
+  m_Layer: 11
   m_Name: Trampo (41)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3213,7 +3606,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602924003371}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3260,6 +3653,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &1184553760843107828
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602924003371}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095602993899051
 GameObject:
   m_ObjectHideFlags: 0
@@ -3272,7 +3681,8 @@ GameObject:
   - component: {fileID: 6877095602993899055}
   - component: {fileID: 6877095602993899054}
   - component: {fileID: 6877095602993899053}
-  m_Layer: 0
+  - component: {fileID: 5197111299968625259}
+  m_Layer: 11
   m_Name: Trampo (43)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3308,7 +3718,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095602993899051}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3355,6 +3765,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &5197111299968625259
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095602993899051}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603099448927
 GameObject:
   m_ObjectHideFlags: 0
@@ -3367,7 +3793,8 @@ GameObject:
   - component: {fileID: 6877095603099448899}
   - component: {fileID: 6877095603099448898}
   - component: {fileID: 6877095603099448897}
-  m_Layer: 0
+  - component: {fileID: 7885528995580138064}
+  m_Layer: 11
   m_Name: Trampo (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3403,7 +3830,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603099448927}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3450,6 +3877,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &7885528995580138064
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603099448927}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603138520834
 GameObject:
   m_ObjectHideFlags: 0
@@ -3462,7 +3905,8 @@ GameObject:
   - component: {fileID: 6877095603138520838}
   - component: {fileID: 6877095603138520837}
   - component: {fileID: 6877095603138520836}
-  m_Layer: 0
+  - component: {fileID: 283298763747555833}
+  m_Layer: 11
   m_Name: Trampo (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3498,7 +3942,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603138520834}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3545,6 +3989,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &283298763747555833
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603138520834}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603188300935
 GameObject:
   m_ObjectHideFlags: 0
@@ -3557,7 +4017,8 @@ GameObject:
   - component: {fileID: 6877095603188300939}
   - component: {fileID: 6877095603188300938}
   - component: {fileID: 6877095603188300937}
-  m_Layer: 0
+  - component: {fileID: 8784202491335947374}
+  m_Layer: 11
   m_Name: Trampo (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3593,7 +4054,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603188300935}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3640,6 +4101,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &8784202491335947374
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603188300935}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603235339533
 GameObject:
   m_ObjectHideFlags: 0
@@ -3652,7 +4129,8 @@ GameObject:
   - component: {fileID: 6877095603235339633}
   - component: {fileID: 6877095603235339632}
   - component: {fileID: 6877095603235339535}
-  m_Layer: 0
+  - component: {fileID: 9160127088387066266}
+  m_Layer: 11
   m_Name: Trampo (32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3688,7 +4166,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603235339533}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3735,6 +4213,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &9160127088387066266
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603235339533}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603263729409
 GameObject:
   m_ObjectHideFlags: 0
@@ -3777,7 +4271,8 @@ GameObject:
   - component: {fileID: 6877095603267351620}
   - component: {fileID: 6877095603267351619}
   - component: {fileID: 6877095603267351618}
-  m_Layer: 0
+  - component: {fileID: 5251635612269468572}
+  m_Layer: 11
   m_Name: Trampo (33)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3813,7 +4308,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603267351616}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3860,6 +4355,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &5251635612269468572
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603267351616}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603283633213
 GameObject:
   m_ObjectHideFlags: 0
@@ -3872,7 +4383,8 @@ GameObject:
   - component: {fileID: 6877095603283633185}
   - component: {fileID: 6877095603283633184}
   - component: {fileID: 6877095603283633215}
-  m_Layer: 0
+  - component: {fileID: 4083108268843615054}
+  m_Layer: 11
   m_Name: Trampo (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3908,7 +4420,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603283633213}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3955,6 +4467,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4083108268843615054
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603283633213}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603286162352
 GameObject:
   m_ObjectHideFlags: 0
@@ -3967,7 +4495,8 @@ GameObject:
   - component: {fileID: 6877095603286162356}
   - component: {fileID: 6877095603286162355}
   - component: {fileID: 6877095603286162354}
-  m_Layer: 0
+  - component: {fileID: 1461595418386799831}
+  m_Layer: 11
   m_Name: Trampo (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4003,7 +4532,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603286162352}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4050,6 +4579,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &1461595418386799831
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603286162352}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603329099187
 GameObject:
   m_ObjectHideFlags: 0
@@ -4092,7 +4637,8 @@ GameObject:
   - component: {fileID: 6877095603340126008}
   - component: {fileID: 6877095603340126007}
   - component: {fileID: 6877095603340126006}
-  m_Layer: 0
+  - component: {fileID: 8062437506335839180}
+  m_Layer: 11
   m_Name: Trampo (58)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4128,7 +4674,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603340126004}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4175,6 +4721,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &8062437506335839180
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603340126004}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603442160979
 GameObject:
   m_ObjectHideFlags: 0
@@ -4247,7 +4809,8 @@ GameObject:
   - component: {fileID: 6877095603482619318}
   - component: {fileID: 6877095603482619317}
   - component: {fileID: 6877095603482619316}
-  m_Layer: 0
+  - component: {fileID: 4525054144000476048}
+  m_Layer: 11
   m_Name: Trampo (47)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4283,7 +4846,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603482619314}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4330,6 +4893,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4525054144000476048
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603482619314}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603487219376
 GameObject:
   m_ObjectHideFlags: 0
@@ -4342,7 +4921,8 @@ GameObject:
   - component: {fileID: 6877095603487219380}
   - component: {fileID: 6877095603487219379}
   - component: {fileID: 6877095603487219378}
-  m_Layer: 0
+  - component: {fileID: 618962092070332951}
+  m_Layer: 11
   m_Name: Trampo (65)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4378,7 +4958,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603487219376}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4425,6 +5005,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &618962092070332951
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603487219376}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603490284779
 GameObject:
   m_ObjectHideFlags: 0
@@ -4437,7 +5033,8 @@ GameObject:
   - component: {fileID: 6877095603490284783}
   - component: {fileID: 6877095603490284782}
   - component: {fileID: 6877095603490284781}
-  m_Layer: 0
+  - component: {fileID: 3566882982077585142}
+  m_Layer: 11
   m_Name: Trampo (52)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4473,7 +5070,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603490284779}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4520,6 +5117,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &3566882982077585142
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603490284779}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603495279718
 GameObject:
   m_ObjectHideFlags: 0
@@ -4562,7 +5175,8 @@ GameObject:
   - component: {fileID: 6877095603503522651}
   - component: {fileID: 6877095603503522650}
   - component: {fileID: 6877095603503522649}
-  m_Layer: 0
+  - component: {fileID: 4463196515280680675}
+  m_Layer: 11
   m_Name: Trampo (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4598,7 +5212,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603503522647}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4645,6 +5259,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4463196515280680675
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603503522647}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603560435609
 GameObject:
   m_ObjectHideFlags: 0
@@ -4657,7 +5287,8 @@ GameObject:
   - component: {fileID: 6877095603560435613}
   - component: {fileID: 6877095603560435612}
   - component: {fileID: 6877095603560435611}
-  m_Layer: 0
+  - component: {fileID: 1909068691976114206}
+  m_Layer: 11
   m_Name: Trampo (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4693,7 +5324,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603560435609}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4740,6 +5371,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &1909068691976114206
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603560435609}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603595268334
 GameObject:
   m_ObjectHideFlags: 0
@@ -4752,7 +5399,8 @@ GameObject:
   - component: {fileID: 6877095603595268306}
   - component: {fileID: 6877095603595268305}
   - component: {fileID: 6877095603595268304}
-  m_Layer: 0
+  - component: {fileID: 5978728052981402875}
+  m_Layer: 11
   m_Name: Trampo (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4788,7 +5436,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603595268334}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4835,6 +5483,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &5978728052981402875
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603595268334}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603611774849
 GameObject:
   m_ObjectHideFlags: 0
@@ -4847,7 +5511,8 @@ GameObject:
   - component: {fileID: 6877095603611774853}
   - component: {fileID: 6877095603611774852}
   - component: {fileID: 6877095603611774851}
-  m_Layer: 0
+  - component: {fileID: 430247387112500518}
+  m_Layer: 11
   m_Name: Trampo (36)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4883,7 +5548,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603611774849}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4930,6 +5595,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &430247387112500518
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603611774849}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603655148720
 GameObject:
   m_ObjectHideFlags: 0
@@ -4972,7 +5653,8 @@ GameObject:
   - component: {fileID: 6877095603660080653}
   - component: {fileID: 6877095603660080652}
   - component: {fileID: 6877095603660080651}
-  m_Layer: 0
+  - component: {fileID: 869852547697854630}
+  m_Layer: 11
   m_Name: Trampo (46)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5008,7 +5690,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603660080649}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5055,6 +5737,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &869852547697854630
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603660080649}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603669122579
 GameObject:
   m_ObjectHideFlags: 0
@@ -5067,7 +5765,8 @@ GameObject:
   - component: {fileID: 6877095603669122583}
   - component: {fileID: 6877095603669122582}
   - component: {fileID: 6877095603669122581}
-  m_Layer: 0
+  - component: {fileID: 8372306741981131847}
+  m_Layer: 11
   m_Name: Trampo (48)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5103,7 +5802,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603669122579}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5150,6 +5849,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &8372306741981131847
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603669122579}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603678623986
 GameObject:
   m_ObjectHideFlags: 0
@@ -5192,7 +5907,8 @@ GameObject:
   - component: {fileID: 6877095603680105454}
   - component: {fileID: 6877095603680105453}
   - component: {fileID: 6877095603680105452}
-  m_Layer: 0
+  - component: {fileID: 6962781824461505869}
+  m_Layer: 11
   m_Name: Trampo (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5228,7 +5944,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603680105450}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5275,6 +5991,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &6962781824461505869
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603680105450}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603682667685
 GameObject:
   m_ObjectHideFlags: 0
@@ -5287,7 +6019,8 @@ GameObject:
   - component: {fileID: 6877095603682667689}
   - component: {fileID: 6877095603682667688}
   - component: {fileID: 6877095603682667687}
-  m_Layer: 0
+  - component: {fileID: 3221645334732622775}
+  m_Layer: 11
   m_Name: Trampo (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5323,7 +6056,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603682667685}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5370,6 +6103,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &3221645334732622775
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603682667685}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603698719902
 GameObject:
   m_ObjectHideFlags: 0
@@ -5412,7 +6161,8 @@ GameObject:
   - component: {fileID: 6877095603702337709}
   - component: {fileID: 6877095603702337708}
   - component: {fileID: 6877095603702337707}
-  m_Layer: 0
+  - component: {fileID: 7481916908173484306}
+  m_Layer: 11
   m_Name: Trampo (55)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5448,7 +6198,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603702337705}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5495,6 +6245,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &7481916908173484306
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603702337705}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603706728153
 GameObject:
   m_ObjectHideFlags: 0
@@ -5507,7 +6273,8 @@ GameObject:
   - component: {fileID: 6877095603706728157}
   - component: {fileID: 6877095603706728156}
   - component: {fileID: 6877095603706728155}
-  m_Layer: 0
+  - component: {fileID: 7374407647635843326}
+  m_Layer: 11
   m_Name: Trampo (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5543,7 +6310,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603706728153}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5590,6 +6357,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &7374407647635843326
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603706728153}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603746158647
 GameObject:
   m_ObjectHideFlags: 0
@@ -5602,7 +6385,8 @@ GameObject:
   - component: {fileID: 6877095603746158651}
   - component: {fileID: 6877095603746158650}
   - component: {fileID: 6877095603746158649}
-  m_Layer: 0
+  - component: {fileID: 2389441079206760172}
+  m_Layer: 11
   m_Name: Trampo (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5638,7 +6422,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603746158647}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5685,6 +6469,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &2389441079206760172
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603746158647}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603751434857
 GameObject:
   m_ObjectHideFlags: 0
@@ -5697,7 +6497,8 @@ GameObject:
   - component: {fileID: 6877095603751434861}
   - component: {fileID: 6877095603751434860}
   - component: {fileID: 6877095603751434859}
-  m_Layer: 0
+  - component: {fileID: 5021994998170610866}
+  m_Layer: 11
   m_Name: Trampo (49)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5733,7 +6534,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603751434857}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5780,6 +6581,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &5021994998170610866
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603751434857}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603753511519
 GameObject:
   m_ObjectHideFlags: 0
@@ -5792,7 +6609,8 @@ GameObject:
   - component: {fileID: 6877095603753511491}
   - component: {fileID: 6877095603753511490}
   - component: {fileID: 6877095603753511489}
-  m_Layer: 0
+  - component: {fileID: 182022488156204981}
+  m_Layer: 11
   m_Name: Trampo (59)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5828,7 +6646,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603753511519}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5875,6 +6693,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &182022488156204981
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603753511519}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603766835183
 GameObject:
   m_ObjectHideFlags: 0
@@ -5977,7 +6811,8 @@ GameObject:
   - component: {fileID: 6877095603799197289}
   - component: {fileID: 6877095603799197288}
   - component: {fileID: 6877095603799197287}
-  m_Layer: 0
+  - component: {fileID: 1635781328243554659}
+  m_Layer: 11
   m_Name: Trampo (56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6013,7 +6848,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603799197285}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6060,6 +6895,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &1635781328243554659
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603799197285}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603803242076
 GameObject:
   m_ObjectHideFlags: 0
@@ -6102,7 +6953,8 @@ GameObject:
   - component: {fileID: 6877095603830904667}
   - component: {fileID: 6877095603830904666}
   - component: {fileID: 6877095603830904665}
-  m_Layer: 0
+  - component: {fileID: 2575801925801915582}
+  m_Layer: 11
   m_Name: Trampo (66)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6138,7 +6990,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603830904663}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6185,6 +7037,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &2575801925801915582
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603830904663}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603881383830
 GameObject:
   m_ObjectHideFlags: 0
@@ -6257,7 +7125,8 @@ GameObject:
   - component: {fileID: 6877095603988097421}
   - component: {fileID: 6877095603988097420}
   - component: {fileID: 6877095603988097419}
-  m_Layer: 0
+  - component: {fileID: 1625130149677501725}
+  m_Layer: 11
   m_Name: Trampo (40)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6293,7 +7162,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095603988097417}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6340,6 +7209,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &1625130149677501725
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095603988097417}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095603992222777
 GameObject:
   m_ObjectHideFlags: 0
@@ -6382,7 +7267,8 @@ GameObject:
   - component: {fileID: 6877095604003388669}
   - component: {fileID: 6877095604003388668}
   - component: {fileID: 6877095604003388667}
-  m_Layer: 0
+  - component: {fileID: 4728861236436832560}
+  m_Layer: 11
   m_Name: Trampo (53)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6418,7 +7304,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095604003388665}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6465,6 +7351,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4728861236436832560
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095604003388665}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095604061410661
 GameObject:
   m_ObjectHideFlags: 0
@@ -6477,7 +7379,8 @@ GameObject:
   - component: {fileID: 6877095604061410665}
   - component: {fileID: 6877095604061410664}
   - component: {fileID: 6877095604061410663}
-  m_Layer: 0
+  - component: {fileID: 1711143496772382467}
+  m_Layer: 11
   m_Name: Trampo (30)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6513,7 +7416,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095604061410661}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6560,6 +7463,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &1711143496772382467
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095604061410661}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095604066032689
 GameObject:
   m_ObjectHideFlags: 0
@@ -6572,7 +7491,8 @@ GameObject:
   - component: {fileID: 6877095604066032693}
   - component: {fileID: 6877095604066032692}
   - component: {fileID: 6877095604066032691}
-  m_Layer: 0
+  - component: {fileID: 6989401811869387082}
+  m_Layer: 11
   m_Name: Trampo (60)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6608,7 +7528,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095604066032689}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6655,6 +7575,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &6989401811869387082
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095604066032689}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095604087164909
 GameObject:
   m_ObjectHideFlags: 0
@@ -6667,7 +7603,8 @@ GameObject:
   - component: {fileID: 6877095604087164881}
   - component: {fileID: 6877095604087164880}
   - component: {fileID: 6877095604087164911}
-  m_Layer: 0
+  - component: {fileID: 6182637879047200654}
+  m_Layer: 11
   m_Name: Trampo (62)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6703,7 +7640,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095604087164909}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6750,6 +7687,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &6182637879047200654
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095604087164909}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095604169656103
 GameObject:
   m_ObjectHideFlags: 0
@@ -6762,7 +7715,8 @@ GameObject:
   - component: {fileID: 6877095604169656107}
   - component: {fileID: 6877095604169656106}
   - component: {fileID: 6877095604169656105}
-  m_Layer: 0
+  - component: {fileID: 6418434813957169432}
+  m_Layer: 11
   m_Name: Trampo (51)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6798,7 +7752,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095604169656103}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6845,6 +7799,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &6418434813957169432
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095604169656103}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095604176429807
 GameObject:
   m_ObjectHideFlags: 0
@@ -6857,7 +7827,8 @@ GameObject:
   - component: {fileID: 6877095604176429779}
   - component: {fileID: 6877095604176429778}
   - component: {fileID: 6877095604176429777}
-  m_Layer: 0
+  - component: {fileID: 500455951319265316}
+  m_Layer: 11
   m_Name: Trampo (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6893,7 +7864,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095604176429807}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6940,6 +7911,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &500455951319265316
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095604176429807}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095604177020205
 GameObject:
   m_ObjectHideFlags: 0
@@ -6952,7 +7939,8 @@ GameObject:
   - component: {fileID: 6877095604177020177}
   - component: {fileID: 6877095604177020176}
   - component: {fileID: 6877095604177020207}
-  m_Layer: 0
+  - component: {fileID: 3103682387890001533}
+  m_Layer: 11
   m_Name: Trampo (31)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6988,7 +7976,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095604177020205}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -7035,6 +8023,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &3103682387890001533
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095604177020205}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095604182896948
 GameObject:
   m_ObjectHideFlags: 0
@@ -7047,7 +8051,8 @@ GameObject:
   - component: {fileID: 6877095604182896952}
   - component: {fileID: 6877095604182896951}
   - component: {fileID: 6877095604182896950}
-  m_Layer: 0
+  - component: {fileID: 6407932757110879467}
+  m_Layer: 11
   m_Name: Trampo (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7083,7 +8088,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095604182896948}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -7130,6 +8135,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &6407932757110879467
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095604182896948}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095604191190257
 GameObject:
   m_ObjectHideFlags: 0
@@ -7142,7 +8163,8 @@ GameObject:
   - component: {fileID: 6877095604191190261}
   - component: {fileID: 6877095604191190260}
   - component: {fileID: 6877095604191190259}
-  m_Layer: 0
+  - component: {fileID: 5944330763847086297}
+  m_Layer: 11
   m_Name: Trampo (34)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7178,7 +8200,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6877095604191190257}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -7225,6 +8247,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &5944330763847086297
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877095604191190257}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6877095604218625695
 GameObject:
   m_ObjectHideFlags: 0
@@ -7298,7 +8336,8 @@ GameObject:
   - component: {fileID: 2671217822681469575}
   - component: {fileID: 4795386388097937313}
   - component: {fileID: 8855789414701022076}
-  m_Layer: 0
+  - component: {fileID: 2822951771351217842}
+  m_Layer: 11
   m_Name: Trampo (67)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7334,7 +8373,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8164265542774053523}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -7381,6 +8420,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &2822951771351217842
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8164265542774053523}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &137258103292382987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9288,14 +10343,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eee3f42f9b079c7469e0bde7cb6083ab, type: 3}
---- !u!135 &2867572541136184104 stripped
-SphereCollider:
-  m_CorrespondingSourceObject: {fileID: 1622759073284593456, guid: eee3f42f9b079c7469e0bde7cb6083ab, type: 3}
-  m_PrefabInstance: {fileID: 3552945175116231704}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1229868075084666105 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2332801593184772321, guid: eee3f42f9b079c7469e0bde7cb6083ab, type: 3}
+  m_PrefabInstance: {fileID: 3552945175116231704}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &2867572541136184104 stripped
+SphereCollider:
+  m_CorrespondingSourceObject: {fileID: 1622759073284593456, guid: eee3f42f9b079c7469e0bde7cb6083ab, type: 3}
   m_PrefabInstance: {fileID: 3552945175116231704}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3665582991600610154
@@ -9877,6 +10932,96 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8640752176380480964, guid: ca16b3cc3cfdbb14c86dd89d4b9fabc0, type: 3}
   m_PrefabInstance: {fileID: 4548907025268616149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4603485961392142014
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6223429186622411793}
+    m_Modifications:
+    - target: {fileID: 581528220161100793, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 581528220161100793, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+    - target: {fileID: 1457059009558854707, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457059009558854707, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457059009558854707, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457059009558854707, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457059009558854707, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457059009638372479, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: _canPatrol
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211073096210202081, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_Name
+      value: UD_Monkey_Manager (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -23.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -18.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+--- !u!4 &2399733963624975184 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+  m_PrefabInstance: {fileID: 4603485961392142014}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4717845393807668322
 PrefabInstance:
@@ -11361,14 +12506,14 @@ PrefabInstance:
       objectReference: {fileID: 8850494960354600371, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
---- !u!4 &761009772879849696 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6196949070072991107, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
-  m_PrefabInstance: {fileID: 6877095602408777059}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &761009773287530928 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6196949070471136467, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
+  m_PrefabInstance: {fileID: 6877095602408777059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &761009772879849696 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6196949070072991107, guid: 24b448448aa8e5b45af9069c3fa3c188, type: 3}
   m_PrefabInstance: {fileID: 6877095602408777059}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6877095602914738000
@@ -11440,14 +12585,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
---- !u!4 &4746535930934263372 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2211073097129574684, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
-  m_PrefabInstance: {fileID: 6877095602914738000}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4746535929545097918 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2211073096210202094, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
+  m_PrefabInstance: {fileID: 6877095602914738000}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4746535930934263372 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2211073097129574684, guid: d52bd75321239ac40bda97720d7d07ae, type: 3}
   m_PrefabInstance: {fileID: 6877095602914738000}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6877095603009069639

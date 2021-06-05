@@ -348,10 +348,14 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 8300000, guid: 909021c3524771047b1eefe59c5882ea, type: 3}
+    - {fileID: -8049230132097280611, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 6ed31f308a7d6054cae5f67b202e600e, type: 3}
+    - {fileID: -3992530507619271791, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 680f788e7fb3e4e429c563e5848f4cb0, type: 3}
+    - {fileID: 7920569136095909040, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 85e734388a3a5af4796993d531d4a906, type: 3}
     - {fileID: 8300000, guid: bac893dff17f14e499b4be87896cf116, type: 3}
+    - {fileID: -4733645740640589285, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -395,6 +399,9 @@ MonoBehaviour:
     - Name: clip
       Entry: 10
       Data: 0
+    - Name: _group
+      Entry: 10
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -424,7 +431,10 @@ MonoBehaviour:
       Data: 5|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 1
+      Data: 2
+    - Name: _group
+      Entry: 10
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -454,7 +464,10 @@ MonoBehaviour:
       Data: 7|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 2
+      Data: 4
+    - Name: _group
+      Entry: 10
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -463,7 +476,10 @@ MonoBehaviour:
       Data: 8|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 3
+      Data: 6
+    - Name: _group
+      Entry: 10
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -493,7 +509,10 @@ MonoBehaviour:
       Data: 10|Sound, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 4
+      Data: 7
+    - Name: _group
+      Entry: 10
+      Data: 8
     - Name: 
       Entry: 8
       Data: 
@@ -621,6 +640,7 @@ Transform:
   - {fileID: 8072824808082983537}
   - {fileID: 8072824807585136641}
   - {fileID: 6635779951996096031}
+  - {fileID: 3047842207291884686}
   m_Father: {fileID: 8835960570973703084}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -757,6 +777,7 @@ MonoBehaviour:
   _monkeyBallDodgeDistance: 5
   _graphics: {fileID: 8072824807585136640}
   _detection: {fileID: 8072824808082983536}
+  _shadow: {fileID: 3047842207291884684}
   _placeholderDestination: {fileID: 382907032}
   _ballGraphics: {fileID: 0}
   _componentsToDeactivateOnDeath:
@@ -950,3 +971,78 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _patrol: {fileID: 8072824808094687783}
+--- !u!1001 &5171726217732990025
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8072824808094687782}
+    m_Modifications:
+    - target: {fileID: 7893039722381959365, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_Name
+      value: Shadow
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.39999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.858
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+--- !u!1 &3047842207291884684 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7893039722381959365, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+  m_PrefabInstance: {fileID: 5171726217732990025}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3047842207291884686 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7893039722381959367, guid: 9919a80c913534c40941c82d6a38691c, type: 3}
+  m_PrefabInstance: {fileID: 5171726217732990025}
+  m_PrefabAsset: {fileID: 0}

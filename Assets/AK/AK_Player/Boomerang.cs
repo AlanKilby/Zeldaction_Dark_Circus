@@ -18,7 +18,7 @@ public class Boomerang : MonoBehaviour
     public AnimationCurve goingSpeedC;
     public AnimationCurve comingSpeedC;
 
-    public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, fakirWeaponLayer, bossLayer; 
+    public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, fakirWeaponLayer, bossLayer, jailLayer; 
    
     private Rigidbody rb;
 
@@ -166,9 +166,10 @@ public class Boomerang : MonoBehaviour
             // Debug.Log("Collision with Enemy");
             enemy = other.GetComponent<BasicAIBrain>(); 
 
-            if (enemy.Type == AIType.Mascotte && Boomerang.s_SeenByEnemy) // change this so you can kill from behind, not only on the way back 
+            if (enemy.Type == AIType.Mascotte && s_SeenByEnemy)  
             {
-                isComingBack = true;
+                isComingBack = true; 
+                comebackTimer = 0;
                 enemy.OnRequireStateChange(States.Defend, StateTransition.Safe); 
                 return;
             }  
@@ -183,14 +184,23 @@ public class Boomerang : MonoBehaviour
 
         if (Mathf.Pow(2, other.gameObject.layer) == fakirWeaponLayer) // fakir weapon
         {
+            isComingBack = true; 
+            comebackTimer = 0;
             other.GetComponent<ParabolicFunction>().InvertDirection(); 
         } 
         
         if (Mathf.Pow(2, other.gameObject.layer) == bossLayer) // fakir weapon
         {
             BossAIBrain.sHitCounter++; 
-            Debug.Log("hitting boss"); 
+            // Debug.Log("hitting boss"); 
             other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
+        } 
+        
+        if (Mathf.Pow(2, other.gameObject.layer) == jailLayer)
+        {
+            isComingBack = true;
+            comebackTimer = 0; 
+            other.GetComponent<UD_JailScript>().DestroyJail(); 
         } 
     }
 } 

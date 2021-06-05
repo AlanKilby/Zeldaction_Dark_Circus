@@ -97,7 +97,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7061524811245064577
 RectTransform:
   m_ObjectHideFlags: 0
@@ -231,6 +231,88 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1001 &240981498582244753
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4474006860911674660}
+    m_Modifications:
+    - target: {fileID: 6179163672433699465, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179163672433699465, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179163672433699465, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179163672433699465, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179163672433699465, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179163672433699465, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179163672433699465, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179163672433699465, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179163672433699465, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179163672433699465, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179163672433699465, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346943742448857441, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_Size.x
+      value: 0.90625
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346943742448857441, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_Size.y
+      value: 1.21875
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346943742448857441, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1147510932732480780, guid: 7f9a1d6b01277494e8059f96abe02548, type: 3}
+    - target: {fileID: 7346943742448857441, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9022016546524069892, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_Name
+      value: Potion
+      objectReference: {fileID: 0}
+    - target: {fileID: 9022016546524069892, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+--- !u!1 &9109804971060895125 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9022016546524069892, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+  m_PrefabInstance: {fileID: 240981498582244753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8003160246753212189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -238,6 +320,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 516016495849758972, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: rewardOnDialogueEnd.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 516016495849758972, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: rewardOnDialogueEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 516016495849758972, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: rewardOnDialogueEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9109804971060895125}
+    - target: {fileID: 516016495849758972, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: rewardOnDialogueEnd.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 516016495849758972, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: rewardOnDialogueEnd.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 516016495849758972, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: rewardOnDialogueEnd.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 516016495849758972, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: rewardOnDialogueEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 516016495849758972, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: rewardOnDialogueEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1355211333175087973, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9961947
@@ -322,36 +436,6 @@ PrefabInstance:
       propertyPath: m_PreserveAspect
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
-      propertyPath: dialogue.name
-      value: Canneline
-      objectReference: {fileID: 0}
-    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
-      propertyPath: dialogue.sentences.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
-      propertyPath: dialogue.sentences.Array.data[0]
-      value: "Eurgh ! C'est pas trop t\xF4t !"
-      objectReference: {fileID: 0}
-    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
-      propertyPath: dialogue.sentences.Array.data[1]
-      value: "Si je devais supporter l'odeur de ces singes plus longtemps, mon d\xE9jeuner
-        aurait fini sur le sol."
-      objectReference: {fileID: 0}
-    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
-      propertyPath: dialogue.sentences.Array.data[2]
-      value: "J'en viens presque \xE0 regretter les fauves du gros Boyardee..."
-      objectReference: {fileID: 0}
-    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
-      propertyPath: dialogue.sentences.Array.data[3]
-      value: "En tout cas, merci pour le coup de main ! Tu devrais pouvoir trouver
-        les autres clowns \xE0 l'int\xE9rieur du palais."
-      objectReference: {fileID: 0}
-    - target: {fileID: 6604171167135550064, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
-      propertyPath: dialogue.sentences.Array.data[4]
-      value: Montre leur de quoi tu es capable !
-      objectReference: {fileID: 0}
     - target: {fileID: 6862337273091986002, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_Size.x
       value: 2
@@ -366,7 +450,7 @@ PrefabInstance:
       objectReference: {fileID: 4121383699775330761, guid: 8d9d75d284e9a154694f8a33e1b5c140, type: 3}
     - target: {fileID: 6862337273091986002, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6862337273091986002, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_SortingOrder
@@ -379,6 +463,40 @@ PrefabInstance:
     - target: {fileID: 6862337273091986002, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127930093602080420, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.name
+      value: Canneline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127930093602080420, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127930093602080420, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: "Eurgh ! C'est pas trop t\xF4t !"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127930093602080420, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: "Si je devais supporter l'odeur de ces singes plus longtemps, mon d\xE9jeuner
+        aurait fini sur le sol."
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127930093602080420, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.data[2]
+      value: "J'en viens presque \xE0 regretter les fauves du gros Boyardee..."
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127930093602080420, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.data[3]
+      value: "En tout cas, merci pour le coup de main ! Tu devrais pouvoir trouver
+        les autres clowns \xE0 l'int\xE9rieur du palais."
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127930093602080420, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.data[4]
+      value: Prends cette potion, elle te sera utile pour te revigorer en cas d'urgence.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127930093602080420, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+      propertyPath: dialogue.sentences.Array.data[5]
+      value: Montre leur de quoi tu es capable !
       objectReference: {fileID: 0}
     - target: {fileID: 7175660437025156206, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
       propertyPath: m_SizeDelta.x
@@ -406,6 +524,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+--- !u!4 &4474006860911674660 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5838409349043434041, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}
+  m_PrefabInstance: {fileID: 8003160246753212189}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3497215442067302597 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6888384538593861592, guid: 7bb07b4c7d52fcc46b4c4505c0963f2f, type: 3}

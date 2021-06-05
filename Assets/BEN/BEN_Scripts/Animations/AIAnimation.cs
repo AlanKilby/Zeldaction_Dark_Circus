@@ -54,10 +54,12 @@ namespace BEN.Animation
             {
                 animator.speed = clipToPlay.speedMultiplier; 
 
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName(clipToPlay.clipContainer.name)) return null; 
-                animator.Play(clipToPlay.clipContainer.name);
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName(clipToPlay.clipContainer.name))
+                {
+                    animator.Play(clipToPlay.clipContainer.name);
+                } 
             }
-            catch (Exception) { }
+            catch (Exception) { } 
 
             return clipToPlay;
         }
@@ -67,7 +69,7 @@ namespace BEN.Animation
             var clipToPlay = _animationSo.GetAnimClipFromDictionary(key, direction); 
             
             if (!animator) animator = GetComponent<Animator>(); 
-            if (!animator.runtimeAnimatorController)
+            if (!animator.runtimeAnimatorController) 
             {
                 animator.runtimeAnimatorController = _animationSo.controller;
             }

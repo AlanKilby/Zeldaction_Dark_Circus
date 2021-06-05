@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CHM_DialogueManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class CHM_DialogueManager : MonoBehaviour
 
     public GameObject dialogueBox;
 
+    public GameObject dialogueButton;
+
     public UnityEvent rewardOnDialogueEnd;
 
     void Start()
@@ -24,12 +27,14 @@ public class CHM_DialogueManager : MonoBehaviour
 
     public void StartDialogue(CHM_Dialogue dialogue)
     {
+        //Debug.Log("Le dialogue manager est lancé");
         animator.SetBool("IsOpen", true);
-
+        //Debug.Log("L'animateur est lancé"); Jusque là tout va bien.
         nameText.text = dialogue.name;
 
         sentences.Clear();
-        
+        EventSystem.current.SetSelectedGameObject(dialogueButton);
+
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
@@ -42,8 +47,9 @@ public class CHM_DialogueManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
+            Debug.Log("Il n'y a plus de phrase et la dialoguebox sera supprimée");
             EndDialogue();
-            dialogueBox.SetActive(false);
+            //dialogueBox.SetActive(false);
             return;
 
         }
@@ -67,6 +73,7 @@ public class CHM_DialogueManager : MonoBehaviour
     {
         rewardOnDialogueEnd.Invoke();
         animator.SetBool("IsOpen", false);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
 }

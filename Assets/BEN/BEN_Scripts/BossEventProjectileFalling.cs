@@ -51,10 +51,10 @@ public class BossEventProjectileFalling : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         Instantiate(_bossProjectile[Random.Range(0, _bossProjectile.Length)], projectileSpawnPosition, Quaternion.identity);
-        Instantiate(_projectileShadow,
+        var shadowRef = Instantiate(_projectileShadow,
             new Vector3(projectileSpawnPosition.x, _groundHeight, projectileSpawnPosition.z),
             Quaternion.Euler(90f, 0f, 0f));
-        
+        shadowRef.GetComponent<Grow>().isSpotlightShadow = true; 
     }
 
     private IEnumerator SetProjectileCanFall()
@@ -62,6 +62,6 @@ public class BossEventProjectileFalling : MonoBehaviour
         sProjectileCanFall = false;
         yield return new WaitForSeconds(_projectileFallDelay);
         sProjectileCanFall = !BossAIBrain.sAllLightsWereOff;
-        Debug.Log($"setting projectile can fall to {sProjectileCanFall}"); 
+        // Debug.Log($"setting projectile can fall to {sProjectileCanFall}"); 
     }
 } 

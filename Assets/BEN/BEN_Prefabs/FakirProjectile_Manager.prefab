@@ -107,8 +107,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -729098779
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f203468fe0532a64193bc40ba13a0754, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -233,6 +233,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   _destroyRoot: 0
   destroyOnWallCollision: 0
+  _freezeYPosition: 1
+  _casterBias: {x: 0, y: 0, z: 0}
+  _dmgToFakirOnReturn: 10
   _wallLayer:
     serializedVersion: 2
     m_Bits: 2048
