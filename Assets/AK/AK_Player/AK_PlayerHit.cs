@@ -6,26 +6,9 @@ public class AK_PlayerHit : MonoBehaviour
 {
     public float invincibleTimer;
 
-    CapsuleCollider playerCollider;
+    public bool isInvincible = false;
 
-    public SpriteRenderer playerSpriteRenderer;
 
-    bool isInvincible = false;
-
-    public bool callFunction;
-
-    private void Start()
-    {
-        playerCollider = gameObject.GetComponent<CapsuleCollider>();
-    }
-
-    private void Update()
-    {
-        if (callFunction)
-        {
-            CallInvincibleState();
-        }
-    }
     public void CallInvincibleState()
     {
         StartCoroutine(InvincibleState());
@@ -36,13 +19,8 @@ public class AK_PlayerHit : MonoBehaviour
         if (!isInvincible)
         {
             isInvincible = true;
-            playerCollider.enabled = false;
             yield return new WaitForSeconds(invincibleTimer);
-
             isInvincible = false;
-            playerCollider.enabled = true;
-
-
         }
         else
         {

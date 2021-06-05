@@ -10,6 +10,8 @@ public class PlayerAnimations : MonoBehaviour
     PlayerMovement_Alan playerMovement;
     public string currentState;
 
+    bool isThrowing = false;
+
     public string PLAYER_IDLE_HAT = "idleh"; 
     public string PLAYER_DOWN_HAT = "Walkingdownh";
     public string PLAYER_LEFT_HAT = "WalkingLefth";
@@ -68,7 +70,7 @@ public class PlayerAnimations : MonoBehaviour
 
     public void ChangeAnimationState(string newState)
     {
-        if (currentState == newState || animator.GetCurrentAnimatorStateInfo(0).IsName("death") /*|| currentState == "throwinghat"*/) return;
+        if (currentState == newState || animator.GetCurrentAnimatorStateInfo(0).IsName("death") || isThrowing) return;
 
         animator.Play(newState);
         currentState = newState;
@@ -79,5 +81,17 @@ public class PlayerAnimations : MonoBehaviour
     {
         Fade.nextSceneIndex = deathScreenIndex;
         Fade.ChangeAnimationState(Fade.Loyal_Fade_In);
+    }
+
+    public void ThrowingAnimBoolToTrue()
+    {
+        isThrowing = true;
+    }
+
+    public void ThrowingAnimBoolToFalse()
+    {
+    
+        isThrowing = false;
+
     }
 }
