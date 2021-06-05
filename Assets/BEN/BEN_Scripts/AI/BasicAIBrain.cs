@@ -188,7 +188,7 @@ namespace BEN.AI
 #endif
                 }
             }
-            catch (Exception e)
+            catch (Exception e) 
             {
                 Debug.Log($"{ e.Message} thrown by {gameObject.name}"); 
                 _patrol = GetComponent<FsmPatrol>();
@@ -334,7 +334,6 @@ namespace BEN.AI
         { 
             yield return new WaitForSeconds(0.03f);
             NewState = States.Default;
-            Debug.Log("default_enter"); 
 
             if ((_canPatrol || GoingBackToPositionBeforeIdling) && !HasBeenInvokedByBoss)
             {
@@ -361,7 +360,6 @@ namespace BEN.AI
                 if (type == AIType.MonkeySurBall)
                 {
                     var clip = _ballAnimation.PlayAnimation(AnimState.Idle, AnimDirection.None); 
-                    Debug.Log($"playing {clip.clipContainer.name}");
                 } 
             } 
         } 
@@ -379,7 +377,6 @@ namespace BEN.AI
             
             _agent.destination = TargetToAttackPosition;
             _idlePositionBeforeAttacking = transform.position;
-            Debug.Log("attack_enter");
 
             var clip = new Clip();
             
@@ -536,7 +533,6 @@ namespace BEN.AI
             {
                 case AIType.MonkeySurBall:
                     yield return new WaitForSeconds(_monkeyBallDodgeReactionTime);
-                    Debug.Log("defend_enter");
                     _checkSurroundings.CanDodgeProjectile = _monkeyBallCollider.enabled = _ballCollider.enabled = false;
                     transform.position += _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
             
@@ -548,7 +544,6 @@ namespace BEN.AI
                     OnRequireStateChange(States.Attack, StateTransition.Safe);  
                     break;
                 case AIType.Mascotte:
-                    Debug.Log($"HIT with direction : {_animDirection}"); 
                     _aIAnimation.PlayAnimation(AnimState.Hit, _animDirection);
                     
                     yield return new WaitForSeconds(1f);  
@@ -572,7 +567,6 @@ namespace BEN.AI
             NewState = States.Die;
             _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
             _agent.speed = 0f; 
-            Debug.Log("die_enter");
             foreach (var item in _componentsToDeactivateOnDeath)
             {
                 item.enabled = false; 
@@ -591,7 +585,6 @@ namespace BEN.AI
             catch (Exception) { }
 
             if (clipToPlay != null) yield break;
-            Debug.Log("Calling Die state instead of Hit state");
             _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None); // need consistent naming across all mobs, not Die or Hit for same result.. 
         }
 
