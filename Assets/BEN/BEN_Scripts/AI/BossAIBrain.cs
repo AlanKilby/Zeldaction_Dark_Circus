@@ -104,6 +104,7 @@ public class BossAIBrain : MonoBehaviour
 
     private bool isFirstCall = true; 
     ulong seed = 61829450;
+    public static Vector3 sBossPosition; 
 
 
     #region Unity Callbacks
@@ -141,6 +142,7 @@ public class BossAIBrain : MonoBehaviour
         sMaxActiveSwitches = _maxActiveSwitches;
         _bossAnimation.PlayAnimation(AnimState.Idle, AnimDirection.None);
         _initialPosition = transform.position;
+        sBossPosition = transform.position; 
 
         sBossVulnerabilityDuration = _vulnerabilityDuration; 
         for (int i = 0; i < _spawnerHalfCircle.transform.childCount; i++)
@@ -157,7 +159,7 @@ public class BossAIBrain : MonoBehaviour
         StartCoroutine(nameof(SetSwitchesCooldown)); 
     }
 
-    private void FixedUpdate()
+    private void FixedUpdate() 
     {
         if (_deathNotified || (!PlayerMovement_Alan.sPlayer && Time.time >= 1f)) return; 
         
@@ -260,14 +262,19 @@ public class BossAIBrain : MonoBehaviour
         catch (NullReferenceException) { } 
 
         sSwitchUsedCount = 0;
+        StartCoroutine(nameof(SetSwitchesCooldown)); 
         rayHasBeenResetAfterVulnerableState = false;
 
         if (_killAllSpawnsOnLightsOff)
         {
-            foreach (var item in _invokedEntities)
+            try
             {
-                item.GetComponentInChildren<Health>().DecreaseHp(100); 
-            } 
+                foreach (var item in _invokedEntities)
+                {
+                    item.GetComponentInChildren<Health>().DecreaseHp(100); 
+                } 
+            }
+            catch (Exception)  { } 
         } 
         
         _bossCollider.enabled = sAllLightsWereOff = true;
@@ -311,6 +318,8 @@ public class BossAIBrain : MonoBehaviour
     { 
         sHitCounter = 0; 
         _bossCollider.enabled = false;
+        sSwitchUsedCount = 0;
+
         if (_bossHP.CurrentValue > 0)
         { 
             Debug.Log("playing reset anim"); 
@@ -394,9 +403,10 @@ public class BossAIBrain : MonoBehaviour
                 basicAIBrain.OnRequireStateChange(States.Attack, StateTransition.Safe); 
                 
                 _invokedEntities.Add(instanceReference); 
-            }
+            } 
 
-            _isInvoking = false; 
+            _isInvoking = false;
+            OnRequireStateChange(BossStates.Default, StateTransition.Safe); 
         }
     }
     
@@ -454,9 +464,8 @@ public class BossAIBrain : MonoBehaviour
                      _bossHP.CurrentValue > 0;
                      
         Debug.Log($"setting can invoke to {_canInvoke}");
-    } 
+    }
     
-    // DRY 
     IEnumerator SetSwitchesCooldown() 
     {
         _canRevealSwitches = sAllLightsWereOff = switchesAreOn = false;

@@ -1,3 +1,4 @@
+using System;
 using BEN.Animation;
 using UnityEngine;
 using MonsterLove.StateMachine; 
@@ -8,9 +9,8 @@ public class Switch : MonoBehaviour
     [SerializeField] private AIAnimation _leverAnimation;
     [SerializeField] private AnimEventPlaySound _playSoundOnEvent; 
     public bool CanBeDeactivated { get; set; }
-    private GameObject _visualCue; 
+    private GameObject _visualCue;
     
-
     private void Start()
     {
         _visualCue = transform.GetChild(0).gameObject;
@@ -50,5 +50,6 @@ public class Switch : MonoBehaviour
     { 
         CanBeDeactivated = false;
         _visualCue.SetActive(CanBeDeactivated);
+        _leverAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);
     }
 }

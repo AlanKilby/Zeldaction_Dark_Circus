@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using BEN.Animation;
+using MonsterLove.StateMachine;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -39,10 +39,9 @@ public class RayAttack : MonoBehaviour
     }
 
     private void FixedUpdate()
-    { 
+    {
         if (!sCanRayAttack) return; 
         // Debug.Log(" rotating for ray attack");
-        BossAIBrain.sCurrentState = BossStates.RayAttacking; 
         StartCoroutine(nameof(CastRayToPlayer));
         StartCoroutine(nameof(SetCanRotate));
 
@@ -76,14 +75,19 @@ public class RayAttack : MonoBehaviour
     private IEnumerator SetCanRotate()
     {
         sCanRayAttack = false; 
-        yield return new WaitForSeconds(_delayBetwenenRayAttacks); 
+        if (BossAIBrain.sCurrentState != BossStates.Vulnerable)
+        {
+            BossAIBrain.sCurrentState = BossStates.RayAttacking;
+        } 
+        
+        yield return new WaitForSeconds(_delayBetwenenRayAttacks);
         sCanRayAttack = !BossAIBrain.sAllLightsWereOff && 
                         BossAIBrain.sCurrentState != BossStates.Vulnerable &&
                         BossAIBrain.sCurrentState != BossStates.ObjectFalling &&
                         BossAIBrain.sCurrentState != BossStates.Invocation && 
                         _bossHP.CurrentValue > 0;
-
-        // Debug.Log($"setting can ray attack to {sCanRayAttack}"); 
+        
+        BossAIBrain.OnRequireStateChange(BossStates.Default, StateTransition.Safe);
     }
     
     private void DisableRayOnBossVulnerable()

@@ -181,11 +181,6 @@ namespace BEN.AI
 
                     Gizmos.DrawLine(_patrol.Points[i].position, _patrol.Points[(int) Mathf.Repeat(i + 1, _patrol.Points.Length)].position);
                     Gizmos.DrawWireSphere(_patrol.Points[i].position, 0.25f);
-                    
-#if  UNITY_EDITOR
-                    Handles.color = Color.red; 
-                    Handles.DrawWireDisc(transform.position ,Vector3.up, _allyNotifyRadius); 
-#endif
                 }
             }
             catch (Exception e) 
@@ -279,7 +274,7 @@ namespace BEN.AI
         // MOVE ALL THIS TO AIANIMATION ===> WARNING : duplicate 
         private void CheckAnimDirection() 
         {
-            if (Type == AIType.Fakir && !_canPatrol) return; // modify is fakir needs repositionning 
+            if (Type == AIType.Fakir && !_canPatrol) return;  
 
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex); 
 
@@ -297,13 +292,18 @@ namespace BEN.AI
         
         private void CheckAnimDirection(AnimState state)
         {
-            // if (Type == AIType.Fakir && !_canPatrol && NewState == States.Attack) return; // modify if fakir needs repositionning 
-
-            _animDirection = (AnimDirection) (_placeholderDestination.angleIndex);
+            if (Type == AIType.Fakir && !_canPatrol) return;  
+            
+            _animDirection = (AnimDirection) _placeholderDestination.angleIndex;
 
             if (_placeholderDestination.angleIndex == _currentParentRotation) return; 
             
             _aIAnimation.PlayAnimation(state, _animDirection);
+            
+            if (type == AIType.MonkeySurBall)
+            {
+                _ballAnimation.PlayAnimation(AnimState.Walk, _animDirection); 
+            }
             
             _currentParentRotation = _placeholderDestination.angleIndex;
         } 
