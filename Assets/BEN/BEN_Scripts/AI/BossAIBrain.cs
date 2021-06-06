@@ -209,7 +209,14 @@ public class BossAIBrain : MonoBehaviour
     {
         sCurrentState = BossStates.Default;
         Debug.Log("default state");
-    } 
+        StartCoroutine(nameof(ResetAttackStateTrue)); 
+    }
+
+    private IEnumerator ResetAttackStateTrue()
+    {
+        yield return new WaitForSeconds(5f);
+        RayAttack.sCanRayAttack = BossEventProjectileFalling.sProjectileCanFall = true; 
+    }
     
 #endregion
 
@@ -219,9 +226,19 @@ public class BossAIBrain : MonoBehaviour
     {
         sCurrentState = BossStates.Invocation;
         Debug.Log("invocation enter");
-        InvokeEntity(1f); 
+        InvokeEntity(1f);
+        StartCoroutine(nameof(ResetAttackStateFalse)); 
     } 
+    
+    private IEnumerator ResetAttackStateFalse()
+    {
+        yield return null;
+        RayAttack.sCanRayAttack = BossEventProjectileFalling.sProjectileCanFall = false;
 
+        yield return new WaitForSeconds(5f);
+        OnRequireStateChange(BossStates.Default, StateTransition.Safe); 
+    } 
+    
     void Invocation_Exit()
     { 
         
@@ -406,7 +423,6 @@ public class BossAIBrain : MonoBehaviour
             } 
 
             _isInvoking = false;
-            OnRequireStateChange(BossStates.Default, StateTransition.Safe); 
         }
     }
     

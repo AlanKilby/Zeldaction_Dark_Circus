@@ -21,16 +21,17 @@ public class BossEventProjectileFalling : MonoBehaviour
     [SerializeField] private Health _bossHP;
 
     private GameObject projectileRef;
-    public static sbyte sProjectileDirection;
+    public static sbyte sProjectileDirection; 
 
     private void Start()
     {
-        StartCoroutine(nameof(SetProjectileCanFall));
+        StartCoroutine(nameof(SetProjectileCanFall)); 
         sProjectileDirection = 0; 
     }  
 
     private void FixedUpdate()
-    { 
+    {
+        if (Time.time < _projectileFallDelay - 0.05f) return; 
         if (sProjectileCanFall && _bossHP.CurrentValue > 0) 
         {
             StartCoroutine(nameof(SetProjectileCanFall));
