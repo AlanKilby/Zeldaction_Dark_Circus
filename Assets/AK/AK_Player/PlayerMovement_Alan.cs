@@ -57,6 +57,8 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public SpriteRenderer aimSpriteRend;
 
+    public Animator hitScreen;
+
     void Start()
     {
         canThrow = true;
@@ -151,11 +153,12 @@ public class PlayerMovement_Alan : MonoBehaviour
     {
         isHit = true;
 
+        hitScreen.Play("hit");
+
         yield return new WaitForSeconds(0.5f);
 
         isHit = false;
     }
-
     public void PlayerNormalAnims()
     {
         // Animations 
@@ -182,7 +185,7 @@ public class PlayerMovement_Alan : MonoBehaviour
         {
             playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROW_ANIM);
         }
-        else if(!isHit)
+        else if(!isHit && canMove)
         {
             // NO HIT
             if (horizontalMove == 0 && verticalMove == 0 && canThrow == true)
