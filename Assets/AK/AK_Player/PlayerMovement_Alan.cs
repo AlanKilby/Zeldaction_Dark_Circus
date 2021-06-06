@@ -64,6 +64,7 @@ public class PlayerMovement_Alan : MonoBehaviour
         sPlayer = transform.root.gameObject;
         movementSpeedHolder = movementSpeed;
         playerHit = gameObject.GetComponent<AK_PlayerHit>();
+        aimSpriteRend.enabled = false;
 
     }
 
