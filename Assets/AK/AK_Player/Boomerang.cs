@@ -19,6 +19,7 @@ public class Boomerang : MonoBehaviour
     public AnimationCurve comingSpeedC;
 
     public GameObject teleportParticles;
+    public GameObject hitParticles;
 
     public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, fakirWeaponLayer, bossLayer, jailLayer; 
    
@@ -179,6 +180,8 @@ public class Boomerang : MonoBehaviour
             }  
 
             other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
+
+            Instantiate(hitParticles, gameObject.transform.position, Quaternion.identity);
 
             // Changement pour que la nervosité augmente, changement fait le 19 mai 2021
 
