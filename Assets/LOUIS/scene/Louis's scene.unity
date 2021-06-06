@@ -1336,6 +1336,7 @@ Transform:
   - {fileID: 1614563719}
   - {fileID: 1993186336}
   - {fileID: 445380208}
+  - {fileID: 479665582}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1348,6 +1349,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4409024924235439338, guid: da9d7558f330c6a43b2df74c7619c9b4, type: 3}
   m_PrefabInstance: {fileID: 4409024924056491507}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &224285650 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+  m_PrefabInstance: {fileID: 750476393719369172}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &249397033
 PrefabInstance:
@@ -1912,6 +1918,106 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cf5c698106ca7344cb0d96fc21397860, type: 3}
   m_PrefabInstance: {fileID: 857845701}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &479665581
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 479665582}
+  - component: {fileID: 479665585}
+  - component: {fileID: 479665584}
+  - component: {fileID: 479665583}
+  m_Layer: 0
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &479665582
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479665581}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 224285650}
+  m_Father: {fileID: 174990114}
+  m_RootOrder: 45
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &479665583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479665581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 524279
+--- !u!114 &479665584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479665581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &479665585
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479665581}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1001 &570553019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16000,9 +16106,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &133294033488755255
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -17151,9 +17254,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &338676739319487264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17662,9 +17762,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &375381111511630149
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -18090,9 +18187,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &377690988147360152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18981,9 +19075,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &449903768167487856
 Transform:
   m_ObjectHideFlags: 0
@@ -19532,9 +19623,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &505377375901713359
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -20939,6 +21027,103 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animationSo: {fileID: 11400000, guid: d623a60036f4a4342874566cae1c8bae, type: 2}
   animator: {fileID: 0}
+--- !u!1001 &750476393719369172
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 479665582}
+    m_Modifications:
+    - target: {fileID: 750476393630653957, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_Name
+      value: UI_hiteffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1780
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1010
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 750476393630653958, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4129155ef7883194797dbcd92514a1a3, type: 3}
 --- !u!1 &750876108543438060
 GameObject:
   m_ObjectHideFlags: 0
@@ -21832,9 +22017,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!23 &876381199329924945
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -22307,9 +22489,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &918356360183511115
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -23343,9 +23522,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &988835317242570523
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -23719,9 +23895,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1013163030103385640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26536,9 +26709,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1321482354380752860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27016,9 +27186,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &1359179716509658104
 Transform:
   m_ObjectHideFlags: 0
@@ -27291,9 +27458,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &1373557909952277353
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27947,9 +28111,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &1410988130688598377
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -29282,9 +29443,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &1657942492820212343
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -31656,9 +31814,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!65 &1888703262120094488
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32187,9 +32342,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &1901825004663482968
 Transform:
   m_ObjectHideFlags: 0
@@ -32633,9 +32785,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1907876566905173628
 GameObject:
   m_ObjectHideFlags: 0
@@ -32934,9 +33083,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &1915409702096058631
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -33531,9 +33677,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &1962855917586360975
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -35121,9 +35264,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &2084754801891672760
 Transform:
   m_ObjectHideFlags: 0
@@ -37851,9 +37991,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &2318267169325116991
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -38228,9 +38365,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &2389297190871277615
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -39488,9 +39622,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &2482666547037532515
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -40236,9 +40367,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2505128355381878295
 GameObject:
   m_ObjectHideFlags: 0
@@ -40645,9 +40773,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &2537503197472032280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41045,9 +41170,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!65 &2545377691065323160
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41315,9 +41437,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &2565629642686289016
 Transform:
   m_ObjectHideFlags: 0
@@ -43806,9 +43925,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &2706884007360150839
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -44161,9 +44277,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &2710135828075106828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44853,9 +44966,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!65 &2764341771975430104
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -47450,9 +47560,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &2868599733712915394
 Transform:
   m_ObjectHideFlags: 0
@@ -48302,9 +48409,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2946917186781847828
 GameObject:
   m_ObjectHideFlags: 0
@@ -48609,9 +48713,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &2971079700715392813
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -49660,9 +49761,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &3045274578402116729
 GameObject:
   m_ObjectHideFlags: 0
@@ -50281,9 +50379,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!65 &3054055228286059480
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50866,9 +50961,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &3087682960124374487
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51651,9 +51743,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &3127043998548698009
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -53672,9 +53761,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &3289156276701099423
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -55112,9 +55198,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!195 &3354632235654326136
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -56454,9 +56537,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!195 &3501634700265738320
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -57180,9 +57260,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!65 &3508865975208866168
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57821,9 +57898,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &3521522682923201215
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -58193,9 +58267,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &3525954821738523417
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -60992,9 +61063,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &3788123461993408584
 GameObject:
   m_ObjectHideFlags: 0
@@ -61609,9 +61677,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &3829533768615350999
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -64237,9 +64302,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &4194291318798834809
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -64686,9 +64748,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &4203899115632057813
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -64911,9 +64970,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &4233502055670107555
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -66265,9 +66321,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4283309499682390456
 GameObject:
   m_ObjectHideFlags: 0
@@ -66941,9 +66994,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4339250537328649137
 GameObject:
   m_ObjectHideFlags: 0
@@ -67649,9 +67699,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &4376661736738351351
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -68222,9 +68269,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &4407757682968447805
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -68639,9 +68683,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &4446119233957246777
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -70326,9 +70367,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &4717998298506389336
 Transform:
   m_ObjectHideFlags: 0
@@ -71158,9 +71196,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4775167874074729452
 GameObject:
   m_ObjectHideFlags: 0
@@ -71992,9 +72027,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &4884555571748091483
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -72215,9 +72247,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &4900979104865029957
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -72922,9 +72951,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4962016369455674809
 GameObject:
   m_ObjectHideFlags: 0
@@ -73529,9 +73555,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &5056895438390571653
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -74054,9 +74077,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &5058623860522594335
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -74264,9 +74284,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &5061545203395546563
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -76943,9 +76960,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &5368554174835286605
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -77711,9 +77725,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &5430646139483518420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78501,9 +78512,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &5494549177487814651
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -79282,9 +79290,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &5587485206478955901
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -80234,9 +80239,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &5693260198178887531
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -80729,9 +80731,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &5759065609267437721
 GameObject:
   m_ObjectHideFlags: 0
@@ -82062,9 +82061,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &5951886261781777717
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -82411,9 +82407,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &6001719685957801571
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -83685,9 +83678,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!65 &6095604428518814544
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -84438,9 +84428,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &6130671896476294641
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -84665,9 +84652,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &6164590708440300765
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -85411,9 +85395,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &6249498170310890291
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -86571,9 +86552,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &6383499721490894938
 GameObject:
   m_ObjectHideFlags: 0
@@ -87050,9 +87028,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &6397696238925510007
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -87728,9 +87703,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &6496255918080095271
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -88269,9 +88241,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &6561125370872083625
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -88983,9 +88952,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &6591924345607757874
 GameObject:
   m_ObjectHideFlags: 0
@@ -90310,9 +90276,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &6812627884796880849
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -92817,9 +92780,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &7200581096903478125
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -93344,9 +93304,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &7202337980749888234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96862,9 +96819,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &7323620803079646232
 GameObject:
   m_ObjectHideFlags: 0
@@ -97233,9 +97187,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &7343523040387218552
 Transform:
   m_ObjectHideFlags: 0
@@ -97583,9 +97534,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!65 &7386028565154335960
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -98478,9 +98426,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!195 &7467472828098446808
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -99270,9 +99215,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &7544463154952476897
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99863,9 +99805,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &7564854068751690993
 GameObject:
   m_ObjectHideFlags: 0
@@ -101126,9 +101065,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &7768479420442739504
 GameObject:
   m_ObjectHideFlags: 0
@@ -101793,9 +101729,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &7862997473111517296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108261,9 +108194,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &8287934880466797977
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -110959,9 +110889,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &8729300347251441157
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -111529,9 +111456,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &8762341513108911277
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -112855,9 +112779,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &8996849524528947215
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -113563,9 +113484,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &9093324479385318680
 Transform:
   m_ObjectHideFlags: 0
@@ -113981,9 +113899,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &9113417643390924824
 GameObject:
   m_ObjectHideFlags: 0
@@ -114446,9 +114361,6 @@ MonoBehaviour:
   _graphicsDisableDelay: 0
   _debugger: {fileID: 0}
   refresh: 0
-  playerHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &9147275872525584837
 MeshFilter:
   m_ObjectHideFlags: 0
