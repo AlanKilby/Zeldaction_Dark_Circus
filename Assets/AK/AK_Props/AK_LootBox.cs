@@ -15,6 +15,7 @@ public class AK_LootBox : MonoBehaviour
     {
         chestCollider = GetComponent<Collider>();
         dropRateManager = GameObject.FindGameObjectWithTag("Player").GetComponent<AK_DropRateManager>();
+        
     }
 
     private void OnTriggerEnter(Collider other)

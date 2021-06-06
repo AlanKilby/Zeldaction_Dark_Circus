@@ -15,15 +15,18 @@ public class AK_PlayerPotionManager : MonoBehaviour
 
     Health playerHealth;
 
+    float maxHP;
+
     private void Start()
     {
         playerHealth = GetComponent<Health>();
+        maxHP = playerHealth.CurrentValue;
     }
     private void Update()
     {
         
 
-        if (Input.GetButtonDown("Potion") && AK_PlayerManager.potionNumber > 0)
+        if (Input.GetButtonDown("Potion") && AK_PlayerManager.potionNumber > 0 && playerHealth.CurrentValue < maxHP)
         {
             UsePotion(potion);
         }

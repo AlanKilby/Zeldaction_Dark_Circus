@@ -64,6 +64,7 @@ public class PlayerMovement_Alan : MonoBehaviour
         sPlayer = transform.root.gameObject;
         movementSpeedHolder = movementSpeed;
         playerHit = gameObject.GetComponent<AK_PlayerHit>();
+        aimSpriteRend.enabled = false;
 
     }
 
@@ -233,7 +234,11 @@ public class PlayerMovement_Alan : MonoBehaviour
         if (isHit)
         {
             // HITS
-            if (verticalMove < 0 && canThrow == true)
+            if (horizontalMove == 0 && verticalMove == 0 && canThrow == true)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_IDLE);
+            }
+            else if (verticalMove < 0 && canThrow == true)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_DOWN);
                 Debug.Log("playerAnim.PLAYER_HIT_HAT_DOWN");
@@ -253,6 +258,10 @@ public class PlayerMovement_Alan : MonoBehaviour
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_LEFT);
                 Debug.Log("playerAnim.PLAYER_HIT_HAT_LEFT");
             } // NO HAT
+            else if (horizontalMove == 0 && verticalMove == 0 && canThrow == false)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_IDLE);
+            }
             else if (verticalMove > 0 && canThrow == false)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_TOP);
