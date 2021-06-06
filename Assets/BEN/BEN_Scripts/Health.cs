@@ -37,6 +37,11 @@ public class Health : MonoBehaviour
     public void DecreaseHp(sbyte value)
     {
         CurrentValue -= value;
+        if (gameObject.CompareTag("Player"))
+        {
+            AK_PlayerHit playerHit = gameObject.GetComponent<AK_PlayerHit>();
+            playerHit.CallInvincibleState();
+        }
 
         if (CurrentValue > 0)
         {
