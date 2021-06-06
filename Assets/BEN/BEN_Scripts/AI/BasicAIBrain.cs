@@ -42,7 +42,6 @@ namespace BEN.AI
     } 
     
     [RequireComponent(typeof(NavMeshAgent))]
-    [RequireComponent(typeof(Health))]
     [DefaultExecutionOrder(2)] 
     public class BasicAIBrain : MonoBehaviour
     {
@@ -50,6 +49,8 @@ namespace BEN.AI
 
         [SerializeField] private AIType type;
         [SerializeField] private bool _canPatrol = true; 
+        [SerializeField] private AK_DropRateManager _drop;
+
         public AIType Type { get => type; set => Type = value; } 
         
         // used for conditionalShow's property drawer until I know how to directly use enum 
@@ -145,9 +146,9 @@ namespace BEN.AI
         private void Awake()
         {
             _fsm = StateMachine<States>.Initialize(this);
-            _fsm.ChangeState(States.Init, StateTransition.Safe); 
+            _fsm.ChangeState(States.Init, StateTransition.Safe);
             
-            _agentHp = GetComponent<Health>();
+            _agentHp = Type == AIType.Mascotte ? GetComponentInChildren<Health>() : GetComponent<Health>();
             _agentHp.IsMonkeyBall = true; 
         }
 
@@ -485,7 +486,6 @@ namespace BEN.AI
         private void BecomeNormalMonkey()
         {
             Destroy(_ballGraphics); 
-            transform.position = new Vector3(transform.position.x, -0.75f, transform.position.z);
             _graphics.transform.localPosition = Vector3.zero; 
             _checkSurroundings.BearerType = type = AIType.Monkey; 
             _agentHp.CurrentValue = 1; 
@@ -494,6 +494,7 @@ namespace BEN.AI
             _agent.destination = PlayerMovement_Alan.sPlayerPos;
             _attackDelay = 0.2f; 
             
+            transform.position = new Vector3(transform.position.x, -1f, transform.position.z);
             OnRequireStateChange(States.Attack, StateTransition.Safe); 
         }
 
@@ -575,6 +576,8 @@ namespace BEN.AI
             NewState = States.Die;
             _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
             _agent.speed = 0f; 
+            _drop.Drop(gameObject);
+            
             foreach (var item in _componentsToDeactivateOnDeath)
             {
                 item.enabled = false; 
@@ -591,7 +594,7 @@ namespace BEN.AI
                 clipToPlay = _aIAnimation.PlayAnimation(wasMonkeyBall ? AnimState.Die : AnimState.Hit, AnimDirection.None);
             } 
             catch (Exception) { }
-
+            
             if (clipToPlay != null) yield break;
             _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None); // need consistent naming across all mobs, not Die or Hit for same result.. 
         }

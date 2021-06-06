@@ -264,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   _canPatrol: 1
+  _drop: {fileID: 0}
   isMonkeyBall: 0
   isFakir: 1
   isCaster: 1
@@ -426,6 +427,7 @@ GameObject:
   - component: {fileID: 1114475966}
   - component: {fileID: 1368377169}
   - component: {fileID: 7467046443556585310}
+  - component: {fileID: 5476025751100501073}
   m_Layer: 0
   m_Name: Fakir_Graphics
   m_TagString: Untagged
@@ -664,6 +666,8 @@ MonoBehaviour:
   - {fileID: 9151969981844469843, guid: 6ddf36aaa609f1b4cbd151ad984c2c9c, type: 3}
   originPositionReference: {fileID: 2277243042852891183}
   secondarySpawnPoint: {fileID: 366257296850436054}
+  _eulerRotation: {x: 90, y: 0, z: 0}
+  _groundHeight: 0.27
 --- !u!114 &7467046443556585310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -855,6 +859,26 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+--- !u!114 &5476025751100501073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3196105207732227387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e9b89112307eb247b4a844d25d80c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDropRate: 50
+  dropRateIncrease: 20
+  increaseOT: 0
+  time: 0
+  potion: {fileID: 9022016546524069892, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+  potionDropRate: 50
+  heart: {fileID: 1324029780496701695, guid: 40da512ef0ffe5147b147b1fdfe68887, type: 3}
+  heartDropRate: 100
 --- !u!1 &5953828729676287935
 GameObject:
   m_ObjectHideFlags: 0

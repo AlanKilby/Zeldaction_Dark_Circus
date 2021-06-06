@@ -65,7 +65,7 @@ public class AK_DropRateManager : MonoBehaviour
         if (currentDropRate < minDropRate)
             currentDropRate = minDropRate;
     }
-
+    
     public void Drop(GameObject thisGameObject)
     {
         if(Random.Range(0,101) <= currentDropRate)
@@ -77,7 +77,7 @@ public class AK_DropRateManager : MonoBehaviour
         {
             IncrementDropRate();
         }
-    }
+    } 
 
     public void ObjectDrop(GameObject thisGameObject)
     {

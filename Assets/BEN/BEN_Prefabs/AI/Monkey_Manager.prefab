@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 6253020814612057539}
   - component: {fileID: 1064879021}
   - component: {fileID: 7792050627292937659}
+  - component: {fileID: 1487215061011339966}
   m_Layer: 0
   m_Name: Monkey_Graphics
   m_TagString: Untagged
@@ -331,6 +332,8 @@ MonoBehaviour:
   - {fileID: 9151969981844469843, guid: 6ddf36aaa609f1b4cbd151ad984c2c9c, type: 3}
   originPositionReference: {fileID: 9022539693079688065}
   secondarySpawnPoint: {fileID: 0}
+  _eulerRotation: {x: 90, y: 0, z: 0}
+  _groundHeight: 0.27
 --- !u!114 &7792050627292937659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,6 +534,26 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+--- !u!114 &1487215061011339966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8072824807585136640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e9b89112307eb247b4a844d25d80c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDropRate: 50
+  dropRateIncrease: 20
+  increaseOT: 0
+  time: 0
+  potion: {fileID: 9022016546524069892, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+  potionDropRate: 50
+  heart: {fileID: 1324029780496701695, guid: 40da512ef0ffe5147b147b1fdfe68887, type: 3}
+  heartDropRate: 100
 --- !u!1 &8072824808082983536
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,6 +781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   _canPatrol: 1
+  _drop: {fileID: 1487215061011339966}
   isMonkeyBall: 0
   isFakir: 0
   isCaster: 0
@@ -831,7 +855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _AIBrain: {fileID: 8072824808094687805}
-  _slowForceMultiplier: 0
+  _slowForceMultiplier: 0.5
   _delayBeforeSlow: 0.5
 --- !u!1 &8835960570973703075
 GameObject:
