@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BEN.AI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,6 +26,8 @@ public class AK_TrapChest : MonoBehaviour
 
     public void EnemySpawn()
     {
-        Instantiate(enemy, transform.position, Quaternion.identity);
+        GameObject instantiatedEnemy = Instantiate(enemy, transform.position, Quaternion.identity);
+
+        instantiatedEnemy.GetComponent<BasicAIBrain>().HasBeenInvokedByBoss = true;
     } 
 }
