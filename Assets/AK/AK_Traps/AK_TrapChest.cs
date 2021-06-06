@@ -26,7 +26,7 @@ public class AK_TrapChest : MonoBehaviour
             chestCollider.enabled = false;
             destructionAnim.Play("crate blowup");
             destructionParticles.Play();
-            EnemySpawn();
+            Invoke("EnemySpawn", .3f);
         }
     }
 
@@ -34,6 +34,6 @@ public class AK_TrapChest : MonoBehaviour
     {
         GameObject instantiatedEnemy = Instantiate(enemy, transform.position, Quaternion.identity);
 
-        instantiatedEnemy.GetComponent<BasicAIBrain>().HasBeenInvokedByBoss = true;
+        instantiatedEnemy.GetComponentInChildren<BasicAIBrain>().HasBeenInvokedByBoss = true;
     } 
 }
