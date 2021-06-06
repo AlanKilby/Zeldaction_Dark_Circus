@@ -18,6 +18,8 @@ public class Boomerang : MonoBehaviour
     public AnimationCurve goingSpeedC;
     public AnimationCurve comingSpeedC;
 
+    public GameObject teleportParticles;
+
     public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, fakirWeaponLayer, bossLayer, jailLayer; 
    
     private Rigidbody rb;
@@ -123,6 +125,7 @@ public class Boomerang : MonoBehaviour
             playerPos.position = new Vector3(transform.position.x, playerPos.position.y, transform.position.z);
             isComingBack = true;
             playerPos.GetComponent<PlayerMovement_Alan>().canThrow = true;
+            Instantiate(teleportParticles, gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);
             
         }

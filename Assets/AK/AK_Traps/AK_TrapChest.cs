@@ -1,4 +1,5 @@
 ﻿using BEN.AI;
+using MonsterLove.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class AK_TrapChest : MonoBehaviour
     private void Awake()
     {
         chestCollider = GetComponent<Collider>();
+        destructionAnim.Play("caissepiege");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,7 +34,9 @@ public class AK_TrapChest : MonoBehaviour
     public void EnemySpawn()
     {
         GameObject instantiatedEnemy = Instantiate(enemy, transform.position, Quaternion.identity);
+        BasicAIBrain aibrain = instantiatedEnemy.GetComponentInChildren<BasicAIBrain>();
 
-        instantiatedEnemy.GetComponent<BasicAIBrain>().HasBeenInvokedByBoss = true;
+        aibrain.HasBeenInvokedByBoss = true;
+        aibrain.OnRequireStateChange(States.Attack, StateTransition.Safe);
     } 
 }
