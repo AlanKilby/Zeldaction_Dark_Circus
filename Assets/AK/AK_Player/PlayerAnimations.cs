@@ -50,6 +50,7 @@ public class PlayerAnimations : MonoBehaviour
 
     private void Start()
     {
+        _playerHp = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
         animator = GetComponent<Animator>();
         playerMovement = player.GetComponent<PlayerMovement_Alan>();
         _playerHp.IsMonkeyBall = false; 
