@@ -904,6 +904,21 @@ MonoBehaviour:
   buttonAnim: {fileID: 3976848922724987784}
   OpenAnimName: QuitterButton_Open
   CloseAnimName: QuitterButton_Close
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1687648747}
+        m_TargetAssemblyTypeName: CHM_ButtonScripts, Assembly-CSharp
+        m_MethodName: Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!54 &89917349
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3696,6 +3711,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ae4f4f43f1a91c49b9915f6639074c2, type: 3}
+--- !u!114 &378326707 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6970871832311890759, guid: 73eef59a99faf0b419ddf6e152dd6078, type: 3}
+  m_PrefabInstance: {fileID: 1665033962}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 097c4143ec8917c4389c5780f7ca7b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &379044916
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4254,6 +4280,45 @@ MonoBehaviour:
   buttonAnim: {fileID: 3976848922724987788}
   OpenAnimName: CreditsButton_Open
   CloseAnimName: CreditsButton_Close
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 483227905}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1783731805}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1347671752}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!54 &484398360
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5578,6 +5643,45 @@ MonoBehaviour:
   buttonAnim: {fileID: 3976848922724987786}
   OpenAnimName: OptionButton_Open
   CloseAnimName: OptionButton_Close
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 483227905}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1783731805}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1709346482}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!54 &671775641
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7624,6 +7728,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6511166355352752017, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 6511166355352752017, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
 --- !u!1001 &956920964
@@ -7815,7 +7923,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7b29ef703b00e37449517fde46a666a4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.6
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -14737,6 +14845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playSceneValue: 4
+  fade: {fileID: 378326707}
 --- !u!4 &1687648748
 Transform:
   m_ObjectHideFlags: 0
@@ -18265,6 +18374,21 @@ MonoBehaviour:
   buttonAnim: {fileID: 3976848922724987782}
   OpenAnimName: JouerButton_Open
   CloseAnimName: JouerButton_Close
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1687648747}
+        m_TargetAssemblyTypeName: CHM_ButtonScripts, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &2088693527
 PrefabInstance:
   m_ObjectHideFlags: 0
