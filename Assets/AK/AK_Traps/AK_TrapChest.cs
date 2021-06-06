@@ -10,6 +10,9 @@ public class AK_TrapChest : MonoBehaviour
     [Tooltip("This enemy will be spawned by the trap chest.")]
     public GameObject enemy;
 
+    public Animator destructionAnim;
+    public ParticleSystem destructionParticles;
+
     private void Awake()
     {
         chestCollider = GetComponent<Collider>();
@@ -20,6 +23,8 @@ public class AK_TrapChest : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Player") || other.gameObject.layer == LayerMask.NameToLayer("PlayerWeapon"))
         {
             chestCollider.enabled = false;
+            destructionAnim.Play("crate blowup");
+            destructionParticles.Play();
             EnemySpawn();
         }
     }
