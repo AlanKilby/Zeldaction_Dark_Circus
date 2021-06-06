@@ -3711,6 +3711,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ae4f4f43f1a91c49b9915f6639074c2, type: 3}
+--- !u!114 &378326707 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6970871832311890759, guid: 73eef59a99faf0b419ddf6e152dd6078, type: 3}
+  m_PrefabInstance: {fileID: 1665033962}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 097c4143ec8917c4389c5780f7ca7b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &379044916
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7717,6 +7728,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6511166355352752017, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 6511166355352752017, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
 --- !u!1001 &956920964
@@ -14830,6 +14845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playSceneValue: 4
+  fade: {fileID: 378326707}
 --- !u!4 &1687648748
 Transform:
   m_ObjectHideFlags: 0

@@ -177,7 +177,7 @@ public class PlayerMovement_Alan : MonoBehaviour
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROWING_HAT_DOWN);
             }
         }
-        else if (Input.GetButtonUp("PlayerAttack"))
+        else if (Input.GetButtonUp("PlayerAttack") && canThrow)
         {
             playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROW_ANIM);
         }

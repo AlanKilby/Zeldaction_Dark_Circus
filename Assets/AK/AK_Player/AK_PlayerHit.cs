@@ -6,7 +6,7 @@ public class AK_PlayerHit : MonoBehaviour
 {
     public float invincibleTimer;
 
-    public bool isInvincible = false;
+    public static bool isInvincible = false;
 
 
     public void CallInvincibleState()
