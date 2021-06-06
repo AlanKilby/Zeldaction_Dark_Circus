@@ -15,7 +15,9 @@ public class AnimEventInstantiateObject : MonoBehaviour
     
     [SerializeField] private Transform originPositionReference;
     [SerializeField, ConditionalShow("useSecondarySpawnPoint", true)] private Transform secondarySpawnPoint;
-
+    [SerializeField, ConditionalShow("instantiateManuallyOnSelfDestroy", true)] private Vector3 _eulerRotation = new Vector3(90f, 0f, 0f);
+    [SerializeField, ConditionalShow("instantiateManuallyOnSelfDestroy", true)] private float _groundHeight = 0.27f;
+    
     private GameObject _reference; 
     
     private void OnValidate()
@@ -47,12 +49,12 @@ public class AnimEventInstantiateObject : MonoBehaviour
         {
             var selector = Random.Range(0, objToInstantiateOnSelfDestroy.Count); 
             _reference = Instantiate(objToInstantiateOnSelfDestroy[selector], 
-                new Vector3(transform.position.x, 0.15f, transform.position.z), Quaternion.Euler(90f, 0f, 0f));
+                new Vector3(transform.position.x, _groundHeight, transform.position.z), Quaternion.Euler(_eulerRotation));
         }
         else if (instantiateManuallyOnSelfDestroy)
         {
             _reference = Instantiate(objToInstantiateOnSelfDestroy[0], 
-                new Vector3(transform.position.x, 0.15f, transform.position.z), Quaternion.Euler(90f, 0f, 0f));
+                new Vector3(transform.position.x, _groundHeight, transform.position.z), Quaternion.Euler(_eulerRotation));
         }
 
         if (!destroyNestedPrefabAfterDelay) return; 
