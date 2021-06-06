@@ -9,7 +9,10 @@ public class UD_EnterDungeonScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Fade.nextSceneIndex = dungeonIndex;
-        Fade.LaunchFadeIn(dungeonIndex);
+        if (other.CompareTag("Player"))
+        {
+            Fade.nextSceneIndex = dungeonIndex;
+            Fade.LaunchFadeIn(dungeonIndex);
+        }
     }
 }
