@@ -9,6 +9,7 @@ using UnityEditor;
 #endif
 using BEN.Animation;
 using BEN.Math;
+using UnityEngine.Events;
 
 
 /* 
@@ -89,7 +90,10 @@ namespace BEN.AI
         [SerializeField] private bool refresh;
         private bool wasMonkeyBall;
 
-        #endregion 
+        // ALAN Variables
+        //public UnityEvent playerHitEvent;
+        
+#endregion 
 
 #region Public Variables
         public Action<States, StateTransition> OnRequireStateChange;
@@ -465,7 +469,14 @@ namespace BEN.AI
 
         private void ApplyCACDamage()
         {
-            _playerHP.DecreaseHp(_attackDamage); 
+            if(!AK_PlayerHit.isInvincible)
+            _playerHP.DecreaseHp(_attackDamage);
+
+            // Added by Alan 06/06/2021
+            PlayerMovement_Alan playerMov = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement_Alan>();
+            playerMov.HitAnim();
+            // Added by Alan 03/06/2021
+            //playerHitEvent.Invoke();
         } 
 
         private void FakirAttack() 

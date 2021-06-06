@@ -1,7 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerMovement_Alan : MonoBehaviour
 {
+    [HideInInspector]
+    public float horizontalMove;
+    [HideInInspector]
+    public float verticalMove;
+
     public float movementSpeed = 5f;
 
     [HideInInspector]
@@ -45,26 +51,27 @@ public class PlayerMovement_Alan : MonoBehaviour
     [HideInInspector]
     public bool isSlowed = false;
 
+    AK_PlayerHit playerHit;
+
+    public bool isHit = false;
+
+    public SpriteRenderer aimSpriteRend;
+
     void Start()
     {
         canThrow = true;
         throwingTime = minThrowTime;
         sPlayer = transform.root.gameObject;
         movementSpeedHolder = movementSpeed;
+        playerHit = gameObject.GetComponent<AK_PlayerHit>();
+
     }
 
     void Update()
     {
-        //if (isInMenu)
-        //{
-        //    canMove = false;
-        //    canThrow = false;
-        //}
-        //else if (!isInMenu)
-        //{
-        //    canMove = true;
-        //    canThrow = true;
-        //}
+
+        PlayerAnims();
+        PlayerNormalAnims();
         
         sPlayerPos = transform.position; 
 
@@ -74,6 +81,7 @@ public class PlayerMovement_Alan : MonoBehaviour
             {
                 playerRB.velocity = Vector3.zero;
                 canMove = false;
+                aimSpriteRend.enabled = true;
                 if(throwingTime <= maxThrowTime)
                 {
                     throwingTime += Time.deltaTime * chargeTimeCoeff;
@@ -85,6 +93,7 @@ public class PlayerMovement_Alan : MonoBehaviour
                 Attack(throwingTime);
                 canMove = true;
                 throwingTime = minThrowTime;
+                aimSpriteRend.enabled = false;
             }
         }
 
@@ -101,8 +110,8 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public void Move()
     {
-        float horizontalMove = Input.GetAxisRaw("Horizontal");
-        float verticalMove = Input.GetAxisRaw("Vertical");
+        horizontalMove = Input.GetAxisRaw("Horizontal");
+        verticalMove = Input.GetAxisRaw("Vertical");
 
 
         // Movement direction (x,y,z)
@@ -122,29 +131,59 @@ public class PlayerMovement_Alan : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(move);
         }
 
+    } 
 
+    
+
+    public void Attack(float throwTime)
+    {
+        boomerangInstance = Instantiate(boomerang, aim.transform.position, gameObject.transform.rotation);
+        boomerangInstance.GetComponent<Boomerang>().comebackTimer = throwTime;
+        canThrow = false;
+    }
+
+    public void HitAnim()
+    {
+        StartCoroutine(HitAnimation());
+    }
+    IEnumerator HitAnimation()
+    {
+        isHit = true;
+
+        yield return new WaitForSeconds(0.5f);
+
+        isHit = false;
+    }
+
+    public void PlayerNormalAnims()
+    {
         // Animations 
         if (Input.GetButton("PlayerAttack") && canThrow)
         {
-            if(horizontalMove > 0 && verticalMove == 0 && canThrow)
+            if (horizontalMove > 0 && verticalMove == 0 && canThrow)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROWING_HAT_RIGHT);
             }
-            else if(horizontalMove < 0 && verticalMove == 0 && canThrow)
+            else if (horizontalMove < 0 && verticalMove == 0 && canThrow)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROWING_HAT_LEFT);
             }
-            else if(verticalMove > 0 && canThrow)
+            else if (verticalMove > 0 && canThrow)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROWING_HAT_TOP);
             }
-            else if(verticalMove < 0 && canThrow)
+            else if (verticalMove < 0 && canThrow)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROWING_HAT_DOWN);
             }
         }
-        else
+        else if (Input.GetButtonUp("PlayerAttack") && canThrow)
         {
+            playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROW_ANIM);
+        }
+        else if(!isHit)
+        {
+            // NO HIT
             if (horizontalMove == 0 && verticalMove == 0 && canThrow == true)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_IDLE_HAT);
@@ -185,14 +224,55 @@ public class PlayerMovement_Alan : MonoBehaviour
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_LEFT_NO_HAT);
             }
-        }
-        
-    } 
 
-    public void Attack(float throwTime)
+
+        }
+    }
+    public void PlayerAnims()
     {
-        boomerangInstance = Instantiate(boomerang, aim.transform.position, gameObject.transform.rotation);
-        boomerangInstance.GetComponent<Boomerang>().comebackTimer = throwTime;
-        canThrow = false;
+        if (isHit)
+        {
+            // HITS
+            if (verticalMove < 0 && canThrow == true)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_DOWN);
+                Debug.Log("playerAnim.PLAYER_HIT_HAT_DOWN");
+            }
+            else if (verticalMove > 0 && canThrow == true)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_TOP);
+                Debug.Log("playerAnim.PLAYER_HIT_HAT_TOP");
+            }
+            else if (horizontalMove > 0 && verticalMove == 0 && canThrow == true)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_RIGHT);
+                Debug.Log("playerAnim.PLAYER_HIT_HAT_RIGHT");
+            }
+            else if (horizontalMove < 0 && verticalMove == 0 && canThrow == true)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_LEFT);
+                Debug.Log("playerAnim.PLAYER_HIT_HAT_LEFT");
+            } // NO HAT
+            else if (verticalMove > 0 && canThrow == false)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_TOP);
+                Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_TOP");
+            }
+            else if (verticalMove < 0 && canThrow == false)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_DOWN);
+                Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_DOWN");
+            }
+            else if (horizontalMove > 0 && verticalMove == 0 && canThrow == false)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_RIGHT);
+                Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_RIGHT");
+            }
+            else if (horizontalMove < 0 && verticalMove == 0 && canThrow == false)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_LEFT);
+                Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_LEFT");
+            }
+        }
     }
 }

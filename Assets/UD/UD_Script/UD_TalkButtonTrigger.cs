@@ -9,7 +9,7 @@ public class UD_TalkButtonTrigger : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("PlayerAttack"))
+        if (Input.GetButtonDown("PlayerInteraction"))
         {
             
             DialogueTrigger.Invoke();
