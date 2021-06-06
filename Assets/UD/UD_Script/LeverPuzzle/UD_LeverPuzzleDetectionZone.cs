@@ -17,7 +17,7 @@ public class UD_LeverPuzzleDetectionZone : MonoBehaviour
 
     private void Update()
     {
-        if (activationInputEnable && Input.GetKeyDown(KeyCode.Space))
+        if (activationInputEnable && Input.GetButtonDown("PlayerInteraction"))
         {
             leverAssociated.Activate();
         }
