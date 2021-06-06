@@ -8,6 +8,8 @@ public class CHM_Pause : MonoBehaviour
 
     private bool gameIsPaused;
 
+
+
     private void Start()
     {
         gameIsPaused = false;

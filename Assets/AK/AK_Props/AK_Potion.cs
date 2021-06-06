@@ -17,11 +17,11 @@ public class AK_Potion : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player") && potionManager.potionQuantity < potionManager.maxPotionQuantity)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player") && AK_PlayerManager.potionNumber < potionManager.maxPotionQuantity)
         {
 
             //Debug.Log("PlayerCollisionPotion");
-            potionManager.potionQuantity++;
+            AK_PlayerManager.potionNumber++;
             potionAnim.Play("collected");
             potionCollider.enabled = false;
             Destroy(gameObject,destroyTime);      
