@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BEN.AI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,9 @@ public class AK_TrapChest : MonoBehaviour
 
     [Tooltip("This enemy will be spawned by the trap chest.")]
     public GameObject enemy;
+
+    public Animator destructionAnim;
+    public ParticleSystem destructionParticles;
 
     private void Awake()
     {
@@ -19,12 +23,16 @@ public class AK_TrapChest : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Player") || other.gameObject.layer == LayerMask.NameToLayer("PlayerWeapon"))
         {
             chestCollider.enabled = false;
+            destructionAnim.Play("crate blowup");
+            destructionParticles.Play();
             EnemySpawn();
         }
     }
 
     public void EnemySpawn()
     {
-        Instantiate(enemy, transform.position, Quaternion.identity);
+        GameObject instantiatedEnemy = Instantiate(enemy, transform.position, Quaternion.identity);
+
+        instantiatedEnemy.GetComponent<BasicAIBrain>().HasBeenInvokedByBoss = true;
     } 
 }
