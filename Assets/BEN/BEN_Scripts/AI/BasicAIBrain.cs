@@ -91,7 +91,7 @@ namespace BEN.AI
         private bool wasMonkeyBall;
 
         // ALAN Variables
-        public UnityEvent playerHitEvent;
+        //public UnityEvent playerHitEvent;
         
 #endregion 
 
@@ -472,10 +472,14 @@ namespace BEN.AI
 
         private void ApplyCACDamage()
         {
+            if(!AK_PlayerHit.isInvincible)
             _playerHP.DecreaseHp(_attackDamage);
 
+            // Added by Alan 06/06/2021
+            PlayerMovement_Alan playerMov = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement_Alan>();
+            playerMov.HitAnim();
             // Added by Alan 03/06/2021
-            playerHitEvent.Invoke();
+            //playerHitEvent.Invoke();
         } 
 
         private void FakirAttack() 

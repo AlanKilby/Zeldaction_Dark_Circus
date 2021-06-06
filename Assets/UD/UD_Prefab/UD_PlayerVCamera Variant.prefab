@@ -119,6 +119,23 @@ MonoBehaviour:
   hardShakeAmplitude: 1.8
   hardShakeFrequency: 8
   VirtualCamera: {fileID: 6654703847501073406}
+--- !u!114 &4752985625647935523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6654703847414224072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 1
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!114 &2006618890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239108799069, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1.7763564e-15
+      value: -1.7763564e-15
       objectReference: {fileID: 0}
     - target: {fileID: 9034283239108799069, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
       propertyPath: m_LocalRotation.z
@@ -328,6 +345,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6654703847414224072 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9034283239718327887, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
+  m_PrefabInstance: {fileID: 2394359578165887623}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6654703847882729695 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9034283239108799064, guid: 4340cac83a420d249b7dfaff378b9a02, type: 3}
