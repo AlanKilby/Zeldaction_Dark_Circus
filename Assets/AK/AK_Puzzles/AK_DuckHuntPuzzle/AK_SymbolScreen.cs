@@ -13,12 +13,14 @@ public class AK_SymbolScreen : MonoBehaviour
     bool puzzleFinished;
     public UD_DuckHuntDoor DHD;
     public UD_MagicalWandBoxScript MWB;
+    public GameObject tutoBaguette;
     //
 
     private void Start()
     {
         //screen.GetComponent<SpriteRenderer>();
         puzzleFinished = false;
+        tutoBaguette.SetActive(false);
     }
 
     private void Update()
@@ -86,6 +88,7 @@ public class AK_SymbolScreen : MonoBehaviour
                 ducks[i].GetComponent<AK_DuckScript>().symbol.SetActive(false);
                 MWB.WandBoxOpen();
                 DHD.OpenDoor();
+                tutoBaguette.SetActive(true);
                 puzzleFinished = true;
             }
         }
