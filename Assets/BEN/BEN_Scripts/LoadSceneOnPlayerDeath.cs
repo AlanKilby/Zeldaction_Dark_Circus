@@ -9,7 +9,7 @@ public class LoadSceneOnPlayerDeath : MonoBehaviour
     [SerializeField, Range(0f, 15f)] private float delayBeforeLoad = 5f;
     [SerializeField] private AgentGameplayData _playerHP;
     [SerializeField] private Scenes sceneToLoad = Scenes.DeathScreen;
-    public static bool playerIsDead; 
+    public static bool sPlayerIsDead; 
 
     private void OnEnable()
     {
@@ -23,12 +23,12 @@ public class LoadSceneOnPlayerDeath : MonoBehaviour
 
     private void Start()
     {
-        playerIsDead = false; 
+        sPlayerIsDead = false; 
     }
 
     private void LoadNewSceneDecorator()
     {
-        playerIsDead = true; 
+        sPlayerIsDead = true; 
         StartCoroutine(nameof(LoadNewScene)); 
     } 
 

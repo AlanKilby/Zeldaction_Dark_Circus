@@ -14,7 +14,7 @@ public class PlaceholderDestination : MonoBehaviour
         GetRotation();
     }
 
-    public void GetRotation()
+    private void GetRotation()
     {
         transform.LookAt(agent.destination);
         EulerAnglesY = transform.rotation.eulerAngles.y; 
