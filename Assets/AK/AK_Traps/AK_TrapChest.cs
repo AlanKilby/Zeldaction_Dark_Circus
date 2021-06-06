@@ -27,7 +27,7 @@ public class AK_TrapChest : MonoBehaviour
             chestCollider.enabled = false;
             destructionAnim.Play("crate blowup");
             destructionParticles.Play();
-            EnemySpawn();
+            Invoke("EnemySpawn", .3f);
         }
     }
 
