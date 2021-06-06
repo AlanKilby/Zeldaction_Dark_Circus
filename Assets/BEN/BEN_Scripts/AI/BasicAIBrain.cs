@@ -137,8 +137,8 @@ namespace BEN.AI
         public bool GoingBackToPositionBeforeIdling { get; set; }
         public bool HasBeenInvokedByBoss { get; set; }
         public float MonkeyBallDodgeDistance { get; private set; }
-        
-#endregion
+
+        #endregion
 
 #region Unity Callbacks
 
