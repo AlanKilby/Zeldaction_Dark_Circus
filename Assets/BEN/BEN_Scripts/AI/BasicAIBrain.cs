@@ -235,10 +235,11 @@ namespace BEN.AI
 
         private void FixedUpdate()
         {
-            if (_canPatrol && !HasBeenInvokedByBoss)
+            if (_canPatrol || NewState != States.Default) 
             {
                 _detection.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.EulerAnglesY, 0f);
-            } 
+            }
+            
             CheckAnimDirection(); // remove from state machine 
 
             if (_agentHp.CurrentValue <= 0 && !_patrol.IsDead && Type != AIType.MonkeySurBall) 
@@ -278,8 +279,6 @@ namespace BEN.AI
         // MOVE ALL THIS TO AIANIMATION ===> WARNING : duplicate 
         private void CheckAnimDirection() 
         {
-            if (Type == AIType.Fakir && !_canPatrol) return;  
-
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex); 
 
             if (_placeholderDestination.angleIndex == _currentParentRotation) return;
@@ -296,8 +295,6 @@ namespace BEN.AI
         
         private void CheckAnimDirection(AnimState state)
         {
-            if (Type == AIType.Fakir && !_canPatrol) return;  
-            
             _animDirection = (AnimDirection) _placeholderDestination.angleIndex;
 
             if (_placeholderDestination.angleIndex == _currentParentRotation) return; 

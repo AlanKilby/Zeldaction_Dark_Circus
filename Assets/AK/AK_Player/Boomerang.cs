@@ -165,6 +165,7 @@ public class Boomerang : MonoBehaviour
         { 
             // Debug.Log("Collision with Enemy");
             enemy = other.GetComponent<BasicAIBrain>(); 
+            Debug.Log("seen by enemy is " + s_SeenByEnemy);
 
             if (enemy.Type == AIType.Mascotte && s_SeenByEnemy)  
             {

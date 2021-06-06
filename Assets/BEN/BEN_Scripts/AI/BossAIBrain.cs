@@ -410,7 +410,7 @@ public class BossAIBrain : MonoBehaviour
             if (_invocationSelector <= invocationProbability) 
             { 
                 // if invocation, select entity
-                _entityToInvokeSelector = UnityEngine.Random.Range(0f, 1f);
+                _entityToInvokeSelector = Random.Range(0f, 1f);
                 var selector = _entityToInvokeSelector <= _spawnableEntitiesList[1].SpawnProbability ? 1 : 0; // super crados 
                 
                 GameObject instanceReference = Instantiate(_spawnableEntitiesList[selector].Prefab, spawnPositions[i], Quaternion.identity);
