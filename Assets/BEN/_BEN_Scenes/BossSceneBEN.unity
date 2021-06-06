@@ -144,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 2877410177616000449, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
     - target: {fileID: 3094000364683129611, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
       propertyPath: _playerUnkillable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3642643065435347103, guid: b65c30a49ef3db6459754e16c87a9a04, type: 3}
       propertyPath: _playerUnkillable
@@ -559,6 +559,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 14.9
       objectReference: {fileID: 0}
+    - target: {fileID: 1272608561, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
+      propertyPath: _accuracyModifier
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1272608561, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
+      propertyPath: _bossAccuracyModifier
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1847129733, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.1
@@ -566,6 +574,10 @@ PrefabInstance:
     - target: {fileID: 1847129733, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: m_LocalPosition.z
       value: 2.7999983
+      objectReference: {fileID: 0}
+    - target: {fileID: 239534653543741571, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
+      propertyPath: _accuracyModifier
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 239534653543741571, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: _projectileFallDelay
@@ -624,6 +636,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6252492802224844196, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
     - target: {fileID: 8930034649593468849, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+    - target: {fileID: 8930034649593468849, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -674,18 +690,6 @@ PrefabInstance:
     - target: {fileID: 8930034649707844236, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8930034650034842194, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: _invocationDelay
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 8930034650034842194, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: _switchesOnDuration
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8930034650034842194, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: _switchesActivationDelay
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8930034650293137190, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: m_Size.x

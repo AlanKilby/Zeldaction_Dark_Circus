@@ -14,15 +14,14 @@ public class BossEventProjectileFalling : MonoBehaviour
     [SerializeField] private BoxCollider _spawnZone;
     [SerializeField, Range(0f, 5f)] private float _fallZoneBorder = 1f;
     [SerializeField, Range(2f, 60f)] private float _projectileFallDelay = 30f;
+
+    [SerializeField, Range(0, 5), Tooltip("0 means total accuracy")] private float _accuracyModifier = 2;  
     public static bool sProjectileCanFall; 
     private Vector3 projectileSpawnPosition;
     [SerializeField] private Health _bossHP;
 
     private GameObject projectileRef;
-    public static sbyte sProjectileDirection; 
-    
-    [Header("DEBUG")]
-    public bool _simulateTotalPrecision;
+    public static sbyte sProjectileDirection;
 
     private void Start()
     {
@@ -42,11 +41,10 @@ public class BossEventProjectileFalling : MonoBehaviour
  
     private void SetProjectileSpawnPosition()
     {
-        projectileSpawnPosition = _simulateTotalPrecision ? PlayerMovement_Alan.sPlayerPos + new Vector3(0f, 10f, 0f) : 
-                                            new Vector3(Random.Range(_spawnZone.bounds.min.x + _fallZoneBorder, _spawnZone.bounds.max.x - _fallZoneBorder), 
-                                            _spawnZone.bounds.center.y, 
-                                            Random.Range(_spawnZone.bounds.min.z + _fallZoneBorder, _spawnZone.bounds.max.z - _fallZoneBorder));
-        
+        projectileSpawnPosition = PlayerMovement_Alan.sPlayerPos + new Vector3(0f, _spawnZone.bounds.center.y, 0f) + (Random.insideUnitSphere *  _accuracyModifier);
+        Mathf.Clamp(projectileSpawnPosition.x, _spawnZone.bounds.min.x, _spawnZone.bounds.min.x); 
+        Mathf.Clamp(projectileSpawnPosition.z, _spawnZone.bounds.min.z, _spawnZone.bounds.min.z);
+
         sProjectileDirection = (sbyte)Mathf.Sign(projectileSpawnPosition.x - BossAIBrain.sBossPosition.x);
         StartCoroutine(nameof(ProjectileFall)); 
     }
@@ -68,6 +66,7 @@ public class BossEventProjectileFalling : MonoBehaviour
         sProjectileCanFall = false;
         if (BossAIBrain.sCurrentState != BossStates.Vulnerable)
         {
+            Debug.Log("setting state to object falling");
             BossAIBrain.sCurrentState = BossStates.ObjectFalling;
         }
 

@@ -23,7 +23,6 @@ public enum BossStates { Init, Default, Vulnerable, Invocation, ObjectFalling, R
 public enum SwitchesPattern { LineOne, LineTwo, LineThree, FullRight, FullLeft, DiagonalOne, DiagonalTwo } 
 public class BossAIBrain : MonoBehaviour
 {
-    // [SerializeField] private GameObject _graphics;
     [Header("Core")]
     [SerializeField] private Collider _bossCollider;
     [SerializeField] private Health _bossHP;
@@ -159,8 +158,9 @@ public class BossAIBrain : MonoBehaviour
         StartCoroutine(nameof(SetSwitchesCooldown)); 
     }
 
-    private void FixedUpdate() 
+    private void FixedUpdate()
     {
+        Debug.Log("current state is " + sCurrentState);
         if (_deathNotified || (!PlayerMovement_Alan.sPlayer && Time.time >= 1f)) return; 
         
         if (switchesAreOn)
