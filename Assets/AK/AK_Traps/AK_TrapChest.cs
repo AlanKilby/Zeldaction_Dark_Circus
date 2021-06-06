@@ -16,6 +16,7 @@ public class AK_TrapChest : MonoBehaviour
     private void Awake()
     {
         chestCollider = GetComponent<Collider>();
+        destructionAnim.Play("caissepiege");
     }
 
     private void OnTriggerEnter(Collider other)
