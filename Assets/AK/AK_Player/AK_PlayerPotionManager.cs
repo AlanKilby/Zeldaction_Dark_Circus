@@ -21,7 +21,7 @@ public class AK_PlayerPotionManager : MonoBehaviour
     {
         playerHealth = GetComponent<Health>();
         maxHP = playerHealth.CurrentValue;
-    }
+    }   
     private void Update()
     {
         

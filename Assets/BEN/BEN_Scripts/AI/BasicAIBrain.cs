@@ -185,16 +185,11 @@ namespace BEN.AI
 
                     Gizmos.DrawLine(_patrol.Points[i].position, _patrol.Points[(int) Mathf.Repeat(i + 1, _patrol.Points.Length)].position);
                     Gizmos.DrawWireSphere(_patrol.Points[i].position, 0.25f);
-                    
-#if  UNITY_EDITOR
-                    Handles.color = Color.red; 
-                    Handles.DrawWireDisc(transform.position ,Vector3.up, _allyNotifyRadius); 
-#endif
                 }
             }
-            catch (Exception e)
+            catch (Exception e) 
             {
-                Debug.Log($"{ e.Message} thrown by {gameObject.name}"); 
+                // Debug.Log($"{ e.Message} thrown by {gameObject.name}"); 
                 _patrol = GetComponent<FsmPatrol>();
                 _patrol.SetPoints();
             } 
@@ -240,10 +235,11 @@ namespace BEN.AI
 
         private void FixedUpdate()
         {
-            if (_canPatrol && !HasBeenInvokedByBoss)
+            if (_canPatrol || NewState != States.Default) 
             {
                 _detection.transform.rotation = Quaternion.Euler(0f, _placeholderDestination.EulerAnglesY, 0f);
-            } 
+            }
+            
             CheckAnimDirection(); // remove from state machine 
 
             if (_agentHp.CurrentValue <= 0 && !_patrol.IsDead && Type != AIType.MonkeySurBall) 
@@ -283,8 +279,6 @@ namespace BEN.AI
         // MOVE ALL THIS TO AIANIMATION ===> WARNING : duplicate 
         private void CheckAnimDirection() 
         {
-            if (Type == AIType.Fakir && !_canPatrol) return; // modify is fakir needs repositionning 
-
             _animDirection = (AnimDirection) (_placeholderDestination.angleIndex); 
 
             if (_placeholderDestination.angleIndex == _currentParentRotation) return;
@@ -301,13 +295,16 @@ namespace BEN.AI
         
         private void CheckAnimDirection(AnimState state)
         {
-            // if (Type == AIType.Fakir && !_canPatrol && NewState == States.Attack) return; // modify if fakir needs repositionning 
-
-            _animDirection = (AnimDirection) (_placeholderDestination.angleIndex);
+            _animDirection = (AnimDirection) _placeholderDestination.angleIndex;
 
             if (_placeholderDestination.angleIndex == _currentParentRotation) return; 
             
             _aIAnimation.PlayAnimation(state, _animDirection);
+            
+            if (type == AIType.MonkeySurBall)
+            {
+                _ballAnimation.PlayAnimation(AnimState.Walk, _animDirection); 
+            }
             
             _currentParentRotation = _placeholderDestination.angleIndex;
         } 
@@ -338,7 +335,6 @@ namespace BEN.AI
         { 
             yield return new WaitForSeconds(0.03f);
             NewState = States.Default;
-            Debug.Log("default_enter"); 
 
             if ((_canPatrol || GoingBackToPositionBeforeIdling) && !HasBeenInvokedByBoss)
             {
@@ -365,7 +361,6 @@ namespace BEN.AI
                 if (type == AIType.MonkeySurBall)
                 {
                     var clip = _ballAnimation.PlayAnimation(AnimState.Idle, AnimDirection.None); 
-                    Debug.Log($"playing {clip.clipContainer.name}");
                 } 
             } 
         } 
@@ -383,7 +378,6 @@ namespace BEN.AI
             
             _agent.destination = TargetToAttackPosition;
             _idlePositionBeforeAttacking = transform.position;
-            Debug.Log("attack_enter");
 
             var clip = new Clip();
             
@@ -435,7 +429,7 @@ namespace BEN.AI
                 } 
 
                 // back to default when player has been killed
-                if (LoadSceneOnPlayerDeath.playerIsDead)
+                if (LoadSceneOnPlayerDeath.sPlayerIsDead)
                 {
                     _fsm.ChangeState(States.Default, StateTransition.Safe);
                     CancelInvoke(nameof(ApplyCACDamage)); 
@@ -547,7 +541,6 @@ namespace BEN.AI
             {
                 case AIType.MonkeySurBall:
                     yield return new WaitForSeconds(_monkeyBallDodgeReactionTime);
-                    Debug.Log("defend_enter");
                     _checkSurroundings.CanDodgeProjectile = _monkeyBallCollider.enabled = _ballCollider.enabled = false;
                     transform.position += _checkSurroundings.DodgeDirection * _monkeyBallDodgeDistance;  
             
@@ -559,7 +552,6 @@ namespace BEN.AI
                     OnRequireStateChange(States.Attack, StateTransition.Safe);  
                     break;
                 case AIType.Mascotte:
-                    Debug.Log($"HIT with direction : {_animDirection}"); 
                     _aIAnimation.PlayAnimation(AnimState.Hit, _animDirection);
                     
                     yield return new WaitForSeconds(1f);  
@@ -583,7 +575,6 @@ namespace BEN.AI
             NewState = States.Die;
             _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
             _agent.speed = 0f; 
-            Debug.Log("die_enter");
             foreach (var item in _componentsToDeactivateOnDeath)
             {
                 item.enabled = false; 
@@ -602,7 +593,6 @@ namespace BEN.AI
             catch (Exception) { }
 
             if (clipToPlay != null) yield break;
-            Debug.Log("Calling Die state instead of Hit state");
             _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None); // need consistent naming across all mobs, not Die or Hit for same result.. 
         }
 
