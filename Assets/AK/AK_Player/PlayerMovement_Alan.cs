@@ -159,7 +159,6 @@ public class PlayerMovement_Alan : MonoBehaviour
 
         isHit = false;
     }
-
     public void PlayerNormalAnims()
     {
         // Animations 

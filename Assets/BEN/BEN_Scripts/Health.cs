@@ -25,13 +25,14 @@ public class Health : MonoBehaviour
     [SerializeField] private bool isBossHP;
     
     [Header("Debug")]
-    [SerializeField] private bool _playerUnkillable; 
+    [SerializeField] private bool _playerUnkillable;
 
+    private PlayerMovement_Alan playerMovementScript;
 
     private void Start()
     {
         CurrentValue = _agentStartingHP.Value;
-        _brain = IsMonkeyBall ? GetComponent<BasicAIBrain>() : null; 
+        _brain = IsMonkeyBall ? GetComponent<BasicAIBrain>() : null;
     }
 
     public void DecreaseHp(sbyte value)
@@ -40,6 +41,8 @@ public class Health : MonoBehaviour
         if (gameObject.CompareTag("Player"))
         {
             AK_PlayerHit playerHit = gameObject.GetComponent<AK_PlayerHit>();
+            playerMovementScript = gameObject.GetComponent<PlayerMovement_Alan>();
+            playerMovementScript.HitAnim();
             playerHit.CallInvincibleState();
         }
 
