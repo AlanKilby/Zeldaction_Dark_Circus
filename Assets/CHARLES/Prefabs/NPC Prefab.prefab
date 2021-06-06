@@ -561,7 +561,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7124170906885081148
 RectTransform:
   m_ObjectHideFlags: 0
@@ -801,6 +801,7 @@ MonoBehaviour:
     name: PNJ
     sentences:
     - "1\xE8re phrase"
+  ownDialogueManager: {fileID: 0}
 --- !u!1 &4643029286146288463
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,6 +1164,12 @@ MonoBehaviour:
   nameText: {fileID: 5876668194782399115}
   dialogueText: {fileID: 3133008331066998952}
   animator: {fileID: 7499511163460907973}
+  dialogueBox: {fileID: 0}
+  dialogueButton: {fileID: 0}
+  rewardOnDialogueEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  playerMovement: {fileID: 0}
 --- !u!1 &7402279374084781584
 GameObject:
   m_ObjectHideFlags: 0

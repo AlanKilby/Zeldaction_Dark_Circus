@@ -57,6 +57,8 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public SpriteRenderer aimSpriteRend;
 
+    public Animator hitScreen;
+
     void Start()
     {
         canThrow = true;
@@ -150,6 +152,8 @@ public class PlayerMovement_Alan : MonoBehaviour
     IEnumerator HitAnimation()
     {
         isHit = true;
+
+        hitScreen.Play("hit");
 
         yield return new WaitForSeconds(0.5f);
 
