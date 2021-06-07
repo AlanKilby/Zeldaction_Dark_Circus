@@ -20,6 +20,7 @@ public class RayAttack : MonoBehaviour
     [SerializeField] private Health _bossHP;
     public static List<GameObject> sRayVisuals = new List<GameObject>();
     public List<PlayAnimationFrom8Direction> _ray;
+    public static System.Action OnFireDone; 
     
     [Header("-- DEBUG -- ")] 
     public bool forceAngle;
@@ -37,22 +38,21 @@ public class RayAttack : MonoBehaviour
 
     private void Start()
     {
-        sCanRayAttack = true; 
         for (int i = 0; i < _rayVisuals.Count; i++)
         {
             _rayColliders.Add(_rayVisuals[i].GetComponent<Collider>());  
             sRayVisuals.Add(_rayVisuals[i]);
         } 
-    }
+    } 
 
     private void FixedUpdate()
     {
         // Debug.Log("can ray attack is " + sCanRayAttack); 
         
-        if (BossAIBrain.sCurrentState == BossStates.Vulnerable || !sCanRayAttack) return; 
+        if (BossAIBrain.sCurrentState == BossStates.Vulnerable || !sCanRayAttack || Time.time < _delayBetwenenRayAttacks * 0.9f) return; 
         // Debug.Log(" rotating for ray attack");
         StartCoroutine(nameof(CastRayToPlayer));
-        StartCoroutine(nameof(SetCanRotate));
+        StartCoroutine(nameof(SetCanRayAttack));
 
         if (!forceAngle)
         {
@@ -77,14 +77,16 @@ public class RayAttack : MonoBehaviour
         _bossAnimation.PlayAnimation(AnimState.Atk, AnimDirection.None);
         foreach (var item in _ray)
         {
+            Debug.Log("setting show ray to true");
             item.ShowRayVisuals(true);
         } 
 
-        yield return new WaitForFixedUpdate(); 
+        yield return new WaitForSeconds(0.015f); 
         foreach (var item in _ray)
         {
-            item.ShowRayVisuals(false);
-        }
+            Debug.Log("setting show ray to false");
+            item.ShowRayVisuals(false); 
+        } 
 
         yield return new WaitForSeconds(_rayPrewarningDuration);
 
@@ -97,10 +99,12 @@ public class RayAttack : MonoBehaviour
         for (var i = 0; i < _rayVisuals.Count; i++)
         { 
             _rayVisuals[i].SetActive(false); 
-        }
+        } 
+
+        OnFireDone(); // notify PlayAnimationFrom8Direction 
     } 
 
-    private IEnumerator SetCanRotate()
+    private IEnumerator SetCanRayAttack()
     {
         sCanRayAttack = false; 
         if (BossAIBrain.sCurrentState != BossStates.Vulnerable)

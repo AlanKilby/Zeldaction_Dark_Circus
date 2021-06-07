@@ -21,7 +21,7 @@ public class SpawnableEntity
 
 public enum BossStates { Init, Default, Vulnerable, Invocation, ObjectFalling, RayAttacking, Death } 
 public enum SwitchesPattern { LineOne, LineTwo, LineThree, FullRight, FullLeft, DiagonalOne, DiagonalTwo } 
-public class BossAIBrain : MonoBehaviour
+public class BossAIBrain : MonoBehaviour 
 {
     [Header("Core")]
     [SerializeField] private Collider _bossCollider;
@@ -31,6 +31,7 @@ public class BossAIBrain : MonoBehaviour
     [SerializeField, Tooltip("Point where the Loyal appears while vulnerable")] private Transform _BossVulnerablePoint;
     [SerializeField] private GameObject _bossGraphics; 
     [SerializeField, Range(0f, 1f)] private float _delayBeforePositioningAtVulnerablePoint = 0.5f;
+    public static Timer sTimer; // set with dialogue
 
     [Header("Spawn")]
     [SerializeField, Space] private GameObject _spawnerHalfCircle; 
