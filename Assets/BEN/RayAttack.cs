@@ -20,7 +20,9 @@ public class RayAttack : MonoBehaviour
     [SerializeField] private Health _bossHP;
     public static List<GameObject> sRayVisuals = new List<GameObject>();
     public List<PlayAnimationFrom8Direction> _ray;
-    public static System.Action OnFireDone; 
+    public static System.Action OnFireDone;
+    public List<LineRenderer> _lineRenderer = new List<LineRenderer>();
+    public List<ParticleSystem> _particleSystems = new List<ParticleSystem>();
     
     [Header("-- DEBUG -- ")] 
     public bool forceAngle;
@@ -28,14 +30,14 @@ public class RayAttack : MonoBehaviour
     
     private void OnEnable()
     {
-        BossAIBrain.OnBossVulnerable += DisableRayOnBossVulnerable;
-        OnFireDone += DisableRayOnBossVulnerable; 
+        BossAIBrain.OnBossVulnerable += DisableRayVisuals;
+        OnFireDone += DisableRayVisuals; 
     }
 
     private void OnDisable()
     {
-        BossAIBrain.OnBossVulnerable -= DisableRayOnBossVulnerable;
-        OnFireDone -= DisableRayOnBossVulnerable; 
+        BossAIBrain.OnBossVulnerable -= DisableRayVisuals;
+        OnFireDone -= DisableRayVisuals; 
     }
 
     private void Start()
@@ -50,8 +52,17 @@ public class RayAttack : MonoBehaviour
     private void FixedUpdate()
     {
         // Debug.Log("can ray attack is " + sCanRayAttack); 
-        
-        if (BossAIBrain.sCurrentState == BossStates.Vulnerable || !sCanRayAttack || Time.time < _delayBetwenenRayAttacks * 0.9f) return; 
+
+        if (BossAIBrain.sCurrentState == BossStates.Vulnerable || !sCanRayAttack ||
+            Time.time < _delayBetwenenRayAttacks * 0.9f)
+        {
+            if (BossAIBrain.sCurrentState == BossStates.Vulnerable)
+            {
+                DisableRayVisuals(); 
+            }
+
+            return;
+        } 
         // Debug.Log(" rotating for ray attack");
         StartCoroutine(nameof(CastRayToPlayer));
         StartCoroutine(nameof(SetCanRayAttack));
@@ -94,14 +105,26 @@ public class RayAttack : MonoBehaviour
 
         for (var i = 0; i < _rayVisuals.Count; i++)
         {
-            _rayVisuals[i].SetActive(true); 
+            _rayVisuals[i].SetActive(true);
+            _lineRenderer[i].enabled = true; 
         } 
+        
+        foreach (var item in _particleSystems)
+        {
+            item.Play();
+        }
 
         yield return new WaitForSeconds(_rayDamageDuration);  
         for (var i = 0; i < _rayVisuals.Count; i++)
         { 
             _rayVisuals[i].SetActive(false); 
+            _lineRenderer[i].enabled = false;
         } 
+        
+        foreach (var item in _particleSystems)
+        {
+            item.Stop();
+        }
 
         OnFireDone(); // notify PlayAnimationFrom8Direction 
     } 
@@ -127,14 +150,20 @@ public class RayAttack : MonoBehaviour
             Debug.Log("calling default from ray");
             BossAIBrain.OnRequireStateChange(BossStates.Default, StateTransition.Safe);
         } 
-    }
+    } 
     
-    private void DisableRayOnBossVulnerable()
+    private void DisableRayVisuals()
     {
-        Debug.Log("disabling rays from boss vulnerable");
+        Debug.Log("disabling rays");
         for (var i = 0; i < _rayVisuals.Count; i++)
         {
-            _rayVisuals[i].SetActive(false); 
+            _rayVisuals[i].SetActive(false);
+            _lineRenderer[i].enabled = false; 
+        }
+
+        foreach (var item in _particleSystems)
+        {
+            item.Stop(); 
         }
     }
 }

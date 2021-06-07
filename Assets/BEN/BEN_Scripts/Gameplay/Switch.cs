@@ -7,14 +7,16 @@ public class Switch : MonoBehaviour
 {
     [SerializeField] private LayerMask _playerLayer, _playerWeaponLayer;
     [SerializeField] private AIAnimation _leverAnimation;
-    [SerializeField] private AnimEventPlaySound _playSoundOnEvent; 
+    [SerializeField] private AnimEventPlaySound _playSoundOnEvent;
+    private UD_BossLeverUI _bossLever;
     public bool CanBeDeactivated { get; set; }
     private GameObject _visualCue;
     
     private void Start()
     {
         _visualCue = transform.GetChild(0).gameObject;
-        _leverAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); 
+        _leverAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);
+        _bossLever = GetComponent<UD_BossLeverUI>(); 
     }
 
     private void OnTriggerEnter(Collider other)
@@ -66,6 +68,7 @@ public class Switch : MonoBehaviour
     private void ResetState() 
     { 
         CanBeDeactivated = false;
+        _bossLever.PlayerIsNear = false; 
         _visualCue.SetActive(CanBeDeactivated);
         _leverAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right);
     }
