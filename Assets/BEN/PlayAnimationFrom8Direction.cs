@@ -106,12 +106,14 @@ public class PlayAnimationFrom8Direction : MonoBehaviour
     private void SetFireDoneDecorator()
     {
         StartCoroutine(nameof(SetFireDone)); 
-    }
+    } 
 
     private IEnumerator SetFireDone()
-    {
+    { 
         _animator.SetBool(FireDone, true);
-        yield return new WaitForSeconds(0.05f); 
+        Debug.Log("FIRE DONE TRUE");
+        yield return new WaitForSeconds(0.25f); 
+        Debug.Log("FIRE DONE FALSE");
         _animator.SetBool(FireDone, false);
     }
 }
