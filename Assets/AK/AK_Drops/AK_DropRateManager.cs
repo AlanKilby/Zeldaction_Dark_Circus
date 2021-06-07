@@ -81,13 +81,13 @@ public class AK_DropRateManager : MonoBehaviour
             currentDropRate = minDropRate;
             ObjectDrop(thisGameObject);
         }
-        else
+        else 
         {
             IncrementDropRate();
         }
     } 
 
-    public void ObjectDrop(GameObject thisGameObject)
+    private void ObjectDrop(GameObject thisGameObject)
     {
         float randomPicker = Random.Range(0, 101);
 
@@ -100,7 +100,7 @@ public class AK_DropRateManager : MonoBehaviour
             Instantiate(heart,thisGameObject.transform.position,Quaternion.identity);
         }
     }
-    public void IncrementDropRate()
+    private void IncrementDropRate()
     {
         currentDropRate += dropRateIncrease;
     }

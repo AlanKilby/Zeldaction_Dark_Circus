@@ -211,7 +211,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4130080751637603281}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.73399997, z: -0.9549999}
+  m_LocalPosition: {x: 0, y: 0.73399997, z: -1.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7725771847332921777}
@@ -228,8 +228,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2.7047994, z: 0.46020627}
-  m_Center: {x: 0, y: -0.8523997, z: 0.49463403}
+  m_Size: {x: 1.8922353, y: 2.8556437, z: 0.041051984}
+  m_Center: {x: 0.02106738, y: -0.77697754, z: 0.59342796}
 --- !u!114 &7775729134186279060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 3982106213023558240}
-  destroyDelay: 1
+  destroyDelay: 0.2
   destroyFromStart: 0
   _destroyableFromBossEvent: 0
 --- !u!114 &1760892740547742467
@@ -700,7 +700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _difficultySettings: {fileID: 11400000, guid: 2a06a0ec0dff5cc4c8dec6db5eb2f889, type: 2}
-  minDropRate: 50
+  minDropRate: 100
   dropRateIncrease: 20
   increaseOT: 0
   time: 0
@@ -866,6 +866,8 @@ MonoBehaviour:
   _canPatrol: 1
   _drop: {fileID: 4087347747468770749}
   _difficultySettings: {fileID: 11400000, guid: 2a06a0ec0dff5cc4c8dec6db5eb2f889, type: 2}
+  showWeakPointCollider: 1
+  _weakPointCollider: {fileID: 8935897942416923823}
   isMonkeyBall: 0
   isFakir: 0
   isCaster: 0
@@ -892,7 +894,7 @@ MonoBehaviour:
   - {fileID: 7725771847202023933}
   - {fileID: 7725771847202023908}
   - {fileID: 7725771847332921778}
-  _graphicsDisableDelay: 0.7
+  _graphicsDisableDelay: 0.5
   _debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
 --- !u!114 &7725771847202023908
