@@ -1066,6 +1066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e9b89112307eb247b4a844d25d80c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _difficultySettings: {fileID: 0}
   minDropRate: 35
   dropRateIncrease: 5
   increaseOT: 0
@@ -1074,6 +1075,22 @@ MonoBehaviour:
   potionDropRate: 85
   heart: {fileID: 0}
   heartDropRate: 0
+--- !u!114 &830011573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830011566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b9d07ed4004db849adf28507e4c5347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionPuzzle1: {fileID: 0}
+  positionPuzzle2: {fileID: 0}
+  positionPuzzle3: {fileID: 0}
+  toggleDebug: 0
 --- !u!114 &830011574 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5539784749741460117, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
@@ -1098,7 +1115,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   invincibleTimer: 7
-  isInvincible: 0
 --- !u!1 &842331483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1491,6 +1507,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyTime: 4
+  _audioSource: {fileID: 0}
+  _audioClip: {fileID: 0}
 --- !u!135 &1122099308
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2734,6 +2752,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heartValue: 1
   playerData: {fileID: 0}
+  _audioSource: {fileID: 0}
+  _audioClip: {fileID: 0}
 --- !u!212 &5923329126088311285
 SpriteRenderer:
   m_ObjectHideFlags: 0

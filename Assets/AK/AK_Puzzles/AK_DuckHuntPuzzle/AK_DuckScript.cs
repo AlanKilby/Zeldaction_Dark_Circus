@@ -39,7 +39,6 @@ public class AK_DuckScript : MonoBehaviour
         if (wasShot)
         {
             //duckSpriteRenderer.sprite = deadDuck;
-            _audioSource.PlayOneShot(_deadClip);
             ChangeAnimationState(DUCK_DEAD);
             duckCollider.enabled = false;
         }
@@ -56,19 +55,23 @@ public class AK_DuckScript : MonoBehaviour
         {
             if(ID == 1 && !otherDucks[0].GetComponent<AK_DuckScript>().wasShot && !otherDucks[1].GetComponent<AK_DuckScript>().wasShot && !otherDucks[2].GetComponent<AK_DuckScript>().wasShot)
             {
+                _audioSource.PlayOneShot(_deadClip);
                 wasShot = true;
                 
             }
             else if (ID == 2 && otherDucks[0].GetComponent<AK_DuckScript>().wasShot && !otherDucks[1].GetComponent<AK_DuckScript>().wasShot && !otherDucks[2].GetComponent<AK_DuckScript>().wasShot)
             {
+                _audioSource.PlayOneShot(_deadClip);
                 wasShot = true;
             }
             else if (ID == 3 && otherDucks[0].GetComponent<AK_DuckScript>().wasShot && otherDucks[1].GetComponent<AK_DuckScript>().wasShot && !otherDucks[2].GetComponent<AK_DuckScript>().wasShot)
             {
+                _audioSource.PlayOneShot(_deadClip);
                 wasShot = true;
             }
             else if (ID == 4 && otherDucks[0].GetComponent<AK_DuckScript>().wasShot && otherDucks[1].GetComponent<AK_DuckScript>().wasShot && otherDucks[2].GetComponent<AK_DuckScript>().wasShot)
             {
+                _audioSource.PlayOneShot(_deadClip);
                 wasShot = true;
             }
             else
