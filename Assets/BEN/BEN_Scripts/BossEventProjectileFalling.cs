@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using BEN.Animation;
@@ -21,7 +22,9 @@ public class BossEventProjectileFalling : MonoBehaviour
     [SerializeField] private Health _bossHP;
 
     private GameObject projectileRef;
-    public static sbyte sProjectileDirection; 
+    public static sbyte sProjectileDirection;
+    private int indexValue;
+    public static List<GameObject> _sShadowList = new List<GameObject>(); 
 
     private void Start()
     {
@@ -54,12 +57,16 @@ public class BossEventProjectileFalling : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         projectileRef = Instantiate(_bossProjectile[Random.Range(0, _bossProjectile.Length)], projectileSpawnPosition, Quaternion.identity);
+        var FallDetectionRef = projectileRef.GetComponent<FallDetection>(); 
 
         var shadowRef = Instantiate(_projectileShadow,
             new Vector3(projectileSpawnPosition.x, _groundHeight, projectileSpawnPosition.z),
             Quaternion.Euler(90f, 0f, 0f));
-        shadowRef.GetComponent<Grow>().isSpotlightShadow = true; 
-        
+        var growRef = shadowRef.GetComponent<Grow>();
+        growRef.isSpotlightShadow = true; 
+        FallDetectionRef.Index = growRef.Index = indexValue;
+        indexValue++; 
+        _sShadowList.Add(shadowRef);
     }
 
     private IEnumerator SetProjectileCanFall()
@@ -79,6 +86,11 @@ public class BossEventProjectileFalling : MonoBehaviour
                              _bossHP.CurrentValue > 0;
 
         BossAIBrain.OnRequireStateChange(BossStates.Default, StateTransition.Safe);
+    }
+
+    public static void DestroyShadowAtIndex(int index, float delay)
+    {
+        Destroy(_sShadowList[index], delay);
     }
 } 
   
