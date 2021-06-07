@@ -43,8 +43,8 @@ public class AK_DropRateManager : MonoBehaviour
         timeHolder = time;
         minDropRate = _difficultySettings.Value switch
         {
-            Difficulty.Easy => minDropRate * 1.75f,
-            Difficulty.Hard => minDropRate * 0.7f,
+            Difficulty.Easy => minDropRate * 1.5f,
+            Difficulty.Hard => minDropRate * 0.75f,
             _ => minDropRate
         }; 
 

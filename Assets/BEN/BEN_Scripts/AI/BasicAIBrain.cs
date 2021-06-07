@@ -206,7 +206,7 @@ namespace BEN.AI
             GoingBackToPositionBeforeIdling = false;
             DefaultSpeed = InitialSpeed = _difficultySettings.Value switch
             {
-                Difficulty.Easy => _defaultSpeed * 0.75f,
+                Difficulty.Easy => _defaultSpeed * 0.8f,
                 Difficulty.Hard => _defaultSpeed * 1.15f,
                 _ => _defaultSpeed 
             }; 
