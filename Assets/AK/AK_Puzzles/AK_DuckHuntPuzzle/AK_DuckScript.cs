@@ -23,6 +23,9 @@ public class AK_DuckScript : MonoBehaviour
 
     public string DUCK_ALIVE = "idle";
     public string DUCK_DEAD = "hit";
+
+    public AudioSource _audioSource; 
+    public AudioClip _deadClip; 
     //
 
     private void Start()
@@ -36,6 +39,7 @@ public class AK_DuckScript : MonoBehaviour
         if (wasShot)
         {
             //duckSpriteRenderer.sprite = deadDuck;
+            _audioSource.PlayOneShot(_deadClip);
             ChangeAnimationState(DUCK_DEAD);
             duckCollider.enabled = false;
         }

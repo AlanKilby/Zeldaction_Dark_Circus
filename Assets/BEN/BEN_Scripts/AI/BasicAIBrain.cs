@@ -42,7 +42,6 @@ namespace BEN.AI
     } 
     
     [RequireComponent(typeof(NavMeshAgent))]
-    [RequireComponent(typeof(Health))]
     [DefaultExecutionOrder(2)] 
     public class BasicAIBrain : MonoBehaviour
     {
@@ -50,6 +49,9 @@ namespace BEN.AI
 
         [SerializeField] private AIType type;
         [SerializeField] private bool _canPatrol = true; 
+        [SerializeField] private AK_DropRateManager _drop;
+        [SerializeField] private DifficultySettings _difficultySettings; 
+
         public AIType Type { get => type; set => Type = value; } 
         
         // used for conditionalShow's property drawer until I know how to directly use enum 
@@ -137,17 +139,17 @@ namespace BEN.AI
         public bool GoingBackToPositionBeforeIdling { get; set; }
         public bool HasBeenInvokedByBoss { get; set; }
         public float MonkeyBallDodgeDistance { get; private set; }
-        
-#endregion
+
+        #endregion
 
 #region Unity Callbacks
 
         private void Awake()
         {
             _fsm = StateMachine<States>.Initialize(this);
-            _fsm.ChangeState(States.Init, StateTransition.Safe); 
+            _fsm.ChangeState(States.Init, StateTransition.Safe);
             
-            _agentHp = GetComponent<Health>();
+            _agentHp = Type == AIType.Mascotte ? GetComponentInChildren<Health>() : GetComponent<Health>();
             _agentHp.IsMonkeyBall = true; 
         }
 
@@ -191,7 +193,7 @@ namespace BEN.AI
             {
                 // Debug.Log($"{ e.Message} thrown by {gameObject.name}"); 
                 _patrol = GetComponent<FsmPatrol>();
-                _patrol.SetPoints();
+                _patrol.SetPoints(); 
             } 
         }
 
@@ -200,7 +202,13 @@ namespace BEN.AI
             _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>();
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
-            DefaultSpeed = InitialSpeed = _defaultSpeed; 
+            DefaultSpeed = InitialSpeed = _difficultySettings.Value switch
+            {
+                Difficulty.Easy => _defaultSpeed * 0.75f,
+                Difficulty.Hard => _defaultSpeed * 1.15f,
+                _ => _defaultSpeed 
+            }; 
+            
             MonkeyBallDodgeDistance = _monkeyBallDodgeDistance;
 
             if (type == AIType.MonkeySurBall)
@@ -482,7 +490,6 @@ namespace BEN.AI
         private void BecomeNormalMonkey()
         {
             Destroy(_ballGraphics); 
-            transform.position = new Vector3(transform.position.x, -0.75f, transform.position.z);
             _graphics.transform.localPosition = Vector3.zero; 
             _checkSurroundings.BearerType = type = AIType.Monkey; 
             _agentHp.CurrentValue = 1; 
@@ -491,6 +498,7 @@ namespace BEN.AI
             _agent.destination = PlayerMovement_Alan.sPlayerPos;
             _attackDelay = 0.2f; 
             
+            transform.position = new Vector3(transform.position.x, -1f, transform.position.z);
             OnRequireStateChange(States.Attack, StateTransition.Safe); 
         }
 
@@ -532,8 +540,8 @@ namespace BEN.AI
         IEnumerator Defend_Enter()
         {
             _agent.speed = 0f;
-            NewState = States.Defend; 
-
+            NewState = States.Defend;
+            
             switch (Type)
             {
                 case AIType.MonkeySurBall:
@@ -554,7 +562,7 @@ namespace BEN.AI
                     yield return new WaitForSeconds(1f);  
                     OnRequireStateChange(States.Attack, StateTransition.Safe); // would have been better to use HFSM 
                     break;
-            }
+            } 
         }   
 
         void Defend_Exit()  
@@ -572,6 +580,8 @@ namespace BEN.AI
             NewState = States.Die;
             _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
             _agent.speed = 0f; 
+            _drop.Drop(gameObject);
+            
             foreach (var item in _componentsToDeactivateOnDeath)
             {
                 item.enabled = false; 
@@ -588,7 +598,7 @@ namespace BEN.AI
                 clipToPlay = _aIAnimation.PlayAnimation(wasMonkeyBall ? AnimState.Die : AnimState.Hit, AnimDirection.None);
             } 
             catch (Exception) { }
-
+            
             if (clipToPlay != null) yield break;
             _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None); // need consistent naming across all mobs, not Die or Hit for same result.. 
         }

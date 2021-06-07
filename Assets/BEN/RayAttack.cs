@@ -12,7 +12,7 @@ public class RayAttack : MonoBehaviour
                                             "and ray effectively dealing damages")] private float _rayPrewarningDuration = 1f;  
     [SerializeField, Range(0.5f, 5f)] private float _rayDamageDuration = 1.5f;  
     [SerializeField, Range(2f, 10f)] private float _delayBetwenenRayAttacks = 5f;
-    [SerializeField, Range(0, 20), Tooltip("0 means Boss will aim at exactly player position")] private byte _accuracyModifier = 10; 
+    [SerializeField, Range(5, 20)] private byte _rayMaxAngle = 10;
 
     public List<GameObject> _rayVisuals = new List<GameObject>(); 
     private List<Collider> _rayColliders = new List<Collider>();
@@ -47,11 +47,10 @@ public class RayAttack : MonoBehaviour
         // Debug.Log(" rotating for ray attack");
         StartCoroutine(nameof(CastRayToPlayer));
         StartCoroutine(nameof(SetCanRotate));
+        
+        transform.rotation = Quaternion.Euler(0f, Random.Range(180 - _rayMaxAngle, 180 + _rayMaxAngle + 1), 0f); 
 
-        transform.LookAt(PlayerMovement_Alan.sPlayerPos);
-        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y + Random.Range(-_accuracyModifier, _accuracyModifier), 0f); 
-
-        for (var i = 0; i < _rayVisuals.Count; i++)
+        for (var i = 0; i < _rayVisuals.Count; i++) 
         {
             // add previsualise without applying damage
             _rayVisuals[i].SetActive(false); 
