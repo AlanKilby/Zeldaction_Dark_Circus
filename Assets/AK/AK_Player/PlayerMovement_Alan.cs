@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement_Alan : MonoBehaviour
@@ -58,6 +58,12 @@ public class PlayerMovement_Alan : MonoBehaviour
     public SpriteRenderer aimSpriteRend;
 
     public Animator hitScreen;
+
+    //Ajout Ulric
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] hitSounds;
+    [SerializeField] private UD_ScreenShakeForEnnemies SS;
+    //
 
     void Start()
     {
@@ -147,10 +153,19 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public void HitAnim()
     {
-        StartCoroutine(HitAnimation());
+        // StartCoroutine(HitAnimation());
     }
     IEnumerator HitAnimation()
     {
+        int i = Random.Range(0, hitSounds.Length);
+
+        audioSource.PlayOneShot(hitSounds[i]);
+
+        if (SS != null)
+        {
+            SS.MediumScreenShake();
+        }
+
         isHit = true;
 
         hitScreen.Play("hit");
@@ -244,22 +259,22 @@ public class PlayerMovement_Alan : MonoBehaviour
             else if (verticalMove < 0 && canThrow == true)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_DOWN);
-                Debug.Log("playerAnim.PLAYER_HIT_HAT_DOWN");
+                // Debug.Log("playerAnim.PLAYER_HIT_HAT_DOWN");
             }
             else if (verticalMove > 0 && canThrow == true)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_TOP);
-                Debug.Log("playerAnim.PLAYER_HIT_HAT_TOP");
+                // Debug.Log("playerAnim.PLAYER_HIT_HAT_TOP");
             }
             else if (horizontalMove > 0 && verticalMove == 0 && canThrow == true)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_RIGHT);
-                Debug.Log("playerAnim.PLAYER_HIT_HAT_RIGHT");
+                // Debug.Log("playerAnim.PLAYER_HIT_HAT_RIGHT");
             }
             else if (horizontalMove < 0 && verticalMove == 0 && canThrow == true)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_LEFT);
-                Debug.Log("playerAnim.PLAYER_HIT_HAT_LEFT");
+                // Debug.Log("playerAnim.PLAYER_HIT_HAT_LEFT");
             } // NO HAT
             else if (horizontalMove == 0 && verticalMove == 0 && canThrow == false)
             {
@@ -268,23 +283,23 @@ public class PlayerMovement_Alan : MonoBehaviour
             else if (verticalMove > 0 && canThrow == false)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_TOP);
-                Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_TOP");
+                // Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_TOP");
             }
             else if (verticalMove < 0 && canThrow == false)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_DOWN);
-                Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_DOWN");
+                // Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_DOWN");
             }
             else if (horizontalMove > 0 && verticalMove == 0 && canThrow == false)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_RIGHT);
-                Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_RIGHT");
+                // Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_RIGHT");
             }
             else if (horizontalMove < 0 && verticalMove == 0 && canThrow == false)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_LEFT);
-                Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_LEFT");
+                // Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_LEFT");
             }
         }
-    }
+    } 
 }

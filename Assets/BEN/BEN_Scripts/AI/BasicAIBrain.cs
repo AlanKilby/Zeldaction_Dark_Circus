@@ -205,7 +205,7 @@ namespace BEN.AI
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
             DefaultSpeed = InitialSpeed = _difficultySettings.Value switch
-            {
+            { 
                 Difficulty.Easy => _defaultSpeed * 0.8f,
                 Difficulty.Hard => _defaultSpeed * 1.15f,
                 _ => _defaultSpeed 
