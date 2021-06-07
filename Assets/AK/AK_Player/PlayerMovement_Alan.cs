@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement_Alan : MonoBehaviour
@@ -162,7 +162,7 @@ public class PlayerMovement_Alan : MonoBehaviour
     public void PlayerNormalAnims()
     {
         // Animations 
-        if (Input.GetButton("PlayerAttack") && canThrow)
+        if (Input.GetButton("PlayerAttack") && canThrow && !isHit)
         {
             if (horizontalMove > 0 && verticalMove == 0 && canThrow)
             {
