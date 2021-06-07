@@ -47,8 +47,8 @@ public class BossAIBrain : MonoBehaviour
     [SerializeField, Range(1, 4)] private byte _maxActiveSwitches = 2;
     [SerializeField, Range(1, 40), Tooltip("Boss vulnerability when all swithces" +
                                            "where turned off")] private float _vulnerabilityDuration = 20f;
-    [SerializeField, Range(5, 50), Tooltip("max damage applicable to Boss " +
-                                           "before back to invulnerable")] private byte _maxPercentOfDamageBeforeSwitchReset = 25;
+    [SerializeField, Range(5, 100), Tooltip("max damage applicable to Boss " +
+                                           "before back to invulnerable. 100 means possible to one shot if fast enough")] private byte _maxPercentOfDamageBeforeSwitchReset = 25;
     [SerializeField, Range(5f, 60f), Tooltip("delay between each switches activation. " +
                                              "Applied from start")] private float _switchesActivationDelay = 20f;
     [SerializeField, Range(5, 60), Tooltip("time during which an active switch " +
@@ -160,8 +160,8 @@ public class BossAIBrain : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log("current state is " + sCurrentState);
-        if (_deathNotified || (!PlayerMovement_Alan.sPlayer && Time.time >= 1f)) return; 
+        // Debug.Log("current state is " + sCurrentState);
+        if (_deathNotified || (!PlayerMovement_Alan.sPlayer && Time.time >= 1f) || sCurrentState == BossStates.Vulnerable) return; 
         
         if (switchesAreOn)
         {
@@ -209,12 +209,12 @@ public class BossAIBrain : MonoBehaviour
     {
         sCurrentState = BossStates.Default;
         Debug.Log("default state");
-        StartCoroutine(nameof(ResetAttackStateTrue)); 
     }
 
     private IEnumerator ResetAttackStateTrue()
     {
         yield return new WaitForSeconds(5f);
+        Debug.Log("-- FORCE RESET --"); 
         RayAttack.sCanRayAttack = BossEventProjectileFalling.sProjectileCanFall = true; 
     }
     
@@ -236,6 +236,7 @@ public class BossAIBrain : MonoBehaviour
         RayAttack.sCanRayAttack = BossEventProjectileFalling.sProjectileCanFall = false;
 
         yield return new WaitForSeconds(5f);
+        if (sCurrentState == BossStates.Vulnerable) yield break;
         OnRequireStateChange(BossStates.Default, StateTransition.Safe); 
     } 
     
@@ -270,6 +271,11 @@ public class BossAIBrain : MonoBehaviour
     IEnumerator Vulnerable_Enter()
     {
         sCurrentState = BossStates.Vulnerable;
+        foreach (var item in RayAttack.sRayVisuals)
+        {
+            item.SetActive(false);
+        }
+        
         Debug.Log("vulnerable enter");
         try // DEBUG because will throw error when RayAttacks_Manager is disabled 
         {
@@ -298,27 +304,27 @@ public class BossAIBrain : MonoBehaviour
         BossEventProjectileFalling.sProjectileCanFall = RayAttack.sCanRayAttack = false;
         _canRevealSwitches = _canInvoke = false; 
         
-        StartCoroutine(nameof(ResetToAttackState));
+        StartCoroutine(nameof(ResetToAttackStateFromVulnerabiltyEnd));
 
         yield return new WaitForSeconds(_delayBeforePositioningAtVulnerablePoint); 
-        Debug.Log("setting new position");
-        _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None); 
+        Debug.Log("setting new position for entity and graphics"); 
+        _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None);
         
-        // had to unparent graphics from entity because of weird distortions during animations..
-        transform.position = _bossGraphics.transform.position = _BossVulnerablePoint.position;  
-    }
+        // had to unparent graphics from entity because of weird distortions during animations.. 
+        transform.position = _bossGraphics.transform.position = _BossVulnerablePoint.position; 
+    } 
 
-    IEnumerator ResetToAttackState()
+    IEnumerator ResetToAttackStateFromVulnerabiltyEnd()
     { 
         yield return new WaitForSeconds(_vulnerabilityDuration);
-        Debug.Log("reseting to invocation state");
+        Debug.Log("END OF VULNERABILITY");
         StartCoroutine(nameof(SetInvocationCooldown));  
         OnRequireStateChange(BossStates.Invocation, StateTransition.Safe);
     } 
     
     void Vulnerable_FixedUpdate()
     {
-        if (ignoreMaxHitCount) return; 
+        if (ignoreMaxHitCount) return;
         if (sHitCounter >= _bossHP.AgentStartinHP.Value / (100 / _maxPercentOfDamageBeforeSwitchReset))
         {
             sHitCounter = 0; 
@@ -337,9 +343,8 @@ public class BossAIBrain : MonoBehaviour
         _bossCollider.enabled = false;
         sSwitchUsedCount = 0;
 
-        if (_bossHP.CurrentValue > 0)
+        if (_bossHP.CurrentValue > 0) 
         { 
-            Debug.Log("playing reset anim"); 
             transform.position =  _bossGraphics.transform.position = _initialPosition; // lerp 
             var clip = _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.Top);
             yield return new WaitForSeconds(clip.clipContainer.length * 1.15f);
@@ -347,6 +352,7 @@ public class BossAIBrain : MonoBehaviour
 
         yield return new WaitForFixedUpdate(); 
         StartCoroutine(nameof(SetSwitchesCooldown)); 
+        StartCoroutine(nameof(ResetAttackStateTrue));
     } 
     #endregion 
     
