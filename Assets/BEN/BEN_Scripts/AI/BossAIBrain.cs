@@ -272,6 +272,8 @@ public class BossAIBrain : MonoBehaviour
     IEnumerator Vulnerable_Enter()
     {
         sCurrentState = BossStates.Vulnerable;
+        RayAttack.OnFireDone(); 
+            
         foreach (var item in RayAttack.sRayVisuals)
         {
             item.SetActive(false);
