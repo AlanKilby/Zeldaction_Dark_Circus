@@ -37,7 +37,7 @@ public class Switch : MonoBehaviour
 
     private void OnTriggerStay(Collider other) 
     {
-        if (Mathf.Pow(2f, other.gameObject.layer) == _playerLayer && Input.GetButtonDown("CAC")) 
+        if (Mathf.Pow(2f, other.gameObject.layer) == _playerLayer && Input.GetButtonDown("PlayerInteraction")) 
         {
             BossAIBrain.sSwitchUsedCount++; 
             CanBeDeactivated = false;  
