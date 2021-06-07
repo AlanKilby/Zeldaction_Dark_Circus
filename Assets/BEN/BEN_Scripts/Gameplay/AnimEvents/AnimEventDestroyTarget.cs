@@ -31,9 +31,14 @@ public class AnimEventDestroyTarget : MonoBehaviour
         // Debug.Log("destroying target from animation event"); 
     }
 
+    public void DestroyTarget(GameObject obj)
+    {
+        Destroy(obj);
+    }
+
     private void BossEventDestroy()
     {
-        if (!_destroyableFromBossEvent) return; // un peu casse-gueule.. 
+        if (!_destroyableFromBossEvent) return;
         Destroy(targetToDestroy, destroyDelay);
     }
 }

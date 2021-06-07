@@ -64,8 +64,6 @@ namespace BEN.AI
 
         private void OnTriggerEnter(Collider other)
         {
-            Boomerang.s_SeenByEnemy = true;
-
             if (Mathf.Pow(2, other.gameObject.layer) != player) return; 
             
             _playerDetected = true;
@@ -76,7 +74,6 @@ namespace BEN.AI
         {
             if (!_playerDetected || IsDead) return; 
             playerPosition = other.gameObject.transform.position; 
-            Boomerang.s_SeenByEnemy = true;
 
             if (Mathf.Pow(2, other.gameObject.layer) == playerWeapon && BearerType == AIType.MonkeySurBall && CanDodgeProjectile)
             {
@@ -121,7 +118,6 @@ namespace BEN.AI
         private void OnTriggerExit(Collider other) 
         {
             if (IsDead || Mathf.Pow(2, other.gameObject.layer) != player || BearerType == AIType.Mascotte) return;
-            Boomerang.s_SeenByEnemy = false; 
 
             if (Mathf.Pow(2, other.gameObject.layer) == player)
             {

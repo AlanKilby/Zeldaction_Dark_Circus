@@ -8,6 +8,8 @@ public class AK_Potion : MonoBehaviour
     BoxCollider potionCollider;
     AK_PlayerPotionManager potionManager;
     public float destroyTime = 4;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _audioClip; 
     private void Start()
     {
         potionAnim = GetComponent<Animator>();
@@ -19,7 +21,7 @@ public class AK_Potion : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player") && AK_PlayerManager.potionNumber < potionManager.maxPotionQuantity)
         {
-
+            _audioSource.PlayOneShot(_audioClip);
             //Debug.Log("PlayerCollisionPotion");
             AK_PlayerManager.potionNumber++;
             potionAnim.Play("collected");

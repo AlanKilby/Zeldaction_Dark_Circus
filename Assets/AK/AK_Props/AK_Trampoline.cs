@@ -5,6 +5,8 @@ using UnityEngine;
 public class AK_Trampoline : MonoBehaviour
 {
     Animator trampoAnimator;
+    [SerializeField] private AudioSource _audiosource;
+    [SerializeField] private AudioClip _clipToPlay; 
 
     private void Start()
     {
@@ -16,6 +18,7 @@ public class AK_Trampoline : MonoBehaviour
         if(collision.gameObject.layer == LayerMask.NameToLayer("PlayerWeapon"))
         {
             Debug.Log("Weapon Collision");
+            _audiosource.PlayOneShot(_clipToPlay);
             TrampolineBounce();
         }
     }

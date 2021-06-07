@@ -16,7 +16,7 @@ public class CHM_NPCTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             dialogueButton.SetActive(true);
-        }
+        } 
     }
 
     private void OnTriggerExit(Collider other)
