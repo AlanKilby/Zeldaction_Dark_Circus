@@ -15,11 +15,18 @@ public class FallDetection : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _audioClip; 
     [SerializeField] private AudioMixerGroup _group;
+    private SpriteRenderer _spriteRenderer;
 
     public static Action<int> NotifyShadowOnReachingGround;
     public int Index { get; set; }
-    
-    
+
+    private void Start()
+    {
+        var _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.sortingLayerName = "ennemy";
+        _spriteRenderer.sortingOrder = 3; 
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (Mathf.Pow(2f, other.gameObject.layer) == _groundLayer)
