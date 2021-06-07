@@ -160,8 +160,8 @@ public class BossAIBrain : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log("current state is " + sCurrentState);
-        if (_deathNotified || (!PlayerMovement_Alan.sPlayer && Time.time >= 1f)) return; 
+        // Debug.Log("current state is " + sCurrentState);
+        if (_deathNotified || (!PlayerMovement_Alan.sPlayer && Time.time >= 1f) || sCurrentState == BossStates.Vulnerable) return; 
         
         if (switchesAreOn)
         {
@@ -209,12 +209,12 @@ public class BossAIBrain : MonoBehaviour
     {
         sCurrentState = BossStates.Default;
         Debug.Log("default state");
-        StartCoroutine(nameof(ResetAttackStateTrue)); 
     }
 
     private IEnumerator ResetAttackStateTrue()
     {
         yield return new WaitForSeconds(5f);
+        Debug.Log("-- FORCE RESET --"); 
         RayAttack.sCanRayAttack = BossEventProjectileFalling.sProjectileCanFall = true; 
     }
     
@@ -236,6 +236,7 @@ public class BossAIBrain : MonoBehaviour
         RayAttack.sCanRayAttack = BossEventProjectileFalling.sProjectileCanFall = false;
 
         yield return new WaitForSeconds(5f);
+        if (sCurrentState == BossStates.Vulnerable) yield break;
         OnRequireStateChange(BossStates.Default, StateTransition.Safe); 
     } 
     
@@ -298,20 +299,19 @@ public class BossAIBrain : MonoBehaviour
         BossEventProjectileFalling.sProjectileCanFall = RayAttack.sCanRayAttack = false;
         _canRevealSwitches = _canInvoke = false; 
         
-        StartCoroutine(nameof(ResetToAttackState));
+        StartCoroutine(nameof(ResetToAttackStateFromVulnerabiltyEnd));
 
         yield return new WaitForSeconds(_delayBeforePositioningAtVulnerablePoint); 
         Debug.Log("setting new position");
-        _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None); 
-        
+        _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None);
         // had to unparent graphics from entity because of weird distortions during animations..
         transform.position = _bossGraphics.transform.position = _BossVulnerablePoint.position;  
     }
 
-    IEnumerator ResetToAttackState()
+    IEnumerator ResetToAttackStateFromVulnerabiltyEnd()
     { 
         yield return new WaitForSeconds(_vulnerabilityDuration);
-        Debug.Log("reseting to invocation state");
+        Debug.Log("END OF VULNERABILITY");
         StartCoroutine(nameof(SetInvocationCooldown));  
         OnRequireStateChange(BossStates.Invocation, StateTransition.Safe);
     } 
@@ -337,9 +337,8 @@ public class BossAIBrain : MonoBehaviour
         _bossCollider.enabled = false;
         sSwitchUsedCount = 0;
 
-        if (_bossHP.CurrentValue > 0)
+        if (_bossHP.CurrentValue > 0) 
         { 
-            Debug.Log("playing reset anim"); 
             transform.position =  _bossGraphics.transform.position = _initialPosition; // lerp 
             var clip = _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.Top);
             yield return new WaitForSeconds(clip.clipContainer.length * 1.15f);
@@ -347,6 +346,7 @@ public class BossAIBrain : MonoBehaviour
 
         yield return new WaitForFixedUpdate(); 
         StartCoroutine(nameof(SetSwitchesCooldown)); 
+        StartCoroutine(nameof(ResetAttackStateTrue));
     } 
     #endregion 
     

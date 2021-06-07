@@ -41,9 +41,9 @@ public class RayAttack : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log("can ray attack is " + sCanRayAttack); 
+        // Debug.Log("can ray attack is " + sCanRayAttack); 
         
-        if (!sCanRayAttack) return; 
+        if (BossAIBrain.sCurrentState == BossStates.Vulnerable || !sCanRayAttack) return; 
         // Debug.Log(" rotating for ray attack");
         StartCoroutine(nameof(CastRayToPlayer));
         StartCoroutine(nameof(SetCanRotate));
@@ -93,6 +93,7 @@ public class RayAttack : MonoBehaviour
 
         if (BossAIBrain.sCurrentState != BossStates.Vulnerable)
         {
+            Debug.Log("calling default from ray");
             BossAIBrain.OnRequireStateChange(BossStates.Default, StateTransition.Safe);
         } 
     }

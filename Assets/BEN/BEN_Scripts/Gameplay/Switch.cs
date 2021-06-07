@@ -17,10 +17,27 @@ public class Switch : MonoBehaviour
         _leverAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if ((Mathf.Pow(2f, other.gameObject.layer) ==  _playerWeaponLayer) && CanBeDeactivated) 
+        {
+            BossAIBrain.sSwitchUsedCount++; 
+            CanBeDeactivated = false;  
+            _visualCue.SetActive(CanBeDeactivated);
+            Invoke(nameof(ResetState), 0f);
+            _leverAnimation.PlayAnimation(AnimState.Idle, AnimDirection.Right); 
+            _playSoundOnEvent.PlaySoundSafe(SoundType.Reset);
+
+            if (BossAIBrain.sSwitchUsedCount == BossAIBrain.sMaxActiveSwitches)
+            { 
+                BossAIBrain.OnRequireStateChange(BossStates.Vulnerable, StateTransition.Safe); 
+            } 
+        } 
+    }
+
     private void OnTriggerStay(Collider other) 
     {
-        if ((Mathf.Pow(2f, other.gameObject.layer) == _playerLayer && Input.GetButtonDown("CAC") 
-            || Mathf.Pow(2f, other.gameObject.layer) ==  _playerWeaponLayer) && CanBeDeactivated) 
+        if (Mathf.Pow(2f, other.gameObject.layer) == _playerLayer && Input.GetButtonDown("CAC")) 
         {
             BossAIBrain.sSwitchUsedCount++; 
             CanBeDeactivated = false;  
