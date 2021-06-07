@@ -20,7 +20,7 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public GameObject aim;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool canThrow;
 
     [Tooltip("If the player has the Wand he can teleport to his hat.")]
@@ -30,7 +30,7 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public PlayerAnimations playerAnim;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool canMove = true;
 
     [HideInInspector]
