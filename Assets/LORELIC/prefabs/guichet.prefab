@@ -171,12 +171,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1349684633360063381}
-  m_Layer: 0
+  - component: {fileID: 4408319229534939021}
+  - component: {fileID: 7838590411978557906}
+  m_Layer: 11
   m_Name: guichet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1349684633360063381
 Transform:
@@ -194,3 +196,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -179.108, z: 0}
+--- !u!65 &4408319229534939021
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869235366142837039}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9682581, y: 2.107489, z: 0.8246034}
+  m_Center: {x: 0.37570676, y: 0.55374897, z: 0.7199222}
+--- !u!208 &7838590411978557906
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869235366142837039}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.985, y: 1.065, z: 0.415}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.37570676, y: 0.55374897, z: 0.7199222}
+  m_TimeToStationary: 0.5

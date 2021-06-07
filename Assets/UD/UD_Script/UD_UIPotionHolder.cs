@@ -8,17 +8,14 @@ public class UD_UIPotionHolder : MonoBehaviour
     public Sprite[] potionHolderImages;
     Image ownImage;
 
-    AK_PlayerPotionManager PPM;
-
     void Start()
     {
-        PPM = GameObject.FindGameObjectWithTag("Player").GetComponent<AK_PlayerPotionManager>();
         ownImage = GetComponent<Image>();
     }
 
 
     void Update()
     {
-        ownImage.sprite = potionHolderImages[PPM.potionQuantity];
+        ownImage.sprite = potionHolderImages[AK_PlayerManager.potionNumber];
     }
 }

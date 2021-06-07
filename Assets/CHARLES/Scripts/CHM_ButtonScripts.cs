@@ -7,9 +7,11 @@ public class CHM_ButtonScripts : MonoBehaviour
 {
     public int playSceneValue;
 
+    public UD_FadeAndLoadingSceneManager fade;
+
     public void Play()
     {
-        SceneManager.LoadScene(playSceneValue);
+        fade.LaunchFadeIn(playSceneValue);
     }
 
     public void Exit()

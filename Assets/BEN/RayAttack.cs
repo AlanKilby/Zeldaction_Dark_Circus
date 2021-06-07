@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using BEN.Animation;
+using MonsterLove.StateMachine;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,7 +11,8 @@ public class RayAttack : MonoBehaviour
     [SerializeField, Range(0f, 3f), Tooltip("delay between animation " +
                                             "and ray effectively dealing damages")] private float _rayPrewarningDuration = 1f;  
     [SerializeField, Range(0.5f, 5f)] private float _rayDamageDuration = 1.5f;  
-    [SerializeField, Range(2f, 10f)] private float _delayBetwenenRayAttacks = 5f;  
+    [SerializeField, Range(2f, 10f)] private float _delayBetwenenRayAttacks = 5f;
+    [SerializeField, Range(0, 20), Tooltip("0 means Boss will aim at exactly player position")] private byte _accuracyModifier = 10; 
 
     public List<GameObject> _rayVisuals = new List<GameObject>(); 
     private List<Collider> _rayColliders = new List<Collider>();
@@ -35,17 +36,20 @@ public class RayAttack : MonoBehaviour
         for (int i = 0; i < _rayVisuals.Count; i++)
         {
             _rayColliders.Add(_rayVisuals[i].GetComponent<Collider>());  
-        }
+        } 
     }
 
     private void FixedUpdate()
-    { 
+    {
+        Debug.Log("can ray attack is " + sCanRayAttack); 
+        
         if (!sCanRayAttack) return; 
         // Debug.Log(" rotating for ray attack");
         StartCoroutine(nameof(CastRayToPlayer));
         StartCoroutine(nameof(SetCanRotate));
 
-        transform.rotation = Quaternion.Euler(0f, Random.Range(-11, 11), 0f); // UPRGADE : less random, aim at player with some accuracy value
+        transform.LookAt(PlayerMovement_Alan.sPlayerPos);
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y + Random.Range(-_accuracyModifier, _accuracyModifier), 0f); 
 
         for (var i = 0; i < _rayVisuals.Count; i++)
         {
@@ -56,7 +60,6 @@ public class RayAttack : MonoBehaviour
     
     private IEnumerator CastRayToPlayer()
     {
-        
         _bossAnimation.PlayAnimation(AnimState.Atk, AnimDirection.None);
         yield return new WaitForSeconds(_rayPrewarningDuration);   
         // Debug.Log("ray attacking");  
@@ -64,7 +67,7 @@ public class RayAttack : MonoBehaviour
         for (var i = 0; i < _rayVisuals.Count; i++)
         {
             _rayVisuals[i].SetActive(true); 
-        }
+        } 
 
         yield return new WaitForSeconds(_rayDamageDuration);  
         for (var i = 0; i < _rayVisuals.Count; i++)
@@ -76,13 +79,28 @@ public class RayAttack : MonoBehaviour
     private IEnumerator SetCanRotate()
     {
         sCanRayAttack = false; 
-        yield return new WaitForSeconds(_delayBetwenenRayAttacks); 
-        sCanRayAttack = !BossAIBrain.sAllLightsWereOff && _bossHP.CurrentValue > 0; 
-        // Debug.Log($"setting can ray attack to {sCanRayAttack}"); 
+        if (BossAIBrain.sCurrentState != BossStates.Vulnerable)
+        {
+            Debug.Log("setting state to ray attacking");
+            BossAIBrain.sCurrentState = BossStates.RayAttacking;
+        } 
+        
+        yield return new WaitForSeconds(_delayBetwenenRayAttacks);
+        sCanRayAttack = !BossAIBrain.sAllLightsWereOff && 
+                        BossAIBrain.sCurrentState != BossStates.Vulnerable &&
+                        BossAIBrain.sCurrentState != BossStates.ObjectFalling &&
+                        BossAIBrain.sCurrentState != BossStates.Invocation && 
+                        _bossHP.CurrentValue > 0;
+
+        if (BossAIBrain.sCurrentState != BossStates.Vulnerable)
+        {
+            BossAIBrain.OnRequireStateChange(BossStates.Default, StateTransition.Safe);
+        } 
     }
     
     private void DisableRayOnBossVulnerable()
     {
+        Debug.Log("disabling rays from boss vulnerable");
         for (var i = 0; i < _rayVisuals.Count; i++)
         {
             _rayVisuals[i].SetActive(false); 

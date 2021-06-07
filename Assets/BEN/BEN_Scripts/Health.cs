@@ -25,19 +25,34 @@ public class Health : MonoBehaviour
     [SerializeField] private bool isBossHP;
     
     [Header("Debug")]
-    [SerializeField] private bool _playerUnkillable; 
+    [SerializeField] private bool _playerUnkillable;
 
+    private PlayerMovement_Alan playerMovementScript;
 
     private void Start()
     {
         CurrentValue = _agentStartingHP.Value;
-        _brain = IsMonkeyBall ? GetComponent<BasicAIBrain>() : null; 
+        _brain = IsMonkeyBall ? GetComponent<BasicAIBrain>() : null;
     }
 
     public void DecreaseHp(sbyte value)
     {
         CurrentValue -= value;
+        if (gameObject.CompareTag("Player"))
+        {
+            AK_PlayerHit playerHit = gameObject.GetComponent<AK_PlayerHit>();
+            playerMovementScript = gameObject.GetComponent<PlayerMovement_Alan>();
+            playerMovementScript.HitAnim();
+            playerHit.CallInvincibleState();
+        }
 
+        try
+        {
+            AK_PlayerHit playerHit = gameObject.GetComponent<AK_PlayerHit>();
+            playerHit.CallInvincibleState();
+        }
+        catch (Exception) { }
+        
         if (CurrentValue > 0)
         {
             if (isBossHP) 
@@ -48,12 +63,9 @@ public class Health : MonoBehaviour
         }
 
         if (_notifiedDeath) return; // avoid call if HP == -1; 
-        
-        if (isBossHP) 
-        {
-            _OnBossHPLoss.Invoke(AnimState.Die, AnimDirection.None); 
-        }
-        else if (!IsMonkeyBall && !_playerUnkillable)
+        _notifiedDeath = true;
+
+        if (!IsMonkeyBall && !_playerUnkillable && !isBossHP)
         {
             _playercollider = GetComponent<Collider>();
             _playercollider.enabled = false; 
@@ -63,6 +75,5 @@ public class Health : MonoBehaviour
         {
             OnMonkeyBallTransitionToNormalMonkey(); 
         }
-        _notifiedDeath = true;
     } 
 }

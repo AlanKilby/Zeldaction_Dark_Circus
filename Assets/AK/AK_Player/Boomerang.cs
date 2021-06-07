@@ -18,6 +18,9 @@ public class Boomerang : MonoBehaviour
     public AnimationCurve goingSpeedC;
     public AnimationCurve comingSpeedC;
 
+    public GameObject teleportParticles;
+    public GameObject hitParticles;
+
     public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, fakirWeaponLayer, bossLayer, jailLayer; 
    
     private Rigidbody rb;
@@ -118,11 +121,12 @@ public class Boomerang : MonoBehaviour
 
     public void Teleport()
     {
-        if (Input.GetButtonUp("PlayerAttack") && hasWand)
+        if (Input.GetButtonUp("PlayerTeleport") && hasWand)
         {
             playerPos.position = new Vector3(transform.position.x, playerPos.position.y, transform.position.z);
             isComingBack = true;
             playerPos.GetComponent<PlayerMovement_Alan>().canThrow = true;
+            Instantiate(teleportParticles, gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);
             
         }
@@ -165,6 +169,7 @@ public class Boomerang : MonoBehaviour
         { 
             // Debug.Log("Collision with Enemy");
             enemy = other.GetComponent<BasicAIBrain>(); 
+            Debug.Log("seen by enemy is " + s_SeenByEnemy);
 
             if (enemy.Type == AIType.Mascotte && s_SeenByEnemy)  
             {
@@ -175,6 +180,8 @@ public class Boomerang : MonoBehaviour
             }  
 
             other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
+
+            Instantiate(hitParticles, gameObject.transform.position, Quaternion.identity);
 
             // Changement pour que la nervosité augmente, changement fait le 19 mai 2021
 

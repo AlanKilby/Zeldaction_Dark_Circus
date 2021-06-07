@@ -20,6 +20,8 @@ public class CHM_DialogueManager : MonoBehaviour
 
     public UnityEvent rewardOnDialogueEnd;
 
+    public PlayerMovement_Alan playerMovement;
+
     void Start()
     {
         sentences = new Queue<string>();
@@ -35,6 +37,9 @@ public class CHM_DialogueManager : MonoBehaviour
         sentences.Clear();
         EventSystem.current.SetSelectedGameObject(dialogueButton);
 
+        playerMovement.canMove = false;
+        playerMovement.canThrow = false;
+
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
@@ -45,7 +50,7 @@ public class CHM_DialogueManager : MonoBehaviour
 
     public void DisplayNextSentence()
     {
-        if (sentences.Count == 0)
+        if (sentences.Count <= 0)
         {
             Debug.Log("Il n'y a plus de phrase et la dialoguebox sera supprimée");
             EndDialogue();
@@ -74,6 +79,9 @@ public class CHM_DialogueManager : MonoBehaviour
         rewardOnDialogueEnd.Invoke();
         animator.SetBool("IsOpen", false);
         EventSystem.current.SetSelectedGameObject(null);
+
+        playerMovement.canMove = true;
+        playerMovement.canThrow = true;
     }
 
 }

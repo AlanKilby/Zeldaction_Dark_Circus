@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace BEN.Math
@@ -23,7 +24,11 @@ namespace BEN.Math
         [FormerlySerializedAs("isCimeterre")] public bool destroyOnWallCollision;
         [SerializeField] private bool _freezeYPosition;
         [SerializeField] private Vector3 _casterBias;
-        [SerializeField, Range(1, 10)] private sbyte _dmgToFakirOnReturn = 10; 
+        [SerializeField, Range(1, 10)] private sbyte _dmgToFakirOnReturn = 10;
+
+
+        // ALAN Variables
+        //public UnityEvent playerHitEvent;
 
         public LayerMask
             _wallLayer,
@@ -47,6 +52,7 @@ namespace BEN.Math
             distance = Vector3.Distance(transform.position, PlayerMovement_Alan.sPlayerPos);
             _duration = distance / speed;
             _initialPosition = transform.position; // because somehow nulled from FakirAttack call.. 
+            //playerHitEvent.AddListener(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement_Alan>().HitAnim());
         } 
 
         private void FixedUpdate() 
@@ -68,8 +74,10 @@ namespace BEN.Math
             // TEMPORARY 
             if (Mathf.Pow(2f, other.gameObject.layer) == _playerLayer) 
             {
-                Destroy(gameObject);
+                if(!AK_PlayerHit.isInvincible)
                 other.GetComponent<Health>().DecreaseHp(1); // super temporary
+
+                Destroy(gameObject);
             }
             else if (Mathf.Pow(2f, other.gameObject.layer) == _wallLayer)
             {

@@ -15,20 +15,23 @@ public class AK_PlayerPotionManager : MonoBehaviour
 
     Health playerHealth;
 
+    float maxHP;
+
     private void Start()
     {
         playerHealth = GetComponent<Health>();
-    }
+        maxHP = playerHealth.CurrentValue;
+    }   
     private void Update()
     {
         
 
-        if (Input.GetButtonDown("Potion") && potionQuantity > 0)
+        if (Input.GetButtonDown("Potion") && AK_PlayerManager.potionNumber > 0 && playerHealth.CurrentValue < maxHP)
         {
             UsePotion(potion);
         }
        
-        else if (Input.GetButtonDown("Potion") && potionQuantity <= 0)
+        else if (Input.GetButtonDown("Potion") && AK_PlayerManager.potionNumber <= 0)
         {
             Debug.Log("You've got no potions left.");
         }
@@ -38,8 +41,8 @@ public class AK_PlayerPotionManager : MonoBehaviour
 
     public void UsePotion(string potionType)
     {
-        
-        potionQuantity--;
+        AK_PlayerManager.potionNumber--;
+        //potionQuantity--;
         playerHealth.CurrentValue += (sbyte)potionHealthValue;
         
         
