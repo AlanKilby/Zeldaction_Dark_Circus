@@ -201,7 +201,8 @@ namespace BEN.AI
 
         private void Start()
         {
-            _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>();
+            //_playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>();
+            _playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
             DefaultSpeed = InitialSpeed = _difficultySettings.Value switch
