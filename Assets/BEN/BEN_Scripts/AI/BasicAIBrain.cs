@@ -536,8 +536,8 @@ namespace BEN.AI
         IEnumerator Defend_Enter()
         {
             _agent.speed = 0f;
-            NewState = States.Defend; 
-
+            NewState = States.Defend;
+            
             switch (Type)
             {
                 case AIType.MonkeySurBall:
@@ -558,7 +558,7 @@ namespace BEN.AI
                     yield return new WaitForSeconds(1f);  
                     OnRequireStateChange(States.Attack, StateTransition.Safe); // would have been better to use HFSM 
                     break;
-            }
+            } 
         }   
 
         void Defend_Exit()  

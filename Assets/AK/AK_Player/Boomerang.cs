@@ -35,7 +35,8 @@ public class Boomerang : MonoBehaviour
     float comebackTimerHolder;
 
     private BasicAIBrain enemy;
-    public static bool s_SeenByEnemy; 
+    public static bool s_SeenByEnemy;
+    private AnimEventPlaySound _animEventPlaySound; 
 
     private void Start()
     {
@@ -45,6 +46,7 @@ public class Boomerang : MonoBehaviour
         isComingBack = false;
         rb = gameObject.GetComponent<Rigidbody>();
         aimPos = playerPos.GetComponent<PlayerMovement_Alan>().aim.transform.position;
+        _animEventPlaySound = GetComponent<AnimEventPlaySound>();
 
         s_SeenByEnemy = false; 
     }
@@ -143,8 +145,10 @@ public class Boomerang : MonoBehaviour
     }
  
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) 
     {
+        _animEventPlaySound.PlaySoundOverwrite(SoundType.Attack);
+
         if (Mathf.Pow(2, other.gameObject.layer) == playerLayer) 
         {
             // Debug.Log("Collision with Player");
