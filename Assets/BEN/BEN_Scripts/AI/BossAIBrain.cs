@@ -438,6 +438,7 @@ public class BossAIBrain : MonoBehaviour
     private void SelectSwitchesPattern() // remove from here.. It is not part of the state machine 
     {
         switchesAreOn = true;
+        Debug.Log("selecting switches");
 
             var selector = (SwitchesPattern) Random.Range(0, (int) SwitchesPattern.DiagonalTwo + 1);
             switch (_selectRandomPatttern ? selector : _scriptedPatternIndex) 
