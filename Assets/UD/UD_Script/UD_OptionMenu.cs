@@ -9,6 +9,7 @@ public class UD_OptionMenu : MonoBehaviour
     public Slider volumeSlider;
 
     Resolution[] resolutions;
+    public DifficultySettings _difficultySettings; 
 
     void Start()
     {
@@ -52,7 +53,8 @@ public class UD_OptionMenu : MonoBehaviour
 
     public void SetDifficulty(int DifficultyIndex)
     {
-        if (DifficultyIndex == 0)
+        _difficultySettings.Value = (Difficulty)DifficultyIndex; 
+        /* if (DifficultyIndex == 0)
         {
             SetEasy();
         }
@@ -63,14 +65,13 @@ public class UD_OptionMenu : MonoBehaviour
         if (DifficultyIndex == 2)
         {
             SetHard();
-        }
+        } */
     }
 
 
     public void SetEasy()
     {
         print("easy");
-        //currentDifficulty = Difficulty.Easy;
     }
     
     public void SetNormal()

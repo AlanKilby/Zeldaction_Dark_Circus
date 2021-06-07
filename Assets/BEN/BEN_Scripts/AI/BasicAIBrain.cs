@@ -50,6 +50,7 @@ namespace BEN.AI
         [SerializeField] private AIType type;
         [SerializeField] private bool _canPatrol = true; 
         [SerializeField] private AK_DropRateManager _drop;
+        [SerializeField] private DifficultySettings _difficultySettings; 
 
         public AIType Type { get => type; set => Type = value; } 
         
@@ -192,7 +193,7 @@ namespace BEN.AI
             {
                 // Debug.Log($"{ e.Message} thrown by {gameObject.name}"); 
                 _patrol = GetComponent<FsmPatrol>();
-                _patrol.SetPoints();
+                _patrol.SetPoints(); 
             } 
         }
 
@@ -201,7 +202,13 @@ namespace BEN.AI
             _playerHP = PlayerMovement_Alan.sPlayer.GetComponentInChildren<Health>();
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
-            DefaultSpeed = InitialSpeed = _defaultSpeed; 
+            DefaultSpeed = InitialSpeed = _difficultySettings.Value switch
+            {
+                Difficulty.Easy => _defaultSpeed * 0.75f,
+                Difficulty.Hard => _defaultSpeed * 1.15f,
+                _ => _defaultSpeed 
+            }; 
+            
             MonkeyBallDodgeDistance = _monkeyBallDodgeDistance;
 
             if (type == AIType.MonkeySurBall)
