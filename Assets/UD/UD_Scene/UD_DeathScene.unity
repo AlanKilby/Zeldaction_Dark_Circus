@@ -123,6 +123,23 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &610201449 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 512885897267454319, guid: 1dfa4ad479bfa5a4b89b9baba65265e3, type: 3}
+  m_PrefabInstance: {fileID: 669610925502884626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &610201451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610201449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af9d90056e6e634a9a270c9541bd0d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &988604393
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,6 +422,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1486583922909958539, guid: 1dfa4ad479bfa5a4b89b9baba65265e3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1486583923791233695, guid: 1dfa4ad479bfa5a4b89b9baba65265e3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1486583924196110618, guid: 1dfa4ad479bfa5a4b89b9baba65265e3, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -492,6 +517,10 @@ PrefabInstance:
     - target: {fileID: 1486583924196110622, guid: 1dfa4ad479bfa5a4b89b9baba65265e3, type: 3}
       propertyPath: m_Name
       value: "Game Over Canvas F\xEAte Foraine"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1486583924196110622, guid: 1dfa4ad479bfa5a4b89b9baba65265e3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1dfa4ad479bfa5a4b89b9baba65265e3, type: 3}
