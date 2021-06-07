@@ -211,6 +211,9 @@ public class Boomerang : MonoBehaviour
             BossAIBrain.sHitCounter++; 
             // Debug.Log("hitting boss"); 
             other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
+            Instantiate(hitParticles, gameObject.transform.position, Quaternion.identity);
+            isComingBack = true;
+            comebackTimer = 0;
         } 
         
         if (Mathf.Pow(2, other.gameObject.layer) == jailLayer)
