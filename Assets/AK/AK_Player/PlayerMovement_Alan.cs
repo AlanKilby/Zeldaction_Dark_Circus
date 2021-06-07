@@ -153,7 +153,7 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public void HitAnim()
     {
-        StartCoroutine(HitAnimation());
+        // StartCoroutine(HitAnimation());
     }
     IEnumerator HitAnimation()
     {
@@ -259,22 +259,22 @@ public class PlayerMovement_Alan : MonoBehaviour
             else if (verticalMove < 0 && canThrow == true)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_DOWN);
-                Debug.Log("playerAnim.PLAYER_HIT_HAT_DOWN");
+                // Debug.Log("playerAnim.PLAYER_HIT_HAT_DOWN");
             }
             else if (verticalMove > 0 && canThrow == true)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_TOP);
-                Debug.Log("playerAnim.PLAYER_HIT_HAT_TOP");
+                // Debug.Log("playerAnim.PLAYER_HIT_HAT_TOP");
             }
             else if (horizontalMove > 0 && verticalMove == 0 && canThrow == true)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_RIGHT);
-                Debug.Log("playerAnim.PLAYER_HIT_HAT_RIGHT");
+                // Debug.Log("playerAnim.PLAYER_HIT_HAT_RIGHT");
             }
             else if (horizontalMove < 0 && verticalMove == 0 && canThrow == true)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_LEFT);
-                Debug.Log("playerAnim.PLAYER_HIT_HAT_LEFT");
+                // Debug.Log("playerAnim.PLAYER_HIT_HAT_LEFT");
             } // NO HAT
             else if (horizontalMove == 0 && verticalMove == 0 && canThrow == false)
             {
@@ -283,23 +283,23 @@ public class PlayerMovement_Alan : MonoBehaviour
             else if (verticalMove > 0 && canThrow == false)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_TOP);
-                Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_TOP");
+                // Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_TOP");
             }
             else if (verticalMove < 0 && canThrow == false)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_DOWN);
-                Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_DOWN");
+                // Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_DOWN");
             }
             else if (horizontalMove > 0 && verticalMove == 0 && canThrow == false)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_RIGHT);
-                Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_RIGHT");
+                // Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_RIGHT");
             }
             else if (horizontalMove < 0 && verticalMove == 0 && canThrow == false)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_LEFT);
-                Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_LEFT");
+                // Debug.Log("playerAnim.PLAYER_HIT_NO_HAT_LEFT");
             }
         }
-    }
+    } 
 }
