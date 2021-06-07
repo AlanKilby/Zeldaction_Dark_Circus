@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class UD_BossLeverUI : MonoBehaviour
 {
-    public GameObject YCanvas;
+    public GameObject YCanvas; 
     Switch ownSwitch;
 
-    bool playerIsNear;
+    public bool PlayerIsNear { get; set; }
 
     void Start()
     {
-        playerIsNear = false;
+        PlayerIsNear = false;
         YCanvas.SetActive(false);
         ownSwitch = GetComponent<Switch>();
     }
 
     void Update()
     {
-        if (playerIsNear)
+        if (PlayerIsNear)
         {
             YCanvas.SetActive(true);
         }
@@ -32,21 +32,21 @@ public class UD_BossLeverUI : MonoBehaviour
     {
         if (other.CompareTag("Player") && ownSwitch.CanBeDeactivated)
         {
-            playerIsNear = true;
+            PlayerIsNear = true;
         }
     }
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && ownSwitch.CanBeDeactivated)
         {
-            playerIsNear = true;
+            PlayerIsNear = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player") && ownSwitch.CanBeDeactivated)
         {
-            playerIsNear = false;
+            PlayerIsNear = false;
         }
     }
 }
