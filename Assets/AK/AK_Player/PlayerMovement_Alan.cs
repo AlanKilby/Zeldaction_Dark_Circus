@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement_Alan : MonoBehaviour
@@ -58,6 +58,12 @@ public class PlayerMovement_Alan : MonoBehaviour
     public SpriteRenderer aimSpriteRend;
 
     public Animator hitScreen;
+
+    //Ajout Ulric
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] hitSounds;
+    [SerializeField] private UD_ScreenShakeForEnnemies SS;
+    //
 
     void Start()
     {
@@ -151,6 +157,15 @@ public class PlayerMovement_Alan : MonoBehaviour
     }
     IEnumerator HitAnimation()
     {
+        int i = Random.Range(0, hitSounds.Length);
+
+        audioSource.PlayOneShot(hitSounds[i]);
+
+        if (SS != null)
+        {
+            SS.MediumScreenShake();
+        }
+
         isHit = true;
 
         hitScreen.Play("hit");
@@ -162,7 +177,7 @@ public class PlayerMovement_Alan : MonoBehaviour
     public void PlayerNormalAnims()
     {
         // Animations 
-        if (Input.GetButton("PlayerAttack") && canThrow)
+        if (Input.GetButton("PlayerAttack") && canThrow && !isHit)
         {
             if (horizontalMove > 0 && verticalMove == 0 && canThrow)
             {
