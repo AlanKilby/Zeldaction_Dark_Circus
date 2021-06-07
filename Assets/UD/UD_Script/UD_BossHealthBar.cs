@@ -3,21 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[DefaultExecutionOrder(15)]
+
 public class UD_BossHealthBar : MonoBehaviour
 {
     float maxHP;
 
-    public Health bossHealth;
+    Health bossHealth;
     Image image;
+    private float value;
 
     void Start()
     {
-        maxHP = bossHealth.CurrentValue;
         image = GetComponent<Image>();
+        bossHealth = GameObject.FindGameObjectWithTag("Boss").GetComponent<Health>();
+        maxHP = bossHealth.CurrentValue; 
     }
 
     void Update()
     {
-        image.fillAmount = bossHealth.CurrentValue / maxHP;
+        value = (bossHealth.CurrentValue / maxHP);
+        image.fillAmount = value;
     }
 }
