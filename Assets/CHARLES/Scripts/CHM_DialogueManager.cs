@@ -22,10 +22,30 @@ public class CHM_DialogueManager : MonoBehaviour
 
     public PlayerMovement_Alan playerMovement;
 
+    private bool isInDialogue;
+
     void Start()
     {
         sentences = new Queue<string>();
+        isInDialogue = false;
     }
+
+
+    private void Update()
+    {
+        if(isInDialogue)
+        {
+            playerMovement.canMove = false;
+            playerMovement.canThrow = false;
+            playerMovement.playerRB.velocity = Vector3.zero;
+        }
+        //else
+        //{
+        //    playerMovement.canMove = true;
+        //    playerMovement.canThrow = true;
+        //}
+    }
+
 
     public void StartDialogue(CHM_Dialogue dialogue)
     {
@@ -34,11 +54,16 @@ public class CHM_DialogueManager : MonoBehaviour
         //Debug.Log("L'animateur est lancé"); Jusque là tout va bien.
         nameText.text = dialogue.name;
 
+
+        playerMovement.playerAnim.ChangeAnimationState(playerMovement.playerAnim.PLAYER_IDLE_HAT);
+
+        isInDialogue = true;
+
         sentences.Clear();
         EventSystem.current.SetSelectedGameObject(dialogueButton);
 
-        playerMovement.canMove = false;
-        playerMovement.canThrow = false;
+
+
 
         foreach (string sentence in dialogue.sentences)
         {
@@ -58,6 +83,7 @@ public class CHM_DialogueManager : MonoBehaviour
             return;
 
         }
+
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
@@ -79,6 +105,7 @@ public class CHM_DialogueManager : MonoBehaviour
         rewardOnDialogueEnd.Invoke();
         animator.SetBool("IsOpen", false);
         EventSystem.current.SetSelectedGameObject(null);
+        isInDialogue = false;
 
         playerMovement.canMove = true;
         playerMovement.canThrow = true;

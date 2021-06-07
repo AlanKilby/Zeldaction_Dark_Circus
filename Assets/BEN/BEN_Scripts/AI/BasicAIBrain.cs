@@ -49,8 +49,10 @@ namespace BEN.AI
 
         [SerializeField] private AIType type;
         [SerializeField] private bool _canPatrol = true; 
-        [SerializeField] private AK_DropRateManager _drop;
-        [SerializeField] private DifficultySettings _difficultySettings; 
+        [SerializeField] private AK_DropRateManager _drop; 
+        [SerializeField] private DifficultySettings _difficultySettings;
+        [SerializeField] private bool showWeakPointCollider; 
+        [SerializeField, ConditionalShow("showWeakPointCollider", true)] private BoxCollider _weakPointCollider; 
 
         public AIType Type { get => type; set => Type = value; } 
         
@@ -538,9 +540,11 @@ namespace BEN.AI
         #region Defend
 
         IEnumerator Defend_Enter()
-        {
+        { 
+            if (NewState == States.Die) yield break; // hack for mascotte turn after hit from behind on next frame
             _agent.speed = 0f;
             NewState = States.Defend;
+            Debug.Log("defend"); 
             
             switch (Type)
             {
@@ -557,6 +561,7 @@ namespace BEN.AI
                     OnRequireStateChange(States.Attack, StateTransition.Safe);  
                     break;
                 case AIType.Mascotte:
+                    _weakPointCollider.enabled = false;
                     _aIAnimation.PlayAnimation(AnimState.Hit, _animDirection);
                     
                     yield return new WaitForSeconds(1f);  
@@ -565,8 +570,13 @@ namespace BEN.AI
             } 
         }   
 
-        void Defend_Exit()  
-        { 
+        void Defend_Exit()
+        {
+            if (Type == AIType.Mascotte)
+            {
+                _weakPointCollider.enabled = true;
+            }
+            
             _agent.speed = DefaultSpeed;
             _checkSurroundings.RightWallDetected = _checkSurroundings.LeftWallDetected = false; 
             _checkSurroundings.CanDodgeProjectile = true; 
@@ -588,8 +598,8 @@ namespace BEN.AI
             }
 
             StartCoroutine(nameof(DisableGraphics)); // so that I don't hold the whole Die_Enter coroutine for _graphicsDisableDelay seconds
-            
-            yield return new WaitForSeconds(0.25f);  
+
+            yield return new WaitForFixedUpdate();  
             CancelInvoke();
             Clip clipToPlay = null;  
  
@@ -601,7 +611,7 @@ namespace BEN.AI
             
             if (clipToPlay != null) yield break;
             _aIAnimation.PlayAnimation(AnimState.Die, AnimDirection.None); // need consistent naming across all mobs, not Die or Hit for same result.. 
-        }
+        } 
 
         IEnumerator DisableGraphics()
         {
