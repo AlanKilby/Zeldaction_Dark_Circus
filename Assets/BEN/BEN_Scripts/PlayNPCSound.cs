@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum NPC { None = -1, Beastmaster, Canneline, Grobourdin, JeanMarc, Rothilda, Zavatta }
+public enum NPC { None = -1, Beastmaster, Canneline, Grobourdin, JeanMarc, Rothilda, Zavatta = 10 }
 public class PlayNPCSound : MonoBehaviour
 {
     public AudioSource _audioSource; 
