@@ -153,7 +153,7 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public void HitAnim()
     {
-        // StartCoroutine(HitAnimation());
+        StartCoroutine(HitAnimation());
     }
     IEnumerator HitAnimation()
     {
