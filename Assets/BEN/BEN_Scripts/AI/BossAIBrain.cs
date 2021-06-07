@@ -47,8 +47,8 @@ public class BossAIBrain : MonoBehaviour
     [SerializeField, Range(1, 4)] private byte _maxActiveSwitches = 2;
     [SerializeField, Range(1, 40), Tooltip("Boss vulnerability when all swithces" +
                                            "where turned off")] private float _vulnerabilityDuration = 20f;
-    [SerializeField, Range(5, 50), Tooltip("max damage applicable to Boss " +
-                                           "before back to invulnerable")] private byte _maxPercentOfDamageBeforeSwitchReset = 25;
+    [SerializeField, Range(5, 100), Tooltip("max damage applicable to Boss " +
+                                           "before back to invulnerable. 100 means possible to one shot if fast enough")] private byte _maxPercentOfDamageBeforeSwitchReset = 25;
     [SerializeField, Range(5f, 60f), Tooltip("delay between each switches activation. " +
                                              "Applied from start")] private float _switchesActivationDelay = 20f;
     [SerializeField, Range(5, 60), Tooltip("time during which an active switch " +
@@ -271,6 +271,11 @@ public class BossAIBrain : MonoBehaviour
     IEnumerator Vulnerable_Enter()
     {
         sCurrentState = BossStates.Vulnerable;
+        foreach (var item in RayAttack.sRayVisuals)
+        {
+            item.SetActive(false);
+        }
+        
         Debug.Log("vulnerable enter");
         try // DEBUG because will throw error when RayAttacks_Manager is disabled 
         {

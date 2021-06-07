@@ -391,9 +391,24 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 6511166355352752017, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
+    - target: {fileID: 7461228240110252369, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
+      propertyPath: _playerUnkillable
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7947157173063223367, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a81bd3df828f6b64cac3d92dbb45f2d9, type: 3}
+--- !u!114 &1762971763 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 239534653543741571, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
+  m_PrefabInstance: {fileID: 8930034650293137188}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177104161000c00468b979dafdbc2dfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2102575630
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,10 +523,6 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 262711649, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-    - target: {fileID: 278751270, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 746533706, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.11
@@ -558,15 +569,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 239534653543741571, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: _projectileFallDelay
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1346287422943803756, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 2328448476897126825, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2384186876152302358, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: m_IsActive
@@ -681,17 +688,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8930034650034842194, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: doSpawns
+      propertyPath: _componentsToDeactivateOnDeath.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8930034650034842194, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: _vulnerabilityDuration
-      value: 10
-      objectReference: {fileID: 0}
+      propertyPath: _componentsToDeactivateOnDeath.Array.data[0]
+      value: 
+      objectReference: {fileID: 1762971763}
     - target: {fileID: 8930034650034842194, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
-      propertyPath: _switchesActivationDelay
-      value: 5
-      objectReference: {fileID: 0}
+      propertyPath: _componentsToDeactivateOnDeath.Array.data[1]
+      value: 
+      objectReference: {fileID: 1762971763}
     - target: {fileID: 8930034650293137190, guid: 8b5cd9e1201b5244fb80728d892e81d2, type: 3}
       propertyPath: m_Size.x
       value: 27.246716
