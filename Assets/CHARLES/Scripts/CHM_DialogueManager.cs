@@ -22,23 +22,48 @@ public class CHM_DialogueManager : MonoBehaviour
 
     public PlayerMovement_Alan playerMovement;
 
+    private bool isInDialogue;
+
     void Start()
     {
         sentences = new Queue<string>();
+        isInDialogue = false;
     }
+
+
+    private void Update()
+    {
+        if(isInDialogue)
+        {
+            playerMovement.canMove = false;
+            playerMovement.canThrow = false;
+            playerMovement.playerRB.velocity = Vector3.zero;
+        }
+        //else
+        //{
+        //    playerMovement.canMove = true;
+        //    playerMovement.canThrow = true;
+        //}
+    }
+
 
     public void StartDialogue(CHM_Dialogue dialogue)
     {
-        //Debug.Log("Le dialogue manager est lancÈ");
+        //Debug.Log("Le dialogue manager est lanc√©");
         animator.SetBool("IsOpen", true);
-        //Debug.Log("L'animateur est lancÈ"); Jusque l‡ tout va bien.
+        //Debug.Log("L'animateur est lanc√©"); Jusque l√† tout va bien.
         nameText.text = dialogue.name;
+
+
+        playerMovement.playerAnim.ChangeAnimationState(playerMovement.playerAnim.PLAYER_IDLE_HAT);
+
+        isInDialogue = true;
 
         sentences.Clear();
         EventSystem.current.SetSelectedGameObject(dialogueButton);
 
-        playerMovement.canMove = false;
-        playerMovement.canThrow = false;
+
+
 
         foreach (string sentence in dialogue.sentences)
         {
@@ -52,12 +77,13 @@ public class CHM_DialogueManager : MonoBehaviour
     {
         if (sentences.Count <= 0)
         {
-            Debug.Log("Il n'y a plus de phrase et la dialoguebox sera supprimÈe");
+            Debug.Log("Il n'y a plus de phrase et la dialoguebox sera supprim√©e");
             EndDialogue();
             //dialogueBox.SetActive(false);
             return;
 
         }
+
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
@@ -79,6 +105,7 @@ public class CHM_DialogueManager : MonoBehaviour
         rewardOnDialogueEnd.Invoke();
         animator.SetBool("IsOpen", false);
         EventSystem.current.SetSelectedGameObject(null);
+        isInDialogue = false;
 
         playerMovement.canMove = true;
         playerMovement.canThrow = true;

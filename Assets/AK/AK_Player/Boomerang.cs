@@ -21,7 +21,7 @@ public class Boomerang : MonoBehaviour
     public GameObject teleportParticles;
     public GameObject hitParticles;
 
-    public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, fakirWeaponLayer, bossLayer, jailLayer; 
+    public LayerMask mirrorLayer, playerLayer, wallLayer, enemyLayer, fakirWeaponLayer, bossLayer, jailLayer, weakPointLayer; 
    
     private Rigidbody rb;
 
@@ -38,7 +38,8 @@ public class Boomerang : MonoBehaviour
     float comebackTimerHolder;
 
     private BasicAIBrain enemy;
-    public static bool s_SeenByEnemy; 
+    public static bool s_SeenByEnemy;
+    private AnimEventPlaySound _animEventPlaySound; 
 
     private void Start()
     {
@@ -48,6 +49,7 @@ public class Boomerang : MonoBehaviour
         isComingBack = false;
         rb = gameObject.GetComponent<Rigidbody>();
         aimPos = playerPos.GetComponent<PlayerMovement_Alan>().aim.transform.position;
+        _animEventPlaySound = GetComponent<AnimEventPlaySound>();
 
         s_SeenByEnemy = false; 
     }
@@ -147,8 +149,10 @@ public class Boomerang : MonoBehaviour
     }
  
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) 
     {
+        _animEventPlaySound.PlaySoundOverwrite(SoundType.Attack);
+
         if (Mathf.Pow(2, other.gameObject.layer) == playerLayer) 
         {
             // Debug.Log("Collision with Player");
@@ -165,13 +169,19 @@ public class Boomerang : MonoBehaviour
             comebackTimer = 0;
         }
 
-        if (Mathf.Pow(2, other.gameObject.layer) == enemyLayer) 
+        if (Mathf.Pow(2, other.gameObject.layer) == weakPointLayer)
+        {
+            Debug.Log("hitting weak point");
+            isComingBack = true; 
+            comebackTimer = 0;
+            other.GetComponent<Health>().DecreaseHp(boomerangDamage);
+            return; 
+        } 
+        else if (Mathf.Pow(2, other.gameObject.layer) == enemyLayer) 
         { 
             // Debug.Log("Collision with Enemy");
-            enemy = other.GetComponent<BasicAIBrain>(); 
-            Debug.Log("seen by enemy is " + s_SeenByEnemy);
-
-            if (enemy.Type == AIType.Mascotte && s_SeenByEnemy)  
+            enemy = other.GetComponent<BasicAIBrain>();
+            if (enemy.Type == AIType.Mascotte)  
             {
                 isComingBack = true; 
                 comebackTimer = 0;
@@ -179,7 +189,7 @@ public class Boomerang : MonoBehaviour
                 return;
             }  
 
-            other.GetComponent<Health>().DecreaseHp(boomerangDamage); // unefficient get component
+            other.GetComponent<Health>().DecreaseHp(boomerangDamage); 
 
             Instantiate(hitParticles, gameObject.transform.position, Quaternion.identity);
 

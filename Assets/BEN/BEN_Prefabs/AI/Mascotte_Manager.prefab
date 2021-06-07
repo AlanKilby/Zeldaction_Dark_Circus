@@ -185,6 +185,69 @@ Transform:
   m_Father: {fileID: 3982106213429601075}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4130080751637603281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2448385647671018895}
+  - component: {fileID: 8935897942416923823}
+  - component: {fileID: 7775729134186279060}
+  m_Layer: 19
+  m_Name: WeakPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2448385647671018895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130080751637603281}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.73399997, z: -1.69}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7725771847332921777}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8935897942416923823
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130080751637603281}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8922353, y: 2.8556437, z: 0.041051984}
+  m_Center: {x: 0.02106738, y: -0.77697754, z: 0.59342796}
+--- !u!114 &7775729134186279060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130080751637603281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e7f1a20bc890444ad3faf57daaf855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _agentStartingHP: {fileID: 11400000, guid: 14942007862bd6d46835dbe4dec6db3a, type: 2}
+  _OnBossHPLoss:
+    m_PersistentCalls:
+      m_Calls: []
+  isBossHP: 0
+  _playerUnkillable: 0
 --- !u!1 &4266029802302106472
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,6 +294,7 @@ GameObject:
   - component: {fileID: 1370060806}
   - component: {fileID: 1760892740547742467}
   - component: {fileID: 7216914746224979034}
+  - component: {fileID: 4087347747468770749}
   m_Layer: 0
   m_Name: Mascotte_Graphics
   m_TagString: Untagged
@@ -446,7 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 3982106213023558240}
-  destroyDelay: 1
+  destroyDelay: 0.2
   destroyFromStart: 0
   _destroyableFromBossEvent: 0
 --- !u!114 &1760892740547742467
@@ -469,6 +533,8 @@ MonoBehaviour:
     - {fileID: 6188745796295819155, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     - {fileID: 8300000, guid: 6a5b25c112b400240a929580c6ab9748, type: 3}
     - {fileID: 3419186248533322808, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
+    - {fileID: 8300000, guid: 2aafbc7c5ef37d14ba7146390e07f520, type: 3}
+    - {fileID: 5732955852848343046, guid: bd16bdc7abae9f3418978956a9e76a47, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -493,7 +559,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 7
       Data: 
@@ -561,6 +627,39 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Sound, Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 7|Sound, Assembly-CSharp
+    - Name: clip
+      Entry: 10
+      Data: 4
+    - Name: _group
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -586,6 +685,29 @@ MonoBehaviour:
   - {fileID: 9151969981844469843, guid: 6ddf36aaa609f1b4cbd151ad984c2c9c, type: 3}
   originPositionReference: {fileID: 3367656968373875399}
   secondarySpawnPoint: {fileID: 0}
+  _eulerRotation: {x: 90, y: 0, z: 0}
+  _groundHeight: 0.27
+--- !u!114 &4087347747468770749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725771846700993472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e9b89112307eb247b4a844d25d80c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _difficultySettings: {fileID: 11400000, guid: 2a06a0ec0dff5cc4c8dec6db5eb2f889, type: 2}
+  minDropRate: 100
+  dropRateIncrease: 20
+  increaseOT: 0
+  time: 0
+  potion: {fileID: 9022016546524069892, guid: 3f020d7bf8c11044a905be3b02fb082f, type: 3}
+  potionDropRate: 50
+  heart: {fileID: 1324029780496701695, guid: 40da512ef0ffe5147b147b1fdfe68887, type: 3}
+  heartDropRate: 100
 --- !u!1 &7725771847202023909
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,7 +724,6 @@ GameObject:
   - component: {fileID: 7725771847202023904}
   - component: {fileID: 7725771847202023933}
   - component: {fileID: 7725771847202023908}
-  - component: {fileID: 1267593913}
   - component: {fileID: 5278087171588714547}
   m_Layer: 9
   m_Name: Mascotte_Entity
@@ -743,6 +864,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   _canPatrol: 1
+  _drop: {fileID: 4087347747468770749}
+  _difficultySettings: {fileID: 11400000, guid: 2a06a0ec0dff5cc4c8dec6db5eb2f889, type: 2}
+  showWeakPointCollider: 1
+  _weakPointCollider: {fileID: 8935897942416923823}
   isMonkeyBall: 0
   isFakir: 0
   isCaster: 0
@@ -752,7 +877,7 @@ MonoBehaviour:
   _attackRate: 2
   _attackStateSpeedMultiplier: 1.25
   _attackDelay: 1
-  _attackRange: 1
+  _attackRange: 2
   _attackDamage: 1
   _delayBeforeBackToDefaultState: 3
   _allyNotifyRadius: 8
@@ -769,7 +894,7 @@ MonoBehaviour:
   - {fileID: 7725771847202023933}
   - {fileID: 7725771847202023908}
   - {fileID: 7725771847332921778}
-  _graphicsDisableDelay: 0.7
+  _graphicsDisableDelay: 0.5
   _debugger: {fileID: 11400000, guid: 76a10a892f5d0fd49a13dc8f1e2dc23e, type: 2}
   refresh: 0
 --- !u!114 &7725771847202023908
@@ -785,24 +910,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolZone: {fileID: 3982106213429601075}
---- !u!114 &1267593913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7725771847202023909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28e7f1a20bc890444ad3faf57daaf855, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _agentStartingHP: {fileID: 11400000, guid: 14942007862bd6d46835dbe4dec6db3a, type: 2}
-  _OnBossHPLoss:
-    m_PersistentCalls:
-      m_Calls: []
-  isBossHP: 0
-  _playerUnkillable: 0
 --- !u!114 &5278087171588714547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,7 +953,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2448385647671018895}
   m_Father: {fileID: 7725771847202023910}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
