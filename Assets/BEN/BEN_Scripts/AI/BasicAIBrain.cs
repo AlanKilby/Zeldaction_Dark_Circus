@@ -205,7 +205,7 @@ namespace BEN.AI
             DelayBeforeBackToDefaultState = _delayBeforeBackToDefaultState;
             GoingBackToPositionBeforeIdling = false;
             DefaultSpeed = InitialSpeed = _difficultySettings.Value switch
-            {
+            { 
                 Difficulty.Easy => _defaultSpeed * 0.8f,
                 Difficulty.Hard => _defaultSpeed * 1.15f,
                 _ => _defaultSpeed 
@@ -589,8 +589,10 @@ namespace BEN.AI
         {
             NewState = States.Die;
             _patrol.IsDead = _checkSurroundings.IsDead = true; // DEBUG
-            _agent.speed = 0f; 
-            _drop.Drop(gameObject);
+            _agent.speed = 0f;
+            //_drop.Drop(gameObject);
+            AK_DropRateManager dropmanagerAK = GameObject.FindGameObjectWithTag("Player").GetComponent<AK_DropRateManager>();
+            dropmanagerAK.Drop(gameObject);
             
             foreach (var item in _componentsToDeactivateOnDeath)
             {

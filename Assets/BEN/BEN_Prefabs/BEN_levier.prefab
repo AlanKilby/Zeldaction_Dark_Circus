@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8739805577424572474}
   - component: {fileID: 6104734025984432494}
   - component: {fileID: 2885473156806186642}
+  - component: {fileID: 7509783317249266593}
   m_Layer: 0
   m_Name: BEN_levier
   m_TagString: Untagged
@@ -297,6 +298,28 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+--- !u!114 &7509783317249266593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8739805577424572475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda50a2dc7195c74ca467102b0170f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useSecondarySpawnPoint: 0
+  instantiateManuallyOnSelfDestroy: 1
+  destroyNestedPrefabAfterDelay: 0
+  randomSelectionFromList: 0
+  objToInstantiateOnSelfDestroy:
+  - {fileID: 2749289271832880399, guid: cbbf63d1614e17f4581efd5b07feb551, type: 3}
+  originPositionReference: {fileID: 8739805577424572476}
+  secondarySpawnPoint: {fileID: 0}
+  _eulerRotation: {x: -90, y: 0, z: 0}
+  _groundHeight: 0.27
 --- !u!1 &8739805577815543054
 GameObject:
   m_ObjectHideFlags: 0
