@@ -34,14 +34,8 @@ public class UD_BossLeverUI : MonoBehaviour
         {
             PlayerIsNear = true;
         }
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player") && ownSwitch.CanBeDeactivated)
-        {
-            PlayerIsNear = true;
-        }
-    }
+    } 
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player") && ownSwitch.CanBeDeactivated)
@@ -49,4 +43,4 @@ public class UD_BossLeverUI : MonoBehaviour
             PlayerIsNear = false;
         }
     }
-}
+} 

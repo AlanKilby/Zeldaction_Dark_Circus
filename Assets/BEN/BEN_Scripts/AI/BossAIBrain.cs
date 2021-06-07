@@ -270,14 +270,14 @@ public class BossAIBrain : MonoBehaviour
 
 #region Vulnerable 
     IEnumerator Vulnerable_Enter()
-    {
+    { 
         sCurrentState = BossStates.Vulnerable;
         RayAttack.OnFireDone(); 
             
         foreach (var item in RayAttack.sRayVisuals)
         {
             item.SetActive(false);
-        }
+        } 
         
         Debug.Log("vulnerable enter");
         try // DEBUG because will throw error when RayAttacks_Manager is disabled 
