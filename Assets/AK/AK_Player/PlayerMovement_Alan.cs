@@ -59,6 +59,12 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public Animator hitScreen;
 
+    //Ajout Ulric
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] hitSounds;
+    [SerializeField] private UD_ScreenShakeForEnnemies SS;
+    //
+
     void Start()
     {
         canThrow = true;
@@ -151,6 +157,15 @@ public class PlayerMovement_Alan : MonoBehaviour
     }
     IEnumerator HitAnimation()
     {
+        int i = Random.Range(0, hitSounds.Length);
+
+        audioSource.PlayOneShot(hitSounds[i]);
+
+        if (SS != null)
+        {
+            SS.MediumScreenShake();
+        }
+
         isHit = true;
 
         hitScreen.Play("hit");
