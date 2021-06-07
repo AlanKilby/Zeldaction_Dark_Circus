@@ -481,6 +481,7 @@ GameObject:
   - component: {fileID: 262711651}
   - component: {fileID: 262711649}
   - component: {fileID: 8832634358840346067}
+  - component: {fileID: 7204536806351400502}
   m_Layer: 0
   m_Name: Boss_Graphics
   m_TagString: Untagged
@@ -696,7 +697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToDestroy: {fileID: 8930034649707844227}
-  destroyDelay: 0.15
+  destroyDelay: 0.2
   destroyFromStart: 0
   _destroyableFromBossEvent: 0
 --- !u!114 &262711649
@@ -1178,6 +1179,22 @@ MonoBehaviour:
   secondarySpawnPoint: {fileID: 0}
   _eulerRotation: {x: -90, y: 0, z: 0}
   _groundHeight: 0.27
+--- !u!114 &7204536806351400502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8930034648999031261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a56acdca4e4ef444937f3812d388256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _listToSetFalse:
+  - {fileID: 8930034648999031261}
+  - {fileID: 8380143754974839393}
+  - {fileID: 2384186876152302358}
 --- !u!1 &8930034649035599034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,7 +1335,7 @@ MonoBehaviour:
   _rayPrewarningDuration: 1
   _rayDamageDuration: 1.5
   _delayBetwenenRayAttacks: 5
-  _accuracyModifier: 10
+  _rayMaxAngle: 10
   _rayVisuals:
   - {fileID: 2660539946516128947}
   - {fileID: 5779686587824129409}
@@ -1745,7 +1762,7 @@ MonoBehaviour:
   _OnMobInvocation: {fileID: 262711649}
   _BossVulnerablePoint: {fileID: 1346287422943803756}
   _bossGraphics: {fileID: 8930034648999031261}
-  _delayBeforePositioningAtVulnerablePoint: 0.5
+  _delayBeforePositioningAtVulnerablePoint: 0.75
   _spawnerHalfCircle: {fileID: 8930034648340680927}
   _spawnerOuter: {fileID: 8930034649793705264}
   _spawnableEntitiesList:
@@ -1755,7 +1772,7 @@ MonoBehaviour:
   - _type: 3
     _prefab: {fileID: 5953828729676287935, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
     _spawnProbability: 0.1
-  _invocationDelay: 21
+  _invocationDelay: 20
   _killAllSpawnsOnLightsOff: 1
   _switchedList:
   - {fileID: 8656741303415113833}
@@ -1766,8 +1783,8 @@ MonoBehaviour:
   - {fileID: 1902700036765676119}
   _maxActiveSwitches: 2
   _vulnerabilityDuration: 20
-  _maxPercentOfDamageBeforeSwitchReset: 25
-  _switchesActivationDelay: 10
+  _maxPercentOfDamageBeforeSwitchReset: 100
+  _switchesActivationDelay: 5
   _switchesOnDuration: 20
   rewardPlayerOnQuickLightsOff: 1
   _selectRandomPatttern: 1
@@ -1775,7 +1792,7 @@ MonoBehaviour:
   - {fileID: 8930034650034842194}
   - {fileID: 1272608561}
   - {fileID: 239534653543741571}
-  doSpawns: 1
+  doSpawns: 0
   doSwitchMechanic: 1
   playerLayer:
     serializedVersion: 2
@@ -2203,11 +2220,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8739805577424572475, guid: 23c1a58dd6fa14c40a83599238f0a8c4, type: 3}
   m_PrefabInstance: {fileID: 1712629915620566525}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &7966442279615067585 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8739805577424572476, guid: 23c1a58dd6fa14c40a83599238f0a8c4, type: 3}
-  m_PrefabInstance: {fileID: 1712629915620566525}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4597956802206692207 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2885473156806186642, guid: 23c1a58dd6fa14c40a83599238f0a8c4, type: 3}
@@ -2219,6 +2231,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8c8227e6af4654e80773a1b80eb747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &7966442279615067585 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8739805577424572476, guid: 23c1a58dd6fa14c40a83599238f0a8c4, type: 3}
+  m_PrefabInstance: {fileID: 1712629915620566525}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4594664985670031294
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2454,14 +2471,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
---- !u!1 &2660539946516128947 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8067659016652804671, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
-  m_PrefabInstance: {fileID: 5411699327087539852}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2660539946516128946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8067659016652804670, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
+  m_PrefabInstance: {fileID: 5411699327087539852}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2660539946516128947 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8067659016652804671, guid: dbcefd1375e77ab44b052a088c8c4f75, type: 3}
   m_PrefabInstance: {fileID: 5411699327087539852}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6946173739891475413

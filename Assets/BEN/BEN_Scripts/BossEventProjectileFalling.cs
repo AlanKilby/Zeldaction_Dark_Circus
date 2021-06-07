@@ -35,7 +35,7 @@ public class BossEventProjectileFalling : MonoBehaviour
     private void FixedUpdate()
     {
         if (Time.time < _projectileFallDelay - 0.05f) return; 
-        if (sProjectileCanFall && _bossHP.CurrentValue > 0) 
+        if (BossAIBrain.sCurrentState != BossStates.Vulnerable && _bossHP.CurrentValue > 0 && sProjectileCanFall) 
         {
             StartCoroutine(nameof(SetProjectileCanFall));
             SetProjectileSpawnPosition();
@@ -85,7 +85,11 @@ public class BossEventProjectileFalling : MonoBehaviour
                              BossAIBrain.sCurrentState != BossStates.Invocation &&
                              _bossHP.CurrentValue > 0;
 
-        BossAIBrain.OnRequireStateChange(BossStates.Default, StateTransition.Safe);
+        if (BossAIBrain.sCurrentState != BossStates.Vulnerable)
+        {
+            Debug.Log("calling default from object falling");
+            BossAIBrain.OnRequireStateChange(BossStates.Default, StateTransition.Safe);
+        }     
     }
 
     public static void DestroyShadowAtIndex(int index, float delay)
