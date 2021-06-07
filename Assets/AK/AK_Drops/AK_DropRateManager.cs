@@ -6,6 +6,7 @@ using UnityEngine;
 public class AK_DropRateManager : MonoBehaviour
 {
     [Header("Drops general information")]
+    [SerializeField] private DifficultySettings _difficultySettings;
     [Tooltip("The player's drop rate will never go below this number.")]
     [Range(0f,100f)]
     public float minDropRate;
@@ -38,8 +39,15 @@ public class AK_DropRateManager : MonoBehaviour
 
     private void Start()
     {
-        heartDropRate = 100 - potionDropRate;
+        heartDropRate = 100 - potionDropRate; 
         timeHolder = time;
+        minDropRate = _difficultySettings.Value switch
+        {
+            Difficulty.Easy => minDropRate * 1.75f,
+            Difficulty.Hard => minDropRate * 0.7f,
+            _ => minDropRate
+        }; 
+
         currentDropRate = minDropRate;
     }
 
@@ -65,7 +73,7 @@ public class AK_DropRateManager : MonoBehaviour
         if (currentDropRate < minDropRate)
             currentDropRate = minDropRate;
     }
-
+    
     public void Drop(GameObject thisGameObject)
     {
         if(Random.Range(0,101) <= currentDropRate)
@@ -77,7 +85,7 @@ public class AK_DropRateManager : MonoBehaviour
         {
             IncrementDropRate();
         }
-    }
+    } 
 
     public void ObjectDrop(GameObject thisGameObject)
     {

@@ -7,6 +7,9 @@ public class AK_Heart : MonoBehaviour
     public float heartValue = 1;
     Health playerHealth;
     public AgentGameplayData playerData;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _audioClip; 
+    
     private void Start()
     {
 
@@ -17,8 +20,9 @@ public class AK_Heart : MonoBehaviour
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Player") && playerHealth.CurrentValue < playerData.Value)
         {
+            _audioSource.PlayOneShot(_audioClip);
             playerHealth.CurrentValue += (sbyte)heartValue;
-            Destroy(gameObject);
+            Destroy(gameObject); 
         }
     }
 }
