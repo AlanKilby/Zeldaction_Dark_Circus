@@ -74,15 +74,10 @@ namespace BEN.Math
             // TEMPORARY 
             if (Mathf.Pow(2f, other.gameObject.layer) == _playerLayer) 
             {
-                // Added by Alan 06/06/2021
-                PlayerMovement_Alan playerMov = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement_Alan>();
-                playerMov.HitAnim();
-
-
-                Destroy(gameObject);
-
                 if(!AK_PlayerHit.isInvincible)
                 other.GetComponent<Health>().DecreaseHp(1); // super temporary
+
+                Destroy(gameObject);
             }
             else if (Mathf.Pow(2f, other.gameObject.layer) == _wallLayer)
             {

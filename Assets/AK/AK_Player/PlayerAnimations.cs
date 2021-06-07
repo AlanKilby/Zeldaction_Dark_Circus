@@ -67,6 +67,7 @@ public class PlayerAnimations : MonoBehaviour
             ChangeAnimationState(PLAYER_DEAD);
             playerMovement.canMove = false;
             playerMovement.canThrow = false;
+            playerMovement.playerRB.velocity = Vector3.zero;
             Debug.Log("player death animation"); 
         }
     }

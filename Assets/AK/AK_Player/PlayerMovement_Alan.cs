@@ -159,7 +159,6 @@ public class PlayerMovement_Alan : MonoBehaviour
 
         isHit = false;
     }
-
     public void PlayerNormalAnims()
     {
         // Animations 
@@ -186,7 +185,7 @@ public class PlayerMovement_Alan : MonoBehaviour
         {
             playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROW_ANIM);
         }
-        else if(!isHit)
+        else if(!isHit && canMove)
         {
             // NO HIT
             if (horizontalMove == 0 && verticalMove == 0 && canThrow == true)
