@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement_Alan : MonoBehaviour
@@ -153,7 +153,7 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public void HitAnim()
     {
-        // StartCoroutine(HitAnimation());
+        StartCoroutine(HitAnimation());
     }
     IEnumerator HitAnimation()
     {
