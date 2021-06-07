@@ -31,11 +31,13 @@ public class PlayerAnimations : MonoBehaviour
     public string PLAYER_THROW_ANIM = "throwinghat";
     public string PLAYER_DEAD = "death";
 
+    public string PLAYER_HIT_HAT_IDLE = "hitbot";
     public string PLAYER_HIT_HAT_TOP = "hittop";
     public string PLAYER_HIT_HAT_DOWN = "hitbot";
     public string PLAYER_HIT_HAT_RIGHT = "hitright";
     public string PLAYER_HIT_HAT_LEFT = "hitleft";
 
+    public string PLAYER_HIT_NO_HAT_IDLE = "hitbotnh";
     public string PLAYER_HIT_NO_HAT_TOP = "hittopnh";
     public string PLAYER_HIT_NO_HAT_DOWN = "hitbotnh";
     public string PLAYER_HIT_NO_HAT_RIGHT = "hitrightnh";
@@ -65,6 +67,7 @@ public class PlayerAnimations : MonoBehaviour
             ChangeAnimationState(PLAYER_DEAD);
             playerMovement.canMove = false;
             playerMovement.canThrow = false;
+            playerMovement.playerRB.velocity = Vector3.zero;
             Debug.Log("player death animation"); 
         }
     }

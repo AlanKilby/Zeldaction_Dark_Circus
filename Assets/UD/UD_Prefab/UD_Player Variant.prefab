@@ -54,22 +54,19 @@ MonoBehaviour:
       m_Calls: []
   isBossHP: 0
   _playerUnkillable: 0
---- !u!114 &1766796098039392376
+--- !u!114 &8472586135490563848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2648203344096112630}
+  m_GameObject: {fileID: 2648203343848301015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcc706559421f664ea51e170583aa4cf, type: 3}
+  m_Script: {fileID: 11500000, guid: ff0a39cb2eb77654588cc9ae2e60777c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetToDestroy: {fileID: 2648203343996164132}
-  destroyDelay: 0.05
-  destroyFromStart: 0
-  _destroyableFromBossEvent: 0
+  invincibleTimer: 0.5
 --- !u!212 &2331198530031367463
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -336,11 +333,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5539784749741460119, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
---- !u!1 &2648203343996164132 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5539784749608317801, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
-  m_PrefabInstance: {fileID: 7503289491963194189}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2648203343848301015 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5539784749741460122, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
@@ -354,11 +346,6 @@ Transform:
 --- !u!1 &2648203344827753110 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5539784748225169883, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
-  m_PrefabInstance: {fileID: 7503289491963194189}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2648203344096112630 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5539784748974113979, guid: 07a85bbfe7b5ca449a6c80cee739231a, type: 3}
   m_PrefabInstance: {fileID: 7503289491963194189}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7743311731020314888

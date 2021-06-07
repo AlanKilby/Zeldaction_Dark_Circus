@@ -57,6 +57,8 @@ public class PlayerMovement_Alan : MonoBehaviour
 
     public SpriteRenderer aimSpriteRend;
 
+    public Animator hitScreen;
+
     void Start()
     {
         canThrow = true;
@@ -64,6 +66,7 @@ public class PlayerMovement_Alan : MonoBehaviour
         sPlayer = transform.root.gameObject;
         movementSpeedHolder = movementSpeed;
         playerHit = gameObject.GetComponent<AK_PlayerHit>();
+        aimSpriteRend.enabled = false;
 
     }
 
@@ -150,11 +153,12 @@ public class PlayerMovement_Alan : MonoBehaviour
     {
         isHit = true;
 
+        hitScreen.Play("hit");
+
         yield return new WaitForSeconds(0.5f);
 
         isHit = false;
     }
-
     public void PlayerNormalAnims()
     {
         // Animations 
@@ -181,7 +185,7 @@ public class PlayerMovement_Alan : MonoBehaviour
         {
             playerAnim.ChangeAnimationState(playerAnim.PLAYER_THROW_ANIM);
         }
-        else if(!isHit)
+        else if(!isHit && canMove)
         {
             // NO HIT
             if (horizontalMove == 0 && verticalMove == 0 && canThrow == true)
@@ -233,7 +237,11 @@ public class PlayerMovement_Alan : MonoBehaviour
         if (isHit)
         {
             // HITS
-            if (verticalMove < 0 && canThrow == true)
+            if (horizontalMove == 0 && verticalMove == 0 && canThrow == true)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_IDLE);
+            }
+            else if (verticalMove < 0 && canThrow == true)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_DOWN);
                 Debug.Log("playerAnim.PLAYER_HIT_HAT_DOWN");
@@ -253,6 +261,10 @@ public class PlayerMovement_Alan : MonoBehaviour
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_HAT_LEFT);
                 Debug.Log("playerAnim.PLAYER_HIT_HAT_LEFT");
             } // NO HAT
+            else if (horizontalMove == 0 && verticalMove == 0 && canThrow == false)
+            {
+                playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_IDLE);
+            }
             else if (verticalMove > 0 && canThrow == false)
             {
                 playerAnim.ChangeAnimationState(playerAnim.PLAYER_HIT_NO_HAT_TOP);

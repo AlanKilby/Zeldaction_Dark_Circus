@@ -24,6 +24,7 @@ public class UD_FadeAndLoadingSceneManager : MonoBehaviour
 
     public void LaunchDeathFade()
     {
+        nextSceneIndex = deathSceneIndex;
         ChangeAnimationState(Loyal_Fade_In);
     }
 

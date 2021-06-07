@@ -50,7 +50,7 @@ public class CHM_DialogueManager : MonoBehaviour
 
     public void DisplayNextSentence()
     {
-        if (sentences.Count == 0)
+        if (sentences.Count <= 0)
         {
             Debug.Log("Il n'y a plus de phrase et la dialoguebox sera supprimée");
             EndDialogue();
