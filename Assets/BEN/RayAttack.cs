@@ -29,11 +29,13 @@ public class RayAttack : MonoBehaviour
     private void OnEnable()
     {
         BossAIBrain.OnBossVulnerable += DisableRayOnBossVulnerable;
+        OnFireDone += DisableRayOnBossVulnerable; 
     }
 
     private void OnDisable()
     {
         BossAIBrain.OnBossVulnerable -= DisableRayOnBossVulnerable;
+        OnFireDone -= DisableRayOnBossVulnerable; 
     }
 
     private void Start()

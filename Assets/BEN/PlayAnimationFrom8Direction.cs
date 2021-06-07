@@ -112,7 +112,7 @@ public class PlayAnimationFrom8Direction : MonoBehaviour
     { 
         _animator.SetBool(FireDone, true);
         Debug.Log("FIRE DONE TRUE");
-        yield return new WaitForSeconds(0.25f); 
+        yield return new WaitForSeconds(0.5f);  
         Debug.Log("FIRE DONE FALSE");
         _animator.SetBool(FireDone, false);
     }
