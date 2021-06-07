@@ -19,6 +19,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 807852816, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
+      propertyPath: _delayBeforeSlow
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 807852816, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
+      propertyPath: _slowForceMultiplier
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2525902971908637299, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.009
@@ -41,19 +49,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3196105207163711238, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
       propertyPath: _defaultSpeed
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3196105207163711238, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
       propertyPath: _fakirProjectile
       value: 
       objectReference: {fileID: 6490150909894780485, guid: ab30ed61c8c558a46a4e130dcb459bd7, type: 3}
     - target: {fileID: 3196105207163711238, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
+      propertyPath: _graphicsDisableDelay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3196105207163711238, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
       propertyPath: _delayBetweenEachAttack
       value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 3196105207163711238, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
       propertyPath: _attackStateSpeedMultiplier
-      value: 1.6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3196105207235364680, guid: fdc7d2450fa70a848bc700b8d18c62f4, type: 3}
       propertyPath: m_Size.x

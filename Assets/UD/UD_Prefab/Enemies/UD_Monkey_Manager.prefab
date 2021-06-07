@@ -19,6 +19,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3032424804336850376, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
+      propertyPath: _delayBeforeSlow
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032424804336850376, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
+      propertyPath: _slowForceMultiplier
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 3047842207291884686, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.012
@@ -69,11 +77,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8072824808094687805, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
       propertyPath: _attackRate
-      value: 1
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 8072824808094687805, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
       propertyPath: _attackDelay
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072824808094687805, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
+      propertyPath: _attackRange
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8072824808094687805, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
       propertyPath: defaultSpeed
@@ -81,11 +93,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8072824808094687805, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
       propertyPath: _defaultSpeed
-      value: 3.2
+      value: 3.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072824808094687805, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
+      propertyPath: _graphicsDisableDelay
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8072824808094687805, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
       propertyPath: _attackStateSpeedMultiplier
       value: 2.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072824808094687805, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
+      propertyPath: _delayBeforeBackToDefaultState
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8835960570973703075, guid: 89b87074c8f8e134a89e42a817a54805, type: 3}
       propertyPath: m_Name
