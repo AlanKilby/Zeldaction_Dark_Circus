@@ -302,11 +302,12 @@ public class BossAIBrain : MonoBehaviour
         StartCoroutine(nameof(ResetToAttackStateFromVulnerabiltyEnd));
 
         yield return new WaitForSeconds(_delayBeforePositioningAtVulnerablePoint); 
-        Debug.Log("setting new position");
+        Debug.Log("setting new position for entity and graphics"); 
         _bossAnimation.PlayAnimation(AnimState.Hit, AnimDirection.None);
-        // had to unparent graphics from entity because of weird distortions during animations..
-        transform.position = _bossGraphics.transform.position = _BossVulnerablePoint.position;  
-    }
+        
+        // had to unparent graphics from entity because of weird distortions during animations.. 
+        transform.position = _bossGraphics.transform.position = _BossVulnerablePoint.position; 
+    } 
 
     IEnumerator ResetToAttackStateFromVulnerabiltyEnd()
     { 
@@ -318,7 +319,7 @@ public class BossAIBrain : MonoBehaviour
     
     void Vulnerable_FixedUpdate()
     {
-        if (ignoreMaxHitCount) return; 
+        if (ignoreMaxHitCount) return;
         if (sHitCounter >= _bossHP.AgentStartinHP.Value / (100 / _maxPercentOfDamageBeforeSwitchReset))
         {
             sHitCounter = 0; 
